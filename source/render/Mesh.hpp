@@ -1,9 +1,15 @@
 #pragma once
 
+#include <glad/gl.h>
+#include <vector>
+
+#include "Geometry.hpp"
+#include "Shader.hpp"
+
 class Mesh
 {
 public:
-    Mesh();
+    Mesh(Geometry geometry, Shader shader);
     ~Mesh();
 
     void Bind();
@@ -11,6 +17,16 @@ public:
 
     void Update();
     void UpdateGeometry();
-private:
 
+private:
+    Geometry m_Geometry;
+    Shader m_Shader;
+
+    unsigned int m_VAO = 0;
+    unsigned int m_VBO = 0;
+    unsigned int m_IBO = 0;
+
+public:
+    Geometry &GetGeometry() { return m_Geometry; }
+    Shader &GetShader() { return m_Shader; }
 };

@@ -7,17 +7,15 @@
 struct Vertex
 {
     Vertex(glm::vec3 position,
-           glm::vec2 textureCoordinate,
-           glm::vec3 normal);
+           glm::vec3 color);
 
     glm::vec3 Position;
-    glm::vec2 TextureCoordinate;
-    glm::vec3 Normal;
+    glm::vec3 Color;
 };
 
 struct Geometry
 {
     std::vector<Vertex> Vertices;
     std::vector<unsigned int> Indices;
-    unsigned int Offset;
+    unsigned int Offset = 0;
 };

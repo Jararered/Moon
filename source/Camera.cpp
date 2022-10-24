@@ -86,6 +86,5 @@ void Camera::Update(float dt)
     m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Forward, POSITIVE_Y);
     m_ProjectionMatrix = glm::perspective(m_FieldOfView, m_AspectRatio, m_NearClip, m_FarClip);
 
-    std::cout << m_Position.x << " " << m_Position.y << " " << m_Position.z << std::endl;
-    // printf("%f %f %f\n", m_Position.x, m_Position.y, m_Position.z);
+    // std::cout << m_Position.x << " " << m_Position.y << " " << m_Position.z << std::endl;
 }

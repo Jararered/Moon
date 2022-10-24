@@ -14,8 +14,5 @@ private:
     unsigned int m_ID = 0;
 
 public:
-    unsigned int ID()
-    {
-        return m_ID;
-    }
+    const unsigned int GetID() { return m_ID; }
 };
