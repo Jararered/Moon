@@ -12,13 +12,18 @@ Engine::~Engine()
 
 void Engine::Update()
 {
+    double ti = glfwGetTime();
+
     if (m_Windows.empty() == false)
     {
         for (auto &window : m_Windows)
         {
-            window.Update();
+            window.Update(DT);
         }
     }
+
+    double tf = glfwGetTime();
+    DT = tf - ti;
 }
 
 Window &Engine::CreateWindow()

@@ -15,7 +15,7 @@ Renderer::~Renderer()
     std::cout << "Renderer::~Renderer()\n";
 }
 
-void Renderer::Update()
+void Renderer::Update(float dt)
 {
     // New frame
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -24,7 +24,7 @@ void Renderer::Update()
     // Rendering happens here
     for (auto &camera : m_Cameras)
     {
-        camera.Update();
+        camera.Update(dt);
     }
 
     // Swap frames

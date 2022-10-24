@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-
 #include <glfw/glfw3.h>
 
 #include "Renderer.hpp"
@@ -12,13 +11,14 @@ public:
     Window();
     ~Window();
 
-    void Update();
+    void Update(float dt);
+    bool IsRunning();
     Renderer& CreateRenderer();
 
 private:
     std::vector<Renderer> m_Renderers;
 
     GLFWwindow *m_GLFWwindow = nullptr;
-    int m_WindowHeight = 100;
-    int m_WindowWidth = 100;
+    int m_WindowHeight = 720;
+    int m_WindowWidth = 1280;
 };

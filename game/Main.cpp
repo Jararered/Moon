@@ -8,7 +8,7 @@ int main()
     auto &renderer = window.CreateRenderer();
     auto &camera = renderer.CreateCamera();
 
-    while (true)
+    while (window.IsRunning())
     {
         engine.Update();
     }

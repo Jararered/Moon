@@ -11,7 +11,7 @@ public:
     Camera();
     ~Camera();
 
-    void Update();
+    void Update(float dt);
 
     constexpr static glm::vec3 POSITIVE_X = {1.0f, 0.0f, 0.0f};
     constexpr static glm::vec3 POSITIVE_Y = {0.0f, 1.0f, 0.0f};
@@ -23,9 +23,14 @@ private:
     float m_AspectRatio = 16.0f / 9.0f;
     float m_NearClip = 0.1f;
     float m_FarClip = 1000.0f;
+    float m_Yaw = glm::radians(0.0f);
+    float m_Pitch = glm::radians(0.0f);
 
-    glm::vec3 m_Position = {0.0f, 0.0f, 0.0f};
+    glm::vec3 m_Direction = {0.0f, 0.0f, -1.0f};
     glm::vec3 m_Forward = {0.0f, 0.0f, -1.0f};
+    
+    glm::vec3 m_Position = {0.0f, 0.0f, 0.0f};
+    glm::vec3 m_Right = {1.0f, 0.0f, 0.0f};
     glm::mat4 m_ViewMatrix = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                               0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
     glm::mat4 m_ProjectionMatrix = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,

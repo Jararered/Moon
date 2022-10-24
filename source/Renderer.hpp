@@ -10,7 +10,7 @@ public:
     Renderer();
     ~Renderer();
 
-    void Update();
+    void Update(float dt);
     Camera& CreateCamera();
 
 private:

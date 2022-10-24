@@ -11,9 +11,10 @@ public:
     ~Engine();
 
     void Update();
+    bool IsRunning();
     Window& CreateWindow();
 
 private:
     std::vector<Window> m_Windows;
-
+    float DT;
 };
