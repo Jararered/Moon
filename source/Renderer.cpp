@@ -51,51 +51,23 @@ Camera &Renderer::CreateCamera()
 
 Mesh &Renderer::CreateTestMesh()
 {
+    // Create blank mesh components
     Geometry geometry;
     Shader shader;
 
-    unsigned int &offset = geometry.Offset;
+    // Position of center of square
     int x = 0, y = 0, z = 0;
 
-    geometry.Indices.insert(geometry.Indices.end(), {0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset});
-    geometry.Vertices.emplace_back(glm::vec3{x + 0.5f, y + 0.5f, z + 0.5f}, glm::vec3{1.0f, 0.0f, 0.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x + 0.5f, y - 0.5f, z + 0.5f}, glm::vec3{1.0f, 0.0f, 0.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x + 0.5f, y - 0.5f, z - 0.5f}, glm::vec3{1.0f, 0.0f, 0.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x + 0.5f, y + 0.5f, z - 0.5f}, glm::vec3{1.0f, 0.0f, 0.0f});
-    offset += 4;
-    geometry.Indices.insert(geometry.Indices.end(), {0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset});
-    geometry.Vertices.emplace_back(glm::vec3{x - 0.5f, y + 0.5f, z + 0.5f}, glm::vec3{1.0f, 0.0f, 0.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x - 0.5f, y + 0.5f, z - 0.5f}, glm::vec3{1.0f, 0.0f, 0.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x - 0.5f, y - 0.5f, z - 0.5f}, glm::vec3{1.0f, 0.0f, 0.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x - 0.5f, y - 0.5f, z + 0.5f}, glm::vec3{1.0f, 0.0f, 0.0f});
-    offset += 4;
-    geometry.Indices.insert(geometry.Indices.end(), {0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset});
-    geometry.Vertices.emplace_back(glm::vec3{x + 0.5f, y + 0.5f, z + 0.5f}, glm::vec3{0.0f, 1.0f, 0.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x + 0.5f, y + 0.5f, z - 0.5f}, glm::vec3{0.0f, 1.0f, 0.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x - 0.5f, y + 0.5f, z - 0.5f}, glm::vec3{0.0f, 1.0f, 0.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x - 0.5f, y + 0.5f, z + 0.5f}, glm::vec3{0.0f, 1.0f, 0.0f});
-    offset += 4;
-    geometry.Indices.insert(geometry.Indices.end(), {0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset});
-    geometry.Vertices.emplace_back(glm::vec3{x + 0.5f, y - 0.5f, z + 0.5f}, glm::vec3{0.0f, 1.0f, 0.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x - 0.5f, y - 0.5f, z + 0.5f}, glm::vec3{0.0f, 1.0f, 0.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x - 0.5f, y - 0.5f, z - 0.5f}, glm::vec3{0.0f, 1.0f, 0.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x + 0.5f, y - 0.5f, z - 0.5f}, glm::vec3{0.0f, 1.0f, 0.0f});
-    offset += 4;
-    geometry.Indices.insert(geometry.Indices.end(), {0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset});
-    geometry.Vertices.emplace_back(glm::vec3{x + 0.5f, y + 0.5f, z + 0.5f}, glm::vec3{0.0f, 0.0f, 1.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x - 0.5f, y + 0.5f, z + 0.5f}, glm::vec3{0.0f, 0.0f, 1.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x - 0.5f, y - 0.5f, z + 0.5f}, glm::vec3{0.0f, 0.0f, 1.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x + 0.5f, y - 0.5f, z + 0.5f}, glm::vec3{0.0f, 0.0f, 1.0f});
-    offset += 4;
-    geometry.Indices.insert(geometry.Indices.end(), {0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset});
-    geometry.Vertices.emplace_back(glm::vec3{x + 0.5f, y + 0.5f, z - 0.5f}, glm::vec3{0.0f, 0.0f, 1.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x + 0.5f, y - 0.5f, z - 0.5f}, glm::vec3{0.0f, 0.0f, 1.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x - 0.5f, y - 0.5f, z - 0.5f}, glm::vec3{0.0f, 0.0f, 1.0f});
-    geometry.Vertices.emplace_back(glm::vec3{x - 0.5f, y + 0.5f, z - 0.5f}, glm::vec3{0.0f, 0.0f, 1.0f});
-    offset += 4;
+    glm::vec3 red = {1.0f, 0.0f, 0.0f};
+    geometry.Indices.insert(geometry.Indices.end(), {0 + geometry.Offset, 1 + geometry.Offset, 2 + geometry.Offset, 2 + geometry.Offset, 3 + geometry.Offset, 0 + geometry.Offset});
+    geometry.Vertices.emplace_back(glm::vec3{x + 0.5f, y - 0.5f, 0.0f}, red);
+    geometry.Vertices.emplace_back(glm::vec3{x + 0.5f, y + 0.5f, 0.0f}, red);
+    geometry.Vertices.emplace_back(glm::vec3{x - 0.5f, y + 0.5f, 0.0f}, red);
+    geometry.Vertices.emplace_back(glm::vec3{x - 0.5f, y - 0.5f, 0.0f}, red);
 
+    // Create shader for mesh
     shader.Compile("../source/render/shaders/BasicShader.vert", "../source/render/shaders/BasicShader.frag");
 
-    Mesh &mesh = m_Meshes.emplace_back(geometry, shader);
-    return mesh;
+    // Add mesh to queue and retuen the entry
+    return m_Meshes.emplace_back(geometry, shader);
 }
