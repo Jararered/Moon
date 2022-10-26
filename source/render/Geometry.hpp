@@ -6,11 +6,9 @@
 
 struct Vertex
 {
-    Vertex(glm::vec3 position,
-           glm::vec3 color);
+    Vertex(glm::vec3 position);
 
     glm::vec3 Position;
-    glm::vec3 Color;
 };
 
 struct Geometry

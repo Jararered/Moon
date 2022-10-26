@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Camera.hpp"
+#include "render/Camera.hpp"
 #include "render/Mesh.hpp"
 
 class Renderer

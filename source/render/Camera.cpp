@@ -52,7 +52,7 @@ void Camera::Update(float dt)
         // Basic movement processing
         float movementSpeed = 1.0f;
         glm::vec3 newDirection = {0.0f, 0.0f, 0.0f};
-        glm::vec3 directionPlaneXZ = {m_Forward.x, 0.0f, m_Forward.z};
+        glm::vec3 fowardXZ = {m_Forward.x, 0.0f, m_Forward.z};
 
         // Speed increase
         if (Input::IsKeyPressed(CT_KEY_LEFT_CONTROL))
@@ -60,9 +60,9 @@ void Camera::Update(float dt)
 
         // WASD movement
         if (Input::IsKeyPressed(CT_KEY_W))
-            newDirection += directionPlaneXZ;
+            newDirection += fowardXZ;
         if (Input::IsKeyPressed(CT_KEY_S))
-            newDirection -= directionPlaneXZ;
+            newDirection -= fowardXZ;
         if (Input::IsKeyPressed(CT_KEY_A))
             newDirection -= m_Right;
         if (Input::IsKeyPressed(CT_KEY_D))

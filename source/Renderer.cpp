@@ -6,7 +6,8 @@
 Renderer::Renderer()
 {
     glEnable(GL_DEPTH_TEST);
-    glCullFace(GL_BACK);
+    glDepthFunc(GL_LESS);
+    // glCullFace(GL_FRONT);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
@@ -18,8 +19,8 @@ Renderer::~Renderer()
 void Renderer::Update(float dt)
 {
     // New frame
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClearColor(1.0f, 0.0f, 1.0f, 0.0f);
 
     // Rendering happens here
     for (auto &camera : m_Cameras)
@@ -28,15 +29,15 @@ void Renderer::Update(float dt)
 
         for (auto &mesh : m_Meshes)
         {
-            // Bind mesh that is being rendered
             mesh.Bind();
 
-            // Update uniform data
-            glUniformMatrix4fv(glGetUniformLocation(mesh.GetShader().GetID(), "u_ViewMatrix"), 1, GL_FALSE, &camera.GetViewMatrix()[0][0]);
-            glUniformMatrix4fv(glGetUniformLocation(mesh.GetShader().GetID(), "u_ProjectionMatrix"), 1, GL_FALSE, &camera.GetProjectionMatrix()[0][0]);
+            // Update any time-related variables for the mesh
+            mesh.Update(dt);
 
-            // Finally draw everything
-            glDrawElements(GL_TRIANGLES, mesh.GetGeometry().Indices.size(), GL_UNSIGNED_INT, (void *)0);
+            // Draw the mesh
+            mesh.Draw(camera);
+
+            mesh.Unbind();
         }
     }
 
@@ -56,18 +57,16 @@ Mesh &Renderer::CreateTestMesh()
     Shader shader;
 
     // Position of center of square
-    int x = 0, y = 0, z = 0;
-
-    glm::vec3 red = {1.0f, 0.0f, 0.0f};
-    geometry.Indices.insert(geometry.Indices.end(), {0 + geometry.Offset, 1 + geometry.Offset, 2 + geometry.Offset, 2 + geometry.Offset, 3 + geometry.Offset, 0 + geometry.Offset});
-    geometry.Vertices.emplace_back(glm::vec3{x + 0.5f, y - 0.5f, 0.0f}, red);
-    geometry.Vertices.emplace_back(glm::vec3{x + 0.5f, y + 0.5f, 0.0f}, red);
-    geometry.Vertices.emplace_back(glm::vec3{x - 0.5f, y + 0.5f, 0.0f}, red);
-    geometry.Vertices.emplace_back(glm::vec3{x - 0.5f, y - 0.5f, 0.0f}, red);
+    geometry.Indices.insert(geometry.Indices.end(), {0, 1, 2, 2, 3, 0});
+    geometry.Vertices.emplace_back(glm::vec3{+0.5f, -0.5f, -1.0f});
+    geometry.Vertices.emplace_back(glm::vec3{+0.5f, +0.5f, -1.0f});
+    geometry.Vertices.emplace_back(glm::vec3{-0.5f, +0.5f, -1.0f});
+    geometry.Vertices.emplace_back(glm::vec3{-0.5f, -0.5f, -1.0f});
 
     // Create shader for mesh
-    shader.Compile("../source/render/shaders/BasicShader.vert", "../source/render/shaders/BasicShader.frag");
+    shader.Compile("../source/render/shaders/Position.vert", "../source/render/shaders/colors/Red.frag");
 
     // Add mesh to queue and retuen the entry
-    return m_Meshes.emplace_back(geometry, shader);
+    Mesh &mesh = m_Meshes.emplace_back(geometry, shader);
+    return mesh;
 }

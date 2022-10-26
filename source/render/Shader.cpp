@@ -6,16 +6,17 @@
 
 Shader::Shader()
 {
+    std::cout << "Shader::Shader()" << "\n";
 }
 
 Shader::~Shader()
 {
-    glDeleteProgram(m_ID);
+    std::cout << "Shader::~Shader()" << "\n";
 }
 
 void Shader::Compile(const char *vertFile, const char *fragFile)
 {
-    m_ID = glCreateProgram();
+    ID = glCreateProgram();
 
     unsigned int vertexID, fragmentID;
     int successvert;
@@ -59,14 +60,14 @@ void Shader::Compile(const char *vertFile, const char *fragFile)
                   << infoLog << "\n";
     }
 
-    glAttachShader(m_ID, vertexID);
-    glAttachShader(m_ID, fragmentID);
-    glLinkProgram(m_ID);
+    glAttachShader(ID, vertexID);
+    glAttachShader(ID, fragmentID);
+    glLinkProgram(ID);
 
-    glGetProgramiv(m_ID, GL_LINK_STATUS, &successlink);
+    glGetProgramiv(ID, GL_LINK_STATUS, &successlink);
     if (!successlink)
     {
-        glGetProgramInfoLog(m_ID, 512, NULL, infoLog);
+        glGetProgramInfoLog(ID, 512, NULL, infoLog);
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n"
                   << infoLog << "\n";
     }
@@ -76,13 +77,19 @@ void Shader::Compile(const char *vertFile, const char *fragFile)
 
     if (successvert && successfrag && successlink)
     {
-        std::cout << "Successfully compiled shader: " << m_ID << "\n";
+        std::cout << "Created shader: " << ID << "\n";
     }
+}
+
+void Shader::Delete()
+{
+    std::cout << "Deleting shader: " << ID << "\n";
+    glDeleteProgram(ID);
 }
 
 void Shader::Bind()
 {
-    glUseProgram(m_ID);
+    glUseProgram(ID);
 }
 
 void Shader::Unbind()

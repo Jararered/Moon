@@ -5,6 +5,7 @@
 
 #include "Geometry.hpp"
 #include "Shader.hpp"
+#include "Camera.hpp"
 
 class Mesh
 {
@@ -15,8 +16,10 @@ public:
     void Bind();
     void Unbind();
 
-    void Update();
+    void Update(float dt);
     void UpdateGeometry();
+
+    void Draw(Camera& camera);
 
 private:
     Geometry m_Geometry;

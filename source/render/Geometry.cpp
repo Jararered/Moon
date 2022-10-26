@@ -1,4 +1,3 @@
 #include "Geometry.hpp"
 
-Vertex::Vertex(glm::vec3 position,
-               glm::vec3 color) : Position(position), Color(color) {}
+Vertex::Vertex(glm::vec3 position) : Position(position) {}
