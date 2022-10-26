@@ -13,12 +13,19 @@ public:
 
     void Update(float dt);
 
+public:
     constexpr static glm::vec3 POSITIVE_X = {1.0f, 0.0f, 0.0f};
     constexpr static glm::vec3 POSITIVE_Y = {0.0f, 1.0f, 0.0f};
     constexpr static glm::vec3 POSITIVE_Z = {0.0f, 0.0f, 1.0f};
     constexpr static glm::vec3 WORLD_ORIGIN = {0.0f, 0.0f, 0.0f};
+    enum class CameraType
+    {
+        TwoDimensional,
+        ThreeDimensional
+    };
 
 private:
+    CameraType m_CameraType = CameraType::ThreeDimensional;
     float m_FieldOfView = glm::radians(100.0f);
     float m_AspectRatio = 16.0f / 9.0f;
     float m_NearClip = 0.1f;
