@@ -3,6 +3,8 @@
 #include <iostream>
 #include <glad/gl.h>
 
+#include "input/Input.hpp"
+
 Window::Window()
 {
     if (!glfwInit())
@@ -12,7 +14,7 @@ Window::Window()
 
     // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     // glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_TRUE);
-    
+
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -56,6 +58,19 @@ void Window::Update(float dt)
     }
 
     glfwPollEvents();
+
+    if (!Input::IsMouseCaptured())
+    {
+        if (Input::IsLeftClick())
+        {
+            Input::CaptureCursor();
+        }
+    }
+
+    if (Input::IsKeyPressed(CT_KEY_ESCAPE) && Input::IsMouseCaptured())
+    {
+        Input::ReleaseCursor();
+    }
 }
 
 bool Window::IsRunning()
@@ -63,7 +78,7 @@ bool Window::IsRunning()
     return !glfwWindowShouldClose(m_GLFWwindow);
 }
 
-Renderer& Window::CreateRenderer()
+Renderer &Window::CreateRenderer()
 {
     return m_Renderers.emplace_back();
 }

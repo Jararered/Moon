@@ -6,7 +6,11 @@
 
 Camera::Camera()
 {
-    m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Forward, POSITIVE_Y);
+    m_Position = {0.0f, 0.0f, 0.0f};
+    m_Direction = {0.0f, 0.0f, -1.0f};
+    m_Right = glm::cross(m_Direction, POSITIVE_Y);
+
+    m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Direction, POSITIVE_Y);
     m_ProjectionMatrix = glm::perspective(m_FieldOfView, m_AspectRatio, m_NearClip, m_FarClip);
 }
 
@@ -19,9 +23,16 @@ void Camera::Update(float dt)
 {
     // Update Rotation
     {
+        // Set Yaw and Pitch rotations based on mouse movement
         glm::vec2 mouseMovement = Input::GetMouseMovement();
-        m_Yaw += mouseMovement.x;
-        m_Pitch += mouseMovement.y;
+
+        // Each pixel the mouse moves is treated as one degree.
+        // Scaling each pixel to 0.01 degree
+        m_Yaw += (float)mouseMovement.x / 100.0f;
+        m_Pitch += (float)mouseMovement.y / 100.0f;
+
+        std::cout << "MouseX: " << mouseMovement.x << ", MouseY: " << mouseMovement.y << std::endl;
+        std::cout << "Yaw: " << m_Yaw << ", Pitch: " << m_Pitch << std::endl;
 
         // Keep yaw angle from getting to imprecise
         if (m_Yaw > glm::radians(360.0f))
@@ -35,12 +46,14 @@ void Camera::Update(float dt)
         else if (m_Pitch < glm::radians(-89.0f))
             m_Pitch = glm::radians(-89.0f);
 
+        // Update direction based off of yaw and pitch values
         m_Direction.x = glm::cos(m_Yaw) * glm::cos(m_Pitch);
         m_Direction.y = glm::sin(m_Pitch);
         m_Direction.z = glm::sin(m_Yaw) * glm::cos(m_Pitch);
 
-        m_Forward = glm::normalize(m_Direction);
-        m_Right = glm::cross(m_Forward, Camera::POSITIVE_Y);
+        // Normalize Direction vector and update Right vector
+        m_Direction = glm::normalize(m_Direction);
+        m_Right = glm::cross(m_Direction, Camera::POSITIVE_Y);
     }
 
     // Update Position
@@ -52,7 +65,7 @@ void Camera::Update(float dt)
         // Basic movement processing
         float movementSpeed = 1.0f;
         glm::vec3 newDirection = {0.0f, 0.0f, 0.0f};
-        glm::vec3 fowardXZ = {m_Forward.x, 0.0f, m_Forward.z};
+        glm::vec3 fowardXZ = {m_Direction.x, 0.0f, m_Direction.z};
 
         // Speed increase
         if (Input::IsKeyPressed(CT_KEY_LEFT_CONTROL))
@@ -70,7 +83,7 @@ void Camera::Update(float dt)
 
         // Fixes diagonal directed movement to not be faster than along an axis.
         // Only happens when holding two buttons that are off axis from each other.
-        if (newDirection.x != 0.0f || newDirection.y != 0.0f)
+        if (newDirection.x != 0.0f || newDirection.z != 0.0f)
             newDirection = glm::normalize(newDirection);
 
         // Still perform up/down movements after normalization.
@@ -83,8 +96,6 @@ void Camera::Update(float dt)
         m_Position = m_Position + newDirection * dt * movementSpeed;
     }
 
-    m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Forward, POSITIVE_Y);
+    m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Direction, POSITIVE_Y);
     m_ProjectionMatrix = glm::perspective(m_FieldOfView, m_AspectRatio, m_NearClip, m_FarClip);
-
-    // std::cout << m_Position.x << " " << m_Position.y << " " << m_Position.z << std::endl;
 }

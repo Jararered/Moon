@@ -7,7 +7,6 @@ Renderer::Renderer()
 {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
-    // glCullFace(GL_FRONT);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
@@ -58,10 +57,10 @@ Mesh &Renderer::CreateTestMesh()
 
     // Position of center of square
     geometry.Indices.insert(geometry.Indices.end(), {0, 1, 2, 2, 3, 0});
-    geometry.Vertices.emplace_back(glm::vec3{+0.5f, -0.5f, -1.0f});
-    geometry.Vertices.emplace_back(glm::vec3{+0.5f, +0.5f, -1.0f});
-    geometry.Vertices.emplace_back(glm::vec3{-0.5f, +0.5f, -1.0f});
-    geometry.Vertices.emplace_back(glm::vec3{-0.5f, -0.5f, -1.0f});
+    geometry.Vertices.emplace_back(glm::vec3{+0.5f, -1.0f, -0.5f});
+    geometry.Vertices.emplace_back(glm::vec3{+0.5f, -1.0f, +0.5f});
+    geometry.Vertices.emplace_back(glm::vec3{-0.5f, -1.0f, +0.5f});
+    geometry.Vertices.emplace_back(glm::vec3{-0.5f, -1.0f, -0.5f});
 
     // Create shader for mesh
     shader.Compile("../source/render/shaders/Position.vert", "../source/render/shaders/colors/Red.frag");

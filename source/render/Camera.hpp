@@ -26,11 +26,10 @@ private:
     float m_Yaw = glm::radians(0.0f);
     float m_Pitch = glm::radians(0.0f);
 
-    glm::vec3 m_Direction = {0.0f, 0.0f, -1.0f};
-    glm::vec3 m_Forward = {0.0f, 0.0f, -1.0f};
-
     glm::vec3 m_Position = {0.0f, 0.0f, 0.0f};
-    glm::vec3 m_Right = {1.0f, 0.0f, 0.0f};
+    glm::vec3 m_Direction = {0.0f, 0.0f, 0.0f};
+    glm::vec3 m_Right = {0.0f, 0.0f, 0.0f}; // Cross of Direction and POSITIVE_Y
+
     glm::mat4 m_ViewMatrix = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                               0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
     glm::mat4 m_ProjectionMatrix = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
