@@ -28,9 +28,14 @@ void Renderer::Update(float dt)
 
         for (auto &mesh : m_Meshes)
         {
+            // Bind mesh that is being rendered
+            mesh.Bind();
+
+            // Update uniform data
             glUniformMatrix4fv(glGetUniformLocation(mesh.GetShader().GetID(), "u_ViewMatrix"), 1, GL_FALSE, &camera.GetViewMatrix()[0][0]);
             glUniformMatrix4fv(glGetUniformLocation(mesh.GetShader().GetID(), "u_ProjectionMatrix"), 1, GL_FALSE, &camera.GetProjectionMatrix()[0][0]);
 
+            // Finally draw everything
             glDrawElements(GL_TRIANGLES, mesh.GetGeometry().Indices.size(), GL_UNSIGNED_INT, (void *)0);
         }
     }

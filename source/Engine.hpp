@@ -16,5 +16,5 @@ public:
 
 private:
     std::vector<Window> m_Windows;
-    float DT;
+    float DT = 0.0f;
 };

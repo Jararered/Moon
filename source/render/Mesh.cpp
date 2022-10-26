@@ -39,11 +39,16 @@ Mesh::Mesh(Geometry geometry, Shader shader)
 
 Mesh::~Mesh()
 {
-    std::cout << "Mesh::~Mesh()" << std::endl;
-    // Deleting all buffers
+    std::cout << "Deleting VAO: " << m_VAO << std::endl;
     glDeleteVertexArrays(1, &m_VAO);
+
+    std::cout << "Deleting VBO: " << m_VBO << std::endl;
     glDeleteBuffers(1, &m_VBO);
+
+    std::cout << "Deleting IBO: " << m_IBO << std::endl;
     glDeleteBuffers(1, &m_IBO);
+
+    std::cout << "Mesh::~Mesh()" << std::endl;
 }
 
 void Mesh::Bind()
