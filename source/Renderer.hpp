@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "render/Camera.hpp"
+#include "render/camera/Camera.hpp"
 #include "render/Mesh.hpp"
 
 class Renderer
@@ -13,7 +13,8 @@ public:
 
     void Update(float dt);
     
-    Camera& CreateCamera();
+    Camera& Create2DCamera();
+    Camera& Create3DCamera();
     Mesh& CreateTestMesh();
 
 private:

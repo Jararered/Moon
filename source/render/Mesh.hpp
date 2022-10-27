@@ -5,7 +5,7 @@
 
 #include "Geometry.hpp"
 #include "Shader.hpp"
-#include "Camera.hpp"
+#include "camera/Camera.hpp"
 
 class Mesh
 {

@@ -67,7 +67,7 @@ void Window::Update(float dt)
         }
     }
 
-    if (Input::IsKeyPressed(CT_KEY_ESCAPE) && Input::IsMouseCaptured())
+    if (Input::IsKeyPressed(KEY_ESCAPE) && Input::IsMouseCaptured())
     {
         Input::ReleaseCursor();
     }

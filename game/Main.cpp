@@ -6,16 +6,9 @@ int main()
 
     auto &window = engine.CreateWindow();
     auto &renderer = window.CreateRenderer();
-    auto &camera = renderer.CreateCamera();
 
-
-
-
-
-
+    auto &camera = renderer.Create3DCamera();
     auto &mesh = renderer.CreateTestMesh();
-
-
 
     while (window.IsRunning())
     {
