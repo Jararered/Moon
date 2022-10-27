@@ -2,10 +2,7 @@
 
 // Copied from the GLFW key defines
 
-/* The unknown key */
 #define CT_KEY_UNKNOWN            -1
-
-/* Printable keys */
 #define CT_KEY_SPACE              32
 #define CT_KEY_APOSTROPHE         39  /* ' */
 #define CT_KEY_COMMA              44  /* , */
@@ -56,8 +53,6 @@
 #define CT_KEY_GRAVE_ACCENT       96  /* ` */
 #define CT_KEY_WORLD_1            161 /* non-US #1 */
 #define CT_KEY_WORLD_2            162 /* non-US #2 */
-
-/* FunCTion keys */
 #define CT_KEY_ESCAPE             256
 #define CT_KEY_ENTER              257
 #define CT_KEY_TAB                258
