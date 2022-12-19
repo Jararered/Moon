@@ -11,8 +11,7 @@ namespace Input
     // Keyboard related functions
     inline static bool IsKeyPressed(int keycode)
     {
-        int state = glfwGetKey(glfwGetCurrentContext(), keycode);
-        return state == GLFW_PRESS;
+        return glfwGetKey(glfwGetCurrentContext(), keycode) == GLFW_PRESS;
     }
 
     // Mouse button related functions
