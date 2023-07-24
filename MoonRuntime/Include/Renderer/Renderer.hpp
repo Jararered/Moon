@@ -1,9 +1,9 @@
 #pragma once
 
-#include <vector>
-
 #include "Renderer/Camera/Camera.hpp"
-#include "Structure/Mesh.hpp"
+#include "Renderer/Structures/Mesh.hpp"
+
+#include <vector>
 
 class Renderer
 {
@@ -12,12 +12,13 @@ public:
     ~Renderer();
 
     void Update(float dt);
-    
+
     Camera& Create2DCamera();
     Camera& Create3DCamera();
-    Mesh& CreateTestMesh();
+
+    void AddMesh(Mesh* mesh);
 
 private:
     std::vector<Camera> m_Cameras;
-    std::vector<Mesh> m_Meshes;
+    std::vector<Mesh*> m_Meshes;
 };

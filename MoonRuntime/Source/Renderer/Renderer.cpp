@@ -28,15 +28,15 @@ void Renderer::Update(float dt)
 
         for (auto &mesh : m_Meshes)
         {
-            mesh.Bind();
+            mesh->Bind();
 
             // Update any time-related variables for the mesh
-            mesh.Update(dt);
+            mesh->Update(dt);
 
             // Draw the mesh
-            mesh.Draw(camera);
+            mesh->Draw(camera);
 
-            mesh.Unbind();
+            mesh->Unbind();
         }
     }
 
@@ -60,23 +60,9 @@ Camera &Renderer::Create3DCamera()
     return m_Cameras.emplace_back(width, height, CameraType::Camera3D);
 }
 
-Mesh &Renderer::CreateTestMesh()
+
+
+void Renderer::AddMesh(Mesh* mesh)
 {
-    // Create blank mesh components
-    Geometry geometry;
-    Shader shader;
-
-    // Position of center of square
-    geometry.Indices.insert(geometry.Indices.end(), {0, 1, 2, 2, 3, 0});
-    geometry.Vertices.emplace_back(glm::vec3{-0.5f, -0.5f, 0.0f});
-    geometry.Vertices.emplace_back(glm::vec3{-0.5f, +0.5f, 0.0f});
-    geometry.Vertices.emplace_back(glm::vec3{+0.5f, +0.5f, 0.0f});
-    geometry.Vertices.emplace_back(glm::vec3{+0.5f, -0.5f, 0.0f});
-
-    // Create shader for mesh
-    shader.Compile("../source/render/shaders/Position.vert", "../source/render/shaders/colors/Red.frag");
-
-    // Add mesh to queue and retuen the entry
-    Mesh &mesh = m_Meshes.emplace_back(geometry, shader);
-    return mesh;
+    m_Meshes.push_back(mesh);
 }

@@ -28,6 +28,7 @@ void Shader::Compile(const char *vertFile, const char *fragFile)
     {
         std::ifstream file(vertFile);
         std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+        std::cout << contents << std::endl;
         const char *contentsChar = contents.c_str();
         vertexID = glCreateShader(GL_VERTEX_SHADER);
         glShaderSource(vertexID, 1, &contentsChar, NULL);
@@ -46,6 +47,7 @@ void Shader::Compile(const char *vertFile, const char *fragFile)
     {
         std::ifstream file(fragFile);
         std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+        std::cout << contents << std::endl;
         const char *contentsChar = contents.c_str();
         fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
         glShaderSource(fragmentID, 1, &contentsChar, NULL);

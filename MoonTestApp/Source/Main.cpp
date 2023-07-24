@@ -1,5 +1,7 @@
 #include <Moon.hpp>
 
+#include <Tests.hpp>
+
 int main(int argc, char* argv[])
 {
     Engine engine;
@@ -8,7 +10,9 @@ int main(int argc, char* argv[])
     auto& renderer = window->CreateRenderer();
 
     auto& camera = renderer.Create2DCamera();
-    auto& mesh = renderer.CreateTestMesh();
+
+    Mesh* mesh = ExampleMesh::Square();
+    renderer.AddMesh(mesh);
 
     while (window->IsRunning())
     {

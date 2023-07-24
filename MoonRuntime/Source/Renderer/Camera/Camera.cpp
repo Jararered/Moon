@@ -29,7 +29,7 @@ void Camera::Update(float dt)
         Update3D(dt);
     }
 
-    std::cout << "Position: " << m_Position.x << ", " << m_Position.y << ", " << m_Position.z << std::endl;
+    // std::cout << "Position: " << m_Position.x << ", " << m_Position.y << ", " << m_Position.z << std::endl;
 }
 
 void Camera::Update2D(float dt)
