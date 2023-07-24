@@ -3,17 +3,18 @@
 #include <vector>
 #include <glfw/glfw3.h>
 
+#include "Window.hpp"
 #include "Renderer.hpp"
 
-class Window
+class OpenGLWindow : public Window
 {
 public:
-    Window();
-    ~Window();
+    OpenGLWindow();
+    ~OpenGLWindow() override;
 
-    void Update(float dt);
-    bool IsRunning();
-    Renderer& CreateRenderer();
+    void Update(float dt) override;
+    bool IsRunning() override;
+    Renderer& CreateRenderer() override;
 
 private:
     std::vector<Renderer> m_Renderers;

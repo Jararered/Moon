@@ -1,15 +1,15 @@
-#include "Window.hpp"
+#include "OpenGLWindow.hpp"
 
 #include <iostream>
 #include <glad/gl.h>
 
 #include "input/Input.hpp"
 
-Window::Window()
+OpenGLWindow::OpenGLWindow()
 {
     if (!glfwInit())
     {
-        std::cout << "[*Error] Failed to initialize GLFW.\n";
+        std::cout << "OpenGLWindow::OpenGLWindow(): Failed to initialize GLFW.\n";
     }
 
 #ifdef UNIX
@@ -25,7 +25,7 @@ Window::Window()
     m_GLFWwindow = glfwCreateWindow(m_WindowWidth, m_WindowHeight, "Moon (OpenGL 3.3)", NULL, NULL);
     if (!m_GLFWwindow)
     {
-        std::cout << "[*Error] Failed to create OpenGL window.\n";
+        std::cout << "OpenGLWindow::OpenGLWindow(): Failed to create OpenGL window.\n";
         glfwTerminate();
     }
 
@@ -35,7 +35,7 @@ Window::Window()
     int version = gladLoadGL(glfwGetProcAddress);
     if (version == 0)
     {
-        std::cout << "[*Error] Failed to initialize OpenGL context.\n";
+        std::cout << "OpenGLWindow::OpenGLWindow(): Failed to initialize OpenGL context.\n";
     }
 
     glfwSetWindowUserPointer(m_GLFWwindow, this);
@@ -43,13 +43,13 @@ Window::Window()
     glfwSwapInterval(1);
 }
 
-Window::~Window()
+OpenGLWindow::~OpenGLWindow()
 {
-    std::cout << "Window::~Window()\n";
+    std::cout << "OpenGLWindow::~OpenGLWindow()\n";
     glfwWindowShouldClose(m_GLFWwindow);
 }
 
-void Window::Update(float dt)
+void OpenGLWindow::Update(float dt)
 {
     if (m_Renderers.empty() == false)
     {
@@ -75,12 +75,12 @@ void Window::Update(float dt)
     }
 }
 
-bool Window::IsRunning()
+bool OpenGLWindow::IsRunning()
 {
     return !glfwWindowShouldClose(m_GLFWwindow);
 }
 
-Renderer &Window::CreateRenderer()
+Renderer &OpenGLWindow::CreateRenderer()
 {
     return m_Renderers.emplace_back();
 }

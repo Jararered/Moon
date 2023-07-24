@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 
 #include "Window.hpp"
 
@@ -12,10 +13,10 @@ public:
 
     void Update();
 
-    Window& CreateWindow();
-    const float Dt() const {return m_Dt;};
+    std::shared_ptr<Window> CreateWindow(GraphicsAPI api);
+    const float Dt() const { return m_Dt; };
 
 private:
-    std::vector<Window> m_Windows;
+    std::vector<std::shared_ptr<Window>> m_Windows;
     float m_Dt = 0.0f;
 };

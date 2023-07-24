@@ -4,24 +4,41 @@ get_filename_component(Project ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 project(${Project})
 
 include_directories(
-    MoonRuntime/Include/
-    MoonRuntime/Include/Input/
-    MoonRuntime/Include/Renderer/
-    MoonRuntime/Include/Renderer/Camera
-    MoonRuntime/Include/Shaders/
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Renderer/
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Renderer/Camera/
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Renderer/Structures/
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Shaders/
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Window/
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Window/Input
 
-    Libraries/cereal/include/
-    Libraries/FastNoiseLite/include/
-    Libraries/glad/include/
-    Libraries/glfw/include/
-    Libraries/glm/include/
-    Libraries/imgui/include/
-    Libraries/stb_image/include/
+    ${CMAKE_SOURCE_DIR}/Libraries/cereal/include/
+    ${CMAKE_SOURCE_DIR}/Libraries/FastNoiseLite/include/
+    ${CMAKE_SOURCE_DIR}/Libraries/glad/include/
+    ${CMAKE_SOURCE_DIR}/Libraries/glfw/include/
+    ${CMAKE_SOURCE_DIR}/Libraries/glm/include/
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/include/
+    ${CMAKE_SOURCE_DIR}/Libraries/stb_image/include/
 )
 
 link_directories(
-    ../bin/
+    ${CMAKE_SOURCE_DIR}/bin/
 )
+
+set(LibrarySourceFiles
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/source/imgui_draw.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/source/imgui_impl_glfw.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/source/imgui_impl_opengl3.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/source/imgui_tables.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/source/imgui_widgets.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/source/imgui.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/glad/source/gl.c
+    ${CMAKE_SOURCE_DIR}/Libraries/stb_image/source/stb_image.cpp
+)
+
+if(UNIX)
+    add_definitions(-DUNIX)
+endif(UNIX)
 
 add_subdirectory(MoonRuntime)
 add_subdirectory(MoonTestApp)

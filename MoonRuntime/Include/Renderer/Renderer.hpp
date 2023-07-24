@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "Renderer/Camera/Camera.hpp"
-#include "Renderer/Mesh.hpp"
+#include "Structure/Mesh.hpp"
 
 class Renderer
 {
