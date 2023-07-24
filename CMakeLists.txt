@@ -1,73 +1,29 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.27)
 
-get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
-
-set(CMAKE_CXX_STANDARD 23)
-
-# set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++ -lwsock32 -lws2_32 ${CMAKE_CXX_STANDARD_LIBRARIES}")
-# set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive")
-project(${PROJECT_NAME})
-
-if(${CMAKE_CL_64})
-    set(CMAKE_64_BIT_POSTFIX -x64)
-endif(${CMAKE_CL_64})
-
-set(CMAKE_DEBUG_POSTFIX -debug)
+get_filename_component(Project ${CMAKE_CURRENT_SOURCE_DIR} NAME)
+project(${Project})
 
 include_directories(
-    game
-    source
+    MoonRuntime/Include/
+    MoonRuntime/Include/Input/
+    MoonRuntime/Include/Renderer/
+    MoonRuntime/Include/Renderer/Camera
+    MoonRuntime/Include/Shaders/
 
-    libraries/glad/include
-    libraries/glfw/include
-    libraries/glm/include
-    libraries/imgui/include
-    libraries/stb_image/include
-    libraries/FastNoiseLite/include
-    libraries/cereal/include
+    Libraries/cereal/include/
+    Libraries/FastNoiseLite/include/
+    Libraries/glad/include/
+    Libraries/glfw/include/
+    Libraries/glm/include/
+    Libraries/imgui/include/
+    Libraries/stb_image/include/
 )
 
-# Added so that glad would shut the fuck up
-add_definitions(-DGLFW_INCLUDE_NONE)
-add_definitions(-DGLM_ENABLE_EXPERIMENTAL)
-
-if (WIN32)
-    link_directories(libraries/glfw/lib/windows)
-endif(WIN32)
-if (UNIX)
-    find_package(glfw3 3.3 REQUIRED)
-    # link_directories(libraries/glfw/lib/macos)
-endif(UNIX)    
-
-# Game files
-file(GLOB_RECURSE GAME_CPP_FILES game/*.cpp)
-file(GLOB_RECURSE GAME_HPP_FILES game/*.hpp)
-
-# Engine files
-file(GLOB_RECURSE ENGINE_CPP_FILES source/*.cpp)
-file(GLOB_RECURSE ENGINE_HPP_FILES source/*.hpp)
-file(GLOB_RECURSE IMGUI_CPP_FILES libraries/imgui/source/*.cpp)
-
-add_executable(
-    ${PROJECT_NAME}
-
-    ${GAME_CPP_FILES}
-    ${GAME_HPP_FILES}
-
-    ${ENGINE_CPP_FILES}
-    ${ENGINE_HPP_FILES}
-
-    ${IMGUI_CPP_FILES}
-
-    libraries/glad/source/gl.c
-    libraries/stb_image/source/stb_image.cpp
+link_directories(
+    ../bin/
 )
 
-if (WIN32)
-    target_link_libraries(${PROJECT_NAME} glfw3)
-endif(WIN32)
-if (UNIX)
-    target_link_libraries(${PROJECT_NAME} glfw)
-endif(UNIX)
-# Added to that OpenGL context does not start terminal
-# set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "/ENTRY:mainCRTStartup /SUBSYSTEM:WINDOWS")
+add_subdirectory(MoonRuntime)
+add_subdirectory(MoonTestApp)
+
+
