@@ -20,6 +20,4 @@ private:
     std::vector<Renderer> m_Renderers;
 
     GLFWwindow* m_GLFWwindow = nullptr;
-    int m_WindowHeight = 720;
-    int m_WindowWidth = 1280;
 };

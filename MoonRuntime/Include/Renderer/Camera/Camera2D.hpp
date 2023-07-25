@@ -7,7 +7,7 @@ class Camera2D : public Camera
 public:
     Camera2D();
     virtual ~Camera2D() override = default;
-    
+
     virtual void Update(float dt) override;
 
 private:

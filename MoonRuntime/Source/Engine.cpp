@@ -15,7 +15,6 @@ Engine::Engine()
 
 Engine::~Engine()
 {
-    std::cout << "Engine::~Engine()\n";
 }
 
 void Engine::Update()
@@ -36,6 +35,7 @@ void Engine::Update()
 std::shared_ptr<Window> Engine::CreateWindow(GraphicsAPI api)
 {
     std::cout << "Engine::CreateWindow(): Creating window..." << std::endl;
+
     switch (api)
     {
     case OpenGL:

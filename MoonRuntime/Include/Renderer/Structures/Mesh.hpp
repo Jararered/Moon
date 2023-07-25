@@ -28,5 +28,5 @@ private:
     unsigned int m_IBO = 0;
 
 public:
-    Geometry &GetGeometry() { return m_Geometry; }
+    Geometry& GetGeometry() { return m_Geometry; }
 };

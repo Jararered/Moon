@@ -19,7 +19,7 @@ OpenGLWindow::OpenGLWindow()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Create a windowed mode window and its OpenGL context
-    m_GLFWwindow = glfwCreateWindow(m_WindowWidth, m_WindowHeight, "Moon (OpenGL 3.3)", NULL, NULL);
+    m_GLFWwindow = glfwCreateWindow(m_Width, m_Height, "Moon (OpenGL 3.3)", NULL, NULL);
     if (!m_GLFWwindow)
     {
         std::cout << "OpenGLWindow::OpenGLWindow(): Failed to create OpenGL window.\n";
@@ -47,7 +47,7 @@ void OpenGLWindow::Update(float dt)
 {
     if (m_Renderers.empty() == false)
     {
-        for (auto &renderer : m_Renderers)
+        for (auto& renderer : m_Renderers)
         {
             renderer.Update(dt);
         }
@@ -74,7 +74,7 @@ bool OpenGLWindow::IsRunning()
     return !glfwWindowShouldClose(m_GLFWwindow);
 }
 
-Renderer &OpenGLWindow::CreateRenderer()
+Renderer& OpenGLWindow::CreateRenderer()
 {
     return m_Renderers.emplace_back();
 }

@@ -38,8 +38,8 @@ void Camera3D::Update(float dt)
     m_Right = glm::cross(m_Direction, glm::vec3(0.0f, 1.0f, 0.0f));
 
     // Basic movement processing
-    glm::vec3 newDirection = {0.0f, 0.0f, 0.0f};
-    glm::vec3 fowardXZ = {m_Direction.x, 0.0f, m_Direction.z};
+    glm::vec3 newDirection = { 0.0f, 0.0f, 0.0f };
+    glm::vec3 fowardXZ = { m_Direction.x, 0.0f, m_Direction.z };
 
     // Speed increase
     if (Input::IsKeyPressed(KEY_LEFT_CONTROL))

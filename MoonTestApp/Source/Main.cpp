@@ -17,9 +17,9 @@ int main(int argc, char* argv[])
     camera->AttachShader(shader);
 
     int size = 5;
-    for (int i = -size; i < size + 1; i++)
+    for (int i = 0; i < size; i++)
     {
-        for (int j = -size; j < size + 1; j++)
+        for (int j = 0; j < size; j++)
         {
             Mesh* mesh = ExampleMesh::Square({ i * 100.0f, j * 100.0f }, 50.0f);
             renderer.AddMesh(mesh);

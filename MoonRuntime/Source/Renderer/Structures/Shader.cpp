@@ -4,7 +4,7 @@
 #include <fstream>
 #include <iostream>
 
-void Shader::Compile(const char *vertFile, const char *fragFile)
+void Shader::Compile(const char* vertFile, const char* fragFile)
 {
     ID = glCreateProgram();
 
@@ -16,7 +16,7 @@ void Shader::Compile(const char *vertFile, const char *fragFile)
     {
         std::ifstream file(vertFile);
         std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-        const char *contentsChar = contents.c_str();
+        const char* contentsChar = contents.c_str();
         vertexID = glCreateShader(GL_VERTEX_SHADER);
         glShaderSource(vertexID, 1, &contentsChar, NULL);
         glCompileShader(vertexID);
@@ -27,7 +27,7 @@ void Shader::Compile(const char *vertFile, const char *fragFile)
     {
         glGetShaderInfoLog(vertexID, 512, NULL, infoLog);
         std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
-                  << infoLog << "\n";
+            << infoLog << "\n";
     }
 
     int successFrag;
@@ -35,7 +35,7 @@ void Shader::Compile(const char *vertFile, const char *fragFile)
     {
         std::ifstream file(fragFile);
         std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-        const char *contentsChar = contents.c_str();
+        const char* contentsChar = contents.c_str();
         fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
         glShaderSource(fragmentID, 1, &contentsChar, NULL);
         glCompileShader(fragmentID);
@@ -46,7 +46,7 @@ void Shader::Compile(const char *vertFile, const char *fragFile)
     {
         glGetShaderInfoLog(fragmentID, 512, NULL, infoLog);
         std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n"
-                  << infoLog << "\n";
+            << infoLog << "\n";
     }
 
     glAttachShader(ID, vertexID);
@@ -59,7 +59,7 @@ void Shader::Compile(const char *vertFile, const char *fragFile)
     {
         glGetProgramInfoLog(ID, 512, NULL, infoLog);
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n"
-                  << infoLog << "\n";
+            << infoLog << "\n";
     }
 
     glDeleteShader(vertexID);
