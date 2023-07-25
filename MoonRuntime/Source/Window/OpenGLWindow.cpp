@@ -8,15 +8,12 @@
 OpenGLWindow::OpenGLWindow()
 {
     if (!glfwInit())
-    {
         std::cout << "OpenGLWindow::OpenGLWindow(): Failed to initialize GLFW.\n";
-    }
 
 #ifdef UNIX
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_TRUE);
 #endif
-
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -34,9 +31,7 @@ OpenGLWindow::OpenGLWindow()
 
     int version = gladLoadGL(glfwGetProcAddress);
     if (version == 0)
-    {
         std::cout << "OpenGLWindow::OpenGLWindow(): Failed to initialize OpenGL context.\n";
-    }
 
     glfwSetWindowUserPointer(m_GLFWwindow, this);
 
@@ -45,7 +40,6 @@ OpenGLWindow::OpenGLWindow()
 
 OpenGLWindow::~OpenGLWindow()
 {
-    std::cout << "OpenGLWindow::~OpenGLWindow()\n";
     glfwWindowShouldClose(m_GLFWwindow);
 }
 

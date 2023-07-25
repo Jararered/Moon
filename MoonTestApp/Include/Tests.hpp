@@ -17,14 +17,8 @@ namespace ExampleMesh
         geometry.Vertices.emplace_back(glm::vec3{ origin.x + (size / 2), origin.y + (size / 2), 0.0f });
         geometry.Vertices.emplace_back(glm::vec3{ origin.x + (size / 2), origin.y - (size / 2), 0.0f });
 
-        // Create shader for mesh
-        std::string cwd = Engine::CurrentDirectory();
-        std::string vertFile = std::string("Shaders/Position.vert");
-        std::string fragFile = std::string("Shaders/Colors/Red.frag");
-        shader.Compile(vertFile, fragFile);
-
         // Add mesh to queue and return the entry
-        Mesh* mesh = new Mesh(geometry, shader);
+        Mesh* mesh = new Mesh(geometry);
         return mesh;
     }
 }

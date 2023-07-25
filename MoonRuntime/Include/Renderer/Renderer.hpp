@@ -13,9 +13,7 @@ public:
 
     void Update(float dt);
 
-    Camera* Create2DCamera();
-    Camera* Create3DCamera();
-    
+    void AddCamera(Camera* camera);
     void AddMesh(Mesh* mesh);
 
 private:

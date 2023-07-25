@@ -19,46 +19,35 @@ Renderer::~Renderer()
 
 void Renderer::Update(float dt)
 {
-    // New frame
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // Rendering happens here
-    for (auto& camera : m_Cameras)
+    for (auto camera : m_Cameras)
     {
         camera->Update(dt);
+        camera->GetShader()->Bind();
 
-        for (auto& mesh : m_Meshes)
+        glUniformMatrix4fv(glGetUniformLocation(camera->GetShader()->ID, "u_ViewMatrix"), 1, GL_FALSE, &camera->GetViewMatrix()[0][0]);
+        glUniformMatrix4fv(glGetUniformLocation(camera->GetShader()->ID, "u_ProjectionMatrix"), 1, GL_FALSE, &camera->GetProjectionMatrix()[0][0]);
+
+        for (auto mesh : m_Meshes)
         {
             mesh->Bind();
-
-            // Update any time-related variables for the mesh
             mesh->Update(dt);
-
-            // Draw the mesh
-            mesh->Draw(camera);
-
+            mesh->Draw();
             mesh->Unbind();
         }
     }
 
-    // Swap frames
     glfwSwapBuffers(glfwGetCurrentContext());
-}
-
-Camera* Renderer::Create2DCamera()
-{
-    Camera* camera = new Camera2D();
-    return m_Cameras.emplace_back(camera);
-}
-
-Camera* Renderer::Create3DCamera()
-{
-    Camera* camera = new Camera3D();
-    return m_Cameras.emplace_back(camera);
 }
 
 void Renderer::AddMesh(Mesh* mesh)
 {
     m_Meshes.push_back(mesh);
+}
+
+void Renderer::AddCamera(Camera* camera)
+{
+    m_Cameras.push_back(camera);
 }

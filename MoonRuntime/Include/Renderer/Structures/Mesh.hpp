@@ -4,13 +4,12 @@
 #include <vector>
 
 #include "Geometry.hpp"
-#include "Shader.hpp"
-#include "camera/Camera.hpp"
+#include "Camera.hpp"
 
 class Mesh
 {
 public:
-    Mesh(Geometry geometry, Shader shader);
+    Mesh(Geometry geometry);
     ~Mesh();
 
     void Bind();
@@ -19,11 +18,10 @@ public:
     void Update(float dt);
     void UpdateGeometry();
 
-    void Draw(Camera* camera);
+    void Draw();
 
 private:
     Geometry m_Geometry;
-    Shader m_Shader;
 
     unsigned int m_VAO = 0;
     unsigned int m_VBO = 0;
@@ -31,5 +29,4 @@ private:
 
 public:
     Geometry &GetGeometry() { return m_Geometry; }
-    Shader &GetShader() { return m_Shader; }
 };

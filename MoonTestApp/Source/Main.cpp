@@ -9,12 +9,22 @@ int main(int argc, char* argv[])
     auto window = engine.CreateWindow(GraphicsAPI::OpenGL);
     auto& renderer = window->CreateRenderer();
 
-    auto camera = renderer.Create2DCamera();
+    auto camera = new Camera2D;
+    renderer.AddCamera(camera);
 
-    Mesh* mesh1 = ExampleMesh::Square({100.0f, 0.0f}, 100.0f);
-    Mesh* mesh2 = ExampleMesh::Square({-100.0f, 0.0f}, 100.0f);
-    renderer.AddMesh(mesh1);
-    renderer.AddMesh(mesh2);
+    Shader* shader = new Shader;
+    shader->Compile("Shaders/Position.vert", "Shaders/Colors/Red.frag");
+    camera->AttachShader(shader);
+
+    int size = 5;
+    for (int i = -size; i < size + 1; i++)
+    {
+        for (int j = -size; j < size + 1; j++)
+        {
+            Mesh* mesh = ExampleMesh::Square({ i * 100.0f, j * 100.0f }, 50.0f);
+            renderer.AddMesh(mesh);
+        }
+    }
 
     while (window->IsRunning())
     {

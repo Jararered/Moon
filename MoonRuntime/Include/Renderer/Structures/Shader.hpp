@@ -2,16 +2,17 @@
 
 #include <string>
 
-struct Shader
+class Shader
 {
-    Shader();
-    ~Shader();
+public:
+    Shader() = default;
+    ~Shader() = default;
 
-    void Compile(const char *vertFile, const char *fragFile);
-    void Compile(const std::string& vertFile, const std::string& fragFile);
-    void Delete();
-    void Bind();
+    void Compile(const char* vertFile, const char* fragFile);
+
+    const void Bind() const;
     void Unbind();
+    void Delete();
 
     unsigned int ID = 0;
 };

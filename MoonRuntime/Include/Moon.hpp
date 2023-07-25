@@ -2,7 +2,9 @@
 
 #include "Engine.hpp"
 
-#include "Window/Window.hpp"
-#include "Window/Input/Input.hpp"
-
-#include "Renderer/Renderer.hpp"
+#include "Window.hpp"
+#include "Input.hpp"
+#include "Renderer.hpp"
+#include "Shader.hpp"
+#include "Camera2D.hpp"
+#include "Camera3D.hpp"
