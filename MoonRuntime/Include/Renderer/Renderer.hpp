@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Renderer/Camera/Camera.hpp"
-#include "Renderer/Structures/Mesh.hpp"
+#include "Camera.hpp"
+#include "Mesh.hpp"
 
 #include <vector>
 
@@ -13,12 +13,12 @@ public:
 
     void Update(float dt);
 
-    Camera& Create2DCamera();
-    Camera& Create3DCamera();
-
+    Camera* Create2DCamera();
+    Camera* Create3DCamera();
+    
     void AddMesh(Mesh* mesh);
 
 private:
-    std::vector<Camera> m_Cameras;
+    std::vector<Camera*> m_Cameras;
     std::vector<Mesh*> m_Meshes;
 };

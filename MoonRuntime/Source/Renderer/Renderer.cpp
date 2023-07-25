@@ -1,5 +1,8 @@
 #include "Renderer.hpp"
 
+#include "Camera2D.hpp"
+#include "Camera3D.hpp"
+
 #include <glfw/glfw3.h>
 #include <glad/gl.h>
 
@@ -12,7 +15,6 @@ Renderer::Renderer()
 
 Renderer::~Renderer()
 {
-    std::cout << "Renderer::~Renderer()\n";
 }
 
 void Renderer::Update(float dt)
@@ -22,11 +24,11 @@ void Renderer::Update(float dt)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Rendering happens here
-    for (auto &camera : m_Cameras)
+    for (auto& camera : m_Cameras)
     {
-        camera.Update(dt);
+        camera->Update(dt);
 
-        for (auto &mesh : m_Meshes)
+        for (auto& mesh : m_Meshes)
         {
             mesh->Bind();
 
@@ -44,23 +46,17 @@ void Renderer::Update(float dt)
     glfwSwapBuffers(glfwGetCurrentContext());
 }
 
-Camera &Renderer::Create2DCamera()
+Camera* Renderer::Create2DCamera()
 {
-    int width, height;
-    glfwGetWindowSize(glfwGetCurrentContext(), &width, &height);
-
-    return m_Cameras.emplace_back(width, height, CameraType::Camera2D);
+    Camera* camera = new Camera2D();
+    return m_Cameras.emplace_back(camera);
 }
 
-Camera &Renderer::Create3DCamera()
+Camera* Renderer::Create3DCamera()
 {
-    int width, height;
-    glfwGetWindowSize(glfwGetCurrentContext(), &width, &height);
-
-    return m_Cameras.emplace_back(width, height, CameraType::Camera3D);
+    Camera* camera = new Camera3D();
+    return m_Cameras.emplace_back(camera);
 }
-
-
 
 void Renderer::AddMesh(Mesh* mesh)
 {

@@ -9,10 +9,12 @@ int main(int argc, char* argv[])
     auto window = engine.CreateWindow(GraphicsAPI::OpenGL);
     auto& renderer = window->CreateRenderer();
 
-    auto& camera = renderer.Create2DCamera();
+    auto camera = renderer.Create2DCamera();
 
-    Mesh* mesh = ExampleMesh::Square();
-    renderer.AddMesh(mesh);
+    Mesh* mesh1 = ExampleMesh::Square({100.0f, 0.0f}, 100.0f);
+    Mesh* mesh2 = ExampleMesh::Square({-100.0f, 0.0f}, 100.0f);
+    renderer.AddMesh(mesh1);
+    renderer.AddMesh(mesh2);
 
     while (window->IsRunning())
     {

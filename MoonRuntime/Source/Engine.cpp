@@ -5,10 +5,12 @@
 #include "VulkanWindow.hpp"
 
 #include <glfw/glfw3.h>
+#include <filesystem>
 #include <iostream>
 
 Engine::Engine()
 {
+    std::cout << "Engine::Engine(): Current working directory: " << Engine::CurrentDirectory() << "\n";
 }
 
 Engine::~Engine()
@@ -57,4 +59,10 @@ std::shared_ptr<Window> Engine::CreateWindow(GraphicsAPI api)
         return nullptr;
     }
     }
+}
+
+std::string Engine::CurrentDirectory()
+{
+    std::filesystem::path cwd = std::filesystem::current_path();
+    return cwd.string();
 }

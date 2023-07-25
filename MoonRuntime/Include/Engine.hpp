@@ -12,6 +12,7 @@ public:
     ~Engine();
 
     void Update();
+    static std::string CurrentDirectory();
 
     std::shared_ptr<Window> CreateWindow(GraphicsAPI api);
     const float Dt() const { return m_Dt; };

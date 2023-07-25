@@ -102,11 +102,11 @@ void Mesh::UpdateGeometry()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void Mesh::Draw(Camera& camera)
+void Mesh::Draw(Camera* camera)
 {
     // Update uniform data
-    glUniformMatrix4fv(glGetUniformLocation(m_Shader.ID, "u_ViewMatrix"), 1, GL_FALSE, &camera.GetViewMatrix()[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(m_Shader.ID, "u_ProjectionMatrix"), 1, GL_FALSE, &camera.GetProjectionMatrix()[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(m_Shader.ID, "u_ViewMatrix"), 1, GL_FALSE, &camera->GetViewMatrix()[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(m_Shader.ID, "u_ProjectionMatrix"), 1, GL_FALSE, &camera->GetProjectionMatrix()[0][0]);
 
     // Finally draw everything
     glDrawElements(GL_TRIANGLES, m_Geometry.Indices.size(), GL_UNSIGNED_INT, 0);

@@ -19,7 +19,7 @@ public:
     void Update(float dt);
     void UpdateGeometry();
 
-    void Draw(Camera& camera);
+    void Draw(Camera* camera);
 
 private:
     Geometry m_Geometry;
