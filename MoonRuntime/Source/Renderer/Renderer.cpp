@@ -19,7 +19,7 @@ Renderer::~Renderer()
 {
 }
 
-void Renderer::Reset()
+void Renderer::ClearBuffer()
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -27,7 +27,7 @@ void Renderer::Reset()
 
 void Renderer::Update(float dt)
 {
-    Reset();
+    ClearBuffer();
 
     if (m_Scenarios.empty())
         return;
@@ -44,18 +44,19 @@ void Renderer::Update(float dt)
 void Renderer::Render(Scenario* scenario)
 {
     auto camera = scenario->GetCamera();
+    auto environment = scenario->GetEnvironment();
 
     for (auto entity : scenario->GetEntities())
     {
         auto model = entity->GetMesh();
-        auto id = model->GetShader().GetID();
+        auto shader = model->GetShader();
 
         model->Bind();
 
-        glUniformMatrix4fv(glGetUniformLocation(id, "u_TranslationMatrix"), 1, GL_FALSE, (float*)&model->GetTranslationMatrix());
-        glUniformMatrix4fv(glGetUniformLocation(id, "u_RotationMatrix"), 1, GL_FALSE, (float*)&model->GetRotationMatrix());
-        glUniformMatrix4fv(glGetUniformLocation(id, "u_ViewMatrix"), 1, GL_FALSE, (float*)&camera->GetViewMatrix());
-        glUniformMatrix4fv(glGetUniformLocation(id, "u_ProjectionMatrix"), 1, GL_FALSE, (float*)&camera->GetProjectionMatrix());
+        shader.SetMatrix("u_TranslationMatrix", model->GetTranslationMatrix());
+        shader.SetMatrix("u_RotationMatrix", model->GetRotationMatrix());
+        shader.SetMatrix("u_ViewMatrix", camera->GetViewMatrix());
+        shader.SetMatrix("u_ProjectionMatrix", camera->GetProjectionMatrix());
 
         model->Draw();
         model->Unbind();

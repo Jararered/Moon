@@ -18,6 +18,7 @@ public:
 
 protected:
     glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
+    float m_Scale = 1.0f;
 
 protected:
     Mesh* p_Mesh = nullptr;

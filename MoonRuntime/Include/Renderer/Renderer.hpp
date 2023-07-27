@@ -10,7 +10,7 @@ public:
     Renderer();
     ~Renderer();
 
-    void Reset();
+    void ClearBuffer();
     void Update(float dt);
     void Render(Scenario* scenario);
 

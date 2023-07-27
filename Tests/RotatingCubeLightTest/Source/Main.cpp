@@ -1,4 +1,4 @@
-#include "CubeTest.hpp"
+#include "RotatingCubeLightTest.hpp"
 
 int main(int argc, char* argv[])
 {
