@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glm/vec3.hpp>
+#include <glm/glm.hpp>
 
 // TODO Add Skybox
 // TODO Add Light Direction Change

@@ -10,9 +10,13 @@ Renderer::Renderer()
 {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
+
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
+
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 Renderer::~Renderer()
@@ -21,7 +25,7 @@ Renderer::~Renderer()
 
 void Renderer::ClearBuffer()
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
@@ -53,8 +57,11 @@ void Renderer::Render(Scenario* scenario)
 
         model->Bind();
 
+        shader.SetVector("u_LightDirection", environment->GetLightDirection());
+
         shader.SetMatrix("u_TranslationMatrix", model->GetTranslationMatrix());
         shader.SetMatrix("u_RotationMatrix", model->GetRotationMatrix());
+        
         shader.SetMatrix("u_ViewMatrix", camera->GetViewMatrix());
         shader.SetMatrix("u_ProjectionMatrix", camera->GetProjectionMatrix());
 

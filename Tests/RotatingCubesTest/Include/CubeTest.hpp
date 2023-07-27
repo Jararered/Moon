@@ -124,7 +124,7 @@ public:
         int size = 25;
         int spacing = 50;
         int dimx = 5;
-        int dimy = 0;
+        int dimy = 5;
         int dimz = 5;
         for (int i = -dimx; i < dimx + 1; i++)
         {

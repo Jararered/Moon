@@ -45,5 +45,6 @@ add_subdirectory(MoonRuntime)
 add_subdirectory(Tests/RotatingCubesTest)
 add_subdirectory(Tests/RotatingSquaresTest)
 add_subdirectory(Tests/RotatingCubeLightTest)
+add_subdirectory(Tests/ChunkTest)
 
 

@@ -1,10 +1,8 @@
 #pragma once
 
 #include "Environment.hpp"
-#include "Camera2D.hpp"
-#include "Camera3D.hpp"
-#include "StaticEntity.hpp"
-#include "DynamicEntity.hpp"
+#include "Camera.hpp"
+#include "Entity.hpp"
 
 #include <vector>
 

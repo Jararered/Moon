@@ -34,7 +34,6 @@ public:
     glm::mat4& GetTranslationMatrix() { return m_TranslationMatrix; }
     glm::mat4& GetRotationMatrix() { return m_RotationMatrix; }
 
-
 protected:
     void Generate();
 
