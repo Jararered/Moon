@@ -11,43 +11,54 @@ Renderer::Renderer()
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
 }
 
 Renderer::~Renderer()
 {
 }
 
+void Renderer::Reset()
+{
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
 void Renderer::Update(float dt)
 {
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    Reset();
 
-    for (auto camera : m_Cameras)
+    if (m_Scenarios.empty())
+        return;
+
+    for (auto scenario : m_Scenarios)
     {
-        camera->Update(dt);
-        camera->GetShader()->Bind();
-
-        glUniformMatrix4fv(glGetUniformLocation(camera->GetShader()->ID, "u_ViewMatrix"), 1, GL_FALSE, &camera->GetViewMatrix()[0][0]);
-        glUniformMatrix4fv(glGetUniformLocation(camera->GetShader()->ID, "u_ProjectionMatrix"), 1, GL_FALSE, &camera->GetProjectionMatrix()[0][0]);
-
-        for (auto mesh : m_Meshes)
-        {
-            mesh->Bind();
-            mesh->Update(dt);
-            mesh->Draw();
-            mesh->Unbind();
-        }
+        scenario->Update(dt);
+        Render(scenario);
     }
 
     glfwSwapBuffers(glfwGetCurrentContext());
 }
 
-void Renderer::AddMesh(Mesh* mesh)
+void Renderer::Render(Scenario* scenario)
 {
-    m_Meshes.push_back(mesh);
-}
+    auto camera = scenario->GetCamera();
+    auto id = camera->GetShader()->GetID();
+    camera->GetShader()->Bind();
+    glUniformMatrix4fv(glGetUniformLocation(id, "u_ProjectionMatrix"), 1, GL_FALSE, &camera->GetProjectionMatrix()[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(id, "u_ViewMatrix"), 1, GL_FALSE, &camera->GetViewMatrix()[0][0]);
 
-void Renderer::AddCamera(Camera* camera)
-{
-    m_Cameras.push_back(camera);
+    for (auto entity : scenario->GetEntities())
+    {
+        auto model = entity->GetModel();
+
+        model->Bind();
+
+        glUniformMatrix4fv(glGetUniformLocation(id, "u_TranslationMatrix"), 1, GL_FALSE, &model->GetTranslationMatrix()[0][0]);
+        glUniformMatrix4fv(glGetUniformLocation(id, "u_RotationMatrix"), 1, GL_FALSE, &model->GetRotationMatrix()[0][0]);
+
+        model->Draw();
+        model->Unbind();
+    }
 }

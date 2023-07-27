@@ -1,13 +1,7 @@
 #pragma once
 
-class Renderer;
-
-enum GraphicsAPI
-{
-    OpenGL,
-    Vulkan,
-    Metal
-};
+#include "Renderer.hpp"
+#include "WindowSpecification.hpp"
 
 class Window
 {
@@ -17,9 +11,10 @@ public:
 
     virtual void Update(float dt) = 0;
     virtual bool IsRunning() = 0;
-    virtual Renderer& CreateRenderer() = 0;
+    virtual Renderer* CreateRenderer() = 0;
 
 protected:
-    int m_Height = 1280;
     int m_Width = 1280;
+    int m_Height = 720;
+    bool m_VSync = true;
 };

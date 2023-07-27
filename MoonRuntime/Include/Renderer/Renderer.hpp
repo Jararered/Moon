@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Camera.hpp"
-#include "Mesh.hpp"
+#include "Scenario.hpp"
 
 #include <vector>
 
@@ -11,12 +10,12 @@ public:
     Renderer();
     ~Renderer();
 
+    void Reset();
     void Update(float dt);
+    void Render(Scenario* scenario);
 
-    void AddCamera(Camera* camera);
-    void AddMesh(Mesh* mesh);
+    void Add(Scenario* scenario) { m_Scenarios.push_back(scenario); }
 
 private:
-    std::vector<Camera*> m_Cameras;
-    std::vector<Mesh*> m_Meshes;
+    std::vector<Scenario*> m_Scenarios;
 };

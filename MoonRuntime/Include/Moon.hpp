@@ -8,3 +8,8 @@
 #include "Shader.hpp"
 #include "Camera2D.hpp"
 #include "Camera3D.hpp"
+#include "StaticEntity.hpp"
+#include "DynamicEntity.hpp"
+#include "Mesh.hpp"
+#include "Collider.hpp"
+#include "BoxCollider2D.hpp"

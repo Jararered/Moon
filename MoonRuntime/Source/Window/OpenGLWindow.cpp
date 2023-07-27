@@ -19,40 +19,35 @@ OpenGLWindow::OpenGLWindow()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Create a windowed mode window and its OpenGL context
-    m_GLFWwindow = glfwCreateWindow(m_Width, m_Height, "Moon (OpenGL 3.3)", NULL, NULL);
-    if (!m_GLFWwindow)
+    p_GLFWwindow = glfwCreateWindow(m_Width, m_Height, "Moon (OpenGL 3.3)", NULL, NULL);
+    if (!p_GLFWwindow)
     {
         std::cout << "OpenGLWindow::OpenGLWindow(): Failed to create OpenGL window.\n";
         glfwTerminate();
     }
 
     // Make the window's context current
-    glfwMakeContextCurrent(m_GLFWwindow);
+    glfwMakeContextCurrent(p_GLFWwindow);
 
     int version = gladLoadGL(glfwGetProcAddress);
     if (version == 0)
         std::cout << "OpenGLWindow::OpenGLWindow(): Failed to initialize OpenGL context.\n";
 
-    glfwSetWindowUserPointer(m_GLFWwindow, this);
+    glfwSetWindowUserPointer(p_GLFWwindow, this);
 
-    glfwSwapInterval(1);
+    if (m_VSync)
+        glfwSwapInterval(1);
+    else
+        glfwSwapInterval(0);
 }
 
 OpenGLWindow::~OpenGLWindow()
 {
-    glfwWindowShouldClose(m_GLFWwindow);
+    glfwWindowShouldClose(p_GLFWwindow);
 }
 
 void OpenGLWindow::Update(float dt)
 {
-    if (m_Renderers.empty() == false)
-    {
-        for (auto& renderer : m_Renderers)
-        {
-            renderer.Update(dt);
-        }
-    }
-
     glfwPollEvents();
 
     if (!Input::IsMouseCaptured())
@@ -67,14 +62,18 @@ void OpenGLWindow::Update(float dt)
     {
         Input::ReleaseCursor();
     }
+
+    if (p_Renderer)
+        p_Renderer->Update(dt);
 }
 
 bool OpenGLWindow::IsRunning()
 {
-    return !glfwWindowShouldClose(m_GLFWwindow);
+    return !glfwWindowShouldClose(p_GLFWwindow);
 }
 
-Renderer& OpenGLWindow::CreateRenderer()
+Renderer* OpenGLWindow::CreateRenderer()
 {
-    return m_Renderers.emplace_back();
+    p_Renderer = new Renderer;
+    return p_Renderer;
 }

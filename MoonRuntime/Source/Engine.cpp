@@ -1,8 +1,6 @@
 #include "Engine.hpp"
 
 #include "OpenGLWindow.hpp"
-#include "MetalWindow.hpp"
-#include "VulkanWindow.hpp"
 
 #include <glfw/glfw3.h>
 #include <filesystem>
@@ -19,43 +17,43 @@ Engine::~Engine()
 
 void Engine::Update()
 {
-    double t0 = glfwGetTime();
+    UpdateTime();
 
-    if (m_Windows.empty() == false)
-    {
-        for (auto& window : m_Windows)
-        {
-            window->Update(m_Dt);
-        }
-    }
-
-    m_Dt = glfwGetTime() - t0;
+    if (p_Window)
+        p_Window->Update(m_DeltaFrameTime);
 }
 
-std::shared_ptr<Window> Engine::CreateWindow(GraphicsAPI api)
+void Engine::UpdateTime()
 {
-    std::cout << "Engine::CreateWindow(): Creating window..." << std::endl;
+    float currentFrameTime = glfwGetTime();
+    m_DeltaFrameTime = currentFrameTime - m_LastFrameTime;
+    m_LastFrameTime = currentFrameTime;
+}
 
-    switch (api)
+Window* Engine::GetWindow(const WindowSpecification& spec)
+{
+    std::cout << "Engine::GetWindow(): Creating window\n";
+
+    switch (spec.API)
     {
-    case OpenGL:
+    case WindowSpecification::GraphicsAPI::OpenGL:
     {
-        auto& window = m_Windows.emplace_back(std::make_shared<OpenGLWindow>());;
-        return window;
+        p_Window = new OpenGLWindow;
+        return p_Window;
     }
-    case Vulkan:
+    case WindowSpecification::GraphicsAPI::Vulkan:
     {
-        std::cout << "Engine::CreateWindow(): Vulkan graphics API not implemented." << std::endl;
+        std::cout << "Engine::GetWindow(): Vulkan graphics API not implemented\n";
         return nullptr;
     }
-    case Metal:
+    case WindowSpecification::GraphicsAPI::Metal:
     {
-        std::cout << "Engine::CreateWindow(): Metal graphics API not implemented." << std::endl;
+        std::cout << "Engine::GetWindow(): Metal graphics API not implemented\n";
         return nullptr;
     }
     default:
     {
-        std::cout << "Engine::CreateWindow(): No graphics API selected." << std::endl;
+        std::cout << "Engine::GetWindow(): No graphics API selected\n";
         return nullptr;
     }
     }

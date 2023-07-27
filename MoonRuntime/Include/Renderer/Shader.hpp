@@ -14,5 +14,8 @@ public:
     void Unbind();
     void Delete();
 
-    unsigned int ID = 0;
+    unsigned int GetID() const { return m_ID; }
+
+private:
+    unsigned int m_ID = 0;
 };

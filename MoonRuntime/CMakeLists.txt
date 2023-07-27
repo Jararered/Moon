@@ -11,11 +11,11 @@ add_definitions(-DGLM_ENABLE_EXPERIMENTAL)
 find_package(glfw3 3.3.8 REQUIRED)
 
 file(GLOB_RECURSE ProjectSourceFiles Source/*.cpp)
+file(GLOB_RECURSE ProjectHeaderFiles Source/*.hpp)
 
 add_library(
     ${Project}
     ${ProjectSourceFiles}
+    ${ProjectHeaderFiles}
     ${LibrarySourceFiles}
 )
-
-install(TARGETS ${Project} ARCHIVE DESTINATION ${InstallDir}/lib)

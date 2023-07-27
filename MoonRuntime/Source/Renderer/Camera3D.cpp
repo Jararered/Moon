@@ -1,20 +1,28 @@
 #include "Camera3D.hpp"
 
+Camera3D::Camera3D()
+{
+    m_FieldOfView = glm::radians(85.0f);
+    m_AspectRatio = 16.0f / 9.0f;
+    m_NearClip = 0.001f;
+    m_FarClip = 100000.0f;
+}
+
 void Camera3D::Update(float dt)
 {
-    // Checks for first frame and if a lag spike occurs
     if (dt < 0.0001f || dt > 0.25f)
         return;
 
-    float movementSpeed = dt;
+    float velocityMagnitude = 100.0f;
+    glm::vec3 positionDelta = { 0.0f, 0.0f, 0.0f };
 
     // Set Yaw and Pitch rotations based on mouse movement
     glm::vec2 mouseMovement = Input::GetMouseMovement();
 
     // Each pixel the mouse moves is treated as one degree.
     // Scaling each pixel to 0.01 degree
-    m_Yaw = m_Yaw + (static_cast<float>(mouseMovement.x) / 100.0f);
-    m_Pitch = m_Pitch + (static_cast<float>(mouseMovement.y) / 100.0f);
+    m_Yaw = m_Yaw + (static_cast<float>(mouseMovement.x) / 400.0f);
+    m_Pitch = m_Pitch + (static_cast<float>(mouseMovement.y) / 400.0f);
 
     // Keep yaw angle from getting to imprecise
     if (m_Yaw > glm::radians(360.0f))
@@ -41,34 +49,33 @@ void Camera3D::Update(float dt)
     glm::vec3 newDirection = { 0.0f, 0.0f, 0.0f };
     glm::vec3 fowardXZ = { m_Direction.x, 0.0f, m_Direction.z };
 
-    // Speed increase
-    if (Input::IsKeyPressed(KEY_LEFT_CONTROL))
-        movementSpeed *= 10.0f;
-
     // WASD movement
     if (Input::IsKeyPressed(KEY_W))
-        newDirection += fowardXZ;
+        positionDelta += fowardXZ;
     if (Input::IsKeyPressed(KEY_S))
-        newDirection -= fowardXZ;
+        positionDelta -= fowardXZ;
     if (Input::IsKeyPressed(KEY_A))
-        newDirection -= m_Right;
+        positionDelta -= m_Right;
     if (Input::IsKeyPressed(KEY_D))
-        newDirection += m_Right;
+        positionDelta += m_Right;
 
     // Fixes diagonal directed movement to not be faster than along an axis.
     // Only happens when holding two buttons that are off axis from each other.
-    if ((newDirection.x != 0.0f) || (newDirection.z != 0.0f))
-        newDirection = glm::normalize(newDirection);
+    if ((positionDelta.x != 0.0f) || (positionDelta.z != 0.0f))
+        positionDelta = glm::normalize(positionDelta);
 
     // Still perform up/down movements after normalization.
     // Don't care about limiting speed along verticals.
     if (Input::IsKeyPressed(KEY_SPACE))
-        newDirection += glm::vec3(0.0f, 1.0f, 0.0f);
+        positionDelta += glm::vec3(0.0f, 1.0f, 0.0f);
     if (Input::IsKeyPressed(KEY_LEFT_SHIFT))
-        newDirection -= glm::vec3(0.0f, 1.0f, 0.0f);
+        positionDelta -= glm::vec3(0.0f, 1.0f, 0.0f);
 
-    m_Position += newDirection * movementSpeed;
+    // Speed increase
+    if (Input::IsKeyPressed(KEY_LEFT_CONTROL))
+        velocityMagnitude *= 10.0f;
 
+    m_Position += positionDelta * velocityMagnitude * dt;
     m_ViewMatrix = glm::lookAt(m_Position, (m_Position + m_Direction), glm::vec3(0.0f, 1.0f, 0.0f));
     m_ProjectionMatrix = glm::perspective(m_FieldOfView, m_AspectRatio, m_NearClip, m_FarClip);
 }

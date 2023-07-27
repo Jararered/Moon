@@ -5,6 +5,51 @@
 Mesh::Mesh(Geometry geometry)
     : m_Geometry(geometry)
 {
+    Generate();
+}
+
+Mesh::~Mesh()
+{
+    std::cout << "Deleting VAO: " << m_VAO << "\n";
+    glDeleteVertexArrays(1, &m_VAO);
+
+    std::cout << "Deleting VBO: " << m_VBO << "\n";
+    glDeleteBuffers(1, &m_VBO);
+
+    std::cout << "Deleting IBO: " << m_IBO << "\n";
+    glDeleteBuffers(1, &m_IBO);
+
+    std::cout << "Mesh::~Mesh()" << "\n";
+}
+
+void Mesh::Bind()
+{
+    glBindVertexArray(m_VAO);
+}
+
+void Mesh::Unbind()
+{
+    glBindVertexArray(0);
+}
+
+void Mesh::SetGeometry(const Geometry& geometry)
+{
+    m_Geometry = geometry;
+    Generate();
+}
+
+void Mesh::SetTranslationMatrix(const glm::mat4& matrix)
+{
+    m_TranslationMatrix = matrix;
+}
+
+void Mesh::SetRotationMatrix(const glm::mat4& matrix)
+{
+    m_RotationMatrix = matrix;
+}
+
+void Mesh::Generate()
+{
     // Generate buffers on the GPU
     glGenVertexArrays(1, &m_VAO);
     std::cout << "Created VAO: " << m_VAO << "\n";
@@ -41,39 +86,15 @@ Mesh::Mesh(Geometry geometry)
     // Configuring the VAO
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, Position)));
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, Color)));
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, Normal)));
+    glEnableVertexAttribArray(2);
 
     // Unbind buffers
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
-
-Mesh::~Mesh()
-{
-    std::cout << "Deleting VAO: " << m_VAO << "\n";
-    glDeleteVertexArrays(1, &m_VAO);
-
-    std::cout << "Deleting VBO: " << m_VBO << "\n";
-    glDeleteBuffers(1, &m_VBO);
-
-    std::cout << "Deleting IBO: " << m_IBO << "\n";
-    glDeleteBuffers(1, &m_IBO);
-
-    std::cout << "Mesh::~Mesh()" << "\n";
-}
-
-void Mesh::Bind()
-{
-    glBindVertexArray(m_VAO);
-}
-
-void Mesh::Unbind()
-{
-    glBindVertexArray(0);
-}
-
-void Mesh::Update(float dt)
-{
 }
 
 void Mesh::UpdateGeometry()
@@ -100,6 +121,6 @@ void Mesh::UpdateGeometry()
 
 void Mesh::Draw()
 {
-    // Finally draw everything
     glDrawElements(GL_TRIANGLES, m_Geometry.Indices.size(), GL_UNSIGNED_INT, 0);
 }
+

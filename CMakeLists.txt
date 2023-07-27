@@ -3,16 +3,15 @@ cmake_minimum_required(VERSION 3.27)
 get_filename_component(Project ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 project(${Project})
 
-set(InstallDir ${CMAKE_SOURCE_DIR}/out)
+set(InstallDir ${CMAKE_SOURCE_DIR})
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Collider/
     ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Renderer/
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Renderer/Camera/
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Renderer/Structures/
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Shaders/
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Scene/
     ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Window/
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Window/Input
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Window/Input/
 
     ${CMAKE_SOURCE_DIR}/Libraries/cereal/include/
     ${CMAKE_SOURCE_DIR}/Libraries/FastNoiseLite/include/

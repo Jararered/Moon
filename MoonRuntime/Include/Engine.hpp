@@ -1,23 +1,28 @@
 #pragma once
 
-#include <vector>
-#include <memory>
-
 #include "Window.hpp"
+
+#include <string>
 
 class Engine
 {
 public:
     Engine();
-    ~Engine();
+    virtual ~Engine();
 
-    void Update();
-    static std::string CurrentDirectory();
+public:
+    virtual void Update();
+    void UpdateTime();
+    std::string CurrentDirectory();
 
-    std::shared_ptr<Window> CreateWindow(GraphicsAPI api);
-    const float Dt() const { return m_Dt; };
+    Window* GetWindow(const WindowSpecification& spec);
 
-private:
-    std::vector<std::shared_ptr<Window>> m_Windows;
-    float m_Dt = 0.0f;
+protected:
+    Window* p_Window = nullptr;
+
+    float m_DeltaFrameTime = 0.0f;
+    float m_LastFrameTime = 0.0f;
+    float m_TempAverage = 0.0f;
+    u_int64_t m_FrameCount = 0;
+    u_int8_t m_FrameCounter = 0;
 };

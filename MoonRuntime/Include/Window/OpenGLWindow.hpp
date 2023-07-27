@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include <glfw/glfw3.h>
 
 #include "Window.hpp"
@@ -14,10 +13,9 @@ public:
 
     void Update(float dt) override;
     bool IsRunning() override;
-    Renderer& CreateRenderer() override;
+    Renderer* CreateRenderer() override;
 
 private:
-    std::vector<Renderer> m_Renderers;
-
-    GLFWwindow* m_GLFWwindow = nullptr;
+    Renderer* p_Renderer = nullptr;
+    GLFWwindow* p_GLFWwindow = nullptr;
 };

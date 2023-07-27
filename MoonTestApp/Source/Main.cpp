@@ -1,33 +1,9 @@
-#include <Moon.hpp>
-
-#include <Tests.hpp>
+// #include "SquareTest.hpp"
+// #include "CubeTest.hpp"
+#include "CubeTestRotatingLight.hpp"
 
 int main(int argc, char* argv[])
 {
-    Engine engine;
-
-    auto window = engine.CreateWindow(GraphicsAPI::OpenGL);
-    auto& renderer = window->CreateRenderer();
-
-    auto camera = new Camera2D;
-    renderer.AddCamera(camera);
-
-    Shader* shader = new Shader;
-    shader->Compile("Shaders/Position.vert", "Shaders/Colors/Red.frag");
-    camera->AttachShader(shader);
-
-    int size = 5;
-    for (int i = 0; i < size; i++)
-    {
-        for (int j = 0; j < size; j++)
-        {
-            Mesh* mesh = ExampleMesh::Square({ i * 100.0f, j * 100.0f }, 50.0f);
-            renderer.AddMesh(mesh);
-        }
-    }
-
-    while (window->IsRunning())
-    {
-        engine.Update();
-    }
+    Application app;
+    app.Start();
 }
