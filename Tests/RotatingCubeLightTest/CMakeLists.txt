@@ -29,5 +29,5 @@ target_link_libraries(
     MoonRuntime
 )
 
-install(DIRECTORY Shaders DESTINATION ${InstallDir}/build/Debug/${Project})
-install(DIRECTORY Shaders DESTINATION ${InstallDir}/build/Release/${Project})
+install(DIRECTORY Shaders DESTINATION ${InstallDir}/build/Debug/Tests/${Project})
+install(DIRECTORY Shaders DESTINATION ${InstallDir}/build/Release/Tests/${Project})

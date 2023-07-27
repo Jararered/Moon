@@ -44,19 +44,18 @@ void Renderer::Update(float dt)
 void Renderer::Render(Scenario* scenario)
 {
     auto camera = scenario->GetCamera();
-    auto id = camera->GetShader()->GetID();
-    camera->GetShader()->Bind();
-    glUniformMatrix4fv(glGetUniformLocation(id, "u_ProjectionMatrix"), 1, GL_FALSE, &camera->GetProjectionMatrix()[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(id, "u_ViewMatrix"), 1, GL_FALSE, &camera->GetViewMatrix()[0][0]);
 
     for (auto entity : scenario->GetEntities())
     {
-        auto model = entity->GetModel();
+        auto model = entity->GetMesh();
+        auto id = model->GetShader().GetID();
 
         model->Bind();
 
-        glUniformMatrix4fv(glGetUniformLocation(id, "u_TranslationMatrix"), 1, GL_FALSE, &model->GetTranslationMatrix()[0][0]);
-        glUniformMatrix4fv(glGetUniformLocation(id, "u_RotationMatrix"), 1, GL_FALSE, &model->GetRotationMatrix()[0][0]);
+        glUniformMatrix4fv(glGetUniformLocation(id, "u_TranslationMatrix"), 1, GL_FALSE, (float*)&model->GetTranslationMatrix());
+        glUniformMatrix4fv(glGetUniformLocation(id, "u_RotationMatrix"), 1, GL_FALSE, (float*)&model->GetRotationMatrix());
+        glUniformMatrix4fv(glGetUniformLocation(id, "u_ViewMatrix"), 1, GL_FALSE, (float*)&camera->GetViewMatrix());
+        glUniformMatrix4fv(glGetUniformLocation(id, "u_ProjectionMatrix"), 1, GL_FALSE, (float*)&camera->GetProjectionMatrix());
 
         model->Draw();
         model->Unbind();

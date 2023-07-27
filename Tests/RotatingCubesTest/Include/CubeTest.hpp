@@ -92,17 +92,8 @@ public:
         glm::mat4 rotation = p_Mesh->GetRotationMatrix();
         rotation = glm::rotate(rotation, glm::radians(dt * m_Position.x), glm::vec3(1.0f, 0.0f, 0.0f));
         rotation = glm::rotate(rotation, glm::radians(dt * m_Position.y), glm::vec3(0.0f, 1.0f, 0.0f));
-        rotation = glm::rotate(rotation, glm::radians(dt * m_Position.z), glm::vec3(0.0f, 0.0f, 1.0f));
+        // rotation = glm::rotate(rotation, glm::radians(dt * m_Position.z), glm::vec3(0.0f, 0.0f, 1.0f));
         p_Mesh->SetRotationMatrix(rotation);
-    }
-};
-
-class RotatingLightEnvironment : public Environment
-{
-    void Update(float dt) override
-    {
-        // glm::mat4 rotation = glm::rotate(rotation, glm::radians(dt * m_Position.x), glm::vec3(1.0f, 0.0f, 0.0f));
-        // m_LightDirection
     }
 };
 
@@ -125,10 +116,10 @@ public:
         scenario->SetEnvironment(environment);
 
         auto camera = new Camera3D;
-        auto shader = new Shader;
-        shader->Compile("Shaders/Position.vert", "Shaders/Colors/User.frag");
-        camera->Attach(shader);
         scenario->SetCamera(camera);
+
+        auto shader = Shader();
+        shader.Compile("Shaders/DirectionalLight.vert", "Shaders/DirectionalLight.frag");
 
         int size = 25;
         int spacing = 50;
@@ -142,6 +133,7 @@ public:
                 for (int k = -dimz; k < dimz + 1; k++)
                 {
                     Entity* entity = new CubeEntity({ spacing * i, spacing * j, spacing * k }, size);
+                    entity->GetMesh()->SetShader(shader);
                     scenario->AddEntity(entity);
                 }
             }

@@ -42,6 +42,8 @@ if(UNIX)
 endif(UNIX)
  
 add_subdirectory(MoonRuntime)
-add_subdirectory(MoonTestApp)
+add_subdirectory(Tests/RotatingCubesTest)
+add_subdirectory(Tests/RotatingSquaresTest)
+add_subdirectory(Tests/RotatingCubeLightTest)
 
 

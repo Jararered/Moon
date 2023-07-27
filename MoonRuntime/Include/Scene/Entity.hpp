@@ -13,7 +13,7 @@ public:
     void Attach(Mesh* mesh) { p_Mesh = mesh; }
     void Attach(Collider* collider) { p_Collision = collider; }
 
-    Mesh* GetModel() { return p_Mesh; }
+    Mesh* GetMesh() { return p_Mesh; }
     Collider* GetCollision() { return p_Collision; }
 
 protected:

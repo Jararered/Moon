@@ -24,6 +24,7 @@ Mesh::~Mesh()
 
 void Mesh::Bind()
 {
+    m_Shader.Bind();
     glBindVertexArray(m_VAO);
 }
 
@@ -121,6 +122,8 @@ void Mesh::UpdateGeometry()
 
 void Mesh::Draw()
 {
+    m_Shader.Bind();
     glDrawElements(GL_TRIANGLES, m_Geometry.Indices.size(), GL_UNSIGNED_INT, 0);
+    m_Shader.Unbind();
 }
 

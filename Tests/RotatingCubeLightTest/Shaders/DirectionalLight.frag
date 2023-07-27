@@ -1,9 +1,10 @@
 #version 330 core
 
-in vec3 v_Position;
 in vec3 v_Color;
-in vec3 v_Normal;
 in vec4 v_RotatedNormal;
+
+uniform vec3 u_LightPosition;
+uniform vec3 u_LightDirection;
 
 out vec4 FragColor;
 

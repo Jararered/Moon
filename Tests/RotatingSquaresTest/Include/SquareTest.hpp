@@ -71,18 +71,16 @@ public:
 
         auto window = Engine::GetWindow(spec);
         auto renderer = window->CreateRenderer();
-
         auto scenario = new Scenario;
 
-        // Environment
         auto environment = new Environment;
+        scenario->SetEnvironment(environment);
 
-        // Camera
         auto camera = new Camera3D;
-        auto shader = new Shader;
-        shader->Compile("Shaders/Position.vert", "Shaders/Colors/User.frag");
-        camera->Attach(shader);
         scenario->SetCamera(camera);
+
+        auto shader = Shader();
+        shader.Compile("Shaders/DirectionalLight.vert", "Shaders/DirectionalLight.frag");
 
         int size = 40;
         int countx = 16;
@@ -92,11 +90,12 @@ public:
             for (int j = -county; j < county + 1; j++)
             {
                 Entity* entity = new SquareEntity({ size * i, size * j, 0.0f }, size);
+                entity->GetMesh()->SetShader(shader);
                 scenario->AddEntity(entity);
             }
         }
 
-
+        renderer->Add(scenario);
 
         while (window->IsRunning())
         {
