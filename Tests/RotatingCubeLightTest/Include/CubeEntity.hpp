@@ -1,23 +1,21 @@
 #pragma once
 
-#include <DynamicEntity.hpp>
+#include <Entity.hpp>
 
 #include "CubeMesh.hpp"
 
-class CubeEntity : public DynamicEntity
+class CubeEntity : public Entity
 {
 public:
     CubeEntity(glm::vec3 position = { 0.0f, 0.0f, 0.0f }, float scale = 1.0f)
     {
         m_Position = position;
-        m_Scale = scale;
 
         glm::vec3 white = glm::vec3(1.0f);
         p_Mesh = new CubeMesh(white);
 
         glm::mat4 matrix = p_Mesh->GetTranslationMatrix();
         matrix = glm::translate(matrix, m_Position);
-        matrix = glm::scale(matrix, { m_Scale, m_Scale, m_Scale });
         p_Mesh->SetTranslationMatrix(matrix);
     }
 

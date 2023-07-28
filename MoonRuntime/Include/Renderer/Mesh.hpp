@@ -23,23 +23,23 @@ public:
 
     void UpdateGeometry();
 
+    Geometry& GetGeometry() { return m_Geometry; }
     void SetGeometry(const Geometry& geometry);
-    void SetTranslationMatrix(const glm::mat4& matrix);
-    void SetRotationMatrix(const glm::mat4& matrix);
+
+    Shader& GetShader() { return m_Shader; }
     void SetShader(const Shader& shader) { m_Shader = shader; }
 
-    Geometry& GetGeometry() { return m_Geometry; }
-    Shader& GetShader() { return m_Shader; }
-
     glm::mat4& GetTranslationMatrix() { return m_TranslationMatrix; }
+    void SetTranslationMatrix(const glm::mat4& matrix);
+
     glm::mat4& GetRotationMatrix() { return m_RotationMatrix; }
+    void SetRotationMatrix(const glm::mat4& matrix);
 
 protected:
     void Generate();
 
     Geometry m_Geometry;
     Shader m_Shader;
-
     glm::mat4 m_TranslationMatrix = glm::mat4(1.0f);
     glm::mat4 m_RotationMatrix = glm::mat4(1.0f);
 

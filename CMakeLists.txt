@@ -42,9 +42,10 @@ if(UNIX)
 endif(UNIX)
  
 add_subdirectory(MoonRuntime)
-add_subdirectory(Tests/RotatingCubesTest)
-add_subdirectory(Tests/RotatingSquaresTest)
-add_subdirectory(Tests/RotatingCubeLightTest)
-add_subdirectory(Tests/ChunkTest)
 
-
+# add_subdirectory(Tests/RotatingSquaresTest2D)
+# add_subdirectory(Tests/RotatingSquaresTest3D)
+# add_subdirectory(Tests/RotatingCubesTest)
+# add_subdirectory(Tests/RotatingCubeLightTest)
+# add_subdirectory(Tests/PlanetTest)
+add_subdirectory(Tests/SquaresPhysicsTest)

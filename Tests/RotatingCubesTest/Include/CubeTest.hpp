@@ -55,7 +55,7 @@ public:
     }
 };
 
-class CubeEntity : public DynamicEntity
+class CubeEntity : public Entity
 {
 public:
     CubeEntity(glm::vec3 position = { 0.0f, 0.0f, 0.0f }, float scale = 1.0f)
@@ -83,8 +83,6 @@ public:
         matrix = glm::translate(matrix, position);
         matrix = glm::scale(matrix, { scale, scale, scale });
         p_Mesh->SetTranslationMatrix(matrix);
-
-        p_Collision = nullptr;
     }
 
     void Update(float dt) override

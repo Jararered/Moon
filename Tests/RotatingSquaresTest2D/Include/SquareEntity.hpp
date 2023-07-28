@@ -29,8 +29,6 @@ public:
         matrix = glm::translate(matrix, position);
         matrix = glm::scale(matrix, { scale, scale, scale });
         p_Mesh->SetTranslationMatrix(matrix);
-
-        p_Collision = nullptr;
     }
 
     void Update(float dt) override

@@ -31,9 +31,24 @@ void Application::Start()
         {
             for (int z = -radius; z < radius + 1; z++)
             {
-                Entity* entity = new ChunkEntity({ x, y, z });
-                scenario->AddEntity(entity);
+                ChunkData* chunkData = new ChunkData();
+                chunkData->Allocate();
+                chunkData->SetChunkIndex({x, y, z});
+                chunkData->GeneratePlanet();
+
+                auto mesh = new ChunkMesh();
+                mesh->CreateMesh(chunkData);
+
+                Entity* entity = new ChunkEntity();
+                entity->SetMesh(mesh);
                 entity->GetMesh()->SetShader(shader);
+                scenario->AddEntity(entity);
+
+
+
+                // Entity* entity = new ChunkEntity({ x, y, z });
+                // scenario->AddEntity(entity);
+                // entity->GetMesh()->SetShader(shader);
             }
         }
     }

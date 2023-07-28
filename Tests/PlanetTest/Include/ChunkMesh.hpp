@@ -11,7 +11,9 @@
 class ChunkMesh : public Mesh
 {
 public:
-    ChunkMesh(ChunkData* chunkData)
+    ChunkMesh() = default;
+
+    void CreateMesh(ChunkData* chunkData)
     {
         Block currentBlock, pxBlock, nxBlock, pyBlock, nyBlock, pzBlock, nzBlock;
         bool px = false, nx = false, py = false, ny = false, pz = false, nz = false;

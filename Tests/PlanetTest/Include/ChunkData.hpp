@@ -51,7 +51,7 @@ public:
                     float distanceFromOrigin = glm::sqrt(xGlobal * xGlobal + yGlobal * yGlobal + zGlobal * zGlobal);
 
                     float endCutoffDistance = 50.0f;
-                    float startCutoffDistance = 40.0f;
+                    float startCutoffDistance = 45.0f;
                     float cutoffFactor = 0.0f;
 
                     if (distanceFromOrigin > startCutoffDistance)
@@ -61,7 +61,7 @@ public:
 
                     noise += cutoffFactor;
 
-                    if (noise < 0.3f)
+                    if (noise < 0.95f)
                     {
                         SetBlock({ x, y, z }, Block(1));
                     }
