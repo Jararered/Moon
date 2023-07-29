@@ -22,10 +22,6 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/Libraries/stb_image/include/
 )
 
-link_directories(
-    ${InstallDir}/lib
-)
-
 set(LibrarySourceFiles
     ${CMAKE_SOURCE_DIR}/Libraries/imgui/source/imgui_draw.cpp
     ${CMAKE_SOURCE_DIR}/Libraries/imgui/source/imgui_impl_glfw.cpp
@@ -43,9 +39,9 @@ endif(UNIX)
  
 add_subdirectory(MoonRuntime)
 
-# add_subdirectory(Tests/RotatingSquaresTest2D)
-# add_subdirectory(Tests/RotatingSquaresTest3D)
-# add_subdirectory(Tests/RotatingCubesTest)
-# add_subdirectory(Tests/RotatingCubeLightTest)
-# add_subdirectory(Tests/PlanetTest)
+add_subdirectory(Tests/RotatingSquaresTest2D)
+add_subdirectory(Tests/RotatingSquaresTest3D)
+add_subdirectory(Tests/RotatingCubesTest)
+add_subdirectory(Tests/RotatingCubeLightTest)
+add_subdirectory(Tests/PlanetTest)
 add_subdirectory(Tests/SquaresPhysicsTest)
