@@ -24,7 +24,7 @@ void Application::Start()
     auto shader = Shader();
     shader.Compile("Shaders/DirectionalLight.vert", "Shaders/DirectionalLight.frag");
 
-    int radius = 3;
+    int radius = 4;
     for (int x = -radius; x < radius + 1; x++)
     {
         for (int y = -radius; y < radius + 1; y++)
@@ -43,12 +43,6 @@ void Application::Start()
                 entity->SetMesh(mesh);
                 entity->GetMesh()->SetShader(shader);
                 scenario->AddEntity(entity);
-
-
-
-                // Entity* entity = new ChunkEntity({ x, y, z });
-                // scenario->AddEntity(entity);
-                // entity->GetMesh()->SetShader(shader);
             }
         }
     }

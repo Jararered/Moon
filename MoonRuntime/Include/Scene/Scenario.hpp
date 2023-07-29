@@ -27,15 +27,12 @@ public:
 
         for (auto entity : m_Entities)
         {
-            entity->Update(dt);
+            entity->UpdateDynamics(dt);
         }
 
-        if (p_Dynamics)
+        for (auto entity : m_Entities)
         {
-            for (auto entity : m_Entities)
-            {
-                entity->UpdateDynamics(dt);
-            }
+            entity->Update(dt);
         }
     }
 
