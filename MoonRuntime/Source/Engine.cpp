@@ -38,7 +38,7 @@ Window* Engine::GetWindow(const WindowSpecification& spec)
     {
     case WindowSpecification::GraphicsAPI::OpenGL:
     {
-        p_Window = new OpenGLWindow;
+        p_Window = new OpenGLWindow(spec);
         return p_Window;
     }
     case WindowSpecification::GraphicsAPI::Vulkan:

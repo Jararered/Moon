@@ -16,13 +16,16 @@ public:
     virtual void Update(float dt) {};
 
 public:
-    glm::vec3 GetPosition() const { return m_Position; }
-    glm::vec3 GetDirection() const { return m_Direction; }
-    glm::vec3 GetRight() const { return m_Right; }
+    glm::vec3& GetPosition() { return m_Position; }
+    glm::vec3& GetDirection() { return m_Direction; }
     glm::mat4& GetViewMatrix() { return m_ViewMatrix; }
     glm::mat4& GetProjectionMatrix() { return m_ProjectionMatrix; }
 
+    float GetAspectRatio() const { return m_AspectRatio; }
+    void SetAspectRatio(float aspectRatio) { m_AspectRatio = aspectRatio; }
+
 protected:
+    float m_AspectRatio = 0.0f;
     glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
     glm::vec3 m_Direction = { 0.0f, 0.0f, -1.0f };
     glm::vec3 m_Right = glm::cross(m_Direction, glm::vec3(1.0f, 0.0f, 0.0f));

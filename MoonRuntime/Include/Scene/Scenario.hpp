@@ -25,10 +25,10 @@ public:
             p_Camera->Update(dt);
         }
 
-        for (auto entity : m_Entities)
-        {
-            entity->UpdateDynamics(dt);
-        }
+        // for (auto entity : m_Entities)
+        // {
+        //     entity->UpdateDynamics(dt);
+        // }
 
         for (auto entity : m_Entities)
         {

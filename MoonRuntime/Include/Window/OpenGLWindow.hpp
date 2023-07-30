@@ -3,12 +3,13 @@
 #include <glfw/glfw3.h>
 
 #include "Window.hpp"
+#include "WindowSpecification.hpp"
 #include "Renderer.hpp"
 
-class OpenGLWindow : public Window
+class OpenGLWindow : virtual public Window
 {
 public:
-    OpenGLWindow();
+    OpenGLWindow(const WindowSpecification& spec);
     ~OpenGLWindow() override;
 
     void Update(float dt) override;

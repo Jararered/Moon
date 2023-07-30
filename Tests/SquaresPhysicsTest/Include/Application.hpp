@@ -20,6 +20,8 @@ public:
 
         auto environment = new Environment;
         auto camera = new Camera2D;
+        camera->SetAspectRatio(spec.Width / spec.Height);
+        
         auto dynamics = new Dynamics;
 
         auto scenario = new Scenario;

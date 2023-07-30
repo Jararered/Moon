@@ -2,7 +2,7 @@
 
 #include <Moon.hpp>
 
-#include "SquareEntity.hpp"
+#include "CubeEntity.hpp"
 
 class Application : public Engine
 {
@@ -15,30 +15,36 @@ public:
         spec.VSync = true;
         spec.API = WindowSpecification::GraphicsAPI::OpenGL;
 
-        auto window = Engine::GetWindow(spec);
+        auto window = GetWindow(spec);
         auto renderer = window->CreateRenderer();
         auto scenario = new Scenario;
 
         auto environment = new Environment;
         scenario->SetEnvironment(environment);
 
-        auto camera = new Camera2D;
+        auto camera = new Camera3D;
         camera->SetAspectRatio(spec.Width / spec.Height);
         scenario->SetCamera(camera);
 
         auto shader = Shader();
         shader.Compile("Shaders/DirectionalLight.vert", "Shaders/DirectionalLight.frag");
 
-        int size = 40;
-        int countx = 16;
-        int county = 9;
-        for (int i = -countx; i < countx + 1; i++)
+        int size = 25;
+        int spacing = 50;
+        int dimx = 5;
+        int dimy = 5;
+        int dimz = 5;
+        for (int i = -dimx; i < dimx + 1; i++)
         {
-            for (int j = -county; j < county + 1; j++)
+            for (int j = -dimy; j < dimy + 1; j++)
             {
-                Entity* entity = new SquareEntity({ size * i, size * j, 0.0f }, size);
-                entity->GetMesh()->SetShader(shader);
-                scenario->AddEntity(entity);
+                for (int k = -dimz; k < dimz + 1; k++)
+                {
+                    Entity* entity = new CubeEntity({ spacing * i, spacing * j, spacing * k }, size);
+                    entity->GetMesh()->SetShader(shader);
+                    
+                    scenario->AddEntity(entity);
+                }
             }
         }
 
@@ -46,7 +52,7 @@ public:
 
         while (window->IsRunning())
         {
-            Update();
+            Engine::Update();
         }
     }
 };

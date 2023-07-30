@@ -21,6 +21,7 @@ public:
     {
         float responseCoefficient = 0.75f;
         uint64_t objectCount = entities.size();
+
         // Iterate on all objects
         for (uint64_t i = 0; i < objectCount; ++i)
         {

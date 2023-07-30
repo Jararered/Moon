@@ -10,7 +10,7 @@ struct WindowSpecification
     };
 
     GraphicsAPI API;
-    int Width;
-    int Height;
+    float Width;
+    float Height;
     bool VSync;
 };

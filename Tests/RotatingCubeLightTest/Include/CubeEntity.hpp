@@ -14,26 +14,16 @@ public:
         glm::vec3 white = glm::vec3(1.0f);
         p_Mesh = new CubeMesh(white);
 
-        glm::mat4 matrix = p_Mesh->GetTranslationMatrix();
-        matrix = glm::translate(matrix, m_Position);
-        p_Mesh->SetTranslationMatrix(matrix);
+        auto& translation = GetMesh()->GetTranslationMatrix();
+        translation = glm::translate(translation, m_Position);
+        translation = glm::scale(translation, glm::vec3(scale));
     }
 
     void Update(float dt) override
     {
-        // Rotate
-        glm::mat4 rotation = p_Mesh->GetRotationMatrix();
+        auto& rotation = GetMesh()->GetRotationMatrix();
         rotation = glm::rotate(rotation, glm::radians(0.25f * dt * m_Position.x), glm::vec3(1.0f, 0.0f, 0.0f));
-        // rotation = glm::rotate(rotation, glm::radians(0.25f * dt * m_Position.y), glm::vec3(0.0f, 1.0f, 0.0f));
-        // rotation = glm::rotate(rotation, glm::radians(0.25f * dt * m_Position.z), glm::vec3(0.0f, 0.0f, 1.0f));
-        
-        p_Mesh->SetRotationMatrix(rotation);
-
-        // glm::mat4 translation = p_Mesh->GetTranslationMatrix();
-        // float sinValue = glm::sin(3.0f * static_cast<float>(glfwGetTime()));
-        // glm::vec3 normalized = glm::normalize(m_Position) * 0.1f * sinValue;
-        // translation = glm::translate(translation, normalized);
-        // translation = glm::scale(translation, { 2.0f * sinValue * dt + 1.0f,  2.0f * sinValue * dt + 1.0f,  2.0f * sinValue * dt + 1.0f });
-        // p_Mesh->SetTranslationMatrix(translation);
+        rotation = glm::rotate(rotation, glm::radians(0.25f * dt * m_Position.y), glm::vec3(0.0f, 1.0f, 0.0f));
+        rotation = glm::rotate(rotation, glm::radians(0.25f * dt * m_Position.z), glm::vec3(0.0f, 0.0f, 1.0f));
     }
 };

@@ -24,6 +24,7 @@ public:
         scenario->SetEnvironment(environment);
 
         auto camera = new Camera3D;
+        camera->SetAspectRatio(spec.Width / spec.Height);
         scenario->SetCamera(camera);
 
         auto shader = Shader();

@@ -94,6 +94,10 @@
         "stop_token": "cpp",
         "cinttypes": "cpp",
         "iostream": "cpp",
-        "forward_list": "cpp"
+        "forward_list": "cpp",
+        "cfenv": "cpp",
+        "strstream": "cpp",
+        "source_location": "cpp",
+        "ranges": "cpp"
     }
 }

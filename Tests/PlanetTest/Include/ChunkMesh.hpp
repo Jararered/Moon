@@ -11,10 +11,15 @@
 class ChunkMesh : public Mesh
 {
 public:
-    ChunkMesh() = default;
+    ChunkMesh() = delete;
+    virtual ~ChunkMesh() override = default;
 
-    void CreateMesh(ChunkData* chunkData)
+    ChunkMesh(ChunkData* chunkData)
     {
+        std::vector<Vertex>& vertices = m_VertexBuffer.GetVertices();
+        std::vector<unsigned int>& indices = m_VertexBuffer.GetIndices();
+        unsigned int offset = 0;
+
         Block currentBlock, pxBlock, nxBlock, pyBlock, nyBlock, pzBlock, nzBlock;
         bool px = false, nx = false, py = false, ny = false, pz = false, nz = false;
 
@@ -26,17 +31,15 @@ public:
                 {
                     currentBlock = chunkData->GetBlock({ x, y, z });
 
-                    // If the block is air, add no m_Geometry
+                    // If the block is air, add no                     
                     if (currentBlock.GetID() == 0)
                         continue;
 
                     // Getting block IDs of surrounding blocks
                     pxBlock = chunkData->GetBlock({ x + 1, y, z });
                     nxBlock = chunkData->GetBlock({ x - 1, y, z });
-
                     pyBlock = chunkData->GetBlock({ x, y + 1, z });
                     nyBlock = chunkData->GetBlock({ x, y - 1, z });
-
                     pzBlock = chunkData->GetBlock({ x, y, z + 1 });
                     nzBlock = chunkData->GetBlock({ x, y, z - 1 });
 
@@ -49,71 +52,71 @@ public:
                     // +X Quad
                     if (pxBlock.GetID() == 0)
                     {
-                        m_Geometry.Indices.insert(m_Geometry.Indices.end(), { 0 + m_Geometry.Offset, 1 + m_Geometry.Offset, 2 + m_Geometry.Offset, 2 + m_Geometry.Offset, 3 + m_Geometry.Offset, 0 + m_Geometry.Offset });
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f));
-                        m_Geometry.Offset = m_Geometry.Offset + 4;
+                        indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
+                        vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f));
+                        offset = offset + 4;
                     }
 
                     // -X Quad
                     if (nxBlock.GetID() == 0)
                     {
-                        m_Geometry.Indices.insert(m_Geometry.Indices.end(), { 0 + m_Geometry.Offset, 1 + m_Geometry.Offset, 2 + m_Geometry.Offset, 2 + m_Geometry.Offset, 3 + m_Geometry.Offset, 0 + m_Geometry.Offset });
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f));
-                        m_Geometry.Offset = m_Geometry.Offset + 4;
+                        indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
+                        vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f));
+                        offset = offset + 4;
                     }
 
                     // +Y Quad
                     if (pyBlock.GetID() == 0)
                     {
-                        m_Geometry.Indices.insert(m_Geometry.Indices.end(), { 0 + m_Geometry.Offset, 1 + m_Geometry.Offset, 2 + m_Geometry.Offset, 2 + m_Geometry.Offset, 3 + m_Geometry.Offset, 0 + m_Geometry.Offset });
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f));
-                        m_Geometry.Offset = m_Geometry.Offset + 4;
+                        indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
+                        vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f));
+                        offset = offset + 4;
                     }
 
                     // -Y Quad
                     if (nyBlock.GetID() == 0)
                     {
-                        m_Geometry.Indices.insert(m_Geometry.Indices.end(), { 0 + m_Geometry.Offset, 1 + m_Geometry.Offset, 2 + m_Geometry.Offset, 2 + m_Geometry.Offset, 3 + m_Geometry.Offset, 0 + m_Geometry.Offset });
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f));
-                        m_Geometry.Offset = m_Geometry.Offset + 4;
+                        indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
+                        vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f));
+                        offset = offset + 4;
                     }
 
                     // +Z Quad
                     if (pzBlock.GetID() == 0)
                     {
-                        m_Geometry.Indices.insert(m_Geometry.Indices.end(), { 0 + m_Geometry.Offset, 1 + m_Geometry.Offset, 2 + m_Geometry.Offset, 2 + m_Geometry.Offset, 3 + m_Geometry.Offset, 0 + m_Geometry.Offset });
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f));
-                        m_Geometry.Offset = m_Geometry.Offset + 4;
+                        indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
+                        vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f));
+                        offset = offset + 4;
                     }
 
                     // -Z Quad
                     if (nzBlock.GetID() == 0)
                     {
-                        m_Geometry.Indices.insert(m_Geometry.Indices.end(), { 0 + m_Geometry.Offset, 1 + m_Geometry.Offset, 2 + m_Geometry.Offset, 2 + m_Geometry.Offset, 3 + m_Geometry.Offset, 0 + m_Geometry.Offset });
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f));
-                        m_Geometry.Vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f));
-                        m_Geometry.Offset = m_Geometry.Offset + 4;
+                        indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
+                        vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f));
+                        vertices.emplace_back(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f));
+                        offset = offset + 4;
                     }
                 }
             }
         }
-        Generate();
+        m_VertexBuffer.Generate();
     }
 };

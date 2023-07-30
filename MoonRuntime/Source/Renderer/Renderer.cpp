@@ -52,20 +52,17 @@ void Renderer::Render(Scenario* scenario)
 
     for (auto entity : scenario->GetEntities())
     {
-        auto model = entity->GetMesh();
-        auto shader = model->GetShader();
+        auto mesh = entity->GetMesh();
+        auto shader = mesh->GetShader();
 
-        model->Bind();
+        shader.Bind();
 
         shader.SetVector("u_LightDirection", environment->GetLightDirection());
-
-        shader.SetMatrix("u_TranslationMatrix", model->GetTranslationMatrix());
-        shader.SetMatrix("u_RotationMatrix", model->GetRotationMatrix());
-        
+        shader.SetMatrix("u_TranslationMatrix", mesh->GetTranslationMatrix());
+        shader.SetMatrix("u_RotationMatrix", mesh->GetRotationMatrix());
         shader.SetMatrix("u_ViewMatrix", camera->GetViewMatrix());
         shader.SetMatrix("u_ProjectionMatrix", camera->GetProjectionMatrix());
 
-        model->Draw();
-        model->Unbind();
+        mesh->Draw();
     }
 }

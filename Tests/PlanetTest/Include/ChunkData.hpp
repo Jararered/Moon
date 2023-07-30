@@ -10,8 +10,15 @@
 class ChunkData
 {
 public:
-    ChunkData() {}
-    ~ChunkData() {}
+    ChunkData() = default;
+    ~ChunkData() = default;
+
+    ChunkData(const glm::vec3& index)
+    {
+        m_ChunkIndex = index;
+        Allocate();
+        GeneratePlanet();
+    }
 
     void Allocate()
     {
@@ -56,7 +63,7 @@ public:
 
                     if (distanceFromOrigin > startCutoffDistance)
                         cutoffFactor = (distanceFromOrigin - startCutoffDistance) / (endCutoffDistance - startCutoffDistance);
-                    
+
                     float noise = ChunkGenerator::Get3DNoise(xGlobal, yGlobal, zGlobal);
 
                     noise += cutoffFactor;

@@ -5,7 +5,8 @@
 
 #include "input/Input.hpp"
 
-OpenGLWindow::OpenGLWindow()
+OpenGLWindow::OpenGLWindow(const WindowSpecification& spec)
+    : Window(spec)
 {
     if (!glfwInit())
         std::cout << "OpenGLWindow::OpenGLWindow(): Failed to initialize GLFW.\n";
@@ -19,7 +20,7 @@ OpenGLWindow::OpenGLWindow()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Create a windowed mode window and its OpenGL context
-    p_GLFWwindow = glfwCreateWindow(m_Width, m_Height, "Moon (OpenGL 3.3)", NULL, NULL);
+    p_GLFWwindow = glfwCreateWindow(spec.Width, spec.Height, "Moon (OpenGL 3.3)", NULL, NULL);
     if (!p_GLFWwindow)
     {
         std::cout << "OpenGLWindow::OpenGLWindow(): Failed to create OpenGL window.\n";
@@ -35,7 +36,7 @@ OpenGLWindow::OpenGLWindow()
 
     glfwSetWindowUserPointer(p_GLFWwindow, this);
 
-    if (m_VSync)
+    if (spec.VSync)
         glfwSwapInterval(1);
     else
         glfwSwapInterval(0);
