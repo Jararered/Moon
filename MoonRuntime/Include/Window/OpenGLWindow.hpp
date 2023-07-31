@@ -3,7 +3,6 @@
 #include <glfw/glfw3.h>
 
 #include "Window.hpp"
-#include "WindowSpecification.hpp"
 #include "Renderer.hpp"
 
 class OpenGLWindow : virtual public Window
