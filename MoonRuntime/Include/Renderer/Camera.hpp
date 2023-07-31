@@ -24,8 +24,15 @@ public:
     float GetAspectRatio() const { return m_AspectRatio; }
     void SetAspectRatio(float aspectRatio) { m_AspectRatio = aspectRatio; }
 
+    float GetSpeed() const { return m_Speed; }
+    void SetSpeed(float speed) { m_Speed = speed; }
+
+    glm::vec3 GetPosition() const { return m_Position; }
+    void SetPosition(const glm::vec3 &position) { m_Position = position; }
+
 protected:
     float m_AspectRatio = 0.0f;
+    float m_Speed = 0.0f;
     glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
     glm::vec3 m_Direction = { 0.0f, 0.0f, -1.0f };
     glm::vec3 m_Right = glm::cross(m_Direction, glm::vec3(1.0f, 0.0f, 0.0f));
