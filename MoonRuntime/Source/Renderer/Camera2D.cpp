@@ -8,6 +8,7 @@ Camera2D::Camera2D()
     m_Width = width;
     m_Height = height;
     m_AspectRatio = m_Width / m_Height;
+    m_Speed = 100.0f;
 }
 
 void Camera2D::Update(float dt)
@@ -15,7 +16,6 @@ void Camera2D::Update(float dt)
     if (dt < 0.0001f || dt > 0.25f)
         return;
 
-    float velocityMagnitude = 100.0f;
     glm::vec3 positionDelta = { 0.0f, 0.0f, 0.0f };
 
     // WASD movement
@@ -30,9 +30,9 @@ void Camera2D::Update(float dt)
 
     // Speed increase
     if (Input::IsKeyPressed(KEY_LEFT_CONTROL))
-        velocityMagnitude *= 10.0f;
+        m_Speed *= 10.0f;
 
-    m_Position += positionDelta * velocityMagnitude * dt;
+    m_Position += positionDelta * m_Speed * dt;
     m_ViewMatrix = glm::lookAt(m_Position, (m_Position + m_Direction), glm::vec3(0.0f, 1.0f, 0.0f));
     m_ProjectionMatrix = glm::ortho(-m_Width / 2, m_Width / 2, -m_Height / 2, m_Height / 2, -10.0f, 10.0f);
 }

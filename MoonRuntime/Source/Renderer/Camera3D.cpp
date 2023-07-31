@@ -6,6 +6,7 @@ Camera3D::Camera3D()
     m_AspectRatio = 16.0f / 9.0f;
     m_NearClip = 0.1f;
     m_FarClip = 1000.0f;
+    m_Speed = 50.0f;
 }
 
 void Camera3D::Update(float dt)
@@ -13,7 +14,6 @@ void Camera3D::Update(float dt)
     if (dt < 0.0001f || dt > 0.25f)
         return;
 
-    float velocityMagnitude = 100.0f;
     glm::vec3 positionDelta = { 0.0f, 0.0f, 0.0f };
 
     // Set Yaw and Pitch rotations based on mouse movement
@@ -73,9 +73,9 @@ void Camera3D::Update(float dt)
 
     // Speed increase
     if (Input::IsKeyPressed(KEY_LEFT_CONTROL))
-        velocityMagnitude *= 10.0f;
+        m_Speed *= 10.0f;
 
-    m_Position += positionDelta * velocityMagnitude * dt;
+    m_Position += positionDelta * m_Speed * dt;
     m_ViewMatrix = glm::lookAt(m_Position, (m_Position + m_Direction), glm::vec3(0.0f, 1.0f, 0.0f));
     m_ProjectionMatrix = glm::perspective(m_FieldOfView, m_AspectRatio, m_NearClip, m_FarClip);
 }
