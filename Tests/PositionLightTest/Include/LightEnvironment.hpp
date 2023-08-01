@@ -4,10 +4,10 @@
 
 #include <glm/gtx/rotate_vector.hpp>
 
-class RotatingLightEnvironment : public Environment
+class LightEnvironment : public Environment
 {
 public:
-    RotatingLightEnvironment()
+    LightEnvironment()
     {
     }
 

@@ -3,7 +3,7 @@
 #include <Moon.hpp>
 
 #include "CubeEntity.hpp"
-#include "RotatingLightEnvironment.hpp"
+#include "LightEnvironment.hpp"
 
 class Application : public Engine
 {
@@ -20,7 +20,7 @@ public:
         auto renderer = window->CreateRenderer();
         auto scenario = new Scenario;
 
-        auto environment = new RotatingLightEnvironment;
+        auto environment = new LightEnvironment;
         scenario->SetEnvironment(environment);
 
         auto camera = new Camera3D;
@@ -30,14 +30,12 @@ public:
 
         auto redShader = Shader();
         redShader.Compile("Shaders/PositionalLight.vert", "Shaders/Red.frag");
-        auto blueShader = Shader();
-        blueShader.Compile("Shaders/PositionalLight.vert", "Shaders/Blue.frag");
-
-
         Entity* cube1 = new CubeEntity({ 0.0f, 0.0f, 20.0f }, 10.0f);
         cube1->GetMesh()->SetShader(redShader);
         scenario->AddEntity(cube1);
 
+        auto blueShader = Shader();
+        blueShader.Compile("Shaders/PositionalLight.vert", "Shaders/Blue.frag");
         Entity* cube2 = new CubeEntity({ 0.0f, 0.0f, -20.0f }, 10.0f);
         cube2->GetMesh()->SetShader(blueShader);
         scenario->AddEntity(cube2);
