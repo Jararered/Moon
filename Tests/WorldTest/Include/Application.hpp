@@ -41,7 +41,7 @@ public:
             {
                 for (int z = -radius; z < radius + 1; z++)
                 {
-                    ChunkManager::AddIndex(glm::vec3(x, y, z));
+                    // ChunkManager::AddIndex(glm::vec3(x, y, z));
                     ChunkData* chunkData = new ChunkData(glm::vec3(x, y, z));
                     auto mesh = new ChunkMesh(chunkData);
 
