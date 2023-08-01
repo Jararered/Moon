@@ -1,7 +1,7 @@
 #include "Texture.hpp"
 
+#include <glad/gl.h>
 #include <stb_image.h>
-
 #include <iostream>
 
 void Texture::Bind()
@@ -21,7 +21,7 @@ void Texture::Create(const char* filepath)
     unsigned char* data = stbi_load(filepath, &m_Width, &m_Height, &m_ChannelCount, 0);
     if (!data)
     {
-        std::cout << "Texture::Create(): Could not load image file from " << filepath << "\n";
+        std::cout << "Texture::Create(): Could not load image file from: " << filepath << "\n";
         return;
     }
 

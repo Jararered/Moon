@@ -1,9 +1,10 @@
 #include "OpenGLWindow.hpp"
 
+#include "Input.hpp"
+
 #include <iostream>
 #include <glad/gl.h>
-
-#include "input/Input.hpp"
+#include <glfw/glfw3.h>
 
 OpenGLWindow::OpenGLWindow(const WindowSpecification& spec)
     : Window(spec)

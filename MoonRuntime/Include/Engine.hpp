@@ -13,6 +13,7 @@ public:
 public:
     virtual void Update();
     void UpdateTime();
+    static double GetTime();
     std::string CurrentDirectory();
 
     Window* GetWindow(const WindowSpecification& spec);

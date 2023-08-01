@@ -1,5 +1,7 @@
 #include "Camera2D.hpp"
 
+#include <glfw/glfw3.h>
+
 Camera2D::Camera2D()
 {
     int width, height;

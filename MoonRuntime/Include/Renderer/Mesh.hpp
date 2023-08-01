@@ -3,7 +3,6 @@
 #include "VertexBuffer.hpp"
 #include "Shader.hpp"
 
-#include <glad/gl.h>
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -15,13 +14,8 @@ public:
     Mesh() = default;
     virtual ~Mesh() = default;
 
-    void UseShader() { m_Shader.Bind(); }
-    void Draw()
-    {
-        m_VertexBuffer.Bind();
-        m_VertexBuffer.Draw();
-        m_VertexBuffer.Unbind();
-    }
+    void UseShader();
+    void Draw();
 
 protected:
     Shader m_Shader;

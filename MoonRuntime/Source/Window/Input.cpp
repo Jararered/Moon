@@ -1,40 +1,36 @@
-#pragma once
+#include "Input.hpp"
 
 #include <glfw/glfw3.h>
-#include <glm/vec2.hpp>
-
-#include "KeyboardKeyCodes.hpp"
-#include "MouseButtonCodes.hpp"
 
 namespace Input
 {
     // Keyboard related functions
-    inline static bool IsKeyPressed(int keycode)
+    bool IsKeyPressed(int keycode)
     {
         return glfwGetKey(glfwGetCurrentContext(), keycode) == GLFW_PRESS;
     }
 
     // Mouse button related functions
-    inline static bool IsMouseButtonPressed(int mouseButtonCode)
+    bool IsMouseButtonPressed(int mouseButtonCode)
     {
         int state = glfwGetMouseButton(glfwGetCurrentContext(), mouseButtonCode);
         return state == GLFW_PRESS;
     }
 
-    inline static bool IsLeftClick()
+    bool IsLeftClick()
     {
         int state = glfwGetMouseButton(glfwGetCurrentContext(), MOUSE_BUTTON_LEFT);
         return state == GLFW_PRESS;
     }
 
-    inline static bool IsRightClick()
+    bool IsRightClick()
     {
         int state = glfwGetMouseButton(glfwGetCurrentContext(), MOUSE_BUTTON_RIGHT);
         return state == GLFW_PRESS;
     }
 
     // Mouse position functions
-    static glm::vec2 GetMousePosition()
+    glm::vec2 GetMousePosition()
     {
         double xpos, ypos;
         glfwGetCursorPos(glfwGetCurrentContext(), &xpos, &ypos);
@@ -42,13 +38,13 @@ namespace Input
     }
 
     // Mouse handling functions
-    static bool IsMouseCaptured()
+    bool IsMouseCaptured()
     {
         int option = glfwGetInputMode(glfwGetCurrentContext(), GLFW_CURSOR);
         return option == GLFW_CURSOR_DISABLED;
     }
 
-    static glm::vec2 GetMouseMovement()
+    glm::vec2 GetMouseMovement()
     {
         if (IsMouseCaptured())
         {
@@ -59,7 +55,7 @@ namespace Input
         return { 0.0f, 0.0f };
     }
 
-    static void CaptureCursor()
+    void CaptureCursor()
     {
         if (glfwRawMouseMotionSupported())
         {
@@ -72,7 +68,7 @@ namespace Input
         glfwSetCursorPos(glfwGetCurrentContext(), 0.0, 0.0);
     }
 
-    static void ReleaseCursor()
+    void ReleaseCursor()
     {
         glm::ivec2 size;
         glfwGetWindowSize(glfwGetCurrentContext(), &size.x, &size.y);
@@ -81,7 +77,7 @@ namespace Input
     }
 
     // Updates the current state of all inputs
-    static void PollEvents()
+    void PollEvents()
     {
         glfwPollEvents();
 
@@ -90,4 +86,4 @@ namespace Input
             Input::ReleaseCursor();
         }
     }
-}; // namespace Input
+};

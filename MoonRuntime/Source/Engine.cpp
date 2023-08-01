@@ -30,6 +30,11 @@ void Engine::UpdateTime()
     m_LastFrameTime = currentFrameTime;
 }
 
+double Engine::GetTime()
+{
+    return glfwGetTime();
+}
+
 Window* Engine::GetWindow(const WindowSpecification& spec)
 {
     std::cout << "Engine::GetWindow(): Creating window\n";
