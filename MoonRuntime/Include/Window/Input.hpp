@@ -7,28 +7,18 @@
 
 namespace Input
 {
-    // Keyboard related functions
-    static bool IsKeyPressed(int keycode);
+    bool IsKeyPressed(int keycode);
+    bool IsMouseButtonPressed(int mouseButtonCode);
 
-    // Mouse button related functions
-    static bool IsMouseButtonPressed(int mouseButtonCode);
+    bool IsLeftClick();
+    bool IsRightClick();
 
-    static bool IsLeftClick();
+    glm::vec2 GetMousePosition();
+    glm::vec2 GetCapturedMouseMovement();
 
-    static bool IsRightClick();
+    bool IsMouseCaptured();
+    void CaptureCursor();
+    void ReleaseCursor();
 
-    // Mouse position functions
-    static glm::vec2 GetMousePosition();
-
-    // Mouse handling functions
-    static bool IsMouseCaptured();
-
-    static glm::vec2 GetMouseMovement();
-
-    static void CaptureCursor();
-
-    static void ReleaseCursor();
-
-    // Updates the current state of all inputs
-    static void PollEvents();
+    void PollEvents();
 };

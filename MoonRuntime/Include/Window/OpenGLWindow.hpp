@@ -1,11 +1,11 @@
 #pragma once
 
-#include <glfw/glfw3.h>
-
 #include "Window.hpp"
 #include "Renderer.hpp"
 
-class OpenGLWindow : virtual public Window
+struct GLFWwindow;
+
+class OpenGLWindow : public Window
 {
 public:
     OpenGLWindow(const WindowSpecification& spec);
@@ -16,6 +16,7 @@ public:
     Renderer* CreateRenderer() override;
 
 private:
+
     Renderer* p_Renderer = nullptr;
     GLFWwindow* p_GLFWwindow = nullptr;
 };

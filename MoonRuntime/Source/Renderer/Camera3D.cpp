@@ -17,7 +17,7 @@ void Camera3D::Update(float dt)
     glm::vec3 positionDelta = { 0.0f, 0.0f, 0.0f };
 
     // Set Yaw and Pitch rotations based on mouse movement
-    glm::vec2 mouseMovement = Input::GetMouseMovement();
+    glm::vec2 mouseMovement = Input::GetCapturedMouseMovement();
 
     // Each pixel the mouse moves is treated as one degree.
     // Scaling each pixel to 0.01 degree
