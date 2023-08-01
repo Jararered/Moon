@@ -2,8 +2,9 @@
 
 #include <Moon.hpp>
 
-#include "CubeEntity.hpp"
-#include "LightEnvironment.hpp"
+#include "ChunkEntity.hpp"
+#include "SkyboxEntity.hpp"
+#include "SimpleLightEnvironment.hpp"
 
 class Application : public Engine
 {
@@ -20,26 +21,49 @@ public:
         auto renderer = window->CreateRenderer();
         auto scenario = new Scenario;
 
-        auto environment = new LightEnvironment;
+        auto environment = new SimpleLightEnvironment;
         scenario->SetEnvironment(environment);
 
         auto camera = new Camera3D;
         camera->SetAspectRatio(spec.Width / spec.Height);
-        camera->SetPosition({ -20.0f, 0.0f, 0.0f });
+        camera->SetPosition({ 0.0f, 0.0f, 0.0f });
         scenario->SetCamera(camera);
 
-        auto redShader = Shader();
-        redShader.Compile("Shaders/PositionalLight.vert", "Shaders/Red.frag");
-        Entity* cube1 = new CubeEntity({ 0.0f, 0.0f, 20.0f }, 10.0f);
-        cube1->GetMesh()->SetShader(redShader);
-        scenario->AddEntity(cube1);
+        auto skyboxShader = Shader();
+        skyboxShader.Compile("Shaders/BasicTexture.vert", "Shaders/BasicTexture.frag");
 
-        auto blueShader = Shader();
-        blueShader.Compile("Shaders/PositionalLight.vert", "Shaders/Blue.frag");
-        Entity* cube2 = new CubeEntity({ 0.0f, 0.0f, -20.0f }, 10.0f);
-        cube2->GetMesh()->SetShader(blueShader);
-        scenario->AddEntity(cube2);
+        auto texture = Texture();
+        texture.Create("Textures/sky.png");
 
+        auto mesh = new SkyboxMesh;
+        auto skybox = new SkyboxEntity();
+        skybox->SetMesh(mesh);
+        skybox->GetMesh()->SetTexture(texture);
+        skybox->GetMesh()->SetShader(skyboxShader);
+        skybox->SetPositionReference(&camera->GetPosition());
+        scenario->AddEntity(skybox);
+
+        auto blockShader = Shader();
+        blockShader.Compile("Shaders/DirectionalLight.vert", "Shaders/DirectionalLight.frag");
+        int radius = 3;
+        for (int x = -radius; x < radius + 1; x++)
+        {
+            for (int y = 0; y < 2; y++)
+            {
+                for (int z = -radius; z < radius + 1; z++)
+                {
+                    // ChunkManager::AddIndex(glm::vec3(x, y, z));
+                    ChunkData* chunkData = new ChunkData(glm::vec3(x, y, z));
+                    auto mesh = new ChunkMesh(chunkData);
+
+                    Entity* entity = new ChunkEntity();
+                    entity->SetMesh(mesh);
+                    entity->GetMesh()->SetShader(blockShader);
+
+                    scenario->AddEntity(entity);
+                }
+            }
+        }
 
         renderer->Add(scenario);
 

@@ -56,5 +56,4 @@ public:
 
     float GetRadius() const { return m_Radius; }
     void SetRadius(float radius) { m_Radius = radius; }
-
 };

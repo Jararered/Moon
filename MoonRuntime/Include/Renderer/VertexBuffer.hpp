@@ -1,18 +1,21 @@
 #pragma once
 
+#include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <vector>
 #include <iostream>
 
 struct Vertex
 {
-    Vertex(glm::vec3 position);
-    Vertex(glm::vec3 position, glm::vec3 color);
-    Vertex(glm::vec3 position, glm::vec3 color, glm::vec3 normal);
+    Vertex(glm::vec3 position) :Position(position) {}
+    Vertex(glm::vec3 position, glm::vec3 color) :Position(position), Color(color) {}
+    Vertex(glm::vec3 position, glm::vec3 color, glm::vec3 normal) :Position(position), Color(color), Normal(normal) {}
+    Vertex(glm::vec3 position, glm::vec3 color, glm::vec3 normal, glm::vec2 textureCoordinate) : Position(position), Color(color), Normal(normal), TextureCoordinate(textureCoordinate) {}
 
     glm::vec3 Position;
     glm::vec3 Color;
     glm::vec3 Normal;
+    glm::vec2 TextureCoordinate;
 };
 
 class VertexBuffer

@@ -2,6 +2,7 @@
 
 #include "VertexBuffer.hpp"
 #include "Shader.hpp"
+#include "Texture.hpp"
 
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -13,12 +14,15 @@ public:
     Mesh() = default;
     virtual ~Mesh() = default;
 
-    void UseShader();
+    void Bind();
+    void Unbind();
+
     void Draw();
 
 protected:
-    Shader m_Shader;
     VertexBuffer m_VertexBuffer;
+    Shader m_Shader;
+    Texture m_Texture;
 
     glm::mat4 m_TranslationMatrix = glm::mat4(1.0f);
     glm::mat4 m_RotationMatrix = glm::mat4(1.0f);
@@ -35,4 +39,7 @@ public:
 
     glm::mat4& GetRotationMatrix() { return m_RotationMatrix; }
     void SetRotationMatrix(const glm::mat4& matrix) { m_RotationMatrix = matrix; }
+
+    Texture GetTexture() const { return m_Texture; }
+    void SetTexture(const Texture& texture) { m_Texture = texture; }
 };

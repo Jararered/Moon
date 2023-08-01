@@ -16,24 +16,13 @@ public:
     void Update(float dt)
     {
         if (p_Environment)
-        {
             p_Environment->Update(dt);
-        }
 
         if (p_Camera)
-        {
             p_Camera->Update(dt);
-        }
-
-        // for (auto entity : m_Entities)
-        // {
-        //     entity->UpdateDynamics(dt);
-        // }
 
         for (auto entity : m_Entities)
-        {
             entity->Update(dt);
-        }
     }
 
 private:

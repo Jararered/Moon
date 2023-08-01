@@ -31,3 +31,4 @@ target_link_libraries(
 )
 
 install(DIRECTORY Shaders DESTINATION ${InstallDir}/build/Tests/${Project})
+install(DIRECTORY Textures DESTINATION ${InstallDir}/build/Tests/${Project})

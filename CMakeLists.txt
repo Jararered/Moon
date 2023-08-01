@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.27)
 get_filename_component(Project ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 project(${Project})
 
+set(InstallDir ${CMAKE_SOURCE_DIR})
+
 set(MoonIncludeDirs
     ${CMAKE_SOURCE_DIR}/MoonRuntime/Include
     ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Collider
