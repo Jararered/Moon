@@ -58,6 +58,7 @@ void Renderer::Render(Scenario* scenario)
         shader.Bind();
 
         shader.SetVector("u_LightDirection", environment->GetLightDirection());
+        shader.SetVector("u_LightPosition", environment->GetLightPosition());
         shader.SetMatrix("u_TranslationMatrix", mesh->GetTranslationMatrix());
         shader.SetMatrix("u_RotationMatrix", mesh->GetRotationMatrix());
         shader.SetMatrix("u_ViewMatrix", camera->GetViewMatrix());
