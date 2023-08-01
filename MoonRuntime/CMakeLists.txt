@@ -5,6 +5,10 @@ project(${Project})
 
 set(CMAKE_DEBUG_POSTFIX -debug)
 
+if(UNIX)
+    add_definitions(-DUNIX)
+endif(UNIX)
+
 find_package(glfw3 3.3.8 REQUIRED)
 add_definitions(-DGLFW_INCLUDE_NONE)
 add_definitions(-DGLM_ENABLE_EXPERIMENTAL)
