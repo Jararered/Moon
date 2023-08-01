@@ -26,5 +26,5 @@ public:
     void SetGravity(const glm::vec3& gravity) { m_Gravity = gravity; }
 
     glm::vec3 GetLightPosition() const { return m_LightPosition; }
-    void SetLightPosition(const glm::vec3 &lightPosition) { m_LightPosition = lightPosition; }
+    void SetLightPosition(const glm::vec3& lightPosition) { m_LightPosition = lightPosition; }
 };

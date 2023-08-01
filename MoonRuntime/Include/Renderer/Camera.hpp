@@ -28,7 +28,7 @@ public:
     void SetSpeed(float speed) { m_Speed = speed; }
 
     glm::vec3 GetPosition() const { return m_Position; }
-    void SetPosition(const glm::vec3 &position) { m_Position = position; }
+    void SetPosition(const glm::vec3& position) { m_Position = position; }
 
 protected:
     float m_AspectRatio = 0.0f;

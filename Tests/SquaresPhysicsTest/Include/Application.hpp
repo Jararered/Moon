@@ -21,7 +21,7 @@ public:
         auto environment = new Environment;
         auto camera = new Camera2D;
         camera->SetAspectRatio(spec.Width / spec.Height);
-        
+
         auto dynamics = new Dynamics;
 
         auto scenario = new Scenario;
@@ -33,7 +33,7 @@ public:
         shader.Compile("Shaders/DirectionalLight.vert", "Shaders/DirectionalLight.frag");
 
         auto entity = new SquareEntity();
-        entity->SetPosition({0.0f, 0.0f, 0.0f});
+        entity->SetPosition({ 0.0f, 0.0f, 0.0f });
         entity->GetMesh()->SetShader(shader);
         scenario->AddEntity(entity);
 
