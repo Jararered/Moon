@@ -15,6 +15,7 @@ set(MoonIncludeDirs
 
 set(LibraryIncludeDirs
     ${CMAKE_SOURCE_DIR}/Libraries/cereal/include
+    ${CMAKE_SOURCE_DIR}/Libraries/octree/include
     ${CMAKE_SOURCE_DIR}/Libraries/FastNoiseLite/include
     ${CMAKE_SOURCE_DIR}/Libraries/glad/include
     ${CMAKE_SOURCE_DIR}/Libraries/glfw/include

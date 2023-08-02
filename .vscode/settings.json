@@ -87,7 +87,8 @@
         "random": "cpp",
         "utility": "cpp",
         "stop_token": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "list": "cpp"
     },
     "cmake.debugConfig": {
         "MIMode": "lldb"
