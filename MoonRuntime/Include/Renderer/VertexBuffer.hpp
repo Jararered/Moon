@@ -1,38 +1,85 @@
 #pragma once
 
-#include <glm/vec2.hpp>
-#include <glm/vec3.hpp>
 #include <vector>
+#include <glad/gl.h>
 #include <iostream>
 
-struct Vertex
-{
-    Vertex(glm::vec3 position) :Position(position) {}
-    Vertex(glm::vec3 position, glm::vec3 color) :Position(position), Color(color) {}
-    Vertex(glm::vec3 position, glm::vec3 color, glm::vec3 normal) :Position(position), Color(color), Normal(normal) {}
-    Vertex(glm::vec3 position, glm::vec3 color, glm::vec3 normal, glm::vec2 textureCoordinate) : Position(position), Color(color), Normal(normal), TextureCoordinate(textureCoordinate) {}
-
-    glm::vec3 Position;
-    glm::vec3 Color;
-    glm::vec3 Normal;
-    glm::vec2 TextureCoordinate;
-};
-
-class VertexBuffer
+template <class VertexType> class VertexBuffer
 {
 public:
     VertexBuffer() = default;
     ~VertexBuffer() = default;
 
-    void Generate();
-    void Delete();
-    void Bind();
-    void Unbind();
-    void Draw();
-    void UpdateGeometry();
+    void Generate()
+    {
+        glGenVertexArrays(1, &m_VAO);
+        glBindVertexArray(m_VAO);
 
-    void SetVertices(const std::vector<Vertex>& verticies) { m_Vertices = verticies; }
-    std::vector<Vertex>& GetVertices() { return m_Vertices; }
+        glGenBuffers(1, &m_VBO);
+        glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+
+        glBufferData(GL_ARRAY_BUFFER, m_Vertices.size() * sizeof(VertexType), (void*)0, GL_STATIC_DRAW);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, m_Vertices.size() * sizeof(VertexType), m_Vertices.data());
+
+        glGenBuffers(1, &m_IBO);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Indices.size() * sizeof(unsigned int), (void*)0, GL_STATIC_DRAW);
+        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, m_Indices.size() * sizeof(unsigned int), m_Indices.data());
+
+        VertexType::EnableVertexAttributes();
+
+        glBindVertexArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+        std::cout << "Generated: VAO " << m_VAO << ", VBO " << m_VBO << ", IBO " << m_IBO << "\n";
+    }
+
+    void Delete()
+    {
+        glDeleteVertexArrays(1, &m_VAO);
+        glDeleteBuffers(1, &m_VBO);
+        glDeleteBuffers(1, &m_IBO);
+    }
+
+    void Bind()
+    {
+        glBindVertexArray(m_VAO);
+    }
+
+    void Unbind()
+    {
+        glBindVertexArray(0);
+    }
+
+    void Draw()
+    {
+        glDrawElements(GL_TRIANGLES, m_Indices.size(), GL_UNSIGNED_INT, 0);
+    }
+
+    void UpdateGeometry()
+    {
+        // Binding
+        glBindVertexArray(m_VAO);
+
+        // Bind buffers
+        glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+
+        // Send data to buffers
+        glBufferSubData(GL_ARRAY_BUFFER, 0, m_Vertices.size() * sizeof(VertexType), m_Vertices.data());
+        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, m_Indices.size() * sizeof(unsigned int), m_Indices.data());
+
+        // Unbind Buffers
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+        glBindVertexArray(0);
+    }
+
+    void SetVertices(const std::vector<VertexType>& verticies) { m_Vertices = verticies; }
+    std::vector<VertexType>& GetVertices() { return m_Vertices; }
 
     void SetIndices(const std::vector<unsigned int>& indices) { m_Indices = indices; }
     std::vector<unsigned int>& GetIndices() { return m_Indices; }
@@ -42,6 +89,6 @@ private:
     unsigned int m_VBO = 0;
     unsigned int m_IBO = 0;
 
-    std::vector<Vertex> m_Vertices;
+    std::vector<VertexType> m_Vertices;
     std::vector<unsigned int> m_Indices;
 };

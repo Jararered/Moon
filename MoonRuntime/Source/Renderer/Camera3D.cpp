@@ -7,6 +7,10 @@ Camera3D::Camera3D()
     m_NearClip = 0.1f;
     m_FarClip = 1000.0f;
     m_Speed = 50.0f;
+
+    // Looks toward -z (into screen)
+    // +X is right and +Y is up
+    m_Yaw = glm::radians(-90.0f);
 }
 
 void Camera3D::Update(float dt)

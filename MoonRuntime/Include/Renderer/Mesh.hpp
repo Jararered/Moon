@@ -1,6 +1,7 @@
 #pragma once
 
 #include "VertexBuffer.hpp"
+#include "Vertex.hpp"
 #include "Shader.hpp"
 #include "Texture.hpp"
 
@@ -14,13 +15,11 @@ public:
     Mesh() = default;
     virtual ~Mesh() = default;
 
-    void Bind();
-    void Unbind();
-
-    void Draw();
+    virtual void Bind() {};
+    virtual void Draw() {};
+    virtual void Unbind() {};
 
 protected:
-    VertexBuffer m_VertexBuffer;
     Shader m_Shader;
     Texture m_Texture;
 
@@ -31,9 +30,6 @@ public:
     Shader& GetShader() { return m_Shader; }
     void SetShader(const Shader& shader) { m_Shader = shader; }
 
-    VertexBuffer GetVertexBuffer() const { return m_VertexBuffer; }
-    void SetVertexBuffer(const VertexBuffer& vertexBuffer) { m_VertexBuffer = vertexBuffer; }
-
     glm::mat4& GetTranslationMatrix() { return m_TranslationMatrix; }
     void SetTranslationMatrix(const glm::mat4& matrix) { m_TranslationMatrix = matrix; };
 
@@ -42,4 +38,40 @@ public:
 
     Texture GetTexture() const { return m_Texture; }
     void SetTexture(const Texture& texture) { m_Texture = texture; }
+};
+
+template <typename VertexType>
+class MeshTemplate : public Mesh
+{
+public:
+    MeshTemplate<VertexType>() = default;
+    virtual ~MeshTemplate<VertexType>() override = default;
+
+protected:
+    VertexBuffer<VertexType> m_VertexBuffer;
+
+public:
+    VertexBuffer<VertexType> GetVertexBuffer() const { return m_VertexBuffer; }
+    void SetVertexBuffer(const VertexBuffer<VertexType>& vertexBuffer) { m_VertexBuffer = vertexBuffer; }
+
+    void Draw() override
+    {
+        Bind();
+        m_VertexBuffer.Draw();
+        Unbind();
+    }
+
+    void Bind() override
+    {
+        m_Shader.Bind();
+        m_Texture.Bind();
+        m_VertexBuffer.Bind();
+    }
+
+    void Unbind() override
+    {
+        m_Shader.Unbind();
+        m_Texture.Unbind();
+        m_VertexBuffer.Unbind();
+    }
 };
