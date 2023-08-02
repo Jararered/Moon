@@ -1,9 +1,7 @@
 #version 330 core
 
-in vec3 v_Color;
 in vec4 v_RotatedNormal;
 
-uniform vec3 u_LightPosition;
 uniform vec3 u_LightDirection;
 
 out vec4 FragColor;
@@ -15,5 +13,5 @@ void main()
     // 0.5 to 1
     lightBrightness = (lightBrightness + 1.0) / 2; 
     
-    FragColor = vec4((v_Color * lightBrightness), 1.0);
+    FragColor = vec4((vec3(1.0, 1.0, 1.0) * lightBrightness), 1.0);
 }
