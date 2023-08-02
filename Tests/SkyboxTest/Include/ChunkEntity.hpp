@@ -4,7 +4,6 @@
 
 #include "ChunkMesh.hpp"
 #include "ChunkData.hpp"
-#include "ChunkManager.hpp"
 
 #include <array>
 
@@ -13,8 +12,6 @@ class ChunkEntity : public Entity
 public:
     ChunkEntity() = default;
     ~ChunkEntity() = default;
-
-    static ChunkManager s_ChunkManager;
 
     void Update(float dt) override
     {

@@ -22,6 +22,7 @@ target_include_directories(
     PUBLIC
     Include
     ${MoonIncludeDirs}
+    ${LibraryIncludeDirs}
 )
 
 target_link_libraries(
