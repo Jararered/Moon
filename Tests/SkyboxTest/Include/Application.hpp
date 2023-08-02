@@ -50,14 +50,11 @@ public:
             {
                 for (int z = -radius; z < radius + 1; z++)
                 {
-                    // ChunkManager::AddIndex(glm::vec3(x, y, z));
                     ChunkData* chunkData = new ChunkData(glm::vec3(x, y, z));
                     auto mesh = new ChunkMesh(chunkData);
-
                     Entity* entity = new ChunkEntity();
                     entity->SetMesh(mesh);
                     entity->GetMesh()->SetShader(blockShader);
-
                     scenario->AddEntity(entity);
                 }
             }

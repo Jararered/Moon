@@ -13,6 +13,5 @@ void main()
     // 0.5 to 1
     lightBrightness = (lightBrightness + 1.0) / 2; 
     
-    // FragColor = vec4((vec3(1.0, 1.0, 1.0) * lightBrightness), 1.0);
-    FragColor = vec4((vec3(1.0, 0.0, 0.0) * lightBrightness), 1.0);
+    FragColor = vec4((vec3(1.0, 1.0, 1.0) * lightBrightness), 1.0);
 }

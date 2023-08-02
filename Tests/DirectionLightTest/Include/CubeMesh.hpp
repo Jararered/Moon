@@ -13,40 +13,40 @@ public:
             });
 
         // Right +x
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ +0.5f, +0.5f, +0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ +0.5f, -0.5f, +0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ +0.5f, -0.5f, -0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ +0.5f, +0.5f, -0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ +0.5f, +0.5f, +0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ +0.5f, -0.5f, +0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ +0.5f, -0.5f, -0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ +0.5f, +0.5f, -0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f)));
 
         // Left -x
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ -0.5f, +0.5f, -0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ -0.5f, -0.5f, -0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ -0.5f, -0.5f, +0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ -0.5f, +0.5f, +0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ -0.5f, +0.5f, -0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ -0.5f, -0.5f, -0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ -0.5f, -0.5f, +0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ -0.5f, +0.5f, +0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f)));
 
         // Top +y
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ +0.5f, +0.5f, -0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ -0.5f, +0.5f, -0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ -0.5f, +0.5f, +0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ +0.5f, +0.5f, +0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ +0.5f, +0.5f, -0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ -0.5f, +0.5f, -0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ -0.5f, +0.5f, +0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ +0.5f, +0.5f, +0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f)));
 
         // Bottom -y
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ +0.5f, -0.5f, -0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ +0.5f, -0.5f, +0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ -0.5f, -0.5f, +0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ -0.5f, -0.5f, -0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ +0.5f, -0.5f, -0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ +0.5f, -0.5f, +0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ -0.5f, -0.5f, +0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ -0.5f, -0.5f, -0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f)));
 
         // Front +z
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ -0.5f, -0.5f, 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ +0.5f, -0.5f, 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ +0.5f, +0.5f, 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ -0.5f, +0.5f, 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ -0.5f, -0.5f, 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ +0.5f, -0.5f, 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ +0.5f, +0.5f, 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ -0.5f, +0.5f, 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f)));
 
         // Back -z
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ +0.5f, -0.5f, -0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ -0.5f, -0.5f, -0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ -0.5f, +0.5f, -0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f)));
-        m_VertexBuffer.GetVertices().emplace_back(Vertex3V3(glm::vec3{ +0.5f, +0.5f, -0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ +0.5f, -0.5f, -0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ -0.5f, -0.5f, -0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ -0.5f, +0.5f, -0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f)));
+        AddToVertexBuffer(Vertex3V3(glm::vec3{ +0.5f, +0.5f, -0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f)));
 
         m_VertexBuffer.Generate();
     }

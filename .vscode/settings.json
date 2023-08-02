@@ -88,7 +88,10 @@
         "utility": "cpp",
         "stop_token": "cpp",
         "cinttypes": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "__tree": "cpp",
+        "forward_list": "cpp",
+        "valarray": "cpp"
     },
     "cmake.debugConfig": {
         "MIMode": "lldb"

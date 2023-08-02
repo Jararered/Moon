@@ -54,6 +54,9 @@ public:
     VertexBuffer<VertexType> GetVertexBuffer() const { return m_VertexBuffer; }
     void SetVertexBuffer(const VertexBuffer<VertexType>& vertexBuffer) { m_VertexBuffer = vertexBuffer; }
 
+    void AddToVertexBuffer(const VertexType& vertex) { m_VertexBuffer.GetVertices().emplace_back(vertex); }
+    // void AddToVertexBuffer(const VertexType&& vertex) { m_VertexBuffer.GetVertices().emplace_back(vertex); }
+
     void Draw() override
     {
         Bind();

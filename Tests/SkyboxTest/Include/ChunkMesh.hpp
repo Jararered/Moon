@@ -51,60 +51,60 @@ public:
                     if (px)
                     {
                         indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, { 1.0f, 0.0f, 0.0f }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, { 1.0f, 0.0f, 0.0f }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, { 1.0f, 0.0f, 0.0f }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, { 1.0f, 0.0f, 0.0f }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, { 1.0f, 0.0f, 0.0f }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, { 1.0f, 0.0f, 0.0f }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, { 1.0f, 0.0f, 0.0f }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, { 1.0f, 0.0f, 0.0f }));
                         offset += 4;
                     }
 
                     if (nx)
                     {
                         indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, { -1.0f, 0.0f, 0.0 }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, { -1.0f, 0.0f, 0.0 }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, { -1.0f, 0.0f, 0.0 }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, { -1.0f, 0.0f, 0.0 }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, { -1.0f, 0.0f, 0.0 }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, { -1.0f, 0.0f, 0.0 }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, { -1.0f, 0.0f, 0.0 }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, { -1.0f, 0.0f, 0.0 }));
                         offset += 4;
                     }
 
                     if (py)
                     {
                         indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, { 0.0f, 1.0f, 0.0f }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, { 0.0f, 1.0f, 0.0f }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, { 0.0f, 1.0f, 0.0f }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, { 0.0f, 1.0f, 0.0f }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, { 0.0f, 1.0f, 0.0f }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, { 0.0f, 1.0f, 0.0f }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, { 0.0f, 1.0f, 0.0f }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, { 0.0f, 1.0f, 0.0f }));
                         offset += 4;
                     }
 
                     if (ny)
                     {
                         indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, { 0.0f, -1.0f, 0.0 }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, { 0.0f, -1.0f, 0.0 }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, { 0.0f, -1.0f, 0.0 }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, { 0.0f, -1.0f, 0.0 }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, { 0.0f, -1.0f, 0.0 }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, { 0.0f, -1.0f, 0.0 }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, { 0.0f, -1.0f, 0.0 }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, { 0.0f, -1.0f, 0.0 }));
                         offset += 4;
                     }
 
                     if (pz)
                     {
                         indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, { 0.0f, 0.0f, 1.0f }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, { 0.0f, 0.0f, 1.0f }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, { 0.0f, 0.0f, 1.0f }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, { 0.0f, 0.0f, 1.0f }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, { 0.0f, 0.0f, 1.0f }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, { 0.0f, 0.0f, 1.0f }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, { 0.0f, 0.0f, 1.0f }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, { 0.0f, 0.0f, 1.0f }));
                         offset += 4;
                     }
 
                     if (nz)
                     {
                         indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, { 0.0f, 0.0f, -1.0 }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, { 0.0f, 0.0f, -1.0 }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, { 0.0f, 0.0f, -1.0 }));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, { 0.0f, 0.0f, -1.0 }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, { 0.0f, 0.0f, -1.0 }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, { 0.0f, 0.0f, -1.0 }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, { 0.0f, 0.0f, -1.0 }));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>({ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, { 0.0f, 0.0f, -1.0 }));
                         offset += 4;
                     }
                 }

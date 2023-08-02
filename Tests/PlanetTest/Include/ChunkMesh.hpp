@@ -52,10 +52,10 @@ public:
                     if (pxBlock.GetID() == 0)
                     {
                         indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, glm::vec3(1.0f, 0.0f, 0.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, glm::vec3(1.0f, 0.0f, 0.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, glm::vec3(1.0f, 0.0f, 0.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, glm::vec3(1.0f, 0.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, glm::vec3(1.0f, 0.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, glm::vec3(1.0f, 0.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, glm::vec3(1.0f, 0.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, glm::vec3(1.0f, 0.0f, 0.0f)));
                         offset = offset + 4;
                     }
 
@@ -63,10 +63,10 @@ public:
                     if (nxBlock.GetID() == 0)
                     {
                         indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, glm::vec3(-1.0f, 0.0f, 0.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, glm::vec3(-1.0f, 0.0f, 0.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, glm::vec3(-1.0f, 0.0f, 0.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, glm::vec3(-1.0f, 0.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, glm::vec3(-1.0f, 0.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, glm::vec3(-1.0f, 0.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, glm::vec3(-1.0f, 0.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, glm::vec3(-1.0f, 0.0f, 0.0f)));
                         offset = offset + 4;
                     }
 
@@ -74,10 +74,10 @@ public:
                     if (pyBlock.GetID() == 0)
                     {
                         indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, glm::vec3(0.0f, 1.0f, 0.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, glm::vec3(0.0f, 1.0f, 0.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, glm::vec3(0.0f, 1.0f, 0.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, glm::vec3(0.0f, 1.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, glm::vec3(0.0f, 1.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, glm::vec3(0.0f, 1.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, glm::vec3(0.0f, 1.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, glm::vec3(0.0f, 1.0f, 0.0f)));
                         offset = offset + 4;
                     }
 
@@ -85,10 +85,10 @@ public:
                     if (nyBlock.GetID() == 0)
                     {
                         indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, glm::vec3(0.0f, -1.0f, 0.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, glm::vec3(0.0f, -1.0f, 0.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, glm::vec3(0.0f, -1.0f, 0.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, glm::vec3(0.0f, -1.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, glm::vec3(0.0f, -1.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, glm::vec3(0.0f, -1.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, glm::vec3(0.0f, -1.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, glm::vec3(0.0f, -1.0f, 0.0f)));
                         offset = offset + 4;
                     }
 
@@ -96,10 +96,10 @@ public:
                     if (pzBlock.GetID() == 0)
                     {
                         indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, glm::vec3(0.0f, 0.0f, 1.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, glm::vec3(0.0f, 0.0f, 1.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, glm::vec3(0.0f, 0.0f, 1.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, glm::vec3(0.0f, 0.0f, 1.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, glm::vec3(0.0f, 0.0f, 1.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, glm::vec3(0.0f, 0.0f, 1.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, glm::vec3(0.0f, 0.0f, 1.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, glm::vec3(0.0f, 0.0f, 1.0f)));
                         offset = offset + 4;
                     }
 
@@ -107,10 +107,10 @@ public:
                     if (nzBlock.GetID() == 0)
                     {
                         indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, glm::vec3(0.0f, 0.0f, -1.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, glm::vec3(0.0f, 0.0f, -1.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, glm::vec3(0.0f, 0.0f, -1.0f)));
-                        vertices.emplace_back(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, glm::vec3(0.0f, 0.0f, -1.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, glm::vec3(0.0f, 0.0f, -1.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, glm::vec3(0.0f, 0.0f, -1.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, glm::vec3(0.0f, 0.0f, -1.0f)));
+                        AddToVertexBuffer(Vertex2D<glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, glm::vec3(0.0f, 0.0f, -1.0f)));
                         offset = offset + 4;
                     }
                 }
