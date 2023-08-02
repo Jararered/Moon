@@ -2,7 +2,7 @@
 
 #include <Mesh.hpp>
 
-class SquareMesh : public MeshTemplate<Vertex3V3>
+class SquareMesh : public Mesh<Vertex3V3>
 {
 public:
     SquareMesh(const glm::vec3& color = { 1.0f, 0.0f, 0.0f })

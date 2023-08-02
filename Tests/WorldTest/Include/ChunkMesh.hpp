@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-class ChunkMesh : public MeshTemplate<Vertex3D<glm::vec3, glm::vec3, glm::vec3>>
+class ChunkMesh : public Mesh<Vertex3D<glm::vec3, glm::vec3, glm::vec3>>
 {
 public:
     ChunkMesh() = delete;

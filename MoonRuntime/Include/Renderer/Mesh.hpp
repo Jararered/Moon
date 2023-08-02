@@ -9,11 +9,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 
-class Mesh
+class MeshBase
 {
 public:
-    Mesh() = default;
-    virtual ~Mesh() = default;
+    MeshBase() = default;
+    virtual ~MeshBase() = default;
 
     virtual void Bind() {};
     virtual void Draw() {};
@@ -41,11 +41,11 @@ public:
 };
 
 template <typename VertexType>
-class MeshTemplate : public Mesh
+class Mesh : public MeshBase
 {
 public:
-    MeshTemplate<VertexType>() = default;
-    virtual ~MeshTemplate<VertexType>() override = default;
+    Mesh<VertexType>() = default;
+    virtual ~Mesh<VertexType>() override = default;
 
 protected:
     VertexBuffer<VertexType> m_VertexBuffer;

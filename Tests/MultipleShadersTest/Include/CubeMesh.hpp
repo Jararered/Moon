@@ -2,7 +2,7 @@
 
 #include <Mesh.hpp>
 
-class CubeMesh : public MeshTemplate<Vertex3V3>
+class CubeMesh : public Mesh<Vertex3V3>
 {
 public:
     CubeMesh(const glm::vec3& color = { 1.0f, 0.0f, 0.0f })

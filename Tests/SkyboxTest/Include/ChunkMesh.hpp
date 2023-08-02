@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-class ChunkMesh : public MeshTemplate<Vertex2D<glm::vec3, glm::vec3>>
+class ChunkMesh : public Mesh<Vertex2D<glm::vec3, glm::vec3>>
 {
 public:
     virtual ~ChunkMesh() override = default;

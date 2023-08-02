@@ -2,7 +2,7 @@
 
 #include <Mesh.hpp>
 
-class SkyboxMesh : public MeshTemplate<Vertex2D<glm::vec3, glm::vec2>>
+class SkyboxMesh : public Mesh<Vertex2D<glm::vec3, glm::vec2>>
 {
 public:
     SkyboxMesh()
