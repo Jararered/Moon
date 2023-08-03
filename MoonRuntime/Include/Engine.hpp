@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include <string>
 
 #include "Window.hpp"
@@ -10,8 +11,8 @@ public:
     Engine();
     virtual ~Engine();
 
-public:
     virtual void Update();
+
     void UpdateTime();
     static double GetTime();
     std::string CurrentDirectory();
@@ -22,8 +23,6 @@ protected:
     Window* p_Window = nullptr;
 
     float m_DeltaFrameTime = 0.0f;
-    float m_LastFrameTime = 0.0f;
-    float m_TempAverage = 0.0f;
-    u_int64_t m_FrameCount = 0;
-    u_int8_t m_FrameCounter = 0;
+    std::chrono::system_clock::time_point m_FrameStartTime;
+    std::chrono::system_clock::time_point m_FrameEndTime;
 };

@@ -13,17 +13,13 @@ Engine::~Engine() {}
 
 void Engine::Update()
 {
-    UpdateTime();
+    m_FrameStartTime = std::chrono::high_resolution_clock::now();
 
     if (p_Window)
         p_Window->Update(m_DeltaFrameTime);
-}
 
-void Engine::UpdateTime()
-{
-    float currentFrameTime = glfwGetTime();
-    m_DeltaFrameTime = currentFrameTime - m_LastFrameTime;
-    m_LastFrameTime = currentFrameTime;
+    m_FrameEndTime = std::chrono::high_resolution_clock::now();
+    m_DeltaFrameTime = std::chrono::duration<float, std::chrono::seconds::period>(m_FrameEndTime - m_FrameStartTime).count();
 }
 
 double Engine::GetTime() { return glfwGetTime(); }
