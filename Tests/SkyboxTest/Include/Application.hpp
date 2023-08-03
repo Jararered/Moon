@@ -21,7 +21,7 @@ public:
 
         auto camera = new Camera3D;
         camera->SetAspectRatio(spec.Width / spec.Height);
-        camera->SetPosition({ 0.0f, 0.0f, 60.0f });
+        camera->SetPosition({0.0f, 0.0f, 60.0f});
         camera->SetSkybox("Textures/sky.png");
         scenario->SetCamera(camera);
 

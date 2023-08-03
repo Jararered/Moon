@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Window.hpp"
-
 #include <string>
+
+#include "Window.hpp"
 
 class Engine
 {

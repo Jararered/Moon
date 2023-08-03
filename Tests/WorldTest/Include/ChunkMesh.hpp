@@ -2,9 +2,9 @@
 
 #include <Mesh.hpp>
 
+#include "Block.hpp"
 #include "ChunkConfiguration.hpp"
 #include "ChunkData.hpp"
-#include "Block.hpp"
 
 #include <iostream>
 
@@ -29,21 +29,21 @@ public:
             {
                 for (int z = 0; z < CHUNK_SIZE; z++)
                 {
-                    currentBlock = chunkData->GetBlock({ x, y, z });
+                    currentBlock = chunkData->GetBlock({x, y, z});
 
-                    // If the block is air, add no                     
+                    // If the block is air, add no
                     if (currentBlock.GetID() == 0)
                         continue;
 
                     // Getting block IDs of surrounding blocks
-                    pxBlock = chunkData->GetBlock({ x + 1, y, z });
-                    nxBlock = chunkData->GetBlock({ x - 1, y, z });
-                    pyBlock = chunkData->GetBlock({ x, y + 1, z });
-                    nyBlock = chunkData->GetBlock({ x, y - 1, z });
-                    pzBlock = chunkData->GetBlock({ x, y, z + 1 });
-                    nzBlock = chunkData->GetBlock({ x, y, z - 1 });
+                    pxBlock = chunkData->GetBlock({x + 1, y, z});
+                    nxBlock = chunkData->GetBlock({x - 1, y, z});
+                    pyBlock = chunkData->GetBlock({x, y + 1, z});
+                    nyBlock = chunkData->GetBlock({x, y - 1, z});
+                    pzBlock = chunkData->GetBlock({x, y, z + 1});
+                    nzBlock = chunkData->GetBlock({x, y, z - 1});
 
-                    glm::vec3 color = { 1.0f, 1.0f, 1.0f };
+                    glm::vec3 color = {1.0f, 1.0f, 1.0f};
 
                     float xGlobal = x + chunkData->GetChunkIndex().x * CHUNK_SIZE;
                     float yGlobal = y + chunkData->GetChunkIndex().y * CHUNK_SIZE;
@@ -52,66 +52,66 @@ public:
                     // +X Quad
                     if (pxBlock.GetID() == 0)
                     {
-                        indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(1.0f, 0.0f, 0.0f)));
+                        indices.insert(indices.end(), {0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset});
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f}, color, glm::vec3(1.0f, 0.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f}, color, glm::vec3(1.0f, 0.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f}, color, glm::vec3(1.0f, 0.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f}, color, glm::vec3(1.0f, 0.0f, 0.0f)));
                         offset = offset + 4;
                     }
 
                     // -X Quad
                     if (nxBlock.GetID() == 0)
                     {
-                        indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(-1.0f, 0.0f, 0.0f)));
+                        indices.insert(indices.end(), {0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset});
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f}, color, glm::vec3(-1.0f, 0.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f}, color, glm::vec3(-1.0f, 0.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f}, color, glm::vec3(-1.0f, 0.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f}, color, glm::vec3(-1.0f, 0.0f, 0.0f)));
                         offset = offset + 4;
                     }
 
                     // +Y Quad
                     if (pyBlock.GetID() == 0)
                     {
-                        indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 1.0f, 0.0f)));
+                        indices.insert(indices.end(), {0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset});
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f}, color, glm::vec3(0.0f, 1.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f}, color, glm::vec3(0.0f, 1.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f}, color, glm::vec3(0.0f, 1.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f}, color, glm::vec3(0.0f, 1.0f, 0.0f)));
                         offset = offset + 4;
                     }
 
                     // -Y Quad
                     if (nyBlock.GetID() == 0)
                     {
-                        indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, -1.0f, 0.0f)));
+                        indices.insert(indices.end(), {0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset});
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f}, color, glm::vec3(0.0f, -1.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f}, color, glm::vec3(0.0f, -1.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f}, color, glm::vec3(0.0f, -1.0f, 0.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f}, color, glm::vec3(0.0f, -1.0f, 0.0f)));
                         offset = offset + 4;
                     }
 
                     // +Z Quad
                     if (pzBlock.GetID() == 0)
                     {
-                        indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f }, color, glm::vec3(0.0f, 0.0f, 1.0f)));
+                        indices.insert(indices.end(), {0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset});
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal - 0.5f, yGlobal - 0.5f, zGlobal + 0.5f}, color, glm::vec3(0.0f, 0.0f, 1.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal + 0.5f, yGlobal - 0.5f, zGlobal + 0.5f}, color, glm::vec3(0.0f, 0.0f, 1.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal + 0.5f, yGlobal + 0.5f, zGlobal + 0.5f}, color, glm::vec3(0.0f, 0.0f, 1.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal - 0.5f, yGlobal + 0.5f, zGlobal + 0.5f}, color, glm::vec3(0.0f, 0.0f, 1.0f)));
                         offset = offset + 4;
                     }
 
                     // -Z Quad
                     if (nzBlock.GetID() == 0)
                     {
-                        indices.insert(indices.end(), { 0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset });
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f)));
-                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{ xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f }, color, glm::vec3(0.0f, 0.0f, -1.0f)));
+                        indices.insert(indices.end(), {0 + offset, 1 + offset, 2 + offset, 2 + offset, 3 + offset, 0 + offset});
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal + 0.5f, yGlobal - 0.5f, zGlobal - 0.5f}, color, glm::vec3(0.0f, 0.0f, -1.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal - 0.5f, yGlobal - 0.5f, zGlobal - 0.5f}, color, glm::vec3(0.0f, 0.0f, -1.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal - 0.5f, yGlobal + 0.5f, zGlobal - 0.5f}, color, glm::vec3(0.0f, 0.0f, -1.0f)));
+                        AddToVertexBuffer(Vertex3D<glm::vec3, glm::vec3, glm::vec3>(glm::vec3{xGlobal + 0.5f, yGlobal + 0.5f, zGlobal - 0.5f}, color, glm::vec3(0.0f, 0.0f, -1.0f)));
                         offset = offset + 4;
                     }
                 }

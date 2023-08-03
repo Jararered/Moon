@@ -28,7 +28,7 @@ public:
         shader.Compile("Shaders/DirectionalLight.vert", "Shaders/DirectionalLight.frag");
 
         auto entity = new SquareEntity();
-        entity->SetPosition({ 0.0f, 0.0f, 0.0f });
+        entity->SetPosition({0.0f, 0.0f, 0.0f});
         entity->GetMesh()->SetShader(shader);
         scenario->AddEntity(entity);
 

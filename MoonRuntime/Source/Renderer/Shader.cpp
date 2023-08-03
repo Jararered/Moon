@@ -1,12 +1,12 @@
 #include "Shader.hpp"
 
 #include <glad/gl.h>
+
 #include <fstream>
 #include <iostream>
 
 void Shader::Compile(const char* vertFile, const char* fragFile)
 {
-
     // Vertex Shader
     unsigned int vertexID;
     int successVert;
@@ -81,15 +81,9 @@ void Shader::Delete()
     glDeleteProgram(m_ID);
 }
 
-void Shader::Bind()
-{
-    glUseProgram(m_ID);
-}
+void Shader::Bind() { glUseProgram(m_ID); }
 
-void Shader::Unbind()
-{
-    glUseProgram(0);
-}
+void Shader::Unbind() { glUseProgram(0); }
 
 void Shader::SetMatrix(const std::string& uniform, const glm::mat2& matrix) { glUniformMatrix2fv(glGetUniformLocation(m_ID, uniform.c_str()), 1, GL_FALSE, (float*)&matrix); }
 void Shader::SetMatrix(const std::string& uniform, const glm::mat3& matrix) { glUniformMatrix3fv(glGetUniformLocation(m_ID, uniform.c_str()), 1, GL_FALSE, (float*)&matrix); }

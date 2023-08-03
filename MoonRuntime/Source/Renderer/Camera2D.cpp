@@ -18,7 +18,7 @@ void Camera2D::Update(float dt)
     if (dt < 0.0001f || dt > 0.25f)
         return;
 
-    glm::vec3 positionDelta = { 0.0f, 0.0f, 0.0f };
+    glm::vec3 positionDelta = {0.0f, 0.0f, 0.0f};
 
     // WASD movement
     if (Input::IsKeyPressed(KEY_W))

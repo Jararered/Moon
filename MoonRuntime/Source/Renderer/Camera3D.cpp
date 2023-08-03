@@ -18,7 +18,7 @@ void Camera3D::Update(float dt)
     if (dt < 0.0001f || dt > 0.25f)
         return;
 
-    glm::vec3 positionDelta = { 0.0f, 0.0f, 0.0f };
+    glm::vec3 positionDelta = {0.0f, 0.0f, 0.0f};
 
     // Set Yaw and Pitch rotations based on mouse movement
     glm::vec2 mouseMovement = Input::GetCapturedMouseMovement();
@@ -50,8 +50,8 @@ void Camera3D::Update(float dt)
     m_Right = glm::cross(m_Direction, glm::vec3(0.0f, 1.0f, 0.0f));
 
     // Basic movement processing
-    glm::vec3 newDirection = { 0.0f, 0.0f, 0.0f };
-    glm::vec3 fowardXZ = { m_Direction.x, 0.0f, m_Direction.z };
+    glm::vec3 newDirection = {0.0f, 0.0f, 0.0f};
+    glm::vec3 fowardXZ = {m_Direction.x, 0.0f, m_Direction.z};
 
     // WASD movement
     if (Input::IsKeyPressed(KEY_W))

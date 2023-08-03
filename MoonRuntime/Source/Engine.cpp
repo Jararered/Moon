@@ -1,19 +1,15 @@
 #include "Engine.hpp"
 
-#include "OpenGLWindow.hpp"
-
 #include <glfw/glfw3.h>
+
 #include <filesystem>
 #include <iostream>
 
-Engine::Engine()
-{
-    std::cout << "Engine::Engine(): Current working directory: " << Engine::CurrentDirectory() << "\n";
-}
+#include "OpenGLWindow.hpp"
 
-Engine::~Engine()
-{
-}
+Engine::Engine() { std::cout << "Engine::Engine(): Current working directory: " << Engine::CurrentDirectory() << "\n"; }
+
+Engine::~Engine() {}
 
 void Engine::Update()
 {
@@ -30,10 +26,7 @@ void Engine::UpdateTime()
     m_LastFrameTime = currentFrameTime;
 }
 
-double Engine::GetTime()
-{
-    return glfwGetTime();
-}
+double Engine::GetTime() { return glfwGetTime(); }
 
 Window* Engine::GetWindow(const WindowSpecification& spec)
 {

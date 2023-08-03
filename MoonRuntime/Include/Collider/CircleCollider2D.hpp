@@ -1,18 +1,15 @@
 #pragma once
 
-#include "Collider.hpp"
+#include <glm/vec3.hpp>
 
-#include <glm/vec4.hpp>
+#include "Collider.hpp"
 
 class CircleCollider2D : public Collider
 {
 public:
     CircleCollider2D() = default;
     virtual ~CircleCollider2D() override = default;
-    CircleCollider2D(const glm::vec3& position, float radius)
-        :m_Position(position), m_Radius(radius)
-    {
-    }
+    CircleCollider2D(const glm::vec3& position, float radius) : m_Position(position), m_Radius(radius) {}
 
 private:
     glm::vec3 m_Position;

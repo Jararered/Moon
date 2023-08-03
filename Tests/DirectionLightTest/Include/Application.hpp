@@ -34,7 +34,7 @@ public:
         {
             for (int k = -dimz; k < dimz + 1; k++)
             {
-                Entity* entity = new CubeEntity({ spacing * i, 0.0f, spacing * k }, size);
+                Entity* entity = new CubeEntity({spacing * i, 0.0f, spacing * k}, size);
                 entity->GetMesh()->SetShader(shader);
                 scenario->AddEntity(entity);
             }

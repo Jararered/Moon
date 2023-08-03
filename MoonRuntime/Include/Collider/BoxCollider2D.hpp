@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Collider.hpp"
-
 #include <glm/vec4.hpp>
+
+#include "Collider.hpp"
 
 class BoxCollider2D : public Collider
 {
@@ -10,10 +10,7 @@ public:
     BoxCollider2D() = default;
     ~BoxCollider2D() override = default;
 
-    BoxCollider2D(float positivex, float negativex, float positivey, float negativey)
-        :m_PositiveX(positivex), m_NegativeX(negativex), m_PositiveY(positivey), m_NegativeY(negativey)
-    {
-    }
+    BoxCollider2D(float positivex, float negativex, float positivey, float negativey) : m_PositiveX(positivex), m_NegativeX(negativex), m_PositiveY(positivey), m_NegativeY(negativey) {}
 
     float PositiveX() const { return m_PositiveX; }
     void SetPositiveX(float PositiveX) { m_PositiveX = PositiveX; }

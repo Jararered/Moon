@@ -2,9 +2,9 @@
 
 #include <Entity.hpp>
 
-#include "ChunkMesh.hpp"
 #include "ChunkData.hpp"
 #include "ChunkManager.hpp"
+#include "ChunkMesh.hpp"
 
 #include <array>
 

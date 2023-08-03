@@ -1,9 +1,9 @@
 #pragma once
 
+#include <glm/vec2.hpp>
+
 #include "KeyboardKeyCodes.hpp"
 #include "MouseButtonCodes.hpp"
-
-#include <glm/vec2.hpp>
 
 namespace Input
 {

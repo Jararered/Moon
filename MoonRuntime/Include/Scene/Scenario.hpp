@@ -1,9 +1,9 @@
 #pragma once
 
+#include <vector>
+
 #include "Camera.hpp"
 #include "Entity.hpp"
-
-#include <vector>
 
 class Scenario
 {

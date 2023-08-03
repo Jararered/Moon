@@ -7,17 +7,17 @@
 class CubeEntity : public Entity
 {
 public:
-    CubeEntity(glm::vec3 position = { 0.0f, 0.0f, 0.0f }, float scale = 1.0f)
+    CubeEntity(glm::vec3 position = {0.0f, 0.0f, 0.0f}, float scale = 1.0f)
     {
         m_Position = position;
 
-        constexpr glm::vec3 white = { 255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f };
+        constexpr glm::vec3 white = {255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f};
 
         p_Mesh = new CubeMesh(white);
 
         auto& translation = p_Mesh->GetTranslationMatrix();
         translation = glm::translate(translation, position);
-        translation = glm::scale(translation, { scale, scale, scale });
+        translation = glm::scale(translation, {scale, scale, scale});
     }
 
     void Update(float dt) override

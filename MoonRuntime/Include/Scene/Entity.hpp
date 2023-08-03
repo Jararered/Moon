@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Mesh.hpp"
 #include "Collider.hpp"
+#include "Mesh.hpp"
 
 class Entity
 {
@@ -23,7 +23,7 @@ protected:
     MeshBase* p_Mesh = nullptr;
     Collider* p_Collider = nullptr;
 
-    glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
+    glm::vec3 m_Position = {0.0f, 0.0f, 0.0f};
 
 public:
     glm::vec3 GetPosition() const { return m_Position; }

@@ -2,8 +2,8 @@
 
 #include <Entity.hpp>
 
-#include "ChunkMesh.hpp"
 #include "ChunkData.hpp"
+#include "ChunkMesh.hpp"
 
 #include <array>
 

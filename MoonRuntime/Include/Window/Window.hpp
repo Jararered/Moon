@@ -20,8 +20,8 @@ struct WindowSpecification
 class Window
 {
 public:
-    Window(const WindowSpecification& spec) {};
-    virtual ~Window() {};
+    Window(const WindowSpecification& spec){};
+    virtual ~Window(){};
 
     virtual void Update(float dt) = 0;
     virtual bool IsRunning() = 0;

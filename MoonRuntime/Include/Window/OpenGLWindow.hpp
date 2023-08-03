@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Window.hpp"
 #include "Renderer.hpp"
+#include "Window.hpp"
 
 struct GLFWwindow;
 
@@ -16,7 +16,6 @@ public:
     Renderer* CreateRenderer() override;
 
 private:
-
     Renderer* p_Renderer = nullptr;
     GLFWwindow* p_GLFWwindow = nullptr;
 };

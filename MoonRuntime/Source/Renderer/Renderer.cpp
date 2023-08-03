@@ -1,10 +1,10 @@
 #include "Renderer.hpp"
 
+#include <glad/gl.h>
+#include <glfw/glfw3.h>
+
 #include "Camera2D.hpp"
 #include "Camera3D.hpp"
-
-#include <glfw/glfw3.h>
-#include <glad/gl.h>
 
 Renderer::Renderer()
 {
@@ -19,9 +19,7 @@ Renderer::Renderer()
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
-Renderer::~Renderer()
-{
-}
+Renderer::~Renderer() {}
 
 void Renderer::ClearBuffer()
 {

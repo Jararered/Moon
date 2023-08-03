@@ -2,10 +2,7 @@
 
 #include <glfw/glfw3.h>
 
-bool Input::IsKeyPressed(int keycode)
-{
-    return glfwGetKey(glfwGetCurrentContext(), keycode) == GLFW_PRESS;
-}
+bool Input::IsKeyPressed(int keycode) { return glfwGetKey(glfwGetCurrentContext(), keycode) == GLFW_PRESS; }
 
 bool Input::IsMouseButtonPressed(int mouseButtonCode)
 {
@@ -29,7 +26,7 @@ glm::vec2 Input::GetMousePosition()
 {
     glm::dvec2 position;
     glfwGetCursorPos(glfwGetCurrentContext(), &position.x, &position.y);
-    return { static_cast<float>(position.x), static_cast<float>(-position.y) };
+    return {static_cast<float>(position.x), static_cast<float>(-position.y)};
 }
 
 bool Input::IsMouseCaptured()
@@ -42,7 +39,7 @@ glm::vec2 Input::GetCapturedMouseMovement()
 {
     // This is intended to be called per-frame
     if (!IsMouseCaptured())
-        return { 0.0f, 0.0f };
+        return {0.0f, 0.0f};
 
     glm::vec2 mousepos = GetMousePosition();
     glfwSetCursorPos(glfwGetCurrentContext(), 0.0, 0.0);

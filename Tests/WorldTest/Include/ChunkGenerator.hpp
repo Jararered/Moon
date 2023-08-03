@@ -11,10 +11,7 @@ public:
         return s_Instance;
     }
 
-    static void Initialize()
-    {
-        Get().Noise3D.SetFrequency(0.03f);
-    }
+    static void Initialize() { Get().Noise3D.SetFrequency(0.03f); }
 
     static float Get3DNoise(int x, int y, int z) { return Get().Noise3D.GetNoise(static_cast<float>(x), static_cast<float>(y), static_cast<float>(z)); }
 

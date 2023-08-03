@@ -1,8 +1,9 @@
 #pragma once
 
-#include <vector>
 #include <glad/gl.h>
+
 #include <iostream>
+#include <vector>
 
 template <class VertexType> class VertexBuffer
 {
@@ -43,20 +44,11 @@ public:
         glDeleteBuffers(1, &m_IBO);
     }
 
-    void Bind()
-    {
-        glBindVertexArray(m_VAO);
-    }
+    void Bind() { glBindVertexArray(m_VAO); }
 
-    void Unbind()
-    {
-        glBindVertexArray(0);
-    }
+    void Unbind() { glBindVertexArray(0); }
 
-    void Draw()
-    {
-        glDrawElements(GL_TRIANGLES, m_Indices.size(), GL_UNSIGNED_INT, 0);
-    }
+    void Draw() { glDrawElements(GL_TRIANGLES, m_Indices.size(), GL_UNSIGNED_INT, 0); }
 
     void UpdateGeometry()
     {

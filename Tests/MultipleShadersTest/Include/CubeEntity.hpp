@@ -7,7 +7,7 @@
 class CubeEntity : public Entity
 {
 public:
-    CubeEntity(glm::vec3 position = { 0.0f, 0.0f, 0.0f }, float scale = 1.0f)
+    CubeEntity(glm::vec3 position = {0.0f, 0.0f, 0.0f}, float scale = 1.0f)
     {
         m_Position = position;
 

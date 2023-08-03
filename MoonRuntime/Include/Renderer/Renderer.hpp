@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Scenario.hpp"
-
 #include <vector>
+
+#include "Scenario.hpp"
 
 class Renderer
 {

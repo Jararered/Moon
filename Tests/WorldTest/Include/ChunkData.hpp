@@ -3,9 +3,9 @@
 #include <array>
 #include <glm/vec3.hpp>
 
-#include "ChunkGenerator.hpp"
-#include "ChunkConfiguration.hpp"
 #include "Block.hpp"
+#include "ChunkConfiguration.hpp"
+#include "ChunkGenerator.hpp"
 
 class ChunkData
 {
@@ -39,10 +39,7 @@ public:
         return m_BlockData.at(chunkPos.x * CHUNK_SIZE * CHUNK_SIZE + chunkPos.y * CHUNK_SIZE + chunkPos.z);
     }
 
-    void SetBlock(const glm::ivec3& chunkPos, const Block& block)
-    {
-        m_BlockData.at(chunkPos.x * CHUNK_SIZE * CHUNK_SIZE + chunkPos.y * CHUNK_SIZE + chunkPos.z) = block;
-    }
+    void SetBlock(const glm::ivec3& chunkPos, const Block& block) { m_BlockData.at(chunkPos.x * CHUNK_SIZE * CHUNK_SIZE + chunkPos.y * CHUNK_SIZE + chunkPos.z) = block; }
 
     void GeneratePlanet()
     {
@@ -69,7 +66,7 @@ public:
 
                     if (noise < 0.8f)
                     {
-                        SetBlock({ x, y, z }, Block(1));
+                        SetBlock({x, y, z}, Block(1));
                     }
                 }
             }
@@ -81,6 +78,6 @@ public:
 
 private:
     std::array<Block, CHUNK_VOLUME> m_BlockData;
-    std::array<int, CHUNK_SIZE* CHUNK_SIZE> m_HeightData;
-    glm::ivec3 m_ChunkIndex = { 0, 0, 0 };
+    std::array<int, CHUNK_SIZE * CHUNK_SIZE> m_HeightData;
+    glm::ivec3 m_ChunkIndex = {0, 0, 0};
 };

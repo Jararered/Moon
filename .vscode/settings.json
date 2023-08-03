@@ -1,7 +1,8 @@
 {
-    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "cmake.debugConfig": {
+        "MIMode": "lldb"
+    },
     "files.associations": {
-        "vector": "cpp",
         "__bit_reference": "cpp",
         "__bits": "cpp",
         "__config": "cpp",
@@ -75,6 +76,7 @@
         "unordered_map": "cpp",
         "unordered_set": "cpp",
         "variant": "cpp",
+        "vector": "cpp",
         "*.tcc": "cpp",
         "chrono": "cpp",
         "compare": "cpp",
@@ -87,13 +89,6 @@
         "random": "cpp",
         "utility": "cpp",
         "stop_token": "cpp",
-        "cinttypes": "cpp",
-        "list": "cpp",
-        "__tree": "cpp",
-        "forward_list": "cpp",
-        "valarray": "cpp"
-    },
-    "cmake.debugConfig": {
-        "MIMode": "lldb"
+        "cinttypes": "cpp"
     }
 }

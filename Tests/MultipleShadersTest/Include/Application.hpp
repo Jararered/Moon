@@ -21,21 +21,20 @@ public:
 
         auto camera = new Camera3D;
         camera->SetAspectRatio(spec.Width / spec.Height);
-        camera->SetPosition({ 0.0f, 0.0f, 20.0f });
+        camera->SetPosition({0.0f, 0.0f, 20.0f});
         scenario->SetCamera(camera);
 
         auto redShader = Shader();
         redShader.Compile("Shaders/PositionalLight.vert", "Shaders/Red.frag");
-        Entity* cube1 = new CubeEntity({ 10.0f, 0.0f, 0.0f }, 10.0f);
+        Entity* cube1 = new CubeEntity({10.0f, 0.0f, 0.0f}, 10.0f);
         cube1->GetMesh()->SetShader(redShader);
         scenario->AddEntity(cube1);
 
         auto blueShader = Shader();
         blueShader.Compile("Shaders/PositionalLight.vert", "Shaders/Blue.frag");
-        Entity* cube2 = new CubeEntity({ -10.0f, 0.0f, 0.0f }, 10.0f);
+        Entity* cube2 = new CubeEntity({-10.0f, 0.0f, 0.0f}, 10.0f);
         cube2->GetMesh()->SetShader(blueShader);
         scenario->AddEntity(cube2);
-
 
         renderer->Add(scenario);
 

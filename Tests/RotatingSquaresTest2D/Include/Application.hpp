@@ -33,7 +33,7 @@ public:
         {
             for (int j = -county; j < county + 1; j++)
             {
-                Entity* entity = new SquareEntity({ size * i, size * j, 0.0f }, size);
+                Entity* entity = new SquareEntity({size * i, size * j, 0.0f}, size);
                 entity->GetMesh()->SetShader(shader);
                 scenario->AddEntity(entity);
             }

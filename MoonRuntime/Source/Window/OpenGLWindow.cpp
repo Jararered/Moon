@@ -1,13 +1,13 @@
 #include "OpenGLWindow.hpp"
 
-#include "Input.hpp"
-
-#include <iostream>
 #include <glad/gl.h>
 #include <glfw/glfw3.h>
 
-OpenGLWindow::OpenGLWindow(const WindowSpecification& spec)
-    : Window(spec)
+#include <iostream>
+
+#include "Input.hpp"
+
+OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
 {
     if (!glfwInit())
         std::cout << "OpenGLWindow::OpenGLWindow(): Failed to initialize GLFW.\n";
@@ -43,10 +43,7 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec)
         glfwSwapInterval(0);
 }
 
-OpenGLWindow::~OpenGLWindow()
-{
-    glfwWindowShouldClose(p_GLFWwindow);
-}
+OpenGLWindow::~OpenGLWindow() { glfwWindowShouldClose(p_GLFWwindow); }
 
 void OpenGLWindow::Update(float dt)
 {
@@ -69,10 +66,7 @@ void OpenGLWindow::Update(float dt)
         p_Renderer->Update(dt);
 }
 
-bool OpenGLWindow::IsRunning()
-{
-    return !glfwWindowShouldClose(p_GLFWwindow);
-}
+bool OpenGLWindow::IsRunning() { return !glfwWindowShouldClose(p_GLFWwindow); }
 
 Renderer* OpenGLWindow::CreateRenderer()
 {

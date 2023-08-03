@@ -4,9 +4,9 @@
 #include <glm/vec3.hpp>
 #include <octree/octree.h>
 
-#include "ChunkGenerator.hpp"
-#include "ChunkConfiguration.hpp"
 #include "Block.hpp"
+#include "ChunkConfiguration.hpp"
+#include "ChunkGenerator.hpp"
 
 class ChunkData
 {
@@ -23,15 +23,9 @@ public:
         GeneratePlanet();
     }
 
-    const Block& GetBlock(int x, int y, int z)
-    {
-        return m_OctreeData.at(x, y, z);
-    }
+    const Block& GetBlock(int x, int y, int z) { return m_OctreeData.at(x, y, z); }
 
-    void SetBlock(int x, int y, int z, const Block& block)
-    {
-        m_OctreeData(x, y, z) = block;
-    }
+    void SetBlock(int x, int y, int z, const Block& block) { m_OctreeData(x, y, z) = block; }
 
     void GeneratePlanet()
     {
@@ -62,5 +56,5 @@ public:
 
 private:
     Octree<Block> m_OctreeData = Octree<Block>(CHUNK_SIZE);
-    glm::ivec3 m_ChunkIndex = { 0, 0, 0 };
+    glm::ivec3 m_ChunkIndex = {0, 0, 0};
 };
