@@ -5,7 +5,7 @@ Camera3D::Camera3D()
     m_FieldOfView = glm::radians(85.0f);
     m_AspectRatio = 16.0f / 9.0f;
     m_NearClip = 0.1f;
-    m_FarClip = 1000.0f;
+    m_FarClip = 10000.0f;
     m_Speed = 50.0f;
 
     // Looks toward -z (into screen)

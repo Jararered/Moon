@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Input.hpp"
+#include "Skybox.hpp"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/mat4x4.hpp>
@@ -30,7 +31,30 @@ public:
     glm::vec3 GetPosition() const { return m_Position; }
     void SetPosition(const glm::vec3& position) { m_Position = position; }
 
+    SkyboxEntity* GetSkybox() const { return p_Skybox; }
+    void SetSkybox(const std::string& file)
+    {
+        if (!p_Skybox)
+            p_Skybox = new SkyboxEntity;
+
+        auto skyboxMesh = new SkyboxMesh;
+        p_Skybox->SetMesh(skyboxMesh);
+
+        auto skyboxTexture = Texture();
+        skyboxTexture.Create(file);
+        p_Skybox->GetMesh()->SetTexture(skyboxTexture);
+
+        auto skyboxShader = Shader();
+        skyboxShader.Compile("Shaders/Skybox.vert", "Shaders/Skybox.frag");
+        p_Skybox->GetMesh()->SetShader(skyboxShader);
+
+        p_Skybox->SetPositionReference(&this->GetPosition());
+    }
+    void RemoveSkybox() { delete p_Skybox; }
+
 protected:
+    SkyboxEntity* p_Skybox;
+
     float m_AspectRatio = 0.0f;
     float m_Speed = 0.0f;
     glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };

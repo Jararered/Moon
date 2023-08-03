@@ -1,12 +1,14 @@
 #pragma once
 
+#include <string>
+
 class Texture
 {
 public:
     Texture() = default;
     ~Texture() = default;
 
-    void Create(const char* filepath);
+    void Create(const std::string& file);
     void Delete();
     void Bind();
     void Unbind();

@@ -48,7 +48,19 @@ void Renderer::Update(float dt)
 void Renderer::Render(Scenario* scenario)
 {
     auto camera = scenario->GetCamera();
-    auto environment = scenario->GetEnvironment();
+
+    if (camera->GetSkybox())
+    {
+        camera->GetSkybox()->Update(0.0f);
+        auto mesh = camera->GetSkybox()->GetMesh();
+        auto shader = mesh->GetShader();
+        shader.Bind();
+        shader.SetMatrix("u_TranslationMatrix", mesh->GetTranslationMatrix());
+        shader.SetMatrix("u_RotationMatrix", mesh->GetRotationMatrix());
+        shader.SetMatrix("u_ViewMatrix", camera->GetViewMatrix());
+        shader.SetMatrix("u_ProjectionMatrix", camera->GetProjectionMatrix());
+        mesh->Draw();
+    }
 
     for (auto entity : scenario->GetEntities())
     {
@@ -57,8 +69,6 @@ void Renderer::Render(Scenario* scenario)
 
         shader.Bind();
 
-        shader.SetVector("u_LightDirection", environment->GetLightDirection());
-        shader.SetVector("u_LightPosition", environment->GetLightPosition());
         shader.SetMatrix("u_TranslationMatrix", mesh->GetTranslationMatrix());
         shader.SetMatrix("u_RotationMatrix", mesh->GetRotationMatrix());
         shader.SetMatrix("u_ViewMatrix", camera->GetViewMatrix());

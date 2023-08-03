@@ -3,8 +3,6 @@
 #include <Moon.hpp>
 
 #include "ChunkEntity.hpp"
-#include "SkyboxEntity.hpp"
-#include "SimpleLightEnvironment.hpp"
 
 class Application : public Engine
 {
@@ -12,8 +10,8 @@ public:
     void Start()
     {
         WindowSpecification spec;
-        spec.Width = 1280;
-        spec.Height = 720;
+        spec.Width = 1980;
+        spec.Height = 1080;
         spec.VSync = true;
         spec.API = WindowSpecification::GraphicsAPI::OpenGL;
 
@@ -21,25 +19,11 @@ public:
         auto renderer = window->CreateRenderer();
         auto scenario = new Scenario;
 
-        auto environment = new SimpleLightEnvironment;
-        scenario->SetEnvironment(environment);
-
         auto camera = new Camera3D;
         camera->SetAspectRatio(spec.Width / spec.Height);
         camera->SetPosition({ 0.0f, 0.0f, 60.0f });
+        camera->SetSkybox("Textures/sky.png");
         scenario->SetCamera(camera);
-
-        auto skybox = new SkyboxEntity();
-        auto skyboxTexture = Texture();
-        auto skyboxShader = Shader();
-        auto skyboxMesh = new SkyboxMesh;
-        skyboxTexture.Create("Textures/sky.png");
-        skyboxShader.Compile("Shaders/Skybox.vert", "Shaders/Skybox.frag");
-        skybox->SetMesh(skyboxMesh);
-        skybox->GetMesh()->SetTexture(skyboxTexture);
-        skybox->GetMesh()->SetShader(skyboxShader);
-        skybox->SetPositionReference(&camera->GetPosition());
-        scenario->AddEntity(skybox);
 
         auto blockShader = Shader();
         blockShader.Compile("Shaders/Chunk.vert", "Shaders/Chunk.frag");
