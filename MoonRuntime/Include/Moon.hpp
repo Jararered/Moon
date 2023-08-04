@@ -11,4 +11,5 @@
 #include "Mesh.hpp"
 #include "Renderer.hpp"
 #include "Shader.hpp"
+#include "Timer.hpp"
 #include "Window.hpp"
