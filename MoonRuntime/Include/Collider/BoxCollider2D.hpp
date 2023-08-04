@@ -1,7 +1,5 @@
 #pragma once
 
-#include <glm/vec4.hpp>
-
 #include "Collider.hpp"
 
 class BoxCollider2D : public Collider
