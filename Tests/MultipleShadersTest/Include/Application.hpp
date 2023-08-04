@@ -24,17 +24,18 @@ public:
         camera->SetPosition({0.0f, 0.0f, 20.0f});
         scenario->SetCamera(camera);
 
-        auto redShader = Shader();
-        redShader.Compile("Shaders/PositionalLight.vert", "Shaders/Red.frag");
-        Entity* cube1 = new CubeEntity({10.0f, 0.0f, 0.0f}, 10.0f);
-        cube1->GetMesh()->SetShader(redShader);
-        scenario->AddEntity(cube1);
+        auto colorShader = Shader();
+        colorShader.Compile("Shaders/PositionColor.vert", "Shaders/PositionColor.frag");
 
-        auto blueShader = Shader();
-        blueShader.Compile("Shaders/PositionalLight.vert", "Shaders/Blue.frag");
-        Entity* cube2 = new CubeEntity({-10.0f, 0.0f, 0.0f}, 10.0f);
-        cube2->GetMesh()->SetShader(blueShader);
-        scenario->AddEntity(cube2);
+        for (int x = -100.0f; x < 100.0f; x += 10.0f)
+        {
+            for (int z = -100.0f; z < 100.0f; z += 10.0f)
+            {
+                Entity* cube = new CubeEntity({x * 2.0f, 0.0f, z * 2.0f}, 10.0f, {x / 100.0f, -x / 100.0f + -z / 100.0f, z / 100.0f});
+                cube->GetMesh()->SetShader(colorShader);
+                scenario->AddEntity(cube);
+            }
+        }
 
         renderer->Add(scenario);
 

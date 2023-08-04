@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.27)
 get_filename_component(Project ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 project(${Project})
 
-set (CMAKE_CXX_STANDARD 20)
+set (CMAKE_CXX_STANDARD 23)
 
 set(InstallDir ${CMAKE_SOURCE_DIR})
 

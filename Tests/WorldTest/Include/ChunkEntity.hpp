@@ -18,11 +18,15 @@ public:
 
     void Update(float dt) override
     {
-        float distance = (glm::sin(Engine::GetTime()) + 1.0f) / 2.0f;
-        glm::vec3 newPosition = m_Position;
+        // float distance = (glm::sin(Engine::GetTime()) + 1.0f) / 2.0f;
+        // glm::vec3 newPosition = m_Position;
+        auto& matrix = p_Mesh->GetTranslationMatrix();
+        matrix = glm::translate(matrix, m_Position);
 
-        glm::mat4 matrix = glm::translate(glm::mat4(1.0f), m_Position);
-        p_Mesh->SetTranslationMatrix(matrix);
+        auto& rotation = GetMesh()->GetRotationMatrix();
+        // rotation = glm::rotate(rotation, glm::radians(dt * m_Position.x), glm::vec3(1.0f, 0.0f, 0.0f));
+        rotation = glm::rotate(rotation, glm::radians(dt * m_Position.y), glm::vec3(0.0f, m_Position.y, 0.0f));
+        // rotation = glm::rotate(rotation, glm::radians(dt * m_Position.z), glm::vec3(0.0f, 0.0f, 1.0f));
     }
 
 private:

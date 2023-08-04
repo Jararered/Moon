@@ -13,7 +13,7 @@ void main()
     float dotProduct = dot(v_RotatedNormal.xyz, -1.0 * lightDirection);
 
     // 0.5 to 1.0
-    float brightness = (dotProduct + 1) / 2; 
+    float brightness = (dotProduct + 1) / 2;
 
     FragColor = vec4((v_Color * brightness), 1.0);
 }

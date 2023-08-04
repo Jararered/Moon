@@ -14,46 +14,46 @@ public:
         spec.Height = 1080;
         spec.VSync = true;
         spec.API = WindowSpecification::GraphicsAPI::OpenGL;
+        spec.EnableImgui = true;
 
         auto window = GetWindow(spec);
+        auto layer = Layer();
+        window->AddLayer(layer);
+
         auto renderer = window->CreateRenderer();
-
         auto scenario = new Scenario;
-        renderer->Add(scenario);
 
-        auto camera = new Camera3D();
-        camera->SetSpeed(50.0f);
-        camera->SetPosition(glm::vec3(0.0f, 50.0f, 0.0f));
+        auto camera = new Camera3D;
         camera->SetAspectRatio(spec.Width / spec.Height);
+        camera->SetPosition({0.0f, 0.0f, 60.0f});
+        camera->SetSkybox("Textures/sky.png");
         scenario->SetCamera(camera);
 
-        auto shader = Shader();
-        shader.Compile("Shaders/DirectionalLight.vert", "Shaders/DirectionalLight.frag");
-
-        int radius = 3;
+        auto blockShader = Shader();
+        blockShader.Compile("Shaders/Chunk.vert", "Shaders/Chunk.frag");
+        int radius = 4;
         for (int x = -radius; x < radius + 1; x++)
         {
-            for (int y = 0; y < 2; y++)
+            for (int y = 2; y < 4; y++)
             {
                 for (int z = -radius; z < radius + 1; z++)
                 {
-                    // ChunkManager::AddIndex(glm::vec3(x, y, z));
                     ChunkData* chunkData = new ChunkData(glm::vec3(x, y, z));
                     auto mesh = new ChunkMesh(chunkData);
-
                     Entity* entity = new ChunkEntity();
-                    entity->SetPosition({CHUNK_SIZE * x, CHUNK_SIZE * y, CHUNK_SIZE * z});
                     entity->SetMesh(mesh);
-                    entity->GetMesh()->SetShader(shader);
-
+                    entity->GetMesh()->SetShader(blockShader);
                     scenario->AddEntity(entity);
                 }
             }
         }
 
+        renderer->Add(scenario);
+
         while (window->IsRunning())
         {
-            Update();
+
+            Engine::Update();
         }
     }
 };

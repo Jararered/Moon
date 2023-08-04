@@ -33,10 +33,11 @@ public:
             {
                 for (int z = -radius; z < radius + 1; z++)
                 {
+                    Entity* entity = new ChunkEntity();
+                    entity->SetPosition(glm::vec3(x, y, z));
+
                     ChunkData* chunkData = new ChunkData(glm::vec3(x, y, z));
                     auto mesh = new ChunkMesh(chunkData);
-
-                    Entity* entity = new ChunkEntity();
                     entity->SetMesh(mesh);
                     entity->GetMesh()->SetShader(shader);
 

@@ -31,23 +31,20 @@ public:
     {
         for (int z = 0; z < CHUNK_SIZE; z++)
         {
-            float zGlobal = z + m_ChunkIndex.z * CHUNK_SIZE;
             for (int y = 0; y < CHUNK_SIZE; y++)
             {
-                float yGlobal = y + m_ChunkIndex.y * CHUNK_SIZE;
                 for (int x = 0; x < CHUNK_SIZE; x++)
                 {
                     float xGlobal = x + m_ChunkIndex.x * CHUNK_SIZE;
-
+                    float yGlobal = y + m_ChunkIndex.y * CHUNK_SIZE;
+                    float zGlobal = z + m_ChunkIndex.z * CHUNK_SIZE;
                     float endCutoffDistance = 50.0f;
                     float startCutoffDistance = 40.0f;
                     float cutoffFactor = 0.0f;
                     if (yGlobal > startCutoffDistance)
                         cutoffFactor = (yGlobal - startCutoffDistance) / (endCutoffDistance - startCutoffDistance);
-
                     float noise = ChunkGenerator::Get3DNoise(xGlobal, yGlobal, zGlobal);
                     noise += cutoffFactor;
-
                     if (noise < 0.8f)
                         SetBlock(x, y, z, Block(1));
                 }

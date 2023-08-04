@@ -2,7 +2,10 @@
 
 #include <glfw/glfw3.h>
 
-bool Input::IsKeyPressed(int keycode) { return glfwGetKey(glfwGetCurrentContext(), keycode) == GLFW_PRESS; }
+bool Input::IsKeyPressed(int keycode)
+{
+    return glfwGetKey(glfwGetCurrentContext(), keycode) == GLFW_PRESS;
+}
 
 bool Input::IsMouseButtonPressed(int mouseButtonCode)
 {

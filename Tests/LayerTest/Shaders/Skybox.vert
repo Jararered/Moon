@@ -14,5 +14,5 @@ void main()
 {
     v_TextureCoordinate = a_TextureCoordinate;
 
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_TranslationMatrix * u_RotationMatrix * vec4(a_Position * 5000.0, 1.0);
+    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_TranslationMatrix * u_RotationMatrix * vec4(a_Position * 500.0, 1.0);
 }

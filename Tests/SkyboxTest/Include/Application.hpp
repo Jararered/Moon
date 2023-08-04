@@ -27,10 +27,10 @@ public:
 
         auto blockShader = Shader();
         blockShader.Compile("Shaders/Chunk.vert", "Shaders/Chunk.frag");
-        int radius = 4;
+        int radius = 0;
         for (int x = -radius; x < radius + 1; x++)
         {
-            for (int y = 2; y < 4; y++)
+            for (int y = -100; y < 10; y++)
             {
                 for (int z = -radius; z < radius + 1; z++)
                 {

@@ -17,9 +17,12 @@ file(GLOB_RECURSE ProjectSourceFiles Source/*.cpp)
 file(GLOB_RECURSE ProjectHeaderFiles Include/*.hpp)
 
 set(LibrarySourceFiles
-    ${CMAKE_SOURCE_DIR}/Libraries/imgui/source/imgui.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/source/imgui_draw.cpp
     ${CMAKE_SOURCE_DIR}/Libraries/imgui/source/imgui_impl_glfw.cpp
     ${CMAKE_SOURCE_DIR}/Libraries/imgui/source/imgui_impl_opengl3.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/source/imgui_tables.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/source/imgui_widgets.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/source/imgui.cpp
     ${CMAKE_SOURCE_DIR}/Libraries/glad/source/gl.c
     ${CMAKE_SOURCE_DIR}/Libraries/stb_image/source/stb_image.cpp
 )
