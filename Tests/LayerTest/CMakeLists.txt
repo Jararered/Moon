@@ -34,5 +34,4 @@ target_link_libraries(
     MoonRuntime
 )
 
-install(TARGETS ${Project} RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/Build/Tests/${Project})
 install(DIRECTORY Shaders DESTINATION ${CMAKE_SOURCE_DIR}/Build/Tests/${Project})
