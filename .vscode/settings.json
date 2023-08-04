@@ -1,5 +1,4 @@
 {
-    "cmake.debugConfig": {
-        "MIMode": "lldb"
-    }
+    "cmake.generator": "Ninja",
+    "cmake.buildDirectory": "${workspaceFolder}/Build"
 }
