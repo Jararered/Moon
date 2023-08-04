@@ -22,20 +22,24 @@ public:
     {
         if (!p_Skybox)
             p_Skybox = new SkyboxEntity;
+
         auto skyboxMesh = new SkyboxMesh;
         p_Skybox->SetMesh(skyboxMesh);
+
         auto skyboxTexture = Texture(file);
         p_Skybox->GetMesh()->SetTexture(skyboxTexture);
+
         auto skyboxShader = Shader();
         skyboxShader.Compile("Shaders/Skybox.vert", "Shaders/Skybox.frag");
         p_Skybox->GetMesh()->SetShader(skyboxShader);
+
         p_Skybox->SetPositionReference(&m_Position);
     }
 
     void RemoveSkybox() { delete p_Skybox; }
 
 protected:
-    SkyboxEntity* p_Skybox;
+    SkyboxEntity* p_Skybox = nullptr;
 
     float m_AspectRatio = 0.0f;
     float m_Speed = 0.0f;

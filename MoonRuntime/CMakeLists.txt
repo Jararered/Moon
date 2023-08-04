@@ -5,14 +5,6 @@ project(${Project})
 
 set(CMAKE_DEBUG_POSTFIX -debug)
 
-if(UNIX)
-    add_definitions(-DUNIX)
-endif(UNIX)
-
-find_package(glfw3 3.3.8 REQUIRED)
-add_definitions(-DGLFW_INCLUDE_NONE)
-add_definitions(-DGLM_ENABLE_EXPERIMENTAL)
-
 file(GLOB_RECURSE ProjectSourceFiles Source/*.cpp)
 file(GLOB_RECURSE ProjectHeaderFiles Include/*.hpp)
 
@@ -32,6 +24,18 @@ add_library(${Project}
     ${ProjectHeaderFiles}
     ${LibrarySourceFiles}
 )
+
+if(UNIX)
+    add_definitions(-DUNIX)
+    find_package(glfw3 3.3.8 REQUIRED)
+endif(UNIX)
+
+if(WIN32)
+    target_link_libraries(${Project} ${CMAKE_SOURCE_DIR}/Libraries/glfw/lib/glfw3.lib)
+endif(WIN32)
+
+add_definitions(-DGLFW_INCLUDE_NONE)
+add_definitions(-DGLM_ENABLE_EXPERIMENTAL)
 
 target_include_directories(
     ${Project}

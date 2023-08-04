@@ -17,7 +17,10 @@ public:
     {
         unsigned char* data = stbi_load(file.c_str(), &m_Width, &m_Height, &m_Channels, 0);
         if (!data)
+        {
+            std::cout << "Texture::Create(): Unable to load specified file. (" << file << ")\n";
             return;
+        }
 
         glGenTextures(1, &m_ID);
         glBindTexture(GL_TEXTURE_2D, m_ID);
