@@ -34,3 +34,4 @@ target_link_libraries(
 )
 
 install(DIRECTORY Shaders DESTINATION ${CMAKE_SOURCE_DIR}/Build/Tests/${Project})
+install(DIRECTORY Textures DESTINATION ${CMAKE_SOURCE_DIR}/Build/Tests/${Project})

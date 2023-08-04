@@ -42,7 +42,8 @@ protected:
     SkyboxEntity* p_Skybox = nullptr;
 
     float m_AspectRatio = 0.0f;
-    float m_Speed = 0.0f;
+    float m_MovementSpeed = 0.0f;
+    float m_ZoomSpeed = 0.0f;
     glm::vec3 m_Position = {0.0f, 0.0f, 0.0f};
     glm::vec3 m_Direction = {0.0f, 0.0f, -1.0f};
     glm::vec3 m_Right = glm::cross(m_Direction, glm::vec3(1.0f, 0.0f, 0.0f));
@@ -51,20 +52,20 @@ protected:
 
 public:
     float GetAspectRatio() const { return m_AspectRatio; }
-    void SetAspectRatio(float AspectRatio) { m_AspectRatio = AspectRatio; }
+    void SetAspectRatio(float aspectRatio) { m_AspectRatio = aspectRatio; }
 
-    float GetSpeed() const { return m_Speed; }
-    void SetSpeed(float Speed) { m_Speed = Speed; }
+    float GetSpeed() const { return m_MovementSpeed; }
+    void SetSpeed(float speed) { m_MovementSpeed = speed; }
 
     glm::vec3 GetPosition() const { return m_Position; }
-    void SetPosition(const glm::vec3& Position) { m_Position = Position; }
+    void SetPosition(const glm::vec3& position) { m_Position = position; }
 
     glm::vec3 GetDirection() const { return m_Direction; }
-    void SetDirection(const glm::vec3& Direction) { m_Direction = Direction; }
+    void SetDirection(const glm::vec3& direction) { m_Direction = direction; }
 
     glm::mat4 GetViewMatrix() const { return m_ViewMatrix; }
-    void SetViewMatrix(const glm::mat4& ViewMatrix) { m_ViewMatrix = ViewMatrix; }
+    void SetViewMatrix(const glm::mat4& viewMatrix) { m_ViewMatrix = viewMatrix; }
 
     glm::mat4 GetProjectionMatrix() const { return m_ProjectionMatrix; }
-    void SetProjectionMatrix(const glm::mat4& ProjectionMatrix) { m_ProjectionMatrix = ProjectionMatrix; }
+    void SetProjectionMatrix(const glm::mat4& projectionMatrix) { m_ProjectionMatrix = projectionMatrix; }
 };

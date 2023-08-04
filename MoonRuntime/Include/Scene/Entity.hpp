@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Collider.hpp"
+#include "CircleCollider.hpp"
 #include "Mesh.hpp"
 
 class Entity
@@ -13,54 +13,59 @@ public:
 
     virtual void UpdateDynamics(float dt)
     {
-        const glm::vec3 last_update_move = m_Position - m_LastPosition;
-        const glm::vec3 new_position = m_Position + last_update_move + (m_Acceleration - last_update_move * 40.0f) * (dt * dt);
         m_LastPosition = m_Position;
-        m_Position = new_position;
+        const glm::vec3 new_pos = m_Position + (dt * m_Velocity) + (0.5f * dt * dt * m_Acceleration);
+        const glm::vec3 new_acc = m_Acceleration;
+        const glm::vec3 new_vel = m_Velocity + (m_Acceleration + new_acc) * (dt * 0.5f);
+        m_Position = new_pos;
+        m_Velocity = new_vel;
         m_Acceleration = {0.0f, 0.0f, 0.0f};
 
-        // Updates the mesh's location with the entity's m_Position
-        glm::mat4 translation = glm::mat4(1.0f);
-        translation = glm::translate(translation, m_Position);
-        p_Mesh->SetTranslationMatrix(translation);
+        // Updates the mesh's location
+        if (p_Mesh)
+            p_Mesh->SetTranslationMatrix(glm::translate(glm::mat4(1.0f), m_Position));
+
+        // Updates the collider's location
+        if (p_Collider)
+            p_Collider->SetPosition(m_Position);
     }
 
 protected:
     MeshBase* p_Mesh = nullptr;
-    Collider* p_Collider = nullptr;
+    CircleCollider* p_Collider = nullptr;
 
     glm::vec3 m_Position = {0.0f, 0.0f, 0.0f};
     glm::vec3 m_LastPosition = {0.0f, 0.0f, 0.0f};
+    glm::vec3 m_Velocity = {0.0f, 0.0f, 0.0f};
     glm::vec3 m_Acceleration = {0.0f, 0.0f, 0.0f};
+    float m_Mass = 1.0f;
 
 public:
-    void AddAcceleration(const glm::vec3& acceleration) { m_Acceleration += acceleration; }
+    void ApplyAcceleration(const glm::vec3& acceleration) { m_Acceleration += acceleration; }
 
-    void SetPosition(const glm::vec3& position)
+    glm::vec3 GetPosition() const { return m_Position; }
+    void SetPosition(const glm::vec3& Position)
     {
-        m_Position = position;
-        m_LastPosition = position;
+        m_Position = Position;
+        if (p_Collider)
+            p_Collider->SetPosition(m_Position);
     }
 
-    void Stop() { m_LastPosition = m_Position; }
+    glm::vec3 GetVelocity() const { return m_Velocity; }
+    void SetVelocity(const glm::vec3& Velocity) { m_Velocity = Velocity; }
 
-    void Slowdown(float ratio) { m_LastPosition = m_LastPosition + ratio * (m_Position - m_LastPosition); }
-
-    float GetSpeed() const { return glm::length(m_Position - m_LastPosition); }
-
-    glm::vec3 GetVelocity() const { return m_Position - m_LastPosition; }
-
-    void AddVelocity(glm::vec3 v) { m_LastPosition -= v; }
-
-    void SetPositionSameSpeed(const glm::vec3& newPosition)
-    {
-        const glm::vec3 to_last = m_LastPosition - m_Position;
-        m_Position = newPosition;
-        m_LastPosition = m_Position + to_last;
-    }
-
-    void Move(const glm::vec3& deltaPosition) { m_Position += deltaPosition; }
+    glm::vec3 GetAcceleration() const { return m_Acceleration; }
+    void SetAcceleration(const glm::vec3& Acceleration) { m_Acceleration = Acceleration; }
 
     MeshBase* GetMesh() const { return p_Mesh; }
     void SetMesh(MeshBase* mesh) { p_Mesh = mesh; }
+
+    CircleCollider* GetCollider() const { return p_Collider; }
+    void SetCollider(CircleCollider* collider) { p_Collider = collider; }
+
+    float GetMass() const { return m_Mass; }
+    void SetMass(float mass) { m_Mass = mass; }
+
+    glm::vec3 GetLastPosition() const { return m_LastPosition; }
+    void SetLastPosition(const glm::vec3& lastPosition) { m_LastPosition = lastPosition; }
 };

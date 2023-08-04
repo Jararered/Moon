@@ -1,9 +1,8 @@
 #pragma once
 
-#include "BoxCollider2D.hpp"
 #include "Camera2D.hpp"
 #include "Camera3D.hpp"
-#include "Collider.hpp"
+#include "CircleCollider.hpp"
 #include "Engine.hpp"
 #include "Entity.hpp"
 #include "Input.hpp"
@@ -13,3 +12,4 @@
 #include "Shader.hpp"
 #include "Timer.hpp"
 #include "Window.hpp"
+
