@@ -27,14 +27,19 @@ public:
 
         auto blockShader = Shader();
         blockShader.Compile("Shaders/Chunk.vert", "Shaders/Chunk.frag");
-        int radius = 0;
+        int radius = 5;
+
+        ManualTimer timer("World generation");
+        timer.Start();
         for (int x = -radius; x < radius + 1; x++)
         {
-            for (int y = -100; y < 10; y++)
+            for (int y = 0; y < 10; y++)
             {
                 for (int z = -radius; z < radius + 1; z++)
                 {
-                    ChunkData* chunkData = new ChunkData(glm::vec3(x, y, z));
+                    ScopedTimer timer("Chunk generation");
+
+                    ChunkData* chunkData = new ChunkData({x, y, z});
                     auto mesh = new ChunkMesh(chunkData);
                     Entity* entity = new ChunkEntity();
                     entity->SetMesh(mesh);
@@ -43,6 +48,7 @@ public:
                 }
             }
         }
+        timer.Stop();
 
         renderer->Add(scenario);
 

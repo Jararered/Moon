@@ -20,14 +20,13 @@ public:
         m_OctreeData.setEmptyValue(Block(0));
 
         ChunkGenerator::Initialize();
-        GeneratePlanet();
+        GenerateChunkData();
     }
 
     const Block& GetBlock(int x, int y, int z) { return m_OctreeData.at(x, y, z); }
-
     void SetBlock(int x, int y, int z, const Block& block) { m_OctreeData(x, y, z) = block; }
 
-    void GeneratePlanet()
+    void GenerateChunkData()
     {
         for (int z = 0; z < CHUNK_SIZE; z++)
         {
@@ -53,6 +52,7 @@ public:
                 }
             }
         }
+        std::cout << "Chunk generated, using " << m_OctreeData.bytes() << " bytes.\n";
     }
 
     glm::ivec3 GetChunkIndex() const { return m_ChunkIndex; }

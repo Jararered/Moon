@@ -13,14 +13,7 @@ public:
     ChunkEntity() = default;
     ~ChunkEntity() = default;
 
-    void Update(float dt) override
-    {
-        float distance = (glm::sin(Engine::GetTime()) + 1.0f) / 2.0f;
-        glm::vec3 newPosition = m_Position;
-
-        glm::mat4 matrix = glm::translate(glm::mat4(1.0f), m_Position);
-        p_Mesh->SetTranslationMatrix(matrix);
-    }
+    void Update(float dt) override {}
 
 private:
     ChunkData m_ChunkData;
