@@ -27,7 +27,7 @@ protected:
     glm::mat4 m_RotationMatrix = glm::mat4(1.0f);
 
 public:
-    Shader& GetShader() { return m_Shader; }
+    Shader GetShader() const { return m_Shader; }
     void SetShader(const Shader& shader) { m_Shader = shader; }
 
     Texture GetTexture() const { return m_Texture; }
