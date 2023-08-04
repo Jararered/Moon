@@ -49,7 +49,7 @@ void Renderer::Render(Scenario* scenario)
     for (auto& entity : scenario->GetEntities())
     {
         auto mesh = entity->GetMesh();
-        auto& shader = mesh->GetShader();
+        auto shader = mesh->GetShader();
 
         shader.Bind();
 
