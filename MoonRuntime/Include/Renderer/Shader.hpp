@@ -14,7 +14,7 @@ public:
     Shader() = default;
     ~Shader() = default;
 
-    void Compile(const char* vertFile, const char* fragFile);
+    void Compile(const std::string& vertFile, const std::string& fragFile);
 
     void Bind();
     void Unbind();

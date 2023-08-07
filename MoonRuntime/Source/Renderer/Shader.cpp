@@ -5,7 +5,7 @@
 #include <fstream>
 #include <iostream>
 
-void Shader::Compile(const char* vertFile, const char* fragFile)
+void Shader::Compile(const std::string& vertFile, const std::string& fragFile)
 {
     // Vertex Shader
     unsigned int vertexID;
