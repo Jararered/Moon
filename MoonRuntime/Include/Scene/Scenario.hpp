@@ -16,15 +16,15 @@ public:
         for (auto entity : m_Entities)
             entity->Update(dt);
 
-        UpdateCollisions();
+        UpdateCollisions(dt);
 
-        UpdateBoundaries();
+        UpdateBoundaries(dt);
 
         if (p_Camera)
             p_Camera->Update(dt);
     }
 
-    void UpdateCollisions()
+    void UpdateCollisions(float dt)
     {
         for (auto entity1 : m_Entities)
         {
@@ -32,26 +32,31 @@ public:
             {
                 if (entity1 != entity2)
                 {
-                    if (!entity1->GetCollider()->IsIntersect(entity2->GetCollider()))
-                        return;
+                    glm::vec3 pos1 = entity1->GetPosition();
+                    glm::vec3 pos2 = entity2->GetPosition();
+
+                    float damp = 0.75f;
+                    glm::vec3 collisionAxis = pos1 - pos2;
+                    float distance = glm::length(collisionAxis);
+                    float minDistance = entity1->GetCollider()->GetRadius() + entity2->GetCollider()->GetRadius();
+                    if (distance > minDistance)
+                        continue;
 
                     std::cout << "Collision!\n";
 
-                    glm::vec3 p1 = entity1->GetPosition();
-                    glm::vec3 p2 = entity2->GetPosition();
                     glm::vec3 v1 = entity1->GetVelocity();
                     glm::vec3 v2 = entity2->GetVelocity();
 
                     float m1 = entity1->GetMass();
                     float m2 = entity2->GetMass();
 
-                    glm::vec3 dir = glm::normalize(p2 - p1);
+                    float vmag1 = glm::length(((m1 - m2) / (m1 + m2)) * v1 + ((m2 + m2) / (m1 + m2)) * v2);
+                    glm::vec3 dir1 = glm::normalize(-collisionAxis);
+                    float vmag2 = glm::length(((m2 + m2) / (m1 + m2)) * v1 + ((m2 - m1) / (m1 + m2)) * v2);
+                    glm::vec3 dir2 = glm::normalize(collisionAxis);
 
-                    glm::vec3 vf1 = ((m1 - m2) / (m1 + m2)) * v1 + ((m2 + m2) / (m1 + m2)) * v2;
-                    glm::vec3 vf2 = ((m2 + m2) / (m1 + m2)) * v1 + ((m2 - m1) / (m1 + m2)) * v2;
-
-                    entity1->SetVelocity(glm::length(vf1) * dir * -1.0f);
-                    entity2->SetVelocity(glm::length(vf2) * dir);
+                    entity1->SetVelocity(damp * vmag1 * dir1);
+                    entity2->SetVelocity(damp * vmag2 * dir2);
 
                     entity1->SetPosition(entity1->GetLastPosition());
                     entity2->SetPosition(entity2->GetLastPosition());
@@ -60,21 +65,19 @@ public:
         }
     }
 
-    void UpdateBoundaries()
+    void UpdateBoundaries(float dt)
     {
         float damp = 0.75f;
         for (auto entity : m_Entities)
         {
-            auto collider = entity->GetCollider();
-
             float posy = 1080.0f / 2.0f;
             float negy = -1080.0f / 2.0f;
             float posx = 1920.0f / 2.0f;
             float negx = -1920.0f / 2.0f;
 
             glm::vec3 position = entity->GetPosition();
-            glm::vec3 lastPosition = entity->GetPosition();
-            glm::vec3 velocity = entity->GetVelocity();
+            glm::vec3 lastPosition = entity->GetLastPosition();
+            glm::vec3 velocity = entity->GetVelocity() * damp;
             float radius = entity->GetCollider()->GetRadius();
 
             if (position.x + radius > posx)

@@ -24,10 +24,6 @@ public:
         // Updates the mesh's location
         if (p_Mesh)
             p_Mesh->SetTranslationMatrix(glm::translate(glm::mat4(1.0f), m_Position));
-
-        // Updates the collider's location
-        if (p_Collider)
-            p_Collider->SetPosition(m_Position);
     }
 
 protected:
@@ -47,8 +43,8 @@ public:
     void SetPosition(const glm::vec3& Position)
     {
         m_Position = Position;
-        if (p_Collider)
-            p_Collider->SetPosition(m_Position);
+        if (p_Mesh)
+            p_Mesh->SetTranslationMatrix(glm::translate(glm::mat4(1.0f), m_Position));
     }
 
     glm::vec3 GetVelocity() const { return m_Velocity; }

@@ -32,13 +32,13 @@ public:
 
         for (int i = -5; i < 5; i++)
         {
-            glm::vec3 position = {i * 67.0f, 0.0f, 0.0f};
+            glm::vec3 position = {i * 100.0f, 0.0f, 0.0f};
             glm::vec3 velocity = {i * 73.0f, i * 100.0f, 0.0f};
             float size = 50.0f;
 
             auto entity = new SquareEntity();
             auto mesh = new SquareMesh(size);
-            auto collider = new CircleCollider(position, size);
+            auto collider = new CircleCollider(size / 2.0f);
 
             entity->SetPosition(position);
             entity->SetVelocity(velocity);
