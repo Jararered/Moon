@@ -3,18 +3,9 @@
 #include <glm/geometric.hpp>
 #include <glm/vec3.hpp>
 
-class CircleCollider
+struct CircleCollider
 {
-public:
-    CircleCollider() = default;
-    virtual ~CircleCollider() = default;
+    CircleCollider(float radius) : Radius(radius) {}
 
-    CircleCollider(float radius) : m_Radius(radius) {}
-
-private:
-    float m_Radius;
-
-public:
-    float GetRadius() const { return m_Radius; }
-    void SetRadius(float radius) { m_Radius = radius; }
+    float Radius = 0.0f;
 };
