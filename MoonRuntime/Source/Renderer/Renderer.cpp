@@ -19,24 +19,21 @@ void Renderer::Update(float dt)
 {
     PollDebugControls();
 
-    if (m_Scenarios.empty())
+    if (!p_Scenario)
         return;
 
-    for (auto scenario : m_Scenarios)
-    {
-        scenario->Update(dt);
-        Render(scenario);
-    }
+    p_Scenario->Update(dt);
+    Render();
 }
 
-void Renderer::Render(Scenario* scenario)
+void Renderer::Render()
 {
-    auto camera = scenario->GetCamera();
+    auto camera = p_Scenario->GetCamera();
 
-    if (camera->GetSkybox())
+    if (p_Scenario->GetSkybox())
     {
-        camera->GetSkybox()->UpdatePosition();
-        auto mesh = camera->GetSkybox()->GetMesh();
+        p_Scenario->GetSkybox()->UpdatePosition();
+        auto mesh = p_Scenario->GetSkybox()->GetMesh();
         auto shader = mesh->GetShader();
         shader.Bind();
         shader.SetMatrix("u_TranslationMatrix", mesh->GetTranslationMatrix());
@@ -46,7 +43,7 @@ void Renderer::Render(Scenario* scenario)
         mesh->Draw();
     }
 
-    for (auto& entity : scenario->GetEntities())
+    for (auto& entity : p_Scenario->GetEntities())
     {
         auto mesh = entity->GetMesh();
         auto shader = mesh->GetShader();

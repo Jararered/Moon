@@ -15,15 +15,17 @@ public:
         spec.VSync = true;
         spec.API = WindowSpecification::GraphicsAPI::OpenGL;
 
-        auto window = GetWindow(spec);
+        auto window = CreateWindow(spec);
         auto renderer = window->CreateRenderer();
+
         auto scenario = new Scenario;
 
         auto camera = new Camera3D;
         camera->SetAspectRatio(spec.Width / spec.Height);
         camera->SetPosition({0.0f, 0.0f, 60.0f});
-        camera->SetSkybox("Textures/sky.png");
         scenario->SetCamera(camera);
+
+        scenario->SetSkybox("Textures/sky.png");
 
         auto blockShader = Shader();
         blockShader.Compile("Shaders/Chunk.vert", "Shaders/Chunk.frag");
@@ -50,7 +52,7 @@ public:
         }
         timer.Stop();
 
-        renderer->Add(scenario);
+        renderer->SetScenario(scenario);
 
         while (window->IsRunning())
         {

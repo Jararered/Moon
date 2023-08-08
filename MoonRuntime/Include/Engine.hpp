@@ -19,5 +19,5 @@ protected:
 
 public:
     static double GetTime();
-    Window* GetWindow(const WindowSpecification& spec);
+    Window* CreateWindow(const WindowSpecification& spec);
 };

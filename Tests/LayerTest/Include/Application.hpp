@@ -2,8 +2,6 @@
 
 #include <Moon.hpp>
 
-#include "ChunkEntity.hpp"
-
 class Application : public Engine
 {
 public:
@@ -16,7 +14,7 @@ public:
         spec.API = WindowSpecification::GraphicsAPI::OpenGL;
         spec.EnableImgui = true;
 
-        auto window = GetWindow(spec);
+        auto window = CreateWindow(spec);
         auto layer = Layer();
         window->AddLayer(layer);
 
@@ -24,35 +22,15 @@ public:
         auto scenario = new Scenario;
 
         auto camera = new Camera3D;
-        camera->SetAspectRatio(spec.Width / spec.Height);
-        camera->SetPosition({0.0f, 0.0f, 60.0f});
-        camera->SetSkybox("Textures/sky.png");
         scenario->SetCamera(camera);
 
-        auto blockShader = Shader();
-        blockShader.Compile("Shaders/Chunk.vert", "Shaders/Chunk.frag");
-        int radius = 4;
-        for (int x = -radius; x < radius + 1; x++)
-        {
-            for (int y = 2; y < 4; y++)
-            {
-                for (int z = -radius; z < radius + 1; z++)
-                {
-                    ChunkData* chunkData = new ChunkData(glm::vec3(x, y, z));
-                    auto mesh = new ChunkMesh(chunkData);
-                    Entity* entity = new ChunkEntity();
-                    entity->SetMesh(mesh);
-                    entity->GetMesh()->SetShader(blockShader);
-                    scenario->AddEntity(entity);
-                }
-            }
-        }
+        camera->SetAspectRatio(spec.Width / spec.Height);
+        camera->SetPosition({0.0f, 0.0f, 60.0f});
 
-        renderer->Add(scenario);
+        renderer->SetScenario(scenario);
 
         while (window->IsRunning())
         {
-
             Engine::Update();
         }
     }

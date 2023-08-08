@@ -87,12 +87,19 @@ void OpenGLWindow::Update(float dt)
     {
         for (auto& layer : m_LayerVector)
         {
-            layer.Update(dt);
+            ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplGlfw_NewFrame();
+            ImGui::NewFrame();
+
+            ImGui::Begin("Test");
+
+            layer.Update();
+
+            ImGui::End();
         }
+
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        ImGuiIO& io = ImGui::GetIO();
-        std::cout << io.MousePos.x << ", " << io.MousePos.y << "\n";
     }
 
     glfwSwapBuffers(p_GLFWwindow);

@@ -16,7 +16,7 @@ public:
         spec.VSync = true;
         spec.API = WindowSpecification::GraphicsAPI::OpenGL;
 
-        auto window = Engine::GetWindow(spec);
+        auto window = Engine::CreateWindow(spec);
         auto renderer = window->CreateRenderer();
 
         auto scenario = new Scenario;
@@ -50,7 +50,7 @@ public:
             scenario->AddEntity(entity);
         }
 
-        renderer->Add(scenario);
+        renderer->SetScenario(scenario);
 
         while (window->IsRunning())
         {

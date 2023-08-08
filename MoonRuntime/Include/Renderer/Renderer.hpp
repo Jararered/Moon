@@ -11,12 +11,17 @@ public:
     ~Renderer() = default;
 
     void Update(float dt);
+    void Render();
 
-    void Add(Scenario* scenario) { m_Scenarios.push_back(scenario); }
-    void Render(Scenario* scenario);
+    void SetScenario(Scenario* scenario)
+    {
+        if (p_Scenario)
+            delete p_Scenario;
+        p_Scenario = scenario;
+    }
 
 private:
-    std::vector<Scenario*> m_Scenarios;
+    Scenario* p_Scenario = nullptr;
 
 public:
     void PollDebugControls();

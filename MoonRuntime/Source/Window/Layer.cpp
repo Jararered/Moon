@@ -4,15 +4,9 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
-void Layer::Update(float dt)
+void Layer::Update()
 {
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
-
     ImGuiIO& io = ImGui::GetIO();
-
-    ImGui::Begin("Hello, world!");
 
     ImGui::Text("This is some useful text.");
 
@@ -26,5 +20,4 @@ void Layer::Update(float dt)
     ImGui::Text("counter = %d", counter);
 
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-    ImGui::End();
 }

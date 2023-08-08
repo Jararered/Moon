@@ -6,5 +6,5 @@ public:
     Layer() = default;
     ~Layer() = default;
 
-    void Update(float dt);
+    void Update();
 };
