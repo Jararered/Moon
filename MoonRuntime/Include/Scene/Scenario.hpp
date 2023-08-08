@@ -32,13 +32,13 @@ public:
             {
                 if (entity1 != entity2)
                 {
-                    glm::vec3 pos1 = entity1->GetPosition();
-                    glm::vec3 pos2 = entity2->GetPosition();
+                    glm::vec3 position1 = entity1->GetPosition();
+                    glm::vec3 position2 = entity2->GetPosition();
 
                     float damp = 0.75f;
-                    glm::vec3 collisionAxis = pos1 - pos2;
+                    glm::vec3 collisionAxis = position1 - position2;
                     float distance = glm::length(collisionAxis);
-                    float minDistance = entity1->GetCollider()->GetRadius() + entity2->GetCollider()->GetRadius();
+                    float minDistance = entity1->GetCollider()->Radius + entity2->GetCollider()->Radius;
                     if (distance > minDistance)
                         continue;
 
@@ -78,7 +78,7 @@ public:
             glm::vec3 position = entity->GetPosition();
             glm::vec3 lastPosition = entity->GetLastPosition();
             glm::vec3 velocity = entity->GetVelocity() * damp;
-            float radius = entity->GetCollider()->GetRadius();
+            float radius = entity->GetCollider()->Radius;
 
             if (position.x + radius > posx)
             {
