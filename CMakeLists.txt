@@ -3,16 +3,17 @@ cmake_minimum_required(VERSION 3.26)
 get_filename_component(Project ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 project(${Project})
 
-set (CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 23)
 
 set(InstallDir ${CMAKE_SOURCE_DIR})
 
 set(MoonIncludeDirs
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Collider
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Renderer
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Scene
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Include/Window
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Source
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/Components
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/ECS
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/Layer
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/Systems
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/Window
 )
 
 set(LibraryIncludeDirs
