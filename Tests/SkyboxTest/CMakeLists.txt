@@ -4,10 +4,12 @@ get_filename_component(Project ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 project(${Project})
 
 file(GLOB_RECURSE ProjectSourceFiles Source/*.cpp)
+file(GLOB_RECURSE ProjectHeaderFiles Source/*.hpp)
 
 add_executable(
     ${Project}
     ${ProjectSourceFiles}
+    ${ProjectHeaderFiles}
     ${LibrarySourceFiles}
 )
 

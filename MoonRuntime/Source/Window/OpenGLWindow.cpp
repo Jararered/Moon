@@ -51,15 +51,15 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     else
         glfwSwapInterval(0);
 
-    if (spec.EnableImgui)
-    {
-        const char* glsl_version = "#version 150";
-        IMGUI_CHECKVERSION();
-        ImGui::CreateContext();
-        ImGui::StyleColorsDark();
-        ImGui_ImplGlfw_InitForOpenGL(p_GLFWwindow, true);
-        ImGui_ImplOpenGL3_Init(glsl_version);
-    }
+    // if (spec.EnableImgui)
+    // {
+    //     const char* glsl_version = "#version 150";
+    //     IMGUI_CHECKVERSION();
+    //     ImGui::CreateContext();
+    //     ImGui::StyleColorsDark();
+    //     ImGui_ImplGlfw_InitForOpenGL(p_GLFWwindow, true);
+    //     ImGui_ImplOpenGL3_Init(glsl_version);
+    // }
 }
 
 OpenGLWindow::~OpenGLWindow()
@@ -71,47 +71,14 @@ void OpenGLWindow::Update(float dt)
 {
     glfwPollEvents();
 
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     if (!Input::IsMouseCaptured() && Input::IsLeftClick() && !(m_WindowSpecification.EnableImgui && ImGui::GetIO().WantCaptureMouse))
         Input::CaptureCursor();
 
     if (Input::IsKeyPressed(KEY_ESCAPE) && Input::IsMouseCaptured())
         Input::ReleaseCursor();
-
-    if (p_Renderer)
-        p_Renderer->Update(dt);
-
-    if (!m_LayerVector.empty())
-    {
-        for (auto& layer : m_LayerVector)
-        {
-            ImGui_ImplOpenGL3_NewFrame();
-            ImGui_ImplGlfw_NewFrame();
-            ImGui::NewFrame();
-
-            ImGui::Begin("Test");
-
-            layer.Update();
-
-            ImGui::End();
-        }
-
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    }
-
-    glfwSwapBuffers(p_GLFWwindow);
 }
 
 bool OpenGLWindow::IsRunning()
 {
     return !glfwWindowShouldClose(p_GLFWwindow);
-}
-
-Renderer* OpenGLWindow::CreateRenderer()
-{
-    p_Renderer = new Renderer;
-    return p_Renderer;
 }

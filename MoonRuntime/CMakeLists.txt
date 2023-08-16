@@ -6,7 +6,7 @@ project(${Project})
 set(CMAKE_DEBUG_POSTFIX -debug)
 
 file(GLOB_RECURSE ProjectSourceFiles Source/*.cpp)
-file(GLOB_RECURSE ProjectHeaderFiles Include/*.hpp)
+file(GLOB_RECURSE ProjectHeaderFiles Source/*.hpp)
 
 set(LibrarySourceFiles
     ${CMAKE_SOURCE_DIR}/Libraries/imgui/source/imgui_draw.cpp
