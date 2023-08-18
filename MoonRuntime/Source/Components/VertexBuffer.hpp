@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Debug.hpp"
+
 #include <glad/gl.h>
 #include <iostream>
 #include <vector>
@@ -33,7 +35,7 @@ public:
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-        std::cout << "Generated: VAO " << m_VAO << ", VBO " << m_VBO << ", IBO " << m_IBO << "\n";
+        DebugOutput("VAO " << m_VAO << ", VBO " << m_VBO << ", IBO " << m_IBO);
     }
 
     void Delete()

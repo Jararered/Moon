@@ -4,37 +4,38 @@
 
 bool Input::IsKeyPressed(int keycode)
 {
-    return glfwGetKey(glfwGetCurrentContext(), keycode) == GLFW_PRESS;
+    const int state = glfwGetKey(glfwGetCurrentContext(), keycode);
+    return state == GLFW_PRESS;
 }
 
 bool Input::IsMouseButtonPressed(int mouseButtonCode)
 {
-    int state = glfwGetMouseButton(glfwGetCurrentContext(), mouseButtonCode);
+    const int state = glfwGetMouseButton(glfwGetCurrentContext(), mouseButtonCode);
     return state == GLFW_PRESS;
 }
 
 bool Input::IsLeftClick()
 {
-    int state = glfwGetMouseButton(glfwGetCurrentContext(), MOUSE_BUTTON_LEFT);
+    const int state = glfwGetMouseButton(glfwGetCurrentContext(), MOUSE_BUTTON_LEFT);
     return state == GLFW_PRESS;
 }
 
 bool Input::IsRightClick()
 {
-    int state = glfwGetMouseButton(glfwGetCurrentContext(), MOUSE_BUTTON_RIGHT);
+    const int state = glfwGetMouseButton(glfwGetCurrentContext(), MOUSE_BUTTON_RIGHT);
     return state == GLFW_PRESS;
 }
 
 glm::vec2 Input::GetMousePosition()
 {
-    glm::dvec2 position;
+    glm::dvec2 position = {0.0, 0.0};
     glfwGetCursorPos(glfwGetCurrentContext(), &position.x, &position.y);
     return {static_cast<float>(position.x), static_cast<float>(-position.y)};
 }
 
 bool Input::IsMouseCaptured()
 {
-    int option = glfwGetInputMode(glfwGetCurrentContext(), GLFW_CURSOR);
+    const int option = glfwGetInputMode(glfwGetCurrentContext(), GLFW_CURSOR);
     return option == GLFW_CURSOR_DISABLED;
 }
 
@@ -63,7 +64,7 @@ void Input::CaptureCursor()
 
 void Input::ReleaseCursor()
 {
-    glm::ivec2 position;
+    glm::ivec2 position = {0, 0};
     glfwGetWindowSize(glfwGetCurrentContext(), &position.x, &position.y);
     glfwSetInputMode(glfwGetCurrentContext(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     glfwSetCursorPos(glfwGetCurrentContext(), static_cast<double>(position.x / 2), static_cast<double>(position.y / 2));

@@ -13,26 +13,26 @@ class Application : public Engine
 public:
     void Start()
     {
-        auto shaderID = Shader::CreateShader("Shaders/PositionColorTexture.vert", "Shaders/PositionColorTexture.frag");
-        auto textureID = Texture::CreateTexture("Textures/Circle.png");
-        float diameter = 5.0f;
-        unsigned int count = 50;
+        const auto shaderID = Shader::CreateShader("Shaders/PositionColorTexture.vert", "Shaders/PositionColorTexture.frag");
+        const auto textureID = Texture::CreateTexture("Textures/Circle.png");
+        const float diameter = 5.0f;
+        const unsigned int count = 50;
 
         for (unsigned int i = 0; i < count; i++)
         {
-            float randomx = -20.0f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX) / (20.0f + 20.0f));
-            float randomy = -20.0f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX) / (20.0f + 20.0f));
-            float r = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-            float g = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-            float b = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+            const float x = Random::Value<float>(-20.0f, 20.0f);
+            const float y = Random::Value<float>(-20.0f, 20.0f);
+            const float r = Random::Value<float>(0.0f, 1.0f);
+            const float g = Random::Value<float>(0.0f, 1.0f);
+            const float b = Random::Value<float>(0.0f, 1.0f);
 
-            std::cout << randomx << ", " << randomy << "\n";
+            std::cout << x << ", " << y << "\n";
 
-            Entity ball = g_Coordinator.CreateEntity();
+            const Entity ball = g_Coordinator.CreateEntity();
             MeshBase* mesh = new SquareMesh(glm::vec3(r, g, b));
             g_Coordinator.AddComponent<Mesh>(ball, Mesh{.p_Mesh = mesh});
-            g_Coordinator.AddComponent<Transform>(ball, Transform{.Position = {randomx, randomy, 0.0f}, .Rotation = {0.0f, 0.0f, 0.0f}, .Scale = {diameter, diameter, diameter}});
-            g_Coordinator.AddComponent<RigidBody>(ball, RigidBody{.LastPosition = {randomx, randomy, 0.0f}});
+            g_Coordinator.AddComponent<Transform>(ball, Transform{.Position = {x, y, 0.0f}, .Rotation = {0.0f, 0.0f, 0.0f}, .Scale = {diameter, diameter, diameter}});
+            g_Coordinator.AddComponent<RigidBody>(ball, RigidBody{.LastPosition = {x, y, 0.0f}});
             g_Coordinator.AddComponent<Gravity>(ball, Gravity{.Force = {0.0f, -9.81f * 10.0f, 0.0f}});
             g_Coordinator.AddComponent<Collider>(ball, Collider{.Radius = diameter / 2.0f});
             g_Coordinator.AddComponent<Shader>(ball, Shader{.ID = shaderID});
@@ -41,7 +41,7 @@ public:
 
         while (p_Window->IsRunning())
         {
-            auto frameStartTime = std::chrono::high_resolution_clock::now();
+            const auto frameStartTime = std::chrono::high_resolution_clock::now();
 
             Update();
 
@@ -49,7 +49,7 @@ public:
             p_VerletSystem->Update(m_DeltaFrameTime);
             p_RenderSystem->Update(m_DeltaFrameTime);
 
-            auto frameEndTime = std::chrono::high_resolution_clock::now();
+            const auto frameEndTime = std::chrono::high_resolution_clock::now();
             m_DeltaFrameTime = std::chrono::duration<float, std::chrono::seconds::period>(frameEndTime - frameStartTime).count();
         }
     }

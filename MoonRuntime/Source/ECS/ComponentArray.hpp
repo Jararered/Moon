@@ -25,7 +25,7 @@ public:
         assert(m_EntityToIndexMap.find(entity) == m_EntityToIndexMap.end() && "Component added to same entity more than once.");
 
         // Put new entry at end and update the maps
-        size_t newIndex = m_Size;
+        const size_t newIndex = m_Size;
         m_EntityToIndexMap[entity] = newIndex;
         m_IndexToEntityMap[newIndex] = entity;
         m_ComponentArray[newIndex] = component;
@@ -37,12 +37,12 @@ public:
         assert(m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end() && "Removing non-existent component.");
 
         // Copy element at end into deleted element's place to maintain density
-        size_t indexOfRemovedEntity = m_EntityToIndexMap[entity];
-        size_t indexOfLastElement = m_Size - 1;
+        const size_t indexOfRemovedEntity = m_EntityToIndexMap[entity];
+        const size_t indexOfLastElement = m_Size - 1;
         m_ComponentArray[indexOfRemovedEntity] = m_ComponentArray[indexOfLastElement];
 
         // Update map to point to moved spot
-        Entity entityOfLastElement = m_IndexToEntityMap[indexOfLastElement];
+        const Entity entityOfLastElement = m_IndexToEntityMap[indexOfLastElement];
         m_EntityToIndexMap[entityOfLastElement] = indexOfRemovedEntity;
         m_IndexToEntityMap[indexOfRemovedEntity] = entityOfLastElement;
 

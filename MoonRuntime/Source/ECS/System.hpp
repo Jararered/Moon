@@ -7,6 +7,9 @@
 class System
 {
 public:
+    System() = default;
+    virtual ~System() = default;
+
     virtual void Initialize() = 0;
     virtual void Update(float dt) = 0;
     virtual void Finalize() = 0;

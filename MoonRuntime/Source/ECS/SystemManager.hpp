@@ -18,7 +18,7 @@ public:
         assert(m_Systems.find(typeName) == m_Systems.end() && "Registering system more than once.");
 
         // Create a pointer to the system and return it so it can be used externally
-        auto system = std::make_shared<T>();
+        const auto system = std::make_shared<T>();
         m_Systems.insert({typeName, system});
         return system;
     }

@@ -18,6 +18,7 @@
 
 #include "Camera.hpp"
 #include "Collider.hpp"
+#include "Debug.hpp"
 #include "Gravity.hpp"
 #include "Mesh.hpp"
 #include "RigidBody.hpp"

@@ -8,18 +8,19 @@
 
 #include <iostream>
 
+#include "Debug.hpp"
 #include "Input.hpp"
 
 OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
 {
     if (!glfwInit())
-        std::cout << "OpenGLWindow::OpenGLWindow(): Failed to initialize GLFW.\n";
+        DebugOutput("Failed to initialize GLFW");
 
 #ifdef UNIX
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_TRUE);
 #endif
-    int major(3), minor(3);
+    const int major(3), minor(3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -28,7 +29,7 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     p_GLFWwindow = glfwCreateWindow(spec.Width, spec.Height, "Moon (OpenGL 3.3)", NULL, NULL);
     if (!p_GLFWwindow)
     {
-        std::cout << "OpenGLWindow::OpenGLWindow(): Failed to create OpenGL window.\n";
+        DebugOutput("Failed to create OpenGL window");
         glfwTerminate();
         return;
     }
@@ -36,10 +37,10 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     // Make the window's context current
     glfwMakeContextCurrent(p_GLFWwindow);
 
-    int version = gladLoadGL(glfwGetProcAddress);
+    const int version = gladLoadGL(glfwGetProcAddress);
     if (version == 0)
     {
-        std::cout << "OpenGLWindow::OpenGLWindow(): Failed to initialize OpenGL context.\n";
+        DebugOutput("Failed to initialize OpenGL context");
         glfwTerminate();
         return;
     }

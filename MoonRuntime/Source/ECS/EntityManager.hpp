@@ -25,7 +25,7 @@ public:
         assert(m_LivingEntityCount < MAX_ENTITIES && "Too many entities in existence.");
 
         // Take an ID from the front of the queue
-        Entity id = m_AvailableEntities.front();
+        const Entity id = m_AvailableEntities.front();
         m_AvailableEntities.pop();
         ++m_LivingEntityCount;
 

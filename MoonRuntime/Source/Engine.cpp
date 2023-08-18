@@ -6,6 +6,7 @@
 
 #include "Components.hpp"
 #include "Coordinator.hpp"
+#include "Debug.hpp"
 #include "OpenGLWindow.hpp"
 
 Coordinator g_Coordinator;
@@ -13,7 +14,7 @@ Coordinator g_Coordinator;
 void Engine::Initialize()
 {
     std::filesystem::path cwd = std::filesystem::current_path();
-    std::cout << "Engine::Engine(): Current working directory: " << cwd.string() << "\n";
+    DebugOutput("Current working directory: " << cwd.string());
 
     g_Coordinator.Initialize();
     g_Coordinator.RegisterComponent<Camera>();
@@ -66,7 +67,7 @@ void Engine::Update()
 
 Window* Engine::CreateWindow(const WindowSpecification& spec)
 {
-    std::cout << "Engine::CreateWindow(): Creating window\n";
+    DebugOutput("Creating window");
 
     switch (spec.API)
     {
@@ -77,17 +78,17 @@ Window* Engine::CreateWindow(const WindowSpecification& spec)
     }
     case WindowSpecification::GraphicsAPI::Vulkan:
     {
-        std::cout << "Engine::CreateWindow(): Vulkan graphics API not implemented\n";
+        DebugOutput("Vulkan graphics API not implemented");
         return nullptr;
     }
     case WindowSpecification::GraphicsAPI::Metal:
     {
-        std::cout << "Engine::CreateWindow(): Metal graphics API not implemented\n";
+        DebugOutput("Metal graphics API not implemented");
         return nullptr;
     }
     default:
     {
-        std::cout << "Engine::CreateWindow(): No graphics API selected\n";
+        DebugOutput("No graphics API selected");
         return nullptr;
     }
     }
