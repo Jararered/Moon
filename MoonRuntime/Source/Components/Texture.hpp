@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Debug.hpp"
+
 #include <stb_image.h>
 #include <string>
 
@@ -13,7 +15,7 @@ struct Texture
         unsigned char* data = stbi_load(textureFile.c_str(), &width, &height, &channels, 0);
         if (!data)
         {
-            std::cout << "Texture::Create(): Unable to load specified file. (" << textureFile << ")\n";
+            DebugOutput("Unable to load specified file. (" << textureFile << ")");
             return 0;
         }
 

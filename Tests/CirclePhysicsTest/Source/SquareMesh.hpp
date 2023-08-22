@@ -5,7 +5,7 @@
 class SquareMesh : public TMeshComponent<Vertex3D<glm::vec3, glm::vec3, glm::vec2>> // Position, Color, Texture
 {
 public:
-    SquareMesh(const glm::vec3& color)
+    SquareMesh(const glm::vec3& color = glm::vec3(1.0f))
     {
         auto& vertices = VertexBuffer.GetVertices();
         auto& indices = VertexBuffer.GetIndices();

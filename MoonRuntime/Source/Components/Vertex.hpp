@@ -1,13 +1,9 @@
 #pragma once
 
 #include <glad/gl.h>
-#include <glm/vec2.hpp>
-#include <glm/vec3.hpp>
-#include <glm/vec4.hpp>
 
-template <typename T1> class Vertex1D
+template <typename T1> struct Vertex1D
 {
-public:
     Vertex1D(const T1& data1) : m_Data1(data1) {}
 
     static void EnableVertexAttributes()
@@ -16,13 +12,11 @@ public:
         glEnableVertexAttribArray(0);
     }
 
-private:
     T1 m_Data1;
 };
 
-template <typename T1, typename T2> class Vertex2D
+template <typename T1, typename T2> struct Vertex2D
 {
-public:
     Vertex2D(const T1& data1, const T2& data2) : m_Data1(data1), m_Data2(data2) {}
 
     static void EnableVertexAttributes()
@@ -33,14 +27,12 @@ public:
         glEnableVertexAttribArray(1);
     }
 
-private:
     T1 m_Data1;
     T2 m_Data2;
 };
 
-template <typename T1, typename T2, typename T3> class Vertex3D
+template <typename T1, typename T2, typename T3> struct Vertex3D
 {
-public:
     Vertex3D(const T1& data1, const T2& data2, const T3& data3) : m_Data1(data1), m_Data2(data2), m_Data3(data3) {}
 
     static void EnableVertexAttributes()
@@ -53,15 +45,13 @@ public:
         glEnableVertexAttribArray(2);
     }
 
-private:
     T1 m_Data1;
     T2 m_Data2;
     T3 m_Data3;
 };
 
-template <typename T1, typename T2, typename T3, typename T4> class Vertex4D
+template <typename T1, typename T2, typename T3, typename T4> struct Vertex4D
 {
-public:
     Vertex4D(const T1& data1, const T2& data2, const T3& data3, const T4& data4) : m_Data1(data1), m_Data2(data2), m_Data3(data3), m_Data4(data4) {}
 
     static void EnableVertexAttributes()
@@ -76,7 +66,6 @@ public:
         glEnableVertexAttribArray(3);
     }
 
-private:
     T1 m_Data1;
     T2 m_Data2;
     T3 m_Data3;

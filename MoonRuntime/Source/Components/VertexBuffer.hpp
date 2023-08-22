@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-template <class VertexType> class VertexBuffer
+template <class T> class VertexBuffer
 {
 public:
     VertexBuffer() = default;
@@ -20,8 +20,8 @@ public:
         glGenBuffers(1, &m_VBO);
         glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-        glBufferData(GL_ARRAY_BUFFER, m_Vertices.size() * sizeof(VertexType), (void*)0, GL_STATIC_DRAW);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, m_Vertices.size() * sizeof(VertexType), m_Vertices.data());
+        glBufferData(GL_ARRAY_BUFFER, m_Vertices.size() * sizeof(T), (void*)0, GL_STATIC_DRAW);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, m_Vertices.size() * sizeof(T), m_Vertices.data());
 
         glGenBuffers(1, &m_IBO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
@@ -29,7 +29,7 @@ public:
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Indices.size() * sizeof(unsigned int), (void*)0, GL_STATIC_DRAW);
         glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, m_Indices.size() * sizeof(unsigned int), m_Indices.data());
 
-        VertexType::EnableVertexAttributes();
+        T::EnableVertexAttributes();
 
         glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -61,7 +61,7 @@ public:
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
 
         // Send data to buffers
-        glBufferSubData(GL_ARRAY_BUFFER, 0, m_Vertices.size() * sizeof(VertexType), m_Vertices.data());
+        glBufferSubData(GL_ARRAY_BUFFER, 0, m_Vertices.size() * sizeof(T), m_Vertices.data());
         glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, m_Indices.size() * sizeof(unsigned int), m_Indices.data());
 
         // Unbind Buffers
@@ -76,10 +76,10 @@ private:
     unsigned int m_VBO = 0;
     unsigned int m_IBO = 0;
 
-    std::vector<VertexType> m_Vertices;
+    std::vector<T> m_Vertices;
     std::vector<unsigned int> m_Indices;
 
 public:
-    inline std::vector<VertexType>& GetVertices() { return m_Vertices; }
+    inline std::vector<T>& GetVertices() { return m_Vertices; }
     inline std::vector<unsigned int>& GetIndices() { return m_Indices; }
 };

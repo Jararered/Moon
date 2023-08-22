@@ -16,20 +16,17 @@ public:
         const auto shaderID = Shader::CreateShader("Shaders/PositionColorTexture.vert", "Shaders/PositionColorTexture.frag");
         const auto textureID = Texture::CreateTexture("Textures/Circle.png");
         const float diameter = 5.0f;
-        const unsigned int count = 50;
+        const unsigned int count = 500;
+        TMeshBase* mesh = new SquareMesh();
 
         for (unsigned int i = 0; i < count; i++)
         {
-            const float x = Random::Value<float>(-20.0f, 20.0f);
-            const float y = Random::Value<float>(-20.0f, 20.0f);
-            const float r = Random::Value<float>(0.0f, 1.0f);
-            const float g = Random::Value<float>(0.0f, 1.0f);
-            const float b = Random::Value<float>(0.0f, 1.0f);
+            const float x = Random::Value<float>(-30.0f, 30.0f);
+            const float y = Random::Value<float>(-30.0f, 30.0f);
 
-            std::cout << x << ", " << y << "\n";
+            // std::cout << x << ", " << y << "\n";
 
             const Entity ball = g_Coordinator.CreateEntity();
-            MeshBase* mesh = new SquareMesh(glm::vec3(r, g, b));
             g_Coordinator.AddComponent<Mesh>(ball, Mesh{.p_Mesh = mesh});
             g_Coordinator.AddComponent<Transform>(ball, Transform{.Position = {x, y, 0.0f}, .Rotation = {0.0f, 0.0f, 0.0f}, .Scale = {diameter, diameter, diameter}});
             g_Coordinator.AddComponent<RigidBody>(ball, RigidBody{.LastPosition = {x, y, 0.0f}});

@@ -3,15 +3,15 @@
 #include "Vertex.hpp"
 #include "VertexBuffer.hpp"
 
-struct MeshBase
+struct TMeshBase
 {
-    MeshBase() = default;
-    virtual ~MeshBase() = default;
+    TMeshBase() = default;
+    virtual ~TMeshBase() = default;
 
     virtual void Draw() = 0;
 };
 
-template <typename VertexType> struct TMeshComponent : public MeshBase
+template <typename VertexType> struct TMeshComponent : public TMeshBase
 {
     void Draw() override
     {
@@ -25,5 +25,5 @@ template <typename VertexType> struct TMeshComponent : public MeshBase
 
 struct Mesh
 {
-    MeshBase* p_Mesh = nullptr;
+    TMeshBase* p_Mesh = nullptr;
 };

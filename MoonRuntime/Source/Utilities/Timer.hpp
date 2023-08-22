@@ -6,7 +6,7 @@
 class Timer
 {
 public:
-    Timer(const std::string& name);
+    Timer(const std::string& name = "Timer");
     virtual ~Timer() = default;
 
 protected:
@@ -18,14 +18,14 @@ protected:
 class ScopedTimer : protected Timer
 {
 public:
-    ScopedTimer(const std::string& name);
+    ScopedTimer(const std::string& name = "Timer");
     ~ScopedTimer();
 };
 
 class ManualTimer : protected Timer
 {
 public:
-    ManualTimer(const std::string& name);
+    ManualTimer(const std::string& name = "Timer");
     ~ManualTimer() = default;
 
     void Start();
