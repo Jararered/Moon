@@ -41,8 +41,8 @@ void VerletSystem::Update(float dt)
         {
             auto& transform1 = g_Coordinator.GetComponent<Transform>(entity1);
             auto& dynamics1 = g_Coordinator.GetComponent<Dynamics>(entity1);
-            auto& gravity1 = g_Coordinator.GetComponent<Gravity>(entity1);
             auto& verlet1 = g_Coordinator.GetComponent<Verlet>(entity1);
+            const auto& gravity1 = g_Coordinator.GetComponent<Gravity>(entity1);
 
             // Accumulate forces
             dynamics1.Acceleration += gravity1;
@@ -52,6 +52,7 @@ void VerletSystem::Update(float dt)
             {
                 if (entity1 == entity2)
                     continue;
+
                 auto& transform2 = g_Coordinator.GetComponent<Transform>(entity2);
                 auto& verlet2 = g_Coordinator.GetComponent<Verlet>(entity2);
 
@@ -72,8 +73,8 @@ void VerletSystem::Update(float dt)
             }
 
             // Check constraints
-            const float constraintRadius = 75.0f;
             const glm::vec3 constraintCenter = glm::vec3(0.0f);
+            const float constraintRadius = 75.0f;
             const float distanceMag = glm::distance(constraintCenter, transform1.Position);
 
             // Process constraints
