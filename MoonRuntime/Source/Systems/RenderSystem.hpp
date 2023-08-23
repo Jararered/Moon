@@ -14,12 +14,11 @@ public:
 private:
     Entity m_CameraEntity;
 
+    unsigned int m_CurrentShader = 0;
+    unsigned int m_CurrentTexture = 0;
+
     float m_NearClip;
     float m_FarClip;
 
     void PollDebugControls();
-    void EnableWireframes();
-    void DisableWireframes();
-    void EnableBackCulling();
-    void DisableBackCulling();
 };
