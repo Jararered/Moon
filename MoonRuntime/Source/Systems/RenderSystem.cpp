@@ -7,11 +7,26 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/trigonometric.hpp>
 
-#include "Components.hpp"
 #include "Coordinator.hpp"
 #include "Input.hpp"
 
+#include "Components/Camera.hpp"
+#include "Components/Mesh.hpp"
+#include "Components/Shader.hpp"
+#include "Components/Texture.hpp"
+#include "Components/Transform.hpp"
+
 extern Coordinator g_Coordinator;
+
+void RenderSystem::Register()
+{
+    Signature signature;
+    signature.set(g_Coordinator.GetComponentType<Mesh>());
+    signature.set(g_Coordinator.GetComponentType<Transform>());
+    signature.set(g_Coordinator.GetComponentType<Shader>());
+    signature.set(g_Coordinator.GetComponentType<Texture>());
+    g_Coordinator.SetSystemSignature<RenderSystem>(signature);
+}
 
 void RenderSystem::Initialize()
 {

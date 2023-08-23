@@ -4,8 +4,12 @@
 #include <memory>
 #include <string>
 
-#include "Systems.hpp"
 #include "Window.hpp"
+
+#include "Systems/CameraSystem.hpp"
+#include "Systems/PhysicsSystem.hpp"
+#include "Systems/RenderSystem.hpp"
+#include "Systems/VerletSystem.hpp"
 
 class Engine
 {

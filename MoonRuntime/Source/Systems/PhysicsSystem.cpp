@@ -31,7 +31,7 @@ void PhysicsSystem::Update(float dt)
 
             transform.Position += rigidBody.Velocity * stepDT;
 
-            rigidBody.Velocity += gravity.Force * stepDT;
+            rigidBody.Velocity += gravity * stepDT;
         }
     }
 }

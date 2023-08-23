@@ -4,10 +4,19 @@
 #include <glfw/glfw3.h>
 #include <iostream>
 
-#include "Components.hpp"
 #include "Coordinator.hpp"
 #include "Debug.hpp"
 #include "OpenGLWindow.hpp"
+
+#include "Components/Camera.hpp"
+#include "Components/Collider.hpp"
+#include "Components/Gravity.hpp"
+#include "Components/Index.hpp"
+#include "Components/Mesh.hpp"
+#include "Components/RigidBody.hpp"
+#include "Components/Shader.hpp"
+#include "Components/Texture.hpp"
+#include "Components/Transform.hpp"
 
 Coordinator g_Coordinator;
 
@@ -26,37 +35,9 @@ void Engine::Initialize()
     g_Coordinator.RegisterComponent<Texture>();
     g_Coordinator.RegisterComponent<Transform>();
 
-    p_RenderSystem = g_Coordinator.RegisterSystem<RenderSystem>();
-    {
-        Signature signature;
-        signature.set(g_Coordinator.GetComponentType<Mesh>());
-        signature.set(g_Coordinator.GetComponentType<Transform>());
-        signature.set(g_Coordinator.GetComponentType<Shader>());
-        signature.set(g_Coordinator.GetComponentType<Texture>());
-        g_Coordinator.SetSystemSignature<RenderSystem>(signature);
-    }
-
     p_CameraSystem = g_Coordinator.RegisterSystem<CameraSystem>();
-    {
-        Signature signature;
-        signature.set(g_Coordinator.GetComponentType<Transform>());
-        signature.set(g_Coordinator.GetComponentType<Camera>());
-        g_Coordinator.SetSystemSignature<CameraSystem>(signature);
-    }
-
     p_VerletSystem = g_Coordinator.RegisterSystem<VerletSystem>();
-    {
-        Signature signature;
-        signature.set(g_Coordinator.GetComponentType<Transform>());
-        signature.set(g_Coordinator.GetComponentType<Gravity>());
-        signature.set(g_Coordinator.GetComponentType<RigidBody>());
-        signature.set(g_Coordinator.GetComponentType<Collider>());
-        g_Coordinator.SetSystemSignature<VerletSystem>(signature);
-    }
-
-    p_RenderSystem->Initialize();
-    p_CameraSystem->Initialize();
-    p_VerletSystem->Initialize();
+    p_RenderSystem = g_Coordinator.RegisterSystem<RenderSystem>();
 }
 
 void Engine::Update()

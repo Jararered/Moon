@@ -13,6 +13,16 @@
 
 extern Coordinator g_Coordinator;
 
+void VerletSystem::Register()
+{
+    Signature signature;
+    signature.set(g_Coordinator.GetComponentType<Transform>());
+    signature.set(g_Coordinator.GetComponentType<Gravity>());
+    signature.set(g_Coordinator.GetComponentType<RigidBody>());
+    signature.set(g_Coordinator.GetComponentType<Collider>());
+    g_Coordinator.SetSystemSignature<VerletSystem>(signature);
+}
+
 void VerletSystem::Initialize()
 {
     DebugOutput("Physics using " << m_SubStepCount << " substeps");
@@ -35,7 +45,7 @@ void VerletSystem::Update(float dt)
             const auto& collider1 = g_Coordinator.GetComponent<Collider>(entity1);
 
             // Accumulate forces
-            rigidBody1.Acceleration += gravity1.Force;
+            rigidBody1.Acceleration += gravity1;
 
             // Check collisions with other entities
             for (const auto& entity2 : m_Entities)

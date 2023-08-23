@@ -13,6 +13,14 @@
 
 extern Coordinator g_Coordinator;
 
+void CameraSystem::Register()
+{
+    Signature signature;
+    signature.set(g_Coordinator.GetComponentType<Transform>());
+    signature.set(g_Coordinator.GetComponentType<Camera>());
+    g_Coordinator.SetSystemSignature<CameraSystem>(signature);
+}
+
 void CameraSystem::Initialize()
 {
 }
@@ -22,7 +30,6 @@ void CameraSystem::Update(float dt)
     for (const auto& entity : m_Entities)
     {
         auto& transform = g_Coordinator.GetComponent<Transform>(entity);
-        auto& cameraComponent = g_Coordinator.GetComponent<Camera>(entity);
 
         glm::vec3 positionDelta = {0.0f, 0.0f, 0.0f};
 
@@ -75,9 +82,11 @@ void CameraSystem::Update(float dt)
             positionDelta -= glm::vec3(0.0f, 1.0f, 0.0f);
 
         transform.Position += positionDelta * dt * 10.0f;
+
+        auto& cameraComponent = g_Coordinator.GetComponent<Camera>(entity);
         cameraComponent.ViewMatrix = glm::lookAt(transform.Position, (transform.Position + direction), glm::vec3(0.0f, 1.0f, 0.0f));
 
-        // std::cout << transform.Position.x << ", " << transform.Position.y << ", " << transform.Position.z << "\n";
+        std::cout << transform.Position.x << ", " << transform.Position.y << ", " << transform.Position.z << "\n";
     }
 }
 
