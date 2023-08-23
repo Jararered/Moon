@@ -4,10 +4,10 @@
 #include "Debug.hpp"
 #include "System.hpp"
 
-#include "Components/Collider.hpp"
+#include "Components/Dynamics.hpp"
 #include "Components/Gravity.hpp"
-#include "Components/RigidBody.hpp"
 #include "Components/Transform.hpp"
+#include "Components/Verlet.hpp"
 
 #include <iostream>
 
@@ -18,8 +18,8 @@ void VerletSystem::Register()
     Signature signature;
     signature.set(g_Coordinator.GetComponentType<Transform>());
     signature.set(g_Coordinator.GetComponentType<Gravity>());
-    signature.set(g_Coordinator.GetComponentType<RigidBody>());
-    signature.set(g_Coordinator.GetComponentType<Collider>());
+    signature.set(g_Coordinator.GetComponentType<Dynamics>());
+    signature.set(g_Coordinator.GetComponentType<Verlet>());
     g_Coordinator.SetSystemSignature<VerletSystem>(signature);
 }
 
@@ -40,12 +40,12 @@ void VerletSystem::Update(float dt)
         for (const auto& entity1 : m_Entities)
         {
             auto& transform1 = g_Coordinator.GetComponent<Transform>(entity1);
-            auto& rigidBody1 = g_Coordinator.GetComponent<RigidBody>(entity1);
-            const auto& gravity1 = g_Coordinator.GetComponent<Gravity>(entity1);
-            const auto& collider1 = g_Coordinator.GetComponent<Collider>(entity1);
+            auto& dynamics1 = g_Coordinator.GetComponent<Dynamics>(entity1);
+            auto& gravity1 = g_Coordinator.GetComponent<Gravity>(entity1);
+            auto& verlet1 = g_Coordinator.GetComponent<Verlet>(entity1);
 
             // Accumulate forces
-            rigidBody1.Acceleration += gravity1;
+            dynamics1.Acceleration += gravity1;
 
             // Check collisions with other entities
             for (const auto& entity2 : m_Entities)
@@ -53,8 +53,9 @@ void VerletSystem::Update(float dt)
                 if (entity1 == entity2)
                     continue;
                 auto& transform2 = g_Coordinator.GetComponent<Transform>(entity2);
-                const auto& collider2 = g_Coordinator.GetComponent<Collider>(entity2);
-                const float distanceMin = collider1.Radius + collider2.Radius;
+                auto& verlet2 = g_Coordinator.GetComponent<Verlet>(entity2);
+
+                const float distanceMin = verlet1.Radius + verlet2.Radius;
                 const float distanceMag = glm::distance(transform1.Position, transform2.Position);
 
                 // Process collision
@@ -62,8 +63,8 @@ void VerletSystem::Update(float dt)
                 {
                     const float responseCoef = 0.75f;
                     const float delta = 0.5f * responseCoef * (distanceMag - distanceMin);
-                    const float massRatio1 = collider1.Radius / (collider1.Radius + collider2.Radius);
-                    const float massRatio2 = collider2.Radius / (collider1.Radius + collider2.Radius);
+                    const float massRatio1 = verlet1.Radius / (verlet1.Radius + verlet2.Radius);
+                    const float massRatio2 = verlet2.Radius / (verlet1.Radius + verlet2.Radius);
                     const glm::vec3 normal = glm::normalize(transform1.Position - transform2.Position);
                     transform1.Position -= normal * (massRatio2 * delta);
                     transform2.Position += normal * (massRatio1 * delta);
@@ -76,21 +77,21 @@ void VerletSystem::Update(float dt)
             const float distanceMag = glm::distance(constraintCenter, transform1.Position);
 
             // Process constraints
-            if (distanceMag > (constraintRadius - collider1.Radius))
+            if (distanceMag > (constraintRadius - verlet1.Radius))
             {
                 glm::vec3 distance = constraintCenter - transform1.Position;
                 glm::vec3 normal = glm::normalize(distance);
-                transform1.Position = constraintCenter - normal * (constraintRadius - collider1.Radius);
+                transform1.Position = constraintCenter - normal * (constraintRadius - verlet1.Radius);
             }
 
             // Update entity
             // Compute how much we moved
-            const glm::vec3 displacement = transform1.Position - rigidBody1.LastPosition;
+            const glm::vec3 displacement = transform1.Position - verlet1.LastPosition;
             // Update position
-            rigidBody1.LastPosition = transform1.Position;
-            transform1.Position = transform1.Position + displacement + rigidBody1.Acceleration * (stepDT * stepDT);
+            verlet1.LastPosition = transform1.Position;
+            transform1.Position = transform1.Position + displacement + dynamics1.Acceleration * (stepDT * stepDT);
             // Reset acceleration
-            rigidBody1.Acceleration = glm::vec3(0.0f);
+            dynamics1.Acceleration = glm::vec3(0.0f);
         }
     }
 }

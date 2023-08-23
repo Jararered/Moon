@@ -4,8 +4,8 @@
 #include "Debug.hpp"
 #include "System.hpp"
 
+#include "Components/Dynamics.hpp"
 #include "Components/Gravity.hpp"
-#include "Components/RigidBody.hpp"
 #include "Components/Transform.hpp"
 
 #include <iostream>
@@ -26,12 +26,12 @@ void PhysicsSystem::Update(float dt)
         for (const auto& entity : m_Entities)
         {
             auto& transform = g_Coordinator.GetComponent<Transform>(entity);
-            auto& rigidBody = g_Coordinator.GetComponent<RigidBody>(entity);
+            auto& dynamics = g_Coordinator.GetComponent<Dynamics>(entity);
             const auto& gravity = g_Coordinator.GetComponent<Gravity>(entity);
 
-            transform.Position += rigidBody.Velocity * stepDT;
+            transform.Position += dynamics.Velocity * stepDT;
 
-            rigidBody.Velocity += gravity * stepDT;
+            dynamics.Velocity += gravity * stepDT;
         }
     }
 }

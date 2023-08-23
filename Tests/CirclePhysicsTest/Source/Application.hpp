@@ -32,9 +32,9 @@ public:
             const Entity ball = g_Coordinator.CreateEntity();
             g_Coordinator.AddComponent<Mesh>(ball, Mesh{.p_Mesh = mesh});
             g_Coordinator.AddComponent<Transform>(ball, Transform{.Position = {x, y, 0.0f}, .Rotation = {0.0f, 0.0f, 0.0f}, .Scale = {diameter, diameter, diameter}});
-            g_Coordinator.AddComponent<RigidBody>(ball, RigidBody{.LastPosition = {x, y, 0.0f}});
+            g_Coordinator.AddComponent<Dynamics>(ball, Dynamics{.Velocity = {0.0f, 0.0f, 0.0f}, .Acceleration = {0.0f, 0.0f, 0.0f}});
             g_Coordinator.AddComponent<Gravity>(ball, Gravity{0.0f, -9.81f * 10.0f, 0.0f});
-            g_Coordinator.AddComponent<Collider>(ball, Collider{.Radius = diameter / 2.0f});
+            g_Coordinator.AddComponent<Verlet>(ball, Verlet{.LastPosition = {x, y, 0.0f}, .Radius = diameter / 2.0f});
             g_Coordinator.AddComponent<Shader>(ball, Shader{.ID = shaderID});
             g_Coordinator.AddComponent<Texture>(ball, Texture{.ID = textureID});
         }

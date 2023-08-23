@@ -86,7 +86,7 @@ void CameraSystem::Update(float dt)
         auto& cameraComponent = g_Coordinator.GetComponent<Camera>(entity);
         cameraComponent.ViewMatrix = glm::lookAt(transform.Position, (transform.Position + direction), glm::vec3(0.0f, 1.0f, 0.0f));
 
-        std::cout << transform.Position.x << ", " << transform.Position.y << ", " << transform.Position.z << "\n";
+        // std::cout << transform.Position.x << ", " << transform.Position.y << ", " << transform.Position.z << "\n";
     }
 }
 
