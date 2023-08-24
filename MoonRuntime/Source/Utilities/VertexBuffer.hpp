@@ -12,7 +12,7 @@ public:
     VertexBuffer() = default;
     ~VertexBuffer() = default;
 
-    void Generate()
+    void Create()
     {
         glGenVertexArrays(1, &m_VAO);
         glBindVertexArray(m_VAO);
@@ -51,7 +51,7 @@ public:
 
     void Draw() { glDrawElements(GL_TRIANGLES, m_Indices.size(), GL_UNSIGNED_INT, 0); }
 
-    void UpdateGeometry()
+    void Update()
     {
         // Binding
         glBindVertexArray(m_VAO);

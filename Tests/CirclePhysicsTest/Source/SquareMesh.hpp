@@ -15,6 +15,6 @@ public:
         vertices.emplace_back(Vertex3D<glm::vec3, glm::vec3, glm::vec2>({+0.5f, +0.5f, 0.0f}, color, {1.0f, 1.0f}));
         vertices.emplace_back(Vertex3D<glm::vec3, glm::vec3, glm::vec2>({-0.5f, +0.5f, 0.0f}, color, {0.0f, 1.0f}));
         vertices.emplace_back(Vertex3D<glm::vec3, glm::vec3, glm::vec2>({-0.5f, -0.5f, 0.0f}, color, {0.0f, 0.0f}));
-        VertexBuffer.Generate();
+        VertexBuffer.Create();
     }
 };
