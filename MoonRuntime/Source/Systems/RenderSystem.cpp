@@ -89,7 +89,7 @@ void RenderSystem::Update(float dt)
         glUniformMatrix4fv(glGetUniformLocation(shader.ID, "u_ProjectionMatrix"), 1, GL_FALSE, (float*)&camera.ProjectionMatrix);
 
         const auto& mesh = g_Coordinator.GetComponent<Mesh>(entity);
-        mesh.p_Mesh->Draw();
+        mesh.Data->Draw();
     }
 
     glfwSwapBuffers(glfwGetCurrentContext());

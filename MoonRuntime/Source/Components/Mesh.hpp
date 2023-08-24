@@ -3,15 +3,21 @@
 #include "Vertex.hpp"
 #include "VertexBuffer.hpp"
 
-struct TMeshBase
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
+
+#include <memory>
+
+struct DrawableMesh
 {
-    TMeshBase() = default;
-    virtual ~TMeshBase() = default;
+    DrawableMesh() = default;
+    virtual ~DrawableMesh() = default;
 
     virtual void Draw() = 0;
 };
 
-template <typename VertexType> struct TMeshComponent : public TMeshBase
+template <typename VertexType> struct TMeshComponent : public DrawableMesh
 {
     void Draw() override
     {
@@ -25,5 +31,5 @@ template <typename VertexType> struct TMeshComponent : public TMeshBase
 
 struct Mesh
 {
-    TMeshBase* p_Mesh = nullptr;
+    std::shared_ptr<DrawableMesh> Data;
 };
