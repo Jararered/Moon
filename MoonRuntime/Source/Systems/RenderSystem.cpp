@@ -5,6 +5,7 @@
 #include <glad/gl.h>
 #include <glfw/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/euler_angles.hpp>
 #include <glm/trigonometric.hpp>
 
 #include "Coordinator.hpp"
@@ -62,7 +63,6 @@ void RenderSystem::Update(float dt)
         const auto& shader = g_Coordinator.GetComponent<Shader>(entity);
         if (m_CurrentShader != shader.ID)
         {
-            std::cout << "Binding shader: " << shader.ID << "\n";
             glUseProgram(shader.ID);
             m_CurrentShader = shader.ID;
         }
@@ -70,7 +70,6 @@ void RenderSystem::Update(float dt)
         const auto& texture = g_Coordinator.GetComponent<Texture>(entity);
         if (m_CurrentTexture != texture.ID)
         {
-            std::cout << "Binding texture: " << shader.ID << "\n";
             glBindTexture(GL_TEXTURE_2D, texture.ID);
             m_CurrentTexture = texture.ID;
         }
@@ -78,10 +77,7 @@ void RenderSystem::Update(float dt)
         const auto& transform = g_Coordinator.GetComponent<Transform>(entity);
         const glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), transform.Position);
         const glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), transform.Scale);
-        glm::mat4 rotationMatrix = glm::mat4(1.0f);
-        rotationMatrix = glm::rotate(rotationMatrix, transform.Rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
-        rotationMatrix = glm::rotate(rotationMatrix, transform.Rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
-        rotationMatrix = glm::rotate(rotationMatrix, transform.Rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+        const glm::mat4 rotationMatrix = glm::eulerAngleXYZ(transform.Rotation.x, transform.Rotation.y, transform.Rotation.z);
         const glm::mat4 modelMatrix = translationMatrix * scaleMatrix * rotationMatrix;
 
         glUniformMatrix4fv(glGetUniformLocation(shader.ID, "u_ModelMatrix"), 1, GL_FALSE, (float*)&modelMatrix);

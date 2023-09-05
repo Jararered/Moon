@@ -19,9 +19,7 @@
 
 #include "Components/Camera.hpp"
 #include "Components/Dynamics.hpp"
-#include "Components/Gravity.hpp"
 #include "Components/Mesh.hpp"
 #include "Components/Shader.hpp"
 #include "Components/Texture.hpp"
 #include "Components/Transform.hpp"
-#include "Components/Verlet.hpp"

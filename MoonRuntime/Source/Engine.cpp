@@ -10,13 +10,11 @@
 
 #include "Components/Camera.hpp"
 #include "Components/Dynamics.hpp"
-#include "Components/Gravity.hpp"
 #include "Components/Index.hpp"
 #include "Components/Mesh.hpp"
 #include "Components/Shader.hpp"
 #include "Components/Texture.hpp"
 #include "Components/Transform.hpp"
-#include "Components/Verlet.hpp"
 
 Coordinator g_Coordinator;
 
@@ -27,17 +25,15 @@ void Engine::Initialize()
 
     g_Coordinator.Initialize();
     g_Coordinator.RegisterComponent<Camera>();
-    g_Coordinator.RegisterComponent<Gravity>();
     g_Coordinator.RegisterComponent<Mesh>();
     g_Coordinator.RegisterComponent<Dynamics>();
     g_Coordinator.RegisterComponent<Shader>();
-    g_Coordinator.RegisterComponent<Verlet>();
     g_Coordinator.RegisterComponent<Texture>();
     g_Coordinator.RegisterComponent<Transform>();
 
     p_CameraSystem = g_Coordinator.RegisterSystem<CameraSystem>();
-    p_VerletSystem = g_Coordinator.RegisterSystem<VerletSystem>();
     p_RenderSystem = g_Coordinator.RegisterSystem<RenderSystem>();
+    p_PhysicsSystem = g_Coordinator.RegisterSystem<PhysicsSystem>();
 }
 
 void Engine::Update()

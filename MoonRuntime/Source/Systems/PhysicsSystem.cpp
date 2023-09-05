@@ -5,12 +5,19 @@
 #include "System.hpp"
 
 #include "Components/Dynamics.hpp"
-#include "Components/Gravity.hpp"
 #include "Components/Transform.hpp"
 
 #include <iostream>
 
 extern Coordinator g_Coordinator;
+
+void PhysicsSystem::Register()
+{
+    Signature signature;
+    signature.set(g_Coordinator.GetComponentType<Transform>());
+    signature.set(g_Coordinator.GetComponentType<Dynamics>());
+    g_Coordinator.SetSystemSignature<PhysicsSystem>(signature);
+}
 
 void PhysicsSystem::Initialize()
 {
@@ -27,11 +34,10 @@ void PhysicsSystem::Update(float dt)
         {
             auto& transform = g_Coordinator.GetComponent<Transform>(entity);
             auto& dynamics = g_Coordinator.GetComponent<Dynamics>(entity);
-            const auto& gravity = g_Coordinator.GetComponent<Gravity>(entity);
 
             transform.Position += dynamics.Velocity * stepDT;
 
-            dynamics.Velocity += gravity * stepDT;
+            dynamics.Velocity += PhysicsSystem::s_Gravity * stepDT;
         }
     }
 }

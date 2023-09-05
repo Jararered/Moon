@@ -3,8 +3,8 @@
 int main(int argc, char* argv[])
 {
     WindowSpecification spec;
-    spec.Width = 1980;
-    spec.Height = 1080;
+    spec.Width = 1280;
+    spec.Height = 720;
     spec.VSync = true;
     spec.API = WindowSpecification::GraphicsAPI::OpenGL;
 

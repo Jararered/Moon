@@ -2,6 +2,8 @@
 
 #include "System.hpp"
 
+#include <glm/vec3.hpp>
+
 class PhysicsSystem : public System
 {
 public:
@@ -10,6 +12,8 @@ public:
     void Update(float dt) override;
     void Finalize() override;
 
+    inline static glm::vec3 s_Gravity = glm::vec3(0.0f, -9.81f, 0.0f);
+
 private:
-    unsigned int m_SubStepCount = 4;
+    unsigned int m_SubStepCount = 1;
 };
