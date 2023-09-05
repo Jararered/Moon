@@ -39,10 +39,12 @@ void Engine::Initialize()
 void Engine::Update()
 {
     if (p_Window)
+    {
         p_Window->Update(m_DeltaFrameTime);
+    }
 }
 
-Window* Engine::CreateWindow(const WindowSpecification& spec)
+std::shared_ptr<Window> Engine::CreateWindow(const WindowSpecification& spec)
 {
     DebugOutput("Creating window");
 
@@ -50,7 +52,7 @@ Window* Engine::CreateWindow(const WindowSpecification& spec)
     {
     case WindowSpecification::GraphicsAPI::OpenGL:
     {
-        p_Window = new OpenGLWindow(spec);
+        p_Window = std::make_shared<OpenGLWindow>(spec);
         return p_Window;
     }
     case WindowSpecification::GraphicsAPI::Vulkan:

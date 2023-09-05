@@ -20,8 +20,9 @@ public:
     virtual void Update();
 
 protected:
-    Window* p_Window = nullptr;
     float m_DeltaFrameTime = 0.0f;
+
+    std::shared_ptr<Window> p_Window;
 
     std::shared_ptr<CameraSystem> p_CameraSystem;
     std::shared_ptr<PhysicsSystem> p_PhysicsSystem;
@@ -29,5 +30,5 @@ protected:
 
 public:
     static double GetTime();
-    Window* CreateWindow(const WindowSpecification& spec);
+    std::shared_ptr<Window> CreateWindow(const WindowSpecification& spec);
 };

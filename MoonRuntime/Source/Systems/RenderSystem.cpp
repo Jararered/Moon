@@ -40,7 +40,7 @@ void RenderSystem::Initialize()
 
     m_CameraEntity = g_Coordinator.CreateEntity();
 
-    const glm::vec3 position = glm::vec3(0.0f, 0.0f, 100.0f);
+    const glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
     const glm::vec3 rotation = glm::vec3(0.0f, glm::radians(-90.0f), 0.0f); // Looking into the screen
     g_Coordinator.AddComponent(m_CameraEntity, Transform{.Position = position, .Rotation = rotation});
 

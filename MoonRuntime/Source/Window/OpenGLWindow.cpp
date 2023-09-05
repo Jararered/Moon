@@ -2,10 +2,6 @@
 
 #include <glad/gl.h>
 #include <glfw/glfw3.h>
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
-
 #include <iostream>
 
 #include "Debug.hpp"
@@ -26,7 +22,7 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Create a windowed mode window and its OpenGL context
-    p_GLFWwindow = glfwCreateWindow(spec.Width, spec.Height, "Moon (OpenGL 3.3)", NULL, NULL);
+    p_GLFWwindow = glfwCreateWindow(spec.Width, spec.Height, "Moon", NULL, NULL);
     if (!p_GLFWwindow)
     {
         DebugOutput("Failed to create OpenGL window");
@@ -51,16 +47,6 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
         glfwSwapInterval(1);
     else
         glfwSwapInterval(0);
-
-    // if (spec.EnableImgui)
-    // {
-    //     const char* glsl_version = "#version 150";
-    //     IMGUI_CHECKVERSION();
-    //     ImGui::CreateContext();
-    //     ImGui::StyleColorsDark();
-    //     ImGui_ImplGlfw_InitForOpenGL(p_GLFWwindow, true);
-    //     ImGui_ImplOpenGL3_Init(glsl_version);
-    // }
 }
 
 OpenGLWindow::~OpenGLWindow()
@@ -72,7 +58,7 @@ void OpenGLWindow::Update(float dt)
 {
     glfwPollEvents();
 
-    if (!Input::IsMouseCaptured() && Input::IsLeftClick() && !(m_WindowSpecification.EnableImgui && ImGui::GetIO().WantCaptureMouse))
+    if (!Input::IsMouseCaptured() && Input::IsLeftClick())
         Input::CaptureCursor();
 
     if (Input::IsKeyPressed(KEY_ESCAPE) && Input::IsMouseCaptured())

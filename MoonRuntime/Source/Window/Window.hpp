@@ -1,24 +1,8 @@
 #pragma once
 
-#include "Layer.hpp"
+#include "Components/WindowSpecification.hpp"
 
 #include <vector>
-
-struct WindowSpecification
-{
-    enum GraphicsAPI
-    {
-        OpenGL,
-        Vulkan,
-        Metal
-    };
-
-    GraphicsAPI API = GraphicsAPI::OpenGL;
-    float Width = 1280;
-    float Height = 720;
-    bool VSync = true;
-    bool EnableImgui = false;
-};
 
 class Window
 {
@@ -30,10 +14,4 @@ public:
     virtual bool IsRunning() = 0;
 
     WindowSpecification m_WindowSpecification;
-
-protected:
-    std::vector<Layer*> m_LayerVector;
-
-public:
-    void AddLayer(Layer* layer) { m_LayerVector.emplace_back(layer); }
 };
