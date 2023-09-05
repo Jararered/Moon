@@ -13,5 +13,4 @@ struct WindowSpecification
     float Width = 1280;
     float Height = 720;
     bool VSync = true;
-    bool EnableImgui = false;
 };
