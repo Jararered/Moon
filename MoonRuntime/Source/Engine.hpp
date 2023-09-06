@@ -24,9 +24,7 @@ protected:
 
     std::shared_ptr<Window> p_Window;
 
-    std::shared_ptr<CameraSystem> p_CameraSystem;
-    std::shared_ptr<PhysicsSystem> p_PhysicsSystem;
-    std::shared_ptr<RenderSystem> p_RenderSystem;
+    std::vector<std::shared_ptr<System>> m_Systems;
 
 public:
     static double GetTime();

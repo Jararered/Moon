@@ -31,9 +31,19 @@ void Engine::Initialize()
     g_Coordinator.RegisterComponent<Texture>();
     g_Coordinator.RegisterComponent<Transform>();
 
-    p_CameraSystem = g_Coordinator.RegisterSystem<CameraSystem>();
-    p_RenderSystem = g_Coordinator.RegisterSystem<RenderSystem>();
-    p_PhysicsSystem = g_Coordinator.RegisterSystem<PhysicsSystem>();
+    m_Systems.emplace_back(g_Coordinator.RegisterSystem<CameraSystem>());
+    m_Systems.emplace_back(g_Coordinator.RegisterSystem<PhysicsSystem>());
+    m_Systems.emplace_back(g_Coordinator.RegisterSystem<RenderSystem>());
+
+    for (const auto system : m_Systems)
+    {
+        system->Register();
+    }
+
+    for (const auto system : m_Systems)
+    {
+        system->Initialize();
+    }
 }
 
 void Engine::Update()
@@ -41,6 +51,11 @@ void Engine::Update()
     if (p_Window)
     {
         p_Window->Update(m_DeltaFrameTime);
+    }
+
+    for (const auto system : m_Systems)
+    {
+        system->Update(m_DeltaFrameTime);
     }
 }
 

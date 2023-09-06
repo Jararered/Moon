@@ -12,28 +12,14 @@ class Application : public Engine
 public:
     void Start()
     {
-        // Only initialize systems you intend on using
-        p_PhysicsSystem->Register();
-        p_CameraSystem->Register();
-        p_RenderSystem->Register();
-
         CreateCubes();
         CreatePlatform();
-
-        // Only initialize systems you intend on using
-        p_PhysicsSystem->Initialize();
-        p_CameraSystem->Initialize();
-        p_RenderSystem->Initialize();
 
         while (p_Window->IsRunning())
         {
             const auto frameStartTime = std::chrono::high_resolution_clock::now();
 
             Update();
-
-            p_PhysicsSystem->Update(m_DeltaFrameTime);
-            p_CameraSystem->Update(m_DeltaFrameTime);
-            p_RenderSystem->Update(m_DeltaFrameTime);
 
             const auto frameEndTime = std::chrono::high_resolution_clock::now();
             m_DeltaFrameTime = std::chrono::duration<float, std::chrono::seconds::period>(frameEndTime - frameStartTime).count();
@@ -60,10 +46,10 @@ public:
         const auto shaderID = Shader::CreateShader("Shaders/Position.vert", "Shaders/Position.frag");
         for (unsigned int i = 0; i < count; i++)
         {
-            // const float x = Random::Value<float>(-100.0f, 100.0f);
-            // const float y = Random::Value<float>(20.0f, 100.0f);
-            // const float z = Random::Value<float>(-100.0f, 100.0f);
-            const float x = 0, y = 10, z = 0;
+            const float x = Random::Value<float>(-100.0f, 100.0f);
+            const float y = Random::Value<float>(20.0f, 100.0f);
+            const float z = Random::Value<float>(-100.0f, 100.0f);
+            // const float x = 0, y = 10, z = 0;
             const float scale = Random::Value<float>(1, 10);
 
             const Entity entity = g_Coordinator.CreateEntity();
