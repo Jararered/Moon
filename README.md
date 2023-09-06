@@ -16,14 +16,13 @@ cmake install
 
 ## Resources
 
-https://learnopengl.com/
-https://austinmorlan.com/posts/entity_component_system/
-
-https://github.com/USCiLab/cereal
-https://github.com/Auburn/FastNoiseLite
-https://github.com/Dav1dde/glad
-https://github.com/glfw/glfw
-https://github.com/g-truc/glm
-https://github.com/ocornut/imgui
-http://nomis80.org/code/octree.html
-https://github.com/nothings/stb
+- https://learnopengl.com/
+- https://austinmorlan.com/posts/entity_component_system/
+- https://github.com/USCiLab/cereal
+- https://github.com/Auburn/FastNoiseLite
+- https://github.com/Dav1dde/glad
+- https://github.com/glfw/glfw
+- https://github.com/g-truc/glm
+- https://github.com/ocornut/imgui
+- http://nomis80.org/code/octree.html
+- https://github.com/nothings/stb
