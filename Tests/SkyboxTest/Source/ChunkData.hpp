@@ -3,6 +3,7 @@
 #include <array>
 #include <glm/vec3.hpp>
 #include <octree/octree.h>
+#include <print>
 
 #include "Block.hpp"
 #include "ChunkConfiguration.hpp"
@@ -52,7 +53,7 @@ public:
                 }
             }
         }
-        std::cout << "Chunk generated, using " << m_OctreeData.bytes() << " bytes.\n";
+        std::println("Chunk generated, using {} bytes.", m_OctreeData.bytes());
     }
 
     glm::ivec3 GetChunkIndex() const { return m_ChunkIndex; }
