@@ -1,13 +1,12 @@
 #include "PhysicsSystem.hpp"
 
 #include "Coordinator.hpp"
-#include "Debug.hpp"
 #include "System.hpp"
 
 #include "Components/Dynamics.hpp"
 #include "Components/Transform.hpp"
 
-#include <iostream>
+#include <print>
 
 extern Coordinator g_Coordinator;
 
@@ -21,7 +20,7 @@ void PhysicsSystem::Register()
 
 void PhysicsSystem::Initialize()
 {
-    DebugOutput("Physics using " << m_SubStepCount << " substeps between each frame.");
+    std::print("Physics using {} substeps between each frame.", m_SubStepCount);
 }
 
 void PhysicsSystem::Update(float dt)

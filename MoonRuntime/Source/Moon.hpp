@@ -7,7 +7,6 @@
 #include "Window.hpp"
 
 #include "Coordinator.hpp"
-#include "Debug.hpp"
 #include "Entity.hpp"
 #include "Signature.hpp"
 #include "System.hpp"

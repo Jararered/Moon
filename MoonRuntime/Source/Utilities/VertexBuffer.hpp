@@ -1,9 +1,7 @@
 #pragma once
 
-#include "Debug.hpp"
-
 #include <glad/gl.h>
-#include <iostream>
+#include <print>
 #include <vector>
 
 template <class T> class VertexBuffer
@@ -35,7 +33,7 @@ public:
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-        DebugOutput("VAO " << m_VAO << ", VBO " << m_VBO << ", IBO " << m_IBO);
+        std::print("VAO: {}, VBO: {}, IBO: {}", m_VAO, m_VBO, m_IBO);
     }
 
     void Delete()

@@ -9,7 +9,6 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/trigonometric.hpp>
-#include <iostream>
 
 extern Coordinator g_Coordinator;
 

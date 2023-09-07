@@ -6,8 +6,6 @@
 #include "ChunkConfiguration.hpp"
 #include "ChunkData.hpp"
 
-#include <iostream>
-
 class ChunkMesh : public TMeshComponent<Vertex2D<glm::vec3, glm::vec3>> // Position, Normal
 {
 public:

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Debug.hpp"
-
+#include <glad/gl.h>
+#include <print>
 #include <stb_image.h>
 #include <string>
 
@@ -15,7 +15,7 @@ struct Texture
         unsigned char* data = stbi_load(textureFile.c_str(), &width, &height, &channels, 0);
         if (!data)
         {
-            DebugOutput("Unable to load specified file. (" << textureFile << ")");
+            std::print("Unable to load specified file. ({})", textureFile);
             return 0;
         }
 

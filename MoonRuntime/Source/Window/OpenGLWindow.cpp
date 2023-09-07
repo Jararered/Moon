@@ -2,15 +2,16 @@
 
 #include <glad/gl.h>
 #include <glfw/glfw3.h>
-#include <iostream>
+#include <print>
 
-#include "Debug.hpp"
 #include "Input.hpp"
 
 OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
 {
     if (!glfwInit())
-        DebugOutput("Failed to initialize GLFW");
+    {
+        std::print("Failed to initialize GLFW");
+    }
 
 #ifdef UNIX
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -25,7 +26,7 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     p_GLFWwindow = glfwCreateWindow(spec.Width, spec.Height, "Moon", NULL, NULL);
     if (!p_GLFWwindow)
     {
-        DebugOutput("Failed to create OpenGL window");
+        std::print("Failed to create OpenGL window");
         glfwTerminate();
         return;
     }
@@ -36,7 +37,7 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     const int version = gladLoadGL(glfwGetProcAddress);
     if (version == 0)
     {
-        DebugOutput("Failed to initialize OpenGL context");
+        std::print("Failed to initialize OpenGL context");
         glfwTerminate();
         return;
     }

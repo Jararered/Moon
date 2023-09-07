@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Debug.hpp"
-
 #include <fstream>
 #include <glad/gl.h>
+#include <print>
 #include <string>
 
 struct Shader
@@ -30,7 +29,7 @@ struct Shader
             glDeleteShader(vertexID);
             char infoLog[512];
             glGetShaderInfoLog(vertexID, 512, NULL, infoLog);
-            DebugOutput("Compilation failed: " << infoLog);
+            std::print("Compilation failed: {}", infoLog);
             return 0;
         }
 
@@ -52,7 +51,7 @@ struct Shader
             glDeleteShader(fragmentID);
             char infoLog[512];
             glGetShaderInfoLog(fragmentID, 512, NULL, infoLog);
-            DebugOutput("Compilation failed: " << infoLog);
+            std::print("Compilation failed: {}", std::string(infoLog));
             return 0;
         }
 
@@ -68,7 +67,7 @@ struct Shader
             glDeleteProgram(id);
             char infoLog[512];
             glGetProgramInfoLog(id, 512, NULL, infoLog);
-            DebugOutput("Linking failed: " << infoLog);
+            std::print("Linking failed: {}", std::string(infoLog));
         }
 
         glDeleteShader(vertexID);
@@ -76,7 +75,7 @@ struct Shader
 
         if (successVert && successFrag && successLink)
         {
-            DebugOutput("Created shader: " << id);
+            std::print("Created shader: {}", id);
         }
         return id;
     }
