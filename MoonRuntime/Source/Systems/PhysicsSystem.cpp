@@ -20,7 +20,7 @@ void PhysicsSystem::Register()
 
 void PhysicsSystem::Initialize()
 {
-    std::print("Physics using {} substeps between each frame.", m_SubStepCount);
+    std::println("Physics using {} substeps between each frame.", m_SubStepCount);
 }
 
 void PhysicsSystem::Update(float dt)

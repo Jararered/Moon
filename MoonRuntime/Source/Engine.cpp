@@ -19,7 +19,7 @@ Coordinator g_Coordinator;
 void Engine::Initialize()
 {
     std::filesystem::path cwd = std::filesystem::current_path();
-    std::print("Current working directory: {}", cwd.string());
+    std::println("Current working directory: {}", cwd.string());
 
     g_Coordinator.Initialize();
     g_Coordinator.RegisterComponent<Camera>();
@@ -59,7 +59,7 @@ void Engine::Update()
 
 std::shared_ptr<Window> Engine::CreateWindow(const WindowSpecification& spec)
 {
-    std::print("Creating window with size {}x{}", spec.Width, spec.Height);
+    std::println("Creating window with size {}x{}", spec.Width, spec.Height);
 
     switch (spec.API)
     {
@@ -70,17 +70,17 @@ std::shared_ptr<Window> Engine::CreateWindow(const WindowSpecification& spec)
     }
     case WindowSpecification::GraphicsAPI::Vulkan:
     {
-        std::print("Vulkan graphics API not implemented");
+        std::println("Vulkan graphics API not implemented");
         return nullptr;
     }
     case WindowSpecification::GraphicsAPI::Metal:
     {
-        std::print("Metal graphics API not implemented");
+        std::println("Metal graphics API not implemented");
         return nullptr;
     }
     default:
     {
-        std::print("No graphics API selected");
+        std::println("No graphics API selected");
         return nullptr;
     }
     }

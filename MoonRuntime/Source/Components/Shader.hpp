@@ -29,7 +29,7 @@ struct Shader
             glDeleteShader(vertexID);
             char infoLog[512];
             glGetShaderInfoLog(vertexID, 512, NULL, infoLog);
-            std::print("Compilation failed: {}", infoLog);
+            std::println("Compilation failed: {}", infoLog);
             return 0;
         }
 
@@ -51,7 +51,7 @@ struct Shader
             glDeleteShader(fragmentID);
             char infoLog[512];
             glGetShaderInfoLog(fragmentID, 512, NULL, infoLog);
-            std::print("Compilation failed: {}", std::string(infoLog));
+            std::println("Compilation failed: {}", std::string(infoLog));
             return 0;
         }
 
@@ -67,7 +67,7 @@ struct Shader
             glDeleteProgram(id);
             char infoLog[512];
             glGetProgramInfoLog(id, 512, NULL, infoLog);
-            std::print("Linking failed: {}", std::string(infoLog));
+            std::println("Linking failed: {}", std::string(infoLog));
         }
 
         glDeleteShader(vertexID);
@@ -75,7 +75,7 @@ struct Shader
 
         if (successVert && successFrag && successLink)
         {
-            std::print("Created shader: {}", id);
+            std::println("Created shader: {}", id);
         }
         return id;
     }

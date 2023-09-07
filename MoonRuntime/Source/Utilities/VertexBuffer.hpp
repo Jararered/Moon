@@ -33,7 +33,7 @@ public:
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-        std::print("VAO: {}, VBO: {}, IBO: {}", m_VAO, m_VBO, m_IBO);
+        std::println("VAO: {}, VBO: {}, IBO: {}", m_VAO, m_VBO, m_IBO);
     }
 
     void Delete()

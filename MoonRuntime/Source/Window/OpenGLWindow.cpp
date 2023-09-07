@@ -10,7 +10,7 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
 {
     if (!glfwInit())
     {
-        std::print("Failed to initialize GLFW");
+        std::println("Failed to initialize GLFW");
     }
 
 #ifdef UNIX
@@ -26,7 +26,7 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     p_GLFWwindow = glfwCreateWindow(spec.Width, spec.Height, "Moon", NULL, NULL);
     if (!p_GLFWwindow)
     {
-        std::print("Failed to create OpenGL window");
+        std::println("Failed to create OpenGL window");
         glfwTerminate();
         return;
     }
@@ -37,7 +37,7 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     const int version = gladLoadGL(glfwGetProcAddress);
     if (version == 0)
     {
-        std::print("Failed to initialize OpenGL context");
+        std::println("Failed to initialize OpenGL context");
         glfwTerminate();
         return;
     }

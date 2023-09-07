@@ -22,7 +22,7 @@ ScopedTimer::ScopedTimer(const std::string& name) : Timer(name)
 ScopedTimer::~ScopedTimer()
 {
     m_Stop = std::chrono::high_resolution_clock::now();
-    std::print("{} took: {} seconds.", m_Name, std::chrono::duration<float, std::chrono::seconds::period>(m_Stop - m_Start).count());
+    std::println("{} took: {} seconds.", m_Name, std::chrono::duration<float, std::chrono::seconds::period>(m_Stop - m_Start).count());
 }
 
 ManualTimer::ManualTimer(const std::string& name) : Timer(name)
@@ -37,7 +37,7 @@ void ManualTimer::Start()
 void ManualTimer::Stop()
 {
     m_Stop = std::chrono::high_resolution_clock::now();
-    std::print("{} took: {} seconds.", m_Name, std::chrono::duration<float, std::chrono::seconds::period>(m_Stop - m_Start).count());
+    std::println("{} took: {} seconds.", m_Name, std::chrono::duration<float, std::chrono::seconds::period>(m_Stop - m_Start).count());
 }
 
 float ManualTimer::GetTime()

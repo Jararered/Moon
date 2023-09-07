@@ -15,7 +15,7 @@ struct Texture
         unsigned char* data = stbi_load(textureFile.c_str(), &width, &height, &channels, 0);
         if (!data)
         {
-            std::print("Unable to load specified file. ({})", textureFile);
+            std::println("Unable to load specified file. ({})", textureFile);
             return 0;
         }
 
