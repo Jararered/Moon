@@ -10,14 +10,14 @@
 // An interface is needed so that the ComponentManager (seen later)
 // can tell a generic ComponentArray that an entity has been destroyed
 // and that it needs to update its array mappings.
-class IComponentArray
+class ComponentArrayInterface
 {
 public:
-    virtual ~IComponentArray() = default;
+    virtual ~ComponentArrayInterface() = default;
     virtual void EntityDestroyed(Entity entity) = 0;
 };
 
-template <typename T> class ComponentArray : public IComponentArray
+template <typename T> class ComponentArrayTemplate : public ComponentArrayInterface
 {
 public:
     void InsertData(Entity entity, T component)

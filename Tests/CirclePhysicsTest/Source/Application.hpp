@@ -13,7 +13,7 @@ public:
     void Start()
     {
         CreateCubes();
-        CreatePlatform();
+        // CreatePlatform();
 
         while (p_Window->IsRunning())
         {
@@ -40,14 +40,14 @@ public:
 
     void CreateCubes()
     {
-        const unsigned int count = 100;
+        const unsigned int count = 800;
 
         std::shared_ptr<DrawableMesh> mesh = std::make_shared<CubeMesh>(glm::vec3(1.0f, 0.0f, 0.0f));
         const auto shaderID = Shader::CreateShader("Shaders/Position.vert", "Shaders/Position.frag");
         for (unsigned int i = 0; i < count; i++)
         {
             const float x = Random::Value<float>(-100.0f, 100.0f);
-            const float y = Random::Value<float>(20.0f, 100.0f);
+            const float y = Random::Value<float>(-10.0f, 10.0f);
             const float z = Random::Value<float>(-100.0f, 100.0f);
             // const float x = 0, y = 10, z = 0;
             const float scale = Random::Value<float>(1, 10);

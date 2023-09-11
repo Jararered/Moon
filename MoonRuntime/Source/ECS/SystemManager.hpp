@@ -37,10 +37,8 @@ public:
     {
         // Erase a destroyed entity from all system lists
         // m_Entities is a set so no check needed
-        for (const auto& pair : m_Systems)
+        for (const auto& [_, system] : m_Systems)
         {
-            const auto& system = pair.second;
-
             system->m_Entities.erase(entity);
         }
     }
@@ -48,10 +46,8 @@ public:
     void EntitySignatureChanged(Entity entity, Signature entitySignature)
     {
         // Notify each system that an entity's signature changed
-        for (const auto& pair : m_Systems)
+        for (const auto& [type, system] : m_Systems)
         {
-            const auto& type = pair.first;
-            const auto& system = pair.second;
             const auto& systemSignature = m_Signatures[type];
 
             // Entity signature matches system signature - insert into set
