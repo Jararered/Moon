@@ -36,6 +36,8 @@ void RenderSystem::Initialize()
     glCullFace(GL_BACK);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
+    glfwSetWindowUserPointer(glfwGetCurrentContext(), this);
+
     m_Camera = g_Coordinator.CreateEntity();
 
     const auto position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -47,6 +49,20 @@ void RenderSystem::Initialize()
     const auto projMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
     const auto viewMatrix = glm::mat4(1.0f);
     g_Coordinator.AddComponent(m_Camera, Camera{.ViewMatrix = viewMatrix, .ProjectionMatrix = projMatrix});
+
+    auto FramebufferSizeCallback = [](GLFWwindow* window, int width, int height)
+    {
+        // Callback for when the framebuffer glfw provides is resized. This will trigger when resizing the window.
+        glViewport(0, 0, width, height);
+
+        const auto fov = glm::radians(90.0f);
+        const auto aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+        const auto projMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
+
+        auto& camera = g_Coordinator.GetComponent<Camera>(static_cast<RenderSystem*>(glfwGetWindowUserPointer(glfwGetCurrentContext()))->m_Camera);
+        camera.ProjectionMatrix = projMatrix;
+    };
+    glfwSetFramebufferSizeCallback(glfwGetCurrentContext(), FramebufferSizeCallback);
 }
 
 void RenderSystem::Update(float dt)
