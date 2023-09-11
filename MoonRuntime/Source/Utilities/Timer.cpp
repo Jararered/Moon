@@ -11,7 +11,6 @@ float Timer::GetDelta()
 {
     auto delta = std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - m_Last).count();
     m_Last = std::chrono::high_resolution_clock::now();
-
     return delta;
 }
 
