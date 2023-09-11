@@ -7,7 +7,7 @@ A tiny project for opengl + ecs abstraction
 Currently tested with Windows 11 x64 and MacOS Sonoma ARM
 
 ```
-git clone Moon
+git clone https://github.com/Jararered/Moon
 cd Moon
 cmake -S . -B Build -G Ninja
 cmake build
