@@ -1,4 +1,4 @@
-#include "Application.hpp"
+#include "Games/CubesFalling.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
     spec.VSync = true;
     spec.API = WindowSpecification::GraphicsAPI::OpenGL;
 
-    Application app;
+    CubesFalling app;
     app.CreateWindow(spec);
     app.Initialize();
     app.Start();

@@ -27,4 +27,4 @@ set(LibraryIncludeDirs
 )
  
 add_subdirectory(MoonRuntime)
-add_subdirectory(Tests)
+add_subdirectory(Sandbox)
