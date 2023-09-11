@@ -4,38 +4,38 @@
 
 bool Input::IsKeyPressed(int keycode)
 {
-    const int state = glfwGetKey(glfwGetCurrentContext(), keycode);
+    const auto state = glfwGetKey(glfwGetCurrentContext(), keycode);
     return state == GLFW_PRESS;
 }
 
 bool Input::IsMouseButtonPressed(int mouseButtonCode)
 {
-    const int state = glfwGetMouseButton(glfwGetCurrentContext(), mouseButtonCode);
+    const auto state = glfwGetMouseButton(glfwGetCurrentContext(), mouseButtonCode);
     return state == GLFW_PRESS;
 }
 
 bool Input::IsLeftClick()
 {
-    const int state = glfwGetMouseButton(glfwGetCurrentContext(), MOUSE_BUTTON_LEFT);
+    const auto state = glfwGetMouseButton(glfwGetCurrentContext(), MOUSE_BUTTON_LEFT);
     return state == GLFW_PRESS;
 }
 
 bool Input::IsRightClick()
 {
-    const int state = glfwGetMouseButton(glfwGetCurrentContext(), MOUSE_BUTTON_RIGHT);
+    const auto state = glfwGetMouseButton(glfwGetCurrentContext(), MOUSE_BUTTON_RIGHT);
     return state == GLFW_PRESS;
 }
 
 glm::vec2 Input::GetMousePosition()
 {
-    glm::dvec2 position = {0.0, 0.0};
+    auto position = glm::dvec2(0.0, 0.0);
     glfwGetCursorPos(glfwGetCurrentContext(), &position.x, &position.y);
     return {static_cast<float>(position.x), static_cast<float>(-position.y)};
 }
 
 bool Input::IsMouseCaptured()
 {
-    const int option = glfwGetInputMode(glfwGetCurrentContext(), GLFW_CURSOR);
+    const auto option = glfwGetInputMode(glfwGetCurrentContext(), GLFW_CURSOR);
     return option == GLFW_CURSOR_DISABLED;
 }
 
@@ -45,7 +45,7 @@ glm::vec2 Input::GetCapturedMouseMovement()
     if (!IsMouseCaptured())
         return {0.0f, 0.0f};
 
-    glm::vec2 mousepos = GetMousePosition();
+    const auto mousepos = GetMousePosition();
     glfwSetCursorPos(glfwGetCurrentContext(), 0.0, 0.0);
     return mousepos;
 }
@@ -64,7 +64,7 @@ void Input::CaptureCursor()
 
 void Input::ReleaseCursor()
 {
-    glm::ivec2 position = {0, 0};
+    auto position = glm::ivec2(0, 0);
     glfwGetWindowSize(glfwGetCurrentContext(), &position.x, &position.y);
     glfwSetInputMode(glfwGetCurrentContext(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     glfwSetCursorPos(glfwGetCurrentContext(), static_cast<double>(position.x / 2), static_cast<double>(position.y / 2));

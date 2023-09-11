@@ -34,7 +34,7 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     // Make the window's context current
     glfwMakeContextCurrent(p_GLFWwindow);
 
-    const int version = gladLoadGL(glfwGetProcAddress);
+    const auto version = gladLoadGL(glfwGetProcAddress);
     if (version == 0)
     {
         std::println("Failed to initialize OpenGL context");
