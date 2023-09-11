@@ -5,7 +5,7 @@
 class CubeMesh : public MeshTemplate<Vertex2D<glm::vec3, glm::vec3>> // Position, Color
 {
 public:
-    CubeMesh(const glm::vec3& color = glm::vec3(0.0f, 0.0f, 0.0f))
+    CubeMesh(const glm::vec3& color = glm::vec3(1.0f, 1.0f, 1.0f))
     {
         using Vertex = Vertex2D<glm::vec3, glm::vec3>;
 

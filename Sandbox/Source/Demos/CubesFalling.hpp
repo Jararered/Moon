@@ -33,16 +33,16 @@ public:
 
         const Entity entity = g_Coordinator.CreateEntity();
         g_Coordinator.AddComponent<Mesh>(entity, Mesh{mesh});
+        g_Coordinator.AddComponent<Shader>(entity, Shader{shaderID});
+        g_Coordinator.AddComponent<Texture>(entity, Texture{0});
         g_Coordinator.AddComponent<Transform>(entity, Transform{.Position = {0, 0, 0}, .Rotation = {0, 0, 0}, .Scale = {500, 1, 500}});
-        g_Coordinator.AddComponent<Shader>(entity, Shader{.ID = shaderID});
-        g_Coordinator.AddComponent<Texture>(entity, Texture{.ID = 0});
     }
 
     void CreateCubes()
     {
         const unsigned int count = 9999;
 
-        const auto mesh = std::make_shared<CubeMesh>(glm::vec3(1.0f, 0.0f, 0.0f));
+        const auto mesh = std::make_shared<CubeMesh>();
         const auto shaderID = Shader::CreateShader("Shaders/Position.vert", "Shaders/Position.frag");
         for (unsigned int i = 0; i < count; i++)
         {
@@ -53,8 +53,8 @@ public:
 
             const Entity entity = g_Coordinator.CreateEntity();
             g_Coordinator.AddComponent<Mesh>(entity, Mesh{mesh});
-            g_Coordinator.AddComponent<Shader>(entity, Shader{.ID = shaderID});
-            g_Coordinator.AddComponent<Texture>(entity, Texture{.ID = 0});
+            g_Coordinator.AddComponent<Shader>(entity, Shader{shaderID});
+            g_Coordinator.AddComponent<Texture>(entity, Texture{0});
             g_Coordinator.AddComponent<Transform>(entity, Transform{.Position = {x, y, z}, .Rotation = {0, 0, 0}, .Scale = {1, random, 1}});
             g_Coordinator.AddComponent<Dynamics>(entity, Dynamics{.Velocity{0, 0, 0}, .Acceleration{0, 0, 0}});
         }
