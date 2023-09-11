@@ -33,8 +33,8 @@ void PhysicsSystem::Update(float dt)
             auto& transform = g_Coordinator.GetComponent<Transform>(entity1);
             auto& dynamics = g_Coordinator.GetComponent<Dynamics>(entity1);
 
-            transform.Position = transform.Position + dynamics.Velocity * stepDT;
-            dynamics.Velocity = dynamics.Velocity + s_Gravity * stepDT;
+            transform.Position = transform.Position + (dynamics.Velocity * stepDT);
+            dynamics.Velocity = dynamics.Velocity + (s_Gravity * stepDT);
         }
     }
 }
@@ -45,5 +45,5 @@ void PhysicsSystem::Finalize()
 
 bool PhysicsSystem::IsIntersect(const glm::vec3& lower1, const glm::vec3& lower2, const glm::vec3& upper1, const glm::vec3& upper2)
 {
-    return (upper1.x > lower2.x && lower1.x < upper2.x && upper1.y > lower2.y && lower1.y < upper2.y && upper1.z > lower2.z && lower1.z < upper2.z);
+    return ((upper1.x > lower2.x) && (lower1.x < upper2.x) && (upper1.y > lower2.y) && (lower1.y < upper2.y) && (upper1.z > lower2.z) && (lower1.z < upper2.z));
 }
