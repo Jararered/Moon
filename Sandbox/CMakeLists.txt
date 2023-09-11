@@ -16,7 +16,7 @@ add_executable(
 target_include_directories(
     ${Project}
     PUBLIC
-    Include
+    ${CMAKE_CURRENT_SOURCE_DIR}/Source
     ${MoonIncludeDirs}
 )
 
