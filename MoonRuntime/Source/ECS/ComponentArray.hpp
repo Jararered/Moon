@@ -17,7 +17,7 @@ public:
     virtual void EntityDestroyed(Entity entity) = 0;
 };
 
-template <typename T> class ComponentArrayTemplate : public ComponentArrayInterface
+template <typename T> class ComponentArrayTemplate final : public ComponentArrayInterface
 {
 public:
     void InsertData(Entity entity, T component)
