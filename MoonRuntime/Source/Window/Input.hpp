@@ -7,16 +7,17 @@
 
 namespace Input
 {
-    bool IsKeyPressed(int keycode);
-    bool IsMouseButtonPressed(int mouseButtonCode);
+    [[nodiscard]] bool IsKeyPressed(int keycode);
+    [[nodiscard]] bool IsMouseButtonPressed(int mouseButtonCode);
 
-    bool IsLeftClick();
-    bool IsRightClick();
+    [[nodiscard]] bool IsLeftClick();
+    [[nodiscard]] bool IsRightClick();
 
-    glm::vec2 GetMousePosition();
-    glm::vec2 GetCapturedMouseMovement();
+    [[nodiscard]] glm::vec2 GetMousePosition();
+    [[nodiscard]] glm::vec2 GetCapturedMouseMovement();
 
-    bool IsMouseCaptured();
+    [[nodiscard]] bool IsMouseCaptured();
+
     void CaptureCursor();
     void ReleaseCursor();
 
