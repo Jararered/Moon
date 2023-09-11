@@ -6,34 +6,10 @@ project(${Project})
 file(GLOB_RECURSE ProjectSourceFiles Source/*.cpp)
 file(GLOB_RECURSE ProjectHeaderFiles Source/*.hpp)
 
-add_executable(
-    ${Project}
-    ${ProjectSourceFiles}
-    ${ProjectHeaderFiles}
-    ${LibrarySourceFiles}
-)
+add_executable(${Project} ${ProjectSourceFiles} ${ProjectHeaderFiles})
 
-target_include_directories(
-    ${Project}
-    PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/Source
-    ${MoonIncludeDirs}
-)
+target_include_directories(${Project} PUBLIC Source)
+target_link_libraries(${Project} MoonRuntime)
 
-if(UNIX)
-    add_definitions(-DUNIX)
-    find_package(glfw3 3.3.8 REQUIRED)
-    target_link_libraries(${Project} glfw)
-endif(UNIX)
-
-if(WIN32)
-    target_link_directories(${Project} PUBLIC ${CMAKE_SOURCE_DIR}/Libraries/glfw/lib)
-endif(WIN32)
-
-target_link_libraries(
-    ${Project}
-    MoonRuntime
-)
-
-install(DIRECTORY Shaders DESTINATION ${CMAKE_SOURCE_DIR}/Build/Tests/${Project})
-install(DIRECTORY Textures DESTINATION ${CMAKE_SOURCE_DIR}/Build/Tests/${Project})
+install(DIRECTORY Shaders DESTINATION ${CMAKE_SOURCE_DIR}/Build/Sandbox/${Project})
+install(DIRECTORY Textures DESTINATION ${CMAKE_SOURCE_DIR}/Build/Sandbox/${Project})
