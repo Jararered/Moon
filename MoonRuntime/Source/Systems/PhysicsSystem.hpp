@@ -12,7 +12,7 @@ public:
     PhysicsSystem(PhysicsSystem&&) = default;
     PhysicsSystem& operator=(const PhysicsSystem&) = default;
     PhysicsSystem& operator=(PhysicsSystem&&) = default;
-    virtual ~PhysicsSystem() = default;
+    ~PhysicsSystem() override = default;
 
 public:
     void Register() override;
@@ -23,7 +23,7 @@ public:
     inline static glm::vec3 s_Gravity = glm::vec3(0.0f, -9.81f, 0.0f);
 
 private:
-    bool IsIntersect(const glm::vec3& lower1, const glm::vec3& upper1, const glm::vec3& lower2, const glm::vec3& upper2);
+    [[nodiscard]] bool IsIntersect(const glm::vec3& lower1, const glm::vec3& upper1, const glm::vec3& lower2, const glm::vec3& upper2);
 
     unsigned int m_SubStepCount = 1;
 };

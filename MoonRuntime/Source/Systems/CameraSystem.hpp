@@ -10,7 +10,7 @@ public:
     CameraSystem(CameraSystem&&) = default;
     CameraSystem& operator=(const CameraSystem&) = default;
     CameraSystem& operator=(CameraSystem&&) = default;
-    virtual ~CameraSystem() = default;
+    ~CameraSystem() override = default;
 
 public:
     void Register() override;

@@ -2,7 +2,6 @@
 
 #include "Coordinator.hpp"
 #include "Input.hpp"
-#include "System.hpp"
 
 #include "Components/Camera.hpp"
 #include "Components/Transform.hpp"
@@ -31,10 +30,10 @@ void CameraSystem::Update(float dt)
     {
         auto& transform = g_Coordinator.GetComponent<Transform>(entity);
 
-        glm::vec3 positionDelta = {0.0f, 0.0f, 0.0f};
+        auto positionDelta = glm::vec3(0.0f, 0.0f, 0.0f);
 
         // Set Yaw and Pitch rotations based on mouse movement
-        const glm::vec2 mouseMovement = Input::GetCapturedMouseMovement() / 5.0f;
+        const auto mouseMovement = Input::GetCapturedMouseMovement() / 5.0f;
 
         // Rotation
         transform.Rotation.x += glm::radians(mouseMovement.y);
@@ -46,18 +45,18 @@ void CameraSystem::Update(float dt)
         if (transform.Rotation.x < glm::radians(-90.0f))
             transform.Rotation.x = glm::radians(-89.9f);
 
-        glm::vec3 direction = {0.0f, 0.0f, 0.0f};
+        auto direction = glm::vec3(0.0f, 0.0f, 0.0f);
         direction.x = glm::cos(transform.Rotation.y) * glm::cos(transform.Rotation.x);
         direction.y = glm::sin(transform.Rotation.x);
         direction.z = glm::sin(transform.Rotation.y) * glm::cos(transform.Rotation.x);
 
         // Normalize Direction vector and update Right vector
         direction = glm::normalize(direction);
-        const glm::vec3 right = glm::cross(direction, glm::vec3(0.0f, 1.0f, 0.0f));
+        const auto right = glm::cross(direction, glm::vec3(0.0f, 1.0f, 0.0f));
 
         // Position
         // Basic movement processing
-        const glm::vec3 fowardXZ = {direction.x, 0.0f, direction.z};
+        const auto fowardXZ = glm::vec3(direction.x, 0.0f, direction.z);
 
         // WASD movement
         if (Input::IsKeyPressed(KEY_W))

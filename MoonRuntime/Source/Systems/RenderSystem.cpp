@@ -1,7 +1,5 @@
 #include "RenderSystem.hpp"
 
-#include "System.hpp"
-
 #include <glad/gl.h>
 #include <glfw/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -38,17 +36,17 @@ void RenderSystem::Initialize()
     glCullFace(GL_BACK);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-    m_CameraEntity = g_Coordinator.CreateEntity();
+    m_Camera = g_Coordinator.CreateEntity();
 
-    const glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
-    const glm::vec3 rotation = glm::vec3(0.0f, glm::radians(-90.0f), 0.0f); // Looking into the screen
-    g_Coordinator.AddComponent(m_CameraEntity, Transform{.Position = position, .Rotation = rotation});
+    const auto position = glm::vec3(0.0f, 0.0f, 0.0f);
+    const auto rotation = glm::vec3(0.0f, glm::radians(-90.0f), 0.0f); // Looking into the screen
+    g_Coordinator.AddComponent(m_Camera, Transform{.Position = position, .Rotation = rotation});
 
-    const float fov = glm::radians(90.0f);
-    const float aspectRatio = 16.0f / 9.0f;
-    const glm::mat4 projMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
-    const glm::mat4 viewMatrix = glm::mat4(1.0f);
-    g_Coordinator.AddComponent(m_CameraEntity, Camera{.ViewMatrix = viewMatrix, .ProjectionMatrix = projMatrix});
+    const auto fov = glm::radians(90.0f);
+    const auto aspectRatio = 16.0f / 9.0f;
+    const auto projMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
+    const auto viewMatrix = glm::mat4(1.0f);
+    g_Coordinator.AddComponent(m_Camera, Camera{.ViewMatrix = viewMatrix, .ProjectionMatrix = projMatrix});
 }
 
 void RenderSystem::Update(float dt)
@@ -57,7 +55,7 @@ void RenderSystem::Update(float dt)
 
     PollDebugControls();
 
-    const auto& camera = g_Coordinator.GetComponent<Camera>(m_CameraEntity);
+    const auto& camera = g_Coordinator.GetComponent<Camera>(m_Camera);
     for (const auto& entity : m_Entities)
     {
         const auto& shader = g_Coordinator.GetComponent<Shader>(entity);
@@ -75,10 +73,10 @@ void RenderSystem::Update(float dt)
         }
 
         const auto& transform = g_Coordinator.GetComponent<Transform>(entity);
-        const glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), transform.Position);
-        const glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), transform.Scale);
-        const glm::mat4 rotationMatrix = glm::eulerAngleXYZ(transform.Rotation.x, transform.Rotation.y, transform.Rotation.z);
-        const glm::mat4 modelMatrix = translationMatrix * scaleMatrix * rotationMatrix;
+        const auto translationMatrix = glm::translate(glm::mat4(1.0f), transform.Position);
+        const auto scaleMatrix = glm::scale(glm::mat4(1.0f), transform.Scale);
+        const auto rotationMatrix = glm::eulerAngleXYZ(transform.Rotation.x, transform.Rotation.y, transform.Rotation.z);
+        const auto modelMatrix = translationMatrix * scaleMatrix * rotationMatrix;
 
         glUniformMatrix4fv(glGetUniformLocation(shader.ID, "u_ModelMatrix"), 1, GL_FALSE, (float*)&modelMatrix);
         glUniformMatrix4fv(glGetUniformLocation(shader.ID, "u_ViewMatrix"), 1, GL_FALSE, (float*)&camera.ViewMatrix);
