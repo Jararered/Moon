@@ -2,8 +2,8 @@
 
 #include <Moon.hpp>
 
-#include "Meshes/CubeMesh.hpp"
-#include "Meshes/SquareMesh.hpp"
+#include "Meshes/Cube.hpp"
+#include "Meshes/Square.hpp"
 
 extern Coordinator g_Coordinator;
 
@@ -47,7 +47,7 @@ public:
         for (unsigned int i = 0; i < count; i++)
         {
             const float x = Random::Value<float>(-100.0f, 100.0f);
-            const float y = Random::Value<float>(-100.0f, 100.0f);
+            const float y = Random::Value<float>(0.0f, 10000.0f);
             const float z = Random::Value<float>(-100.0f, 100.0f);
             const float random = Random::Value<float>(1, 10);
 
