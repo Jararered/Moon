@@ -30,32 +30,11 @@ void PhysicsSystem::Update(float dt)
     {
         for (const auto& entity1 : m_Entities)
         {
-            auto& transform1 = g_Coordinator.GetComponent<Transform>(entity1);
-            auto& dynamics1 = g_Coordinator.GetComponent<Dynamics>(entity1);
+            auto& transform = g_Coordinator.GetComponent<Transform>(entity1);
+            auto& dynamics = g_Coordinator.GetComponent<Dynamics>(entity1);
 
-            auto newPosition = transform1.Position + dynamics1.Velocity * stepDT;
-            auto newVelocity = dynamics1.Velocity + s_Gravity * stepDT;
-
-            // Check collisions
-            // for (const auto& entity2 : m_Entities)
-            // {
-            //     if (entity1 == entity2)
-            //         continue;
-            //     const auto& transform2 = g_Coordinator.GetComponent<Transform>(entity2);
-            //     const auto upperbounds1 = newPosition + transform1.Scale / 2.0f;
-            //     const auto upperbounds2 = transform2.Position + transform2.Scale / 2.0f;
-            //     const auto lowerbounds1 = newPosition - transform1.Scale / 2.0f;
-            //     const auto lowerbounds2 = transform2.Position - transform2.Scale / 2.0f;
-            //     const auto intersection = IsIntersect(lowerbounds1, lowerbounds2, upperbounds1, upperbounds2);
-            //     if (intersection)
-            //     {
-            //         newPosition = transform1.Position;
-            //     }
-            // }
-
-            // Apply new states
-            transform1.Position = newPosition;
-            dynamics1.Velocity = newVelocity;
+            transform.Position = transform.Position + dynamics.Velocity * stepDT;
+            dynamics.Velocity = dynamics.Velocity + s_Gravity * stepDT;
         }
     }
 }
@@ -66,6 +45,5 @@ void PhysicsSystem::Finalize()
 
 bool PhysicsSystem::IsIntersect(const glm::vec3& lower1, const glm::vec3& lower2, const glm::vec3& upper1, const glm::vec3& upper2)
 {
-    // Check if Box1's max is greater than Box2's min and Box1's min is less than Box2's max
     return (upper1.x > lower2.x && lower1.x < upper2.x && upper1.y > lower2.y && lower1.y < upper2.y && upper1.z > lower2.z && lower1.z < upper2.z);
 }
