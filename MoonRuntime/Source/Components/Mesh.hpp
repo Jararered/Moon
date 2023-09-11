@@ -9,16 +9,29 @@
 
 #include <memory>
 
-struct DrawableMesh
+class MeshInterface
 {
-    DrawableMesh() = default;
-    virtual ~DrawableMesh() = default;
+public:
+    MeshInterface() = default;
+    MeshInterface(const MeshInterface&) = default;
+    MeshInterface(MeshInterface&&) = default;
+    MeshInterface& operator=(const MeshInterface&) = default;
+    MeshInterface& operator=(MeshInterface&&) = default;
+    virtual ~MeshInterface() = default;
 
     virtual void Draw() = 0;
 };
 
-template <typename VertexType> struct TMeshComponent : public DrawableMesh
+template <typename VertexType> struct MeshTemplate : public MeshInterface
 {
+public:
+    MeshTemplate() = default;
+    MeshTemplate(const MeshTemplate&) = default;
+    MeshTemplate(MeshTemplate&&) = default;
+    MeshTemplate& operator=(const MeshTemplate&) = default;
+    MeshTemplate& operator=(MeshTemplate&&) = default;
+    ~MeshTemplate() override = default;
+
     void Draw() override
     {
         VertexBuffer.Bind();
@@ -31,5 +44,5 @@ template <typename VertexType> struct TMeshComponent : public DrawableMesh
 
 struct Mesh
 {
-    std::shared_ptr<DrawableMesh> Data;
+    std::shared_ptr<MeshInterface> Data;
 };
