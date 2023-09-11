@@ -4,7 +4,7 @@
 #include <print>
 #include <vector>
 
-template <class T> class VertexBuffer
+template <class T> class VertexBuffer final
 {
 public:
     VertexBuffer() = default;

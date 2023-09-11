@@ -4,7 +4,7 @@
 
 struct GLFWwindow;
 
-class OpenGLWindow : public Window
+class OpenGLWindow final : public Window
 {
 public:
     OpenGLWindow(const WindowSpecification& spec);

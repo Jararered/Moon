@@ -2,7 +2,7 @@
 
 #include <glad/gl.h>
 
-template <typename T1> struct Vertex1D
+template <typename T1> struct Vertex1D final
 {
     Vertex1D(const T1& data1) : m_Data1(data1) {}
 
@@ -15,7 +15,7 @@ template <typename T1> struct Vertex1D
     T1 m_Data1;
 };
 
-template <typename T1, typename T2> struct Vertex2D
+template <typename T1, typename T2> struct Vertex2D final
 {
     Vertex2D(const T1& data1, const T2& data2) : m_Data1(data1), m_Data2(data2) {}
 
@@ -31,7 +31,7 @@ template <typename T1, typename T2> struct Vertex2D
     T2 m_Data2;
 };
 
-template <typename T1, typename T2, typename T3> struct Vertex3D
+template <typename T1, typename T2, typename T3> struct Vertex3D final
 {
     Vertex3D(const T1& data1, const T2& data2, const T3& data3) : m_Data1(data1), m_Data2(data2), m_Data3(data3) {}
 
@@ -50,7 +50,7 @@ template <typename T1, typename T2, typename T3> struct Vertex3D
     T3 m_Data3;
 };
 
-template <typename T1, typename T2, typename T3, typename T4> struct Vertex4D
+template <typename T1, typename T2, typename T3, typename T4> struct Vertex4D final
 {
     Vertex4D(const T1& data1, const T2& data2, const T3& data3, const T4& data4) : m_Data1(data1), m_Data2(data2), m_Data3(data3), m_Data4(data4) {}
 

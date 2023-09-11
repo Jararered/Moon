@@ -2,7 +2,7 @@
 
 #include <FastNoiseLite.h>
 
-class Random
+class Random final
 {
 public:
     static FastNoiseLite s_Noise1D;

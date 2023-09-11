@@ -7,7 +7,7 @@
 
 extern Coordinator g_Coordinator;
 
-class CubesFalling : public Engine
+class CubesFalling final : public Engine
 {
 public:
     void Start()
