@@ -10,7 +10,7 @@ public:
     VertexBuffer() = default;
     ~VertexBuffer() = default;
 
-    void Create()
+    void UploadToGPU()
     {
         glGenVertexArrays(1, &m_VAO);
         glBindVertexArray(m_VAO);
@@ -78,6 +78,6 @@ private:
     std::vector<unsigned int> m_Indices;
 
 public:
-    inline std::vector<T>& GetVertices() { return m_Vertices; }
-    inline std::vector<unsigned int>& GetIndices() { return m_Indices; }
+    [[nodiscard]] inline std::vector<T>& GetVertices() { return m_Vertices; }
+    [[nodiscard]] inline std::vector<unsigned int>& GetIndices() { return m_Indices; }
 };
