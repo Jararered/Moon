@@ -3,8 +3,16 @@
 #include "Entity.hpp"
 #include "System.hpp"
 
-class RenderSystem : public System
+class RenderSystem final : public System
 {
+public:
+    RenderSystem() = default;
+    RenderSystem(const RenderSystem&) = default;
+    RenderSystem(RenderSystem&&) = default;
+    RenderSystem& operator=(const RenderSystem&) = default;
+    RenderSystem& operator=(RenderSystem&&) = default;
+    virtual ~RenderSystem() = default;
+
 public:
     void Register() override;
     void Initialize() override;

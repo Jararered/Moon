@@ -38,23 +38,21 @@ void PhysicsSystem::Update(float dt)
             glm::vec3 newVelocity = dynamics1.Velocity + s_Gravity * stepDT;
 
             // Check collisions
-            for (const auto& entity2 : m_Entities)
-            {
-                if (entity1 == entity2)
-                    continue;
-
-                const auto& transform2 = g_Coordinator.GetComponent<Transform>(entity2);
-                const auto upperbounds1 = newPosition + transform1.Scale / 2.0f;
-                const auto upperbounds2 = transform2.Position + transform2.Scale / 2.0f;
-                const auto lowerbounds1 = newPosition - transform1.Scale / 2.0f;
-                const auto lowerbounds2 = transform2.Position - transform2.Scale / 2.0f;
-
-                bool intersection = IsIntersect(lowerbounds1, lowerbounds2, upperbounds1, upperbounds2);
-                if (intersection)
-                {
-                    newPosition = transform1.Position;
-                }
-            }
+            // for (const auto& entity2 : m_Entities)
+            // {
+            //     if (entity1 == entity2)
+            //         continue;
+            //     const auto& transform2 = g_Coordinator.GetComponent<Transform>(entity2);
+            //     const auto upperbounds1 = newPosition + transform1.Scale / 2.0f;
+            //     const auto upperbounds2 = transform2.Position + transform2.Scale / 2.0f;
+            //     const auto lowerbounds1 = newPosition - transform1.Scale / 2.0f;
+            //     const auto lowerbounds2 = transform2.Position - transform2.Scale / 2.0f;
+            //     bool intersection = IsIntersect(lowerbounds1, lowerbounds2, upperbounds1, upperbounds2);
+            //     if (intersection)
+            //     {
+            //         newPosition = transform1.Position;
+            //     }
+            // }
 
             // Apply new states
             transform1.Position = newPosition;

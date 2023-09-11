@@ -4,8 +4,16 @@
 
 #include <glm/vec3.hpp>
 
-class PhysicsSystem : public System
+class PhysicsSystem final : public System
 {
+public:
+    PhysicsSystem() = default;
+    PhysicsSystem(const PhysicsSystem&) = default;
+    PhysicsSystem(PhysicsSystem&&) = default;
+    PhysicsSystem& operator=(const PhysicsSystem&) = default;
+    PhysicsSystem& operator=(PhysicsSystem&&) = default;
+    virtual ~PhysicsSystem() = default;
+
 public:
     void Register() override;
     void Initialize() override;
