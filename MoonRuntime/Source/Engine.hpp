@@ -27,6 +27,6 @@ protected:
     std::vector<std::shared_ptr<System>> m_Systems;
 
 public:
-    static double GetTime();
+    [[nodiscard]] static double GetTime();
     std::shared_ptr<Window> CreateWindow(const WindowSpecification& spec);
 };
