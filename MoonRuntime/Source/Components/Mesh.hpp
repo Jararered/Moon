@@ -42,7 +42,4 @@ public:
     VertexBuffer<VertexType> VertexBuffer;
 };
 
-struct Mesh
-{
-    std::shared_ptr<MeshInterface> Data;
-};
+typedef std::shared_ptr<MeshInterface> Mesh;
