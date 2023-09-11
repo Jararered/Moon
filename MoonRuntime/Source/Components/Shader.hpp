@@ -9,74 +9,64 @@ struct Shader
 {
     unsigned int ID = 0;
 
-    static unsigned int CreateShader(const std::string& vertexFile, const std::string& fragmentFile)
+    static unsigned int CreateShader(const std::string& vertexPath, const std::string& fragmentPath)
     {
+        int success;
+        char info[512];
+
         // Vertex Shader
         unsigned int vertexID;
+        std::ifstream vertexFile(vertexPath);
+        std::string vertexString((std::istreambuf_iterator<char>(vertexFile)), std::istreambuf_iterator<char>());
+        const char* vertexChar = vertexString.c_str();
+        vertexID = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(vertexID, 1, &vertexChar, NULL);
+        glCompileShader(vertexID);
+        glGetShaderiv(vertexID, GL_COMPILE_STATUS, &success);
+        if (!success)
         {
-            std::ifstream file(vertexFile);
-            std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-            const char* contentsChar = contents.c_str();
-            vertexID = glCreateShader(GL_VERTEX_SHADER);
-            glShaderSource(vertexID, 1, &contentsChar, NULL);
-            glCompileShader(vertexID);
-        }
-
-        int successVert;
-        glGetShaderiv(vertexID, GL_COMPILE_STATUS, &successVert);
-        if (!successVert)
-        {
+            glGetShaderInfoLog(vertexID, 512, NULL, info);
             glDeleteShader(vertexID);
-            char infoLog[512];
-            glGetShaderInfoLog(vertexID, 512, NULL, infoLog);
-            std::println("Compilation failed: {}", infoLog);
+            std::println("Compilation failed: {}", info);
             return 0;
         }
 
         // Fragment Shader
         unsigned int fragmentID;
-        {
-            std::ifstream file(fragmentFile);
-            std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-            const char* contentsChar = contents.c_str();
-            fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
-            glShaderSource(fragmentID, 1, &contentsChar, NULL);
-            glCompileShader(fragmentID);
-        }
-
-        int successFrag;
-        glGetShaderiv(fragmentID, GL_COMPILE_STATUS, &successFrag);
-        if (!successFrag)
+        std::ifstream fragmentFile(fragmentPath);
+        std::string fragmentString((std::istreambuf_iterator<char>(fragmentFile)), std::istreambuf_iterator<char>());
+        const char* fragmentChar = fragmentString.c_str();
+        fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(fragmentID, 1, &fragmentChar, NULL);
+        glCompileShader(fragmentID);
+        glGetShaderiv(fragmentID, GL_COMPILE_STATUS, &success);
+        if (!success)
         {
             glDeleteShader(fragmentID);
-            char infoLog[512];
-            glGetShaderInfoLog(fragmentID, 512, NULL, infoLog);
-            std::println("Compilation failed: {}", std::string(infoLog));
+            glGetShaderInfoLog(fragmentID, 512, NULL, info);
+            std::println("Compilation failed: {}", std::string(info));
             return 0;
         }
 
-        unsigned int id = glCreateProgram();
-        glAttachShader(id, vertexID);
-        glAttachShader(id, fragmentID);
-
-        int successLink;
-        glLinkProgram(id);
-        glGetProgramiv(id, GL_LINK_STATUS, &successLink);
-        if (!successLink)
+        // Linking
+        unsigned int shaderID;
+        shaderID = glCreateProgram();
+        glAttachShader(shaderID, vertexID);
+        glAttachShader(shaderID, fragmentID);
+        glLinkProgram(shaderID);
+        glGetProgramiv(shaderID, GL_LINK_STATUS, &success);
+        if (!success)
         {
-            glDeleteProgram(id);
-            char infoLog[512];
-            glGetProgramInfoLog(id, 512, NULL, infoLog);
-            std::println("Linking failed: {}", std::string(infoLog));
+            glDeleteProgram(shaderID);
+            glGetProgramInfoLog(shaderID, 512, NULL, info);
+            std::println("Linking failed: {}", std::string(info));
+            return 0;
         }
 
         glDeleteShader(vertexID);
         glDeleteShader(fragmentID);
 
-        if (successVert && successFrag && successLink)
-        {
-            std::println("Created shader: {}", id);
-        }
-        return id;
+        std::println("Created shader: {}", shaderID);
+        return shaderID;
     }
 };
