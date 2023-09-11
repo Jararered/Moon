@@ -29,9 +29,6 @@ void CameraSystem::Update(float dt)
     for (const auto& entity : m_Entities)
     {
         auto& transform = g_Coordinator.GetComponent<Transform>(entity);
-
-        auto positionDelta = glm::vec3(0.0f, 0.0f, 0.0f);
-
         // Set Yaw and Pitch rotations based on mouse movement
         const auto mouseMovement = Input::GetCapturedMouseMovement() / 5.0f;
 
@@ -45,7 +42,7 @@ void CameraSystem::Update(float dt)
         if (transform.Rotation.x < glm::radians(-90.0f))
             transform.Rotation.x = glm::radians(-89.9f);
 
-        auto direction = glm::vec3(0.0f, 0.0f, 0.0f);
+        auto direction = glm::vec3(0.0f);
         direction.x = glm::cos(transform.Rotation.y) * glm::cos(transform.Rotation.x);
         direction.y = glm::sin(transform.Rotation.x);
         direction.z = glm::sin(transform.Rotation.y) * glm::cos(transform.Rotation.x);
@@ -59,6 +56,7 @@ void CameraSystem::Update(float dt)
         const auto fowardXZ = glm::vec3(direction.x, 0.0f, direction.z);
 
         // WASD movement
+        auto positionDelta = glm::vec3(0.0f);
         if (Input::IsKeyPressed(KEY_W))
             positionDelta += fowardXZ;
         if (Input::IsKeyPressed(KEY_S))
@@ -79,13 +77,13 @@ void CameraSystem::Update(float dt)
             positionDelta += glm::vec3(0.0f, 1.0f, 0.0f);
         if (Input::IsKeyPressed(KEY_LEFT_SHIFT))
             positionDelta -= glm::vec3(0.0f, 1.0f, 0.0f);
+        if (Input::IsKeyPressed(KEY_LEFT_CONTROL))
+            positionDelta *= 10.0f;
 
         transform.Position += positionDelta * dt * 10.0f;
 
-        auto& cameraComponent = g_Coordinator.GetComponent<Camera>(entity);
-        cameraComponent.ViewMatrix = glm::lookAt(transform.Position, (transform.Position + direction), glm::vec3(0.0f, 1.0f, 0.0f));
-
-        // std::println("{}, {}, {}", transform.Position.x, transform.Position.y, transform.Position.z);
+        auto& camera = g_Coordinator.GetComponent<Camera>(entity);
+        camera.ViewMatrix = glm::lookAt(transform.Position, (transform.Position + direction), glm::vec3(0.0f, 1.0f, 0.0f));
     }
 }
 
