@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Components/WindowSpecification.hpp"
+#include "WindowSpecification.hpp"
 
 #include <vector>
 
