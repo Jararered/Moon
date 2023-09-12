@@ -22,7 +22,7 @@ public:
             Update();
 
             const auto frameEndTime = std::chrono::high_resolution_clock::now();
-            m_DeltaFrameTime = std::chrono::duration<float, std::chrono::seconds::period>(frameEndTime - frameStartTime).count();
+            m_DT = std::chrono::duration<float, std::chrono::seconds::period>(frameEndTime - frameStartTime).count();
         }
     }
 
@@ -46,15 +46,16 @@ public:
         const auto shaderID = Shader::CreateShader("Shaders/Position.vert", "Shaders/Position.frag");
         for (unsigned int i = 0; i < count; i++)
         {
-            const float x = Random::Value<float>(-100.0f, 100.0f);
-            const float y = Random::Value<float>(0.0f, 10000.0f);
-            const float z = Random::Value<float>(-100.0f, 100.0f);
+            const float x = Random::Value<float>(-100, 100);
+            const float y = Random::Value<float>(0, 10000);
+            const float z = Random::Value<float>(-100, 100);
             const float random = Random::Value<float>(1, 10);
 
             const Entity entity = g_Coordinator.CreateEntity();
             g_Coordinator.AddComponent<Mesh>(entity, Mesh{mesh});
             g_Coordinator.AddComponent<Shader>(entity, Shader{shaderID});
             g_Coordinator.AddComponent<Texture>(entity, Texture{0});
+            g_Coordinator.AddComponent<Index>(entity, Index{0});
             g_Coordinator.AddComponent<Transform>(entity, Transform{.Position = {x, y, z}, .Rotation = {0, 0, 0}, .Scale = {1, random, 1}});
             g_Coordinator.AddComponent<Dynamics>(entity, Dynamics{.Velocity{0, 0, 0}, .Acceleration{0, 0, 0}});
         }
