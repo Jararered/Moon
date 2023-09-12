@@ -1,14 +1,12 @@
 #pragma once
 
 #include <chrono>
+#include <map>
 #include <memory>
 #include <string>
 
+#include "System.hpp"
 #include "Window.hpp"
-
-#include "Systems/CameraSystem.hpp"
-#include "Systems/PhysicsSystem.hpp"
-#include "Systems/RenderSystem.hpp"
 
 class Engine
 {
@@ -20,11 +18,12 @@ public:
     virtual void Update();
 
 protected:
-    float m_DeltaFrameTime = 0.0f;
+    float m_DT = 0.0f;
 
     std::shared_ptr<Window> p_Window;
 
     std::vector<std::shared_ptr<System>> m_Systems;
+    std::map<unsigned int, std::shared_ptr<System>> m_SystemMap;
 
 public:
     [[nodiscard]] static double GetTime();
