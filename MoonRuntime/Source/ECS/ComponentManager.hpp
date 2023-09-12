@@ -7,6 +7,8 @@
 #include "ComponentType.hpp"
 #include "Entity.hpp"
 
+#include <assert.h>
+
 class ComponentManager
 {
 public:
