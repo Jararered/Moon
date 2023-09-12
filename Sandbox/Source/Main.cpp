@@ -6,7 +6,7 @@ int main(int argc, char* argv[])
     spec.Width = 1280;
     spec.Height = 720;
     spec.VSync = true;
-    spec.API = WindowSpecification::GraphicsAPI::OpenGL;
+    spec.Title = "Moon (OpenGL)";
 
     CubesFalling app;
     app.CreateWindow(spec);
