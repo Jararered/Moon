@@ -17,6 +17,7 @@
 
 #include "Components/Camera.hpp"
 #include "Components/Dynamics.hpp"
+#include "Components/Index.hpp"
 #include "Components/Mesh.hpp"
 #include "Components/Shader.hpp"
 #include "Components/Texture.hpp"
