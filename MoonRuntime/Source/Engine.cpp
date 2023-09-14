@@ -50,6 +50,19 @@ void Engine::Initialize()
     }
 }
 
+void Engine::Start()
+{
+    while (p_Window->IsRunning())
+    {
+        const auto frameStartTime = std::chrono::high_resolution_clock::now();
+
+        Update();
+
+        const auto frameEndTime = std::chrono::high_resolution_clock::now();
+        m_DT = std::chrono::duration<float, std::chrono::seconds::period>(frameEndTime - frameStartTime).count();
+    }
+}
+
 void Engine::Update()
 {
     if (p_Window)

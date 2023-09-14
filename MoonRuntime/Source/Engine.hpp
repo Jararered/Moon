@@ -15,7 +15,10 @@ public:
     virtual ~Engine() = default;
 
     void Initialize();
-    virtual void Update();
+    void Update();
+    void Finalize();
+
+    void Start();
 
 protected:
     float m_DT = 0.0f;
