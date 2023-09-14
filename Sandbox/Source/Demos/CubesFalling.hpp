@@ -14,7 +14,7 @@ class CubesFalling final : public Engine
 public:
     void CreatePlatform()
     {
-        const auto mesh = std::make_shared<TexturedCubeMesh>(glm::vec3(0.5f, 0.5f, 0.5f));
+        const auto mesh = std::make_shared<TexturedCubeMesh>();
         const auto shaderID = Shader::CreateShader("Shaders/PositionNormalTexture.vert", "Shaders/PositionNormalTexture.frag");
         const auto textureID = Texture::CreateTexture("Textures/terrain.png");
         // const auto texturemap = TextureMap(16, 16, )
@@ -31,7 +31,7 @@ public:
         const unsigned int count = 9999;
 
         const auto mesh = std::make_shared<TexturedCubeMesh>();
-        const auto shaderID = Shader::CreateShader("Shaders/Position.vert", "Shaders/Position.frag");
+        const auto shaderID = Shader::CreateShader("Shaders/PositionNormalTexture.vert", "Shaders/PositionNormalTexture.frag");
         for (unsigned int i = 0; i < count; i++)
         {
             const float x = Random::Value<float>(-100, 100);

@@ -12,35 +12,35 @@ public:
         auto& vertices = VertexBuffer.GetVertices();
         vertices.reserve(24);
 
-        vertices.emplace_back(Vertex({-0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {}));
-        vertices.emplace_back(Vertex({+0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {}));
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {}));
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {}));
+        vertices.emplace_back(Vertex({-0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}));
+        vertices.emplace_back(Vertex({+0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}));
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f}));
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}));
 
-        vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}));
-        vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}));
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}));
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}));
+        vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, 0.0f}));
+        vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.0f, 0.0f}));
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.0f, 1.0f}));
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, 1.0f}));
 
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, +0.5f}, {1.0f, 0.0f, 0.0f}, {}));
-        vertices.emplace_back(Vertex({+0.5f, -0.5f, +0.5f}, {1.0f, 0.0f, 0.0f}, {}));
-        vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {}));
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {}));
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, +0.5f}, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}));
+        vertices.emplace_back(Vertex({+0.5f, -0.5f, +0.5f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}));
+        vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}));
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}));
 
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}));
-        vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}));
-        vertices.emplace_back(Vertex({-0.5f, -0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {}));
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {}));
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}));
+        vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}));
+        vertices.emplace_back(Vertex({-0.5f, -0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}));
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}));
 
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {}));
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {}));
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, +0.5f}, {0.0f, 1.0f, 0.0f}, {}));
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, +0.5f}, {0.0f, 1.0f, 0.0f}, {}));
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 1.0f}));
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 1.0f}));
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, +0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}));
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, +0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f}));
 
-        vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}));
-        vertices.emplace_back(Vertex({+0.5f, -0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {}));
-        vertices.emplace_back(Vertex({-0.5f, -0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {}));
-        vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}));
+        vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 0.0f}));
+        vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 0.0f}));
+        vertices.emplace_back(Vertex({+0.5f, -0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f}));
+        vertices.emplace_back(Vertex({-0.5f, -0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 1.0f}));
 
         auto& indices = VertexBuffer.GetIndices();
         indices.reserve(36);

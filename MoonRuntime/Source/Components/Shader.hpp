@@ -25,9 +25,9 @@ struct Shader
         glGetShaderiv(vertexID, GL_COMPILE_STATUS, &success);
         if (!success)
         {
-            glGetShaderInfoLog(vertexID, 512, NULL, info);
             glDeleteShader(vertexID);
-            std::println("Compilation failed: {}", info);
+            glGetShaderInfoLog(vertexID, 512, NULL, info);
+            std::println("Compilation failed: {}", std::string(info));
             return 0;
         }
 
@@ -42,8 +42,8 @@ struct Shader
         glGetShaderiv(fragmentID, GL_COMPILE_STATUS, &success);
         if (!success)
         {
-            glDeleteShader(fragmentID);
             glGetShaderInfoLog(fragmentID, 512, NULL, info);
+            glDeleteShader(fragmentID);
             std::println("Compilation failed: {}", std::string(info));
             return 0;
         }

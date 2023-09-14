@@ -1,4 +1,5 @@
 #include "Demos/CubesFalling.hpp"
+#include "Demos/TexturedCubeDemo.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -8,13 +9,12 @@ int main(int argc, char* argv[])
     spec.VSync = true;
     spec.Title = "Moon (OpenGL)";
 
-    CubesFalling app;
+    TexturedCubeDemo app;
     app.CreateWindow(spec);
     app.Initialize();
 
     // Spawn random cubes
-    // app.CreateCubes();
-    app.CreatePlatform();
+    app.CreateScene();
 
     app.Start();
 }

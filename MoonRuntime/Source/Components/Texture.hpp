@@ -12,6 +12,7 @@ struct Texture
     static unsigned int CreateTexture(const std::string& textureFile)
     {
         int width, height, channels;
+        stbi_set_flip_vertically_on_load(true);
         unsigned char* data = stbi_load(textureFile.c_str(), &width, &height, &channels, 0);
         if (!data)
         {
