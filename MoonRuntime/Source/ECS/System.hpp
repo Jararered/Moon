@@ -1,8 +1,8 @@
 #pragma once
 
-#include <set>
-
 #include "Entity.hpp"
+
+#include <set>
 
 class System
 {

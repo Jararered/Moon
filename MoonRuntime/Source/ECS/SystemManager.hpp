@@ -1,12 +1,12 @@
 #pragma once
 
-#include <assert.h>
-#include <memory>
-#include <unordered_map>
-
 #include "Entity.hpp"
 #include "Signature.hpp"
 #include "System.hpp"
+
+#include <assert.h>
+#include <memory>
+#include <unordered_map>
 
 class SystemManager
 {

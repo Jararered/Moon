@@ -1,16 +1,14 @@
 #pragma once
 
+#include "Entity.hpp"
+
 #include <array>
 #include <unordered_map>
-
-#include "Entity.hpp"
 
 // The one instance of virtual inheritance in the entire implementation.
 // An interface is needed so that the ComponentManager (seen later)
 // can tell a generic ComponentArray that an entity has been destroyed
 // and that it needs to update its array mappings.
-
-using Component = size_t;
 
 class ComponentArrayInterface
 {
@@ -75,7 +73,7 @@ private:
     std::array<T, MAX_ENTITIES> m_ComponentArray;
 
     std::array<Entity, MAX_ENTITIES> m_EntityToIndexArray;
-    std::array<Component, MAX_ENTITIES> m_IndexToEntityArray;
+    std::array<size_t, MAX_ENTITIES> m_IndexToEntityArray;
 
     // Total size of valid entries in the array.
     size_t m_Size;

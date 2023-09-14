@@ -15,8 +15,11 @@ public:
         m_SystemManager = std::make_unique<SystemManager>();
     }
 
-    // Entity methods
-    Entity CreateEntity() { return m_EntityManager->CreateEntity(); }
+    Entity CreateEntity()
+    {
+        // Entity methods
+        return m_EntityManager->CreateEntity();
+    }
 
     void DestroyEntity(Entity entity)
     {
@@ -25,8 +28,11 @@ public:
         m_SystemManager->EntityDestroyed(entity);
     }
 
-    // Component methods
-    template <typename T> void RegisterComponent() { m_ComponentManager->RegisterComponent<T>(); }
+    template <typename T> void RegisterComponent()
+    {
+        // Component methods
+        m_ComponentManager->RegisterComponent<T>();
+    }
 
     template <typename T> void AddComponent(Entity entity, T component)
     {
@@ -50,14 +56,26 @@ public:
         m_SystemManager->EntitySignatureChanged(entity, signature);
     }
 
-    template <typename T> T& GetComponent(Entity entity) { return m_ComponentManager->GetComponent<T>(entity); }
+    template <typename T> T& GetComponent(Entity entity)
+    {
+        return m_ComponentManager->GetComponent<T>(entity);
+    }
 
-    template <typename T> ComponentType GetComponentType() { return m_ComponentManager->GetComponentType<T>(); }
+    template <typename T> ComponentType GetComponentType()
+    {
+        return m_ComponentManager->GetComponentType<T>();
+    }
 
     // System methods
-    template <typename T> std::shared_ptr<T> RegisterSystem() { return m_SystemManager->RegisterSystem<T>(); }
+    template <typename T> std::shared_ptr<T> RegisterSystem()
+    {
+        return m_SystemManager->RegisterSystem<T>();
+    }
 
-    template <typename T> void SetSystemSignature(Signature signature) { m_SystemManager->SetSignature<T>(signature); }
+    template <typename T> void SetSystemSignature(Signature signature)
+    {
+        m_SystemManager->SetSignature<T>(signature);
+    }
 
 private:
     std::unique_ptr<ComponentManager> m_ComponentManager;

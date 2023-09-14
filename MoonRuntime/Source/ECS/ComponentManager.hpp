@@ -1,13 +1,11 @@
 #pragma once
 
-#include <memory>
-#include <unordered_map>
-
 #include "ComponentArray.hpp"
 #include "ComponentType.hpp"
 #include "Entity.hpp"
 
-#include <assert.h>
+#include <memory>
+#include <unordered_map>
 
 class ComponentManager
 {
@@ -16,8 +14,6 @@ public:
     {
         const char* typeName = typeid(T).name();
 
-        assert(m_ComponentTypes.find(typeName) == m_ComponentTypes.end() && "Registering component type more than once.");
-
         // Add this component type to the component type map
         m_ComponentTypes.insert({typeName, m_NextComponentType});
 
@@ -25,14 +21,12 @@ public:
         m_ComponentArrays.insert({typeName, std::make_shared<ComponentArrayTemplate<T>>()});
 
         // Increment the value so that the next component registered will be different
-        ++m_NextComponentType;
+        m_NextComponentType++;
     }
 
     template <typename T> ComponentType GetComponentType()
     {
         const char* typeName = typeid(T).name();
-
-        assert(m_ComponentTypes.find(typeName) != m_ComponentTypes.end() && "Component not registered before use.");
 
         // Return this component's type - used for creating signatures
         return m_ComponentTypes[typeName];
@@ -80,8 +74,6 @@ private:
     template <typename T> std::shared_ptr<ComponentArrayTemplate<T>> GetComponentArray()
     {
         const char* typeName = typeid(T).name();
-
-        assert(m_ComponentTypes.find(typeName) != m_ComponentTypes.end() && "Component not registered before use.");
 
         return std::static_pointer_cast<ComponentArrayTemplate<T>>(m_ComponentArrays[typeName]);
     }
