@@ -11,5 +11,10 @@ int main(int argc, char* argv[])
     CubesFalling app;
     app.CreateWindow(spec);
     app.Initialize();
+
+    // Spawn random cubes
+    // app.CreateCubes();
+    app.CreatePlatform();
+
     app.Start();
 }

@@ -2,39 +2,45 @@
 
 #include <Components/Mesh.hpp>
 
-class CubeMesh : public MeshTemplate<Vertex2D<glm::vec3, glm::vec3>> // Position, Color
+class TexturedCubeMesh : public MeshTemplate<Vertex3D<glm::vec3, glm::vec3, glm::vec2>> // Position, Normal, Texture Coordinate
 {
 public:
-    CubeMesh(const glm::vec3& color = glm::vec3(1.0f, 1.0f, 1.0f))
+    TexturedCubeMesh()
     {
-        using Vertex = Vertex2D<glm::vec3, glm::vec3>;
+        using Vertex = Vertex3D<glm::vec3, glm::vec3, glm::vec2>;
 
         auto& vertices = VertexBuffer.GetVertices();
         vertices.reserve(24);
-        vertices.emplace_back(Vertex({-0.5f, -0.5f, 0.5f}, color));
-        vertices.emplace_back(Vertex({+0.5f, -0.5f, 0.5f}, color));
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, 0.5f}, color));
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, 0.5f}, color));
-        vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, color));
-        vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, color));
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, color));
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, color));
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, +0.5f}, color));
-        vertices.emplace_back(Vertex({+0.5f, -0.5f, +0.5f}, color));
-        vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, color));
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, color));
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, color));
-        vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, color));
-        vertices.emplace_back(Vertex({-0.5f, -0.5f, +0.5f}, color));
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, +0.5f}, color));
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, color));
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, color));
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, +0.5f}, color));
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, +0.5f}, color));
-        vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, color));
-        vertices.emplace_back(Vertex({+0.5f, -0.5f, +0.5f}, color));
-        vertices.emplace_back(Vertex({-0.5f, -0.5f, +0.5f}, color));
-        vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, color));
+
+        vertices.emplace_back(Vertex({-0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {}));
+        vertices.emplace_back(Vertex({+0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {}));
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {}));
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {}));
+
+        vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}));
+        vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}));
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}));
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}));
+
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, +0.5f}, {1.0f, 0.0f, 0.0f}, {}));
+        vertices.emplace_back(Vertex({+0.5f, -0.5f, +0.5f}, {1.0f, 0.0f, 0.0f}, {}));
+        vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {}));
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {}));
+
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}));
+        vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}));
+        vertices.emplace_back(Vertex({-0.5f, -0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {}));
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {}));
+
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {}));
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {}));
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, +0.5f}, {0.0f, 1.0f, 0.0f}, {}));
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, +0.5f}, {0.0f, 1.0f, 0.0f}, {}));
+
+        vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}));
+        vertices.emplace_back(Vertex({+0.5f, -0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {}));
+        vertices.emplace_back(Vertex({-0.5f, -0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {}));
+        vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}));
 
         auto& indices = VertexBuffer.GetIndices();
         indices.reserve(36);

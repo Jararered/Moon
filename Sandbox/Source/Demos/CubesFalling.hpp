@@ -5,36 +5,24 @@
 #include "Meshes/Cube.hpp"
 #include "Meshes/Square.hpp"
 
+#include "Utilities/TextureMap.hpp"
+
 extern Coordinator g_Coordinator;
 
 class CubesFalling final : public Engine
 {
 public:
-    void Start()
-    {
-        CreateCubes();
-        // CreatePlatform();
-
-        while (p_Window->IsRunning())
-        {
-            const auto frameStartTime = std::chrono::high_resolution_clock::now();
-
-            Update();
-
-            const auto frameEndTime = std::chrono::high_resolution_clock::now();
-            m_DT = std::chrono::duration<float, std::chrono::seconds::period>(frameEndTime - frameStartTime).count();
-        }
-    }
-
     void CreatePlatform()
     {
-        const auto mesh = std::make_shared<CubeMesh>(glm::vec3(0.5f, 0.5f, 0.5f));
-        const auto shaderID = Shader::CreateShader("Shaders/PositionColor.vert", "Shaders/PositionColor.frag");
+        const auto mesh = std::make_shared<TexturedCubeMesh>(glm::vec3(0.5f, 0.5f, 0.5f));
+        const auto shaderID = Shader::CreateShader("Shaders/PositionNormalTexture.vert", "Shaders/PositionNormalTexture.frag");
+        const auto textureID = Texture::CreateTexture("Textures/terrain.png");
+        // const auto texturemap = TextureMap(16, 16, )
 
         const Entity entity = g_Coordinator.CreateEntity();
         g_Coordinator.AddComponent<Mesh>(entity, Mesh{mesh});
         g_Coordinator.AddComponent<Shader>(entity, Shader{shaderID});
-        g_Coordinator.AddComponent<Texture>(entity, Texture{0});
+        g_Coordinator.AddComponent<Texture>(entity, Texture{textureID});
         g_Coordinator.AddComponent<Transform>(entity, Transform{.Position = {0, 0, 0}, .Rotation = {0, 0, 0}, .Scale = {500, 1, 500}});
     }
 
@@ -42,7 +30,7 @@ public:
     {
         const unsigned int count = 9999;
 
-        const auto mesh = std::make_shared<CubeMesh>();
+        const auto mesh = std::make_shared<TexturedCubeMesh>();
         const auto shaderID = Shader::CreateShader("Shaders/Position.vert", "Shaders/Position.frag");
         for (unsigned int i = 0; i < count; i++)
         {
