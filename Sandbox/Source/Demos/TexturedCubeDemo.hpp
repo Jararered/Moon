@@ -15,13 +15,14 @@ public:
     void CreateScene()
     {
         const auto mesh = std::make_shared<TexturedCubeMesh>();
-        const auto shaderID = Shader::CreateShader("Shaders/PositionNormalTexture.vert", "Shaders/PositionNormalTexture.frag");
-        const auto textureID = Texture::CreateTexture("Textures/terrain.png");
+        const auto shaderID = Shader("Shaders/PositionNormalTexture.vert", "Shaders/PositionNormalTexture.frag");
+        const auto textureID = Texture("Textures/terrain.png");
 
         const Entity entity = g_Coordinator.CreateEntity();
-        g_Coordinator.AddComponent<Mesh>(entity, Mesh{mesh});
-        g_Coordinator.AddComponent<Shader>(entity, Shader{shaderID});
-        g_Coordinator.AddComponent<Texture>(entity, Texture{textureID});
-        g_Coordinator.AddComponent<Transform>(entity, Transform{});
+        g_Coordinator.AddComponent<Mesh>(entity, mesh);
+        g_Coordinator.AddComponent<Shader>(entity, shaderID);
+        g_Coordinator.AddComponent<Texture>(entity, textureID);
+        g_Coordinator.AddComponent<Transform>(entity);
+        g_Coordinator.AddComponent<Dynamics>(entity);
     }
 };

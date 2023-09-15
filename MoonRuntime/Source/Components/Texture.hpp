@@ -9,7 +9,8 @@ struct Texture
 {
     unsigned int ID = 0;
 
-    static unsigned int CreateTexture(const std::string& textureFile)
+    Texture() = default;
+    Texture(const std::string& textureFile)
     {
         int width, height, channels;
         stbi_set_flip_vertically_on_load(true);
@@ -17,12 +18,10 @@ struct Texture
         if (!data)
         {
             std::println("Unable to load specified file: {}", textureFile);
-            return 0;
         }
 
-        unsigned int id;
-        glGenTextures(1, &id);
-        glBindTexture(GL_TEXTURE_2D, id);
+        glGenTextures(1, &ID);
+        glBindTexture(GL_TEXTURE_2D, ID);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -35,7 +34,5 @@ struct Texture
         // Disables upscaling
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-        return id;
     }
 };

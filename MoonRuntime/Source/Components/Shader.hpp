@@ -9,7 +9,8 @@ struct Shader
 {
     unsigned int ID = 0;
 
-    static unsigned int CreateShader(const std::string& vertexPath, const std::string& fragmentPath)
+    Shader() = default;
+    Shader(const std::string& vertexPath, const std::string& fragmentPath)
     {
         int success;
         char info[512];
@@ -28,7 +29,6 @@ struct Shader
             glDeleteShader(vertexID);
             glGetShaderInfoLog(vertexID, 512, NULL, info);
             std::println("Compilation failed: {}", std::string(info));
-            return 0;
         }
 
         // Fragment Shader
@@ -45,7 +45,6 @@ struct Shader
             glGetShaderInfoLog(fragmentID, 512, NULL, info);
             glDeleteShader(fragmentID);
             std::println("Compilation failed: {}", std::string(info));
-            return 0;
         }
 
         // Linking
@@ -60,13 +59,12 @@ struct Shader
             glDeleteProgram(shaderID);
             glGetProgramInfoLog(shaderID, 512, NULL, info);
             std::println("Linking failed: {}", std::string(info));
-            return 0;
         }
 
         glDeleteShader(vertexID);
         glDeleteShader(fragmentID);
 
         std::println("Created shader: {}", shaderID);
-        return shaderID;
+        ID = shaderID;
     }
 };
