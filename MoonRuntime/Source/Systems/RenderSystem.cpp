@@ -17,6 +17,8 @@
 
 extern Coordinator g_Coordinator;
 
+float quadVertices[] = {-1.0f, 1.0f, 0.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, -1.0f, 1.0f, 0.0f, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f};
+
 void RenderSystem::Register()
 {
     Signature signature;
@@ -29,14 +31,15 @@ void RenderSystem::Register()
 
 void RenderSystem::Initialize()
 {
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_CULL_FACE);
+    glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
     glCullFace(GL_BACK);
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glDepthFunc(GL_LESS);
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
 
     glfwSetWindowUserPointer(glfwGetCurrentContext(), this);
+    glfwGetFramebufferSize(glfwGetCurrentContext(), &m_Width, &m_Height);
 
     m_Camera = g_Coordinator.CreateEntity();
 
@@ -55,7 +58,8 @@ void RenderSystem::Initialize()
         glViewport(0, 0, width, height);
 
         const auto renderer = static_cast<RenderSystem*>(glfwGetWindowUserPointer(glfwGetCurrentContext()));
-
+        renderer->m_Width = width;
+        renderer->m_Height = height;
         const auto fov = glm::radians(90.0f);
         const auto aspectRatio = static_cast<float>(width) / static_cast<float>(height);
         const auto projMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
@@ -63,13 +67,47 @@ void RenderSystem::Initialize()
         camera.ProjectionMatrix = projMatrix;
     };
     glfwSetFramebufferSizeCallback(glfwGetCurrentContext(), framebufferSizeCallback);
+
+    // Create framebuffer
+    glGenFramebuffers(1, &m_FrameBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_FrameBuffer);
+
+    // Create texturebuffer
+    glGenTextures(1, &m_TextureColorBuffer);
+    glBindTexture(GL_TEXTURE_2D, m_TextureColorBuffer);
+
+    // Configure texturebuffer
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_TextureColorBuffer, 0);
+
+    // Create renderbuffer
+    glGenRenderbuffers(1, &m_RBO);
+    glBindRenderbuffer(GL_RENDERBUFFER, m_RBO);
+
+    // Configure renderbuffer
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_Width, m_Height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_RBO);
+
+    // Check if the framebuffer was made successfully
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        std::println("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    m_ScreenMesh = ScreenMesh();
+    m_ScreenShader = Shader("Shaders/PositionTexture.vert", "Shaders/PositionTexture.frag");
 }
 
 void RenderSystem::Update(float dt)
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     PollDebugControls();
+
+    // Bind Framebuffer and draw all objects to it
+    glBindFramebuffer(GL_FRAMEBUFFER, m_FrameBuffer);
+
+    glEnable(GL_DEPTH_TEST);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     const auto& camera = g_Coordinator.GetComponent<Camera>(m_Camera);
     for (const auto& entity : m_Entities)
@@ -102,6 +140,17 @@ void RenderSystem::Update(float dt)
         mesh->Draw();
     }
 
+    // Unbind Framebuffer and draw quad
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    // Draw 2D Screen Quad
+    glDisable(GL_DEPTH_TEST);
+    glUseProgram(m_ScreenShader.ID);
+    m_CurrentShader = m_ScreenShader.ID;
+    glBindTexture(GL_TEXTURE_2D, m_TextureColorBuffer);
+    m_CurrentTexture = m_TextureColorBuffer;
+    m_ScreenMesh.Draw();
+
     glfwSwapBuffers(glfwGetCurrentContext());
 }
 
@@ -113,17 +162,27 @@ void RenderSystem::PollDebugControls()
 {
     // Do not fill polygons
     if (Input::IsKeyPressed(KEY_MINUS))
+    {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        std::println("Wireframe enabled.");
+    }
 
     // Fill polygons
     if (Input::IsKeyPressed(KEY_EQUAL))
+    {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        std::println("Wireframe disabled.");
+    }
 
     // Cull back faces
     if (Input::IsKeyPressed(KEY_MINUS) && Input::IsKeyPressed(KEY_RIGHT_SHIFT))
+    {
         glEnable(GL_CULL_FACE);
+    }
 
     // Do not cull back faces
     if (Input::IsKeyPressed(KEY_EQUAL) && Input::IsKeyPressed(KEY_RIGHT_SHIFT))
+    {
         glDisable(GL_CULL_FACE);
+    }
 }
