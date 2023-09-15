@@ -21,14 +21,16 @@ public:
     void Finalize() override;
 
 private:
+    void ConfigureFramebuffer();
+
     unsigned int m_CurrentShader = 0;
     unsigned int m_CurrentTexture = 0;
 
     int m_Width = 0;
     int m_Height = 0;
 
-    unsigned int m_FrameBuffer;
-    unsigned int m_TextureColorBuffer;
+    unsigned int m_FBO;
+    unsigned int m_TBO;
     unsigned int m_RBO;
 
     void PollDebugControls();

@@ -17,8 +17,6 @@
 
 extern Coordinator g_Coordinator;
 
-float quadVertices[] = {-1.0f, 1.0f, 0.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, -1.0f, 1.0f, 0.0f, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f};
-
 void RenderSystem::Register()
 {
     Signature signature;
@@ -58,8 +56,11 @@ void RenderSystem::Initialize()
         glViewport(0, 0, width, height);
 
         const auto renderer = static_cast<RenderSystem*>(glfwGetWindowUserPointer(glfwGetCurrentContext()));
+
         renderer->m_Width = width;
         renderer->m_Height = height;
+        renderer->ConfigureFramebuffer();
+
         const auto fov = glm::radians(90.0f);
         const auto aspectRatio = static_cast<float>(width) / static_cast<float>(height);
         const auto projMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
@@ -68,34 +69,8 @@ void RenderSystem::Initialize()
     };
     glfwSetFramebufferSizeCallback(glfwGetCurrentContext(), framebufferSizeCallback);
 
-    // Create framebuffer
-    glGenFramebuffers(1, &m_FrameBuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, m_FrameBuffer);
+    ConfigureFramebuffer();
 
-    // Create texturebuffer
-    glGenTextures(1, &m_TextureColorBuffer);
-    glBindTexture(GL_TEXTURE_2D, m_TextureColorBuffer);
-
-    // Configure texturebuffer
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_TextureColorBuffer, 0);
-
-    // Create renderbuffer
-    glGenRenderbuffers(1, &m_RBO);
-    glBindRenderbuffer(GL_RENDERBUFFER, m_RBO);
-
-    // Configure renderbuffer
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_Width, m_Height);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_RBO);
-
-    // Check if the framebuffer was made successfully
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-        std::println("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    m_ScreenMesh = ScreenMesh();
     m_ScreenShader = Shader("Shaders/PositionTexture.vert", "Shaders/PositionTexture.frag");
 }
 
@@ -104,7 +79,7 @@ void RenderSystem::Update(float dt)
     PollDebugControls();
 
     // Bind Framebuffer and draw all objects to it
-    glBindFramebuffer(GL_FRAMEBUFFER, m_FrameBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
 
     glEnable(GL_DEPTH_TEST);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -147,8 +122,8 @@ void RenderSystem::Update(float dt)
     glDisable(GL_DEPTH_TEST);
     glUseProgram(m_ScreenShader.ID);
     m_CurrentShader = m_ScreenShader.ID;
-    glBindTexture(GL_TEXTURE_2D, m_TextureColorBuffer);
-    m_CurrentTexture = m_TextureColorBuffer;
+    glBindTexture(GL_TEXTURE_2D, m_TBO);
+    m_CurrentTexture = m_TBO;
     m_ScreenMesh.Draw();
 
     glfwSwapBuffers(glfwGetCurrentContext());
@@ -156,6 +131,46 @@ void RenderSystem::Update(float dt)
 
 void RenderSystem::Finalize()
 {
+}
+
+void RenderSystem::ConfigureFramebuffer()
+{
+    // Delete previous buffers if they exist
+    if (m_FBO != 0)
+        glDeleteFramebuffers(1, &m_FBO);
+    if (m_TBO != 0)
+        glDeleteTextures(1, &m_TBO);
+    if (m_RBO != 0)
+        glDeleteRenderbuffers(1, &m_RBO);
+
+    // Create framebuffer
+    glGenFramebuffers(1, &m_FBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
+
+    // Create texturebuffer
+    glGenTextures(1, &m_TBO);
+    glBindTexture(GL_TEXTURE_2D, m_TBO);
+
+    // Configure texturebuffer
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_TBO, 0);
+
+    // Create renderbuffer
+    glGenRenderbuffers(1, &m_RBO);
+    glBindRenderbuffer(GL_RENDERBUFFER, m_RBO);
+
+    // Configure renderbuffer
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_Width, m_Height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_RBO);
+
+    // Check if the framebuffer was made successfully
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        std::println("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    std::println("FBO: {}, TBO: {}, RBO: {}", m_FBO, m_TBO, m_RBO);
 }
 
 void RenderSystem::PollDebugControls()
