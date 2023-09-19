@@ -14,9 +14,13 @@ public:
         const auto shader = Shader("Shaders/PositionNormalTexture.vert", "Shaders/NormalLighting.frag");
         const auto texture = Texture("Textures/terrain.png");
 
-        const int xSpan = 2;
-        const int ySpan = 0;
-        const int zSpan = 2;
+        ChunkMesh::s_TextureMap.Configure(texture.Width, texture.Height, 16);
+        ChunkData::s_ChunkGenerator.SetSeed(34587);
+        ChunkData::s_ChunkGenerator.SetFrequency(0.03f);
+
+        const int xSpan = 0;
+        const int ySpan = 1;
+        const int zSpan = 0;
 
         for (int x = -xSpan; x <= xSpan; x++)
         {
@@ -24,7 +28,6 @@ public:
             {
                 for (int z = -zSpan; z <= zSpan; z++)
                 {
-                    // ChunkData::s_ChunkGenerator = ChunkGenerator(34587, 0.03f);
                     const auto chunkData = std::make_shared<ChunkData>(glm::ivec3(x, y, z));
                     const auto mesh = std::make_shared<ChunkMesh>(chunkData);
 
@@ -38,3 +41,6 @@ public:
         }
     }
 };
+
+DepricatedTextureMap ChunkMesh::s_TextureMap = DepricatedTextureMap();
+NoiseGenerator ChunkData::s_ChunkGenerator = NoiseGenerator();

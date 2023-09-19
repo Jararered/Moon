@@ -51,7 +51,9 @@ void RenderSystem::Initialize()
     const auto viewMatrix = glm::mat4(1.0f);
     e_Coordinator.AddComponent(m_Camera, Camera{.ViewMatrix = viewMatrix, .ProjectionMatrix = projMatrix});
 
-    auto framebufferSizeCallback = [](GLFWwindow* window, int width, int height)
+    m_Framebuffer.Create(m_Width, m_Height);
+
+    const auto framebufferSizeCallback = [](GLFWwindow* window, int width, int height)
     {
         glViewport(0, 0, width, height);
 
@@ -59,7 +61,8 @@ void RenderSystem::Initialize()
 
         renderer->m_Width = width;
         renderer->m_Height = height;
-        renderer->ConfigureFramebuffer();
+        renderer->m_Framebuffer.Delete();
+        renderer->m_Framebuffer.Create(width, height);
 
         const auto fov = glm::radians(90.0f);
         const auto aspectRatio = static_cast<float>(width) / static_cast<float>(height);
@@ -68,34 +71,25 @@ void RenderSystem::Initialize()
         camera.ProjectionMatrix = projMatrix;
     };
     glfwSetFramebufferSizeCallback(glfwGetCurrentContext(), framebufferSizeCallback);
-
-    ConfigureFramebuffer();
-
-    m_ScreenShader = Shader("Shaders/PositionTexture.vert", "Shaders/PositionTexture.frag");
 }
 
 void RenderSystem::Update(float dt)
 {
     PollDebugControls();
 
-    StartFramebuffer();
+    m_Framebuffer.Bind();
+
+    glEnable(GL_DEPTH_TEST);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     const auto& camera = e_Coordinator.GetComponent<Camera>(m_Camera);
     for (const auto& entity : m_Entities)
     {
         const auto& shader = e_Coordinator.GetComponent<Shader>(entity);
-        if (m_CurrentShader != shader.ID)
-        {
-            glUseProgram(shader.ID);
-            m_CurrentShader = shader.ID;
-        }
+        glUseProgram(shader.ID);
 
         const auto& texture = e_Coordinator.GetComponent<Texture>(entity);
-        if (m_CurrentTexture != texture.ID)
-        {
-            glBindTexture(GL_TEXTURE_2D, texture.ID);
-            m_CurrentTexture = texture.ID;
-        }
+        glBindTexture(GL_TEXTURE_2D, texture.ID);
 
         const auto& transform = e_Coordinator.GetComponent<Transform>(entity);
         const auto translationMatrix = glm::translate(glm::mat4(1.0f), transform.Position);
@@ -111,108 +105,31 @@ void RenderSystem::Update(float dt)
         mesh->Draw();
     }
 
-    EndFramebuffer();
-    RenderFramebuffer();
+    m_Framebuffer.Unbind();
+    m_Framebuffer.Draw();
+
+    glfwSwapBuffers(glfwGetCurrentContext());
 }
 
 void RenderSystem::Finalize()
 {
 }
 
-void RenderSystem::StartFramebuffer()
-{
-    glBindFramebuffer(GL_FRAMEBUFFER, m_FramebufferID);
-
-    glEnable(GL_DEPTH_TEST);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-void RenderSystem::EndFramebuffer()
-{
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
-
-void RenderSystem::RenderFramebuffer()
-{
-    // Draw 2D Screen Quad
-    glDisable(GL_DEPTH_TEST);
-
-    glUseProgram(m_ScreenShader.ID);
-    m_CurrentShader = m_ScreenShader.ID;
-
-    glBindTexture(GL_TEXTURE_2D, m_ScreenTextureID);
-    m_CurrentTexture = m_ScreenTextureID;
-
-    m_ScreenMesh.Draw();
-
-    glfwSwapBuffers(glfwGetCurrentContext());
-}
-
-void RenderSystem::ConfigureFramebuffer()
-{
-    // Delete previous buffers if they exist
-    if (m_FramebufferID != 0)
-        glDeleteFramebuffers(1, &m_FramebufferID);
-    if (m_ScreenTextureID != 0)
-        glDeleteTextures(1, &m_ScreenTextureID);
-    if (m_RenderbufferID != 0)
-        glDeleteRenderbuffers(1, &m_RenderbufferID);
-
-    // Create framebuffer
-    glGenFramebuffers(1, &m_FramebufferID);
-    glBindFramebuffer(GL_FRAMEBUFFER, m_FramebufferID);
-
-    // Create texturebuffer
-    glGenTextures(1, &m_ScreenTextureID);
-    glBindTexture(GL_TEXTURE_2D, m_ScreenTextureID);
-
-    // Configure texturebuffer
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ScreenTextureID, 0);
-
-    // Create renderbuffer
-    glGenRenderbuffers(1, &m_RenderbufferID);
-    glBindRenderbuffer(GL_RENDERBUFFER, m_RenderbufferID);
-
-    // Configure renderbuffer
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_Width, m_Height);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_RenderbufferID);
-
-    // Check if the framebuffer was made successfully
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-        std::println("Framebuffer is not complete!");
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    // std::println("FBO: {}, TBO: {}, RBO: {}", m_FramebufferID, m_ScreenTextureID, m_RenderbufferID);
-}
-
 void RenderSystem::PollDebugControls()
 {
     // Do not fill polygons
     if (Input::IsKeyPressed(KEY_MINUS))
-    {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        std::println("Wireframe enabled.");
-    }
 
     // Fill polygons
     if (Input::IsKeyPressed(KEY_EQUAL))
-    {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        std::println("Wireframe disabled.");
-    }
 
     // Cull back faces
     if (Input::IsKeyPressed(KEY_MINUS) && Input::IsKeyPressed(KEY_RIGHT_SHIFT))
-    {
         glEnable(GL_CULL_FACE);
-    }
 
     // Do not cull back faces
     if (Input::IsKeyPressed(KEY_EQUAL) && Input::IsKeyPressed(KEY_RIGHT_SHIFT))
-    {
         glDisable(GL_CULL_FACE);
-    }
 }

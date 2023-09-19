@@ -64,7 +64,7 @@ struct Shader
         glDeleteShader(vertexID);
         glDeleteShader(fragmentID);
 
-        std::println("Created shader: {}", shaderID);
+        std::println("Shader: {}", shaderID);
         ID = shaderID;
     }
 };

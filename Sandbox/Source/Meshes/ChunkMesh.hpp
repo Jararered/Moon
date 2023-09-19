@@ -16,14 +16,14 @@ public:
         if (!(width > 0) || !(width < 10000) || !(height > 0) || !(height < 10000))
             return;
 
-        for (int j = 0; j < m_Height; j += resolution)
+        for (int j = 0; j < height; j += resolution)
         {
-            for (int i = 0; i < m_Width; i += resolution)
+            for (int i = 0; i < width; i += resolution)
             {
-                const float left = static_cast<float>(i) / static_cast<float>(m_Width);
-                const float bottom = static_cast<float>(j) / static_cast<float>(m_Height);
-                const float right = (static_cast<float>(i) + static_cast<float>(resolution)) / static_cast<float>(m_Width);
-                const float top = (static_cast<float>(j) + static_cast<float>(resolution)) / static_cast<float>(m_Height);
+                const float left = static_cast<float>(i) / static_cast<float>(width);
+                const float bottom = static_cast<float>(j) / static_cast<float>(height);
+                const float right = (static_cast<float>(i) + static_cast<float>(resolution)) / static_cast<float>(width);
+                const float top = (static_cast<float>(j) + static_cast<float>(resolution)) / static_cast<float>(height);
 
                 m_Coordinates.push_back({left, right, bottom, top});
             }
@@ -37,21 +37,17 @@ public:
     [[nodiscard]] glm::vec2 BottomRight(int index) { return {m_Coordinates[index][1], m_Coordinates[index][3]}; }
 
 private:
-    unsigned int m_Width = 0;      // horizontal pixel count
-    unsigned int m_Height = 0;     // vertical pixel count
-    unsigned int m_Resolution = 0; // resolution of each texture
-
     // vector of 4x1 vectors (left, right, bottom, top coordinates)
     std::vector<std::vector<float>> m_Coordinates;
 };
 
-class ChunkGenerator final
+class NoiseGenerator final
 {
 public:
     void SetSeed(int seed = 0) { m_Noise.SetSeed(seed); }
     void SetFrequency(float frequency = 0.03f) { m_Noise.SetFrequency(frequency); }
 
-    [[nodiscard]] float Get3DNoise(int x, int y, int z) { return m_Noise.GetNoise(static_cast<float>(x), static_cast<float>(y), static_cast<float>(z)); }
+    template <class T> [[nodiscard]] T Get3DNoise(int x, int y, int z) { return m_Noise.GetNoise(static_cast<T>(x), static_cast<T>(y), static_cast<T>(z)); }
 
 private:
     FastNoiseLite m_Noise;
@@ -67,6 +63,8 @@ public:
 
 public:
     ChunkData(const glm::vec3& index) : m_ChunkIndex(index) { GenerateChunkData(); }
+
+    static NoiseGenerator s_ChunkGenerator;
 
     [[nodiscard]] const Block& GetBlock(int x, int y, int z) { return m_OctreeData.at(x, y, z); }
     [[nodiscard]] const glm::ivec3& GetChunkIndex() const { return m_ChunkIndex; }
@@ -93,7 +91,7 @@ public:
                         cutoffFactor = (yGlobal - startCutoffDistance) / (endCutoffDistance - startCutoffDistance);
                     }
 
-                    float noise = s_ChunkGenerator.Get3DNoise(xGlobal, yGlobal, zGlobal);
+                    auto noise = s_ChunkGenerator.Get3DNoise<float>(xGlobal, yGlobal, zGlobal);
                     noise += cutoffFactor;
 
                     if (noise < 0.8f)
@@ -106,7 +104,6 @@ public:
     }
 
 private:
-    static ChunkGenerator s_ChunkGenerator;
     Octree<Block> m_OctreeData = Octree<Block>(c_ChunkSize);
     glm::ivec3 m_ChunkIndex = {0, 0, 0};
 };
@@ -114,6 +111,8 @@ private:
 class ChunkMesh final : public MeshTemplate<Vertex3D<glm::vec3, glm::vec3, glm::vec2>> // Position, Normal, Texture
 {
 public:
+    static DepricatedTextureMap s_TextureMap;
+
     ChunkMesh(std::shared_ptr<ChunkData> chunkData)
     {
         using Vertex = Vertex3D<glm::vec3, glm::vec3, glm::vec2>;
@@ -211,7 +210,4 @@ public:
         }
         VertexBuffer.UploadToGPU();
     }
-
-private:
-    static DepricatedTextureMap s_TextureMap;
 };
