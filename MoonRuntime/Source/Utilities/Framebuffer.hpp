@@ -152,18 +152,23 @@ public:
             glDeleteFramebuffers(1, &m_IFBO);
         if (m_TBO != 0)
             glDeleteTextures(1, &m_TBO);
+        if (m_MSTBO != 0)
+            glDeleteTextures(1, &m_MSTBO);
         if (m_RBO != 0)
             glDeleteRenderbuffers(1, &m_RBO);
 
+        // Frame buffer object
         glGenFramebuffers(1, &m_FBO);
         glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
 
+        // Mutli-sampled texture
         glGenTextures(1, &m_MSTBO);
         glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, m_MSTBO);
         glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 4, GL_RGB, width, height, GL_TRUE);
         glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, m_MSTBO, 0);
 
+        // Render buffer object
         glGenRenderbuffers(1, &m_RBO);
         glBindRenderbuffer(GL_RENDERBUFFER, m_RBO);
         glRenderbufferStorageMultisample(GL_RENDERBUFFER, 4, GL_DEPTH24_STENCIL8, width, height);
@@ -174,9 +179,11 @@ public:
             std::println("Framebuffer is not complete!");
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+        // Intermediate frame buffer object
         glGenFramebuffers(1, &m_IFBO);
         glBindFramebuffer(GL_FRAMEBUFFER, m_IFBO);
 
+        // Texture
         glGenTextures(1, &m_TBO);
         glBindTexture(GL_TEXTURE_2D, m_TBO);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
@@ -184,15 +191,17 @@ public:
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_TBO, 0);
 
-        std::println("Created FBO: {}, TBO: {}, RBO: {}", m_FBO, m_TBO, m_RBO);
+        std::println("Created FBO: {}, IFBO: {}, TBO: {}, MSTBO: {}, RBO: {}", m_FBO, m_IFBO, m_TBO, m_MSTBO, m_RBO);
     }
 
     void Delete()
     {
         glDeleteFramebuffers(1, &m_FBO);
+        glDeleteFramebuffers(1, &m_IFBO);
         glDeleteTextures(1, &m_TBO);
+        glDeleteTextures(1, &m_MSTBO);
         glDeleteRenderbuffers(1, &m_RBO);
-        std::println("Deleted FBO: {}, TBO: {}, RBO: {}", m_FBO, m_TBO, m_RBO);
+        std::println("Deleted FBO: {}, IFBO: {}, TBO: {}, MSTBO: {}, RBO: {}", m_FBO, m_IFBO, m_TBO, m_MSTBO, m_RBO);
     }
 
 private:
