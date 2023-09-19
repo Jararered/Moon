@@ -7,7 +7,7 @@
 
 #include "Utilities/TextureMap.hpp"
 
-extern Coordinator g_Coordinator;
+extern Coordinator e_Coordinator;
 
 class CubesFalling final : public Engine
 {
@@ -19,11 +19,11 @@ public:
         const auto textureID = Texture("Textures/terrain.png");
         // const auto texturemap = TextureMap(16, 16, )
 
-        const Entity entity = g_Coordinator.CreateEntity();
-        g_Coordinator.AddComponent<Mesh>(entity, Mesh{mesh});
-        g_Coordinator.AddComponent<Shader>(entity, Shader{shaderID});
-        g_Coordinator.AddComponent<Texture>(entity, Texture{textureID});
-        g_Coordinator.AddComponent<Transform>(entity, Transform{.Position = {0, 0, 0}, .Rotation = {0, 0, 0}, .Scale = {500, 1, 500}});
+        const Entity entity = e_Coordinator.CreateEntity();
+        e_Coordinator.AddComponent<Mesh>(entity, Mesh{mesh});
+        e_Coordinator.AddComponent<Shader>(entity, Shader{shaderID});
+        e_Coordinator.AddComponent<Texture>(entity, Texture{textureID});
+        e_Coordinator.AddComponent<Transform>(entity, Transform{.Position = {0, 0, 0}, .Rotation = {0, 0, 0}, .Scale = {500, 1, 500}});
     }
 
     void CreateCubes()
@@ -39,13 +39,13 @@ public:
             const float z = Random::Value<float>(-100, 100);
             const float random = Random::Value<float>(1, 10);
 
-            const Entity entity = g_Coordinator.CreateEntity();
-            g_Coordinator.AddComponent<Mesh>(entity, mesh);
-            g_Coordinator.AddComponent<Shader>(entity, shaderID);
-            g_Coordinator.AddComponent<Texture>(entity);
-            g_Coordinator.AddComponent<Index>(entity, Index{0});
-            g_Coordinator.AddComponent<Transform>(entity, Transform{.Position = {x, y, z}, .Rotation = {0, 0, 0}, .Scale = {1, random, 1}});
-            g_Coordinator.AddComponent<Dynamics>(entity, Dynamics{.Velocity{0, 0, 0}, .Acceleration{0, 0, 0}});
+            const Entity entity = e_Coordinator.CreateEntity();
+            e_Coordinator.AddComponent<Mesh>(entity, mesh);
+            e_Coordinator.AddComponent<Shader>(entity, shaderID);
+            e_Coordinator.AddComponent<Texture>(entity);
+            e_Coordinator.AddComponent<Index>(entity, Index{0});
+            e_Coordinator.AddComponent<Transform>(entity, Transform{.Position = {x, y, z}, .Rotation = {0, 0, 0}, .Scale = {1, random, 1}});
+            e_Coordinator.AddComponent<Dynamics>(entity, Dynamics{.Velocity{0, 0, 0}, .Acceleration{0, 0, 0}});
         }
     }
 };

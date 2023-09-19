@@ -19,25 +19,25 @@
 #include "Components/Texture.hpp"
 #include "Components/Transform.hpp"
 
-Coordinator g_Coordinator;
+Coordinator e_Coordinator;
 
 void Engine::Initialize()
 {
     std::println("Current working directory: {}", std::filesystem::current_path().string());
 
-    g_Coordinator.Initialize();
-    g_Coordinator.RegisterComponent<Camera>();
-    g_Coordinator.RegisterComponent<Mesh>();
-    g_Coordinator.RegisterComponent<Dynamics>();
-    g_Coordinator.RegisterComponent<Shader>();
-    g_Coordinator.RegisterComponent<Texture>();
-    g_Coordinator.RegisterComponent<Transform>();
-    g_Coordinator.RegisterComponent<Index>();
+    e_Coordinator.Initialize();
+    e_Coordinator.RegisterComponent<Camera>();
+    e_Coordinator.RegisterComponent<Mesh>();
+    e_Coordinator.RegisterComponent<Dynamics>();
+    e_Coordinator.RegisterComponent<Shader>();
+    e_Coordinator.RegisterComponent<Texture>();
+    e_Coordinator.RegisterComponent<Transform>();
+    e_Coordinator.RegisterComponent<Index>();
 
-    m_SystemMap.emplace(1, g_Coordinator.RegisterSystem<IndexSystem>());
-    m_SystemMap.emplace(2, g_Coordinator.RegisterSystem<PhysicsSystem>());
-    m_SystemMap.emplace(3, g_Coordinator.RegisterSystem<CameraSystem>());
-    m_SystemMap.emplace(4, g_Coordinator.RegisterSystem<RenderSystem>());
+    m_SystemMap.emplace(1, e_Coordinator.RegisterSystem<IndexSystem>());
+    m_SystemMap.emplace(2, e_Coordinator.RegisterSystem<PhysicsSystem>());
+    m_SystemMap.emplace(3, e_Coordinator.RegisterSystem<CameraSystem>());
+    m_SystemMap.emplace(4, e_Coordinator.RegisterSystem<RenderSystem>());
 
     for (const auto [_, system] : m_SystemMap)
     {

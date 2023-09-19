@@ -7,14 +7,14 @@
 
 #include <print>
 
-extern Coordinator g_Coordinator;
+extern Coordinator e_Coordinator;
 
 void IndexSystem::Register()
 {
     Signature signature;
-    signature.set(g_Coordinator.GetComponentType<Transform>());
-    signature.set(g_Coordinator.GetComponentType<Index>());
-    g_Coordinator.SetSystemSignature<IndexSystem>(signature);
+    signature.set(e_Coordinator.GetComponentType<Transform>());
+    signature.set(e_Coordinator.GetComponentType<Index>());
+    e_Coordinator.SetSystemSignature<IndexSystem>(signature);
 }
 
 void IndexSystem::Initialize()
@@ -26,8 +26,8 @@ void IndexSystem::Update(float dt)
 {
     for (const auto entity : m_Entities)
     {
-        const auto transform = g_Coordinator.GetComponent<Transform>(entity);
-        auto& index = g_Coordinator.GetComponent<Index>(entity);
+        const auto transform = e_Coordinator.GetComponent<Transform>(entity);
+        auto& index = e_Coordinator.GetComponent<Index>(entity);
         index = GetIndex(transform.Position, m_Scale);
 
         // std::print("Position: {}, {}, {}     ", (int)transform.Position.x, (int)transform.Position.y, (int)transform.Position.z);

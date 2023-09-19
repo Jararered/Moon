@@ -10,14 +10,14 @@
 #include <glm/trigonometric.hpp>
 #include <print>
 
-extern Coordinator g_Coordinator;
+extern Coordinator e_Coordinator;
 
 void CameraSystem::Register()
 {
     Signature signature;
-    signature.set(g_Coordinator.GetComponentType<Transform>());
-    signature.set(g_Coordinator.GetComponentType<Camera>());
-    g_Coordinator.SetSystemSignature<CameraSystem>(signature);
+    signature.set(e_Coordinator.GetComponentType<Transform>());
+    signature.set(e_Coordinator.GetComponentType<Camera>());
+    e_Coordinator.SetSystemSignature<CameraSystem>(signature);
 }
 
 void CameraSystem::Initialize()
@@ -28,7 +28,7 @@ void CameraSystem::Update(float dt)
 {
     for (const auto& entity : m_Entities)
     {
-        auto& transform = g_Coordinator.GetComponent<Transform>(entity);
+        auto& transform = e_Coordinator.GetComponent<Transform>(entity);
         // Set Yaw and Pitch rotations based on mouse movement
         const auto mouseMovement = Input::GetCapturedMouseMovement() / 5.0f;
 
@@ -82,7 +82,7 @@ void CameraSystem::Update(float dt)
 
         transform.Position += positionDelta * dt * 10.0f;
 
-        auto& camera = g_Coordinator.GetComponent<Camera>(entity);
+        auto& camera = e_Coordinator.GetComponent<Camera>(entity);
         camera.ViewMatrix = glm::lookAt(transform.Position, (transform.Position + direction), glm::vec3(0.0f, 1.0f, 0.0f));
     }
 }

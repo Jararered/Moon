@@ -7,14 +7,14 @@
 
 #include <print>
 
-extern Coordinator g_Coordinator;
+extern Coordinator e_Coordinator;
 
 void PhysicsSystem::Register()
 {
     Signature signature;
-    signature.set(g_Coordinator.GetComponentType<Transform>());
-    signature.set(g_Coordinator.GetComponentType<Dynamics>());
-    g_Coordinator.SetSystemSignature<PhysicsSystem>(signature);
+    signature.set(e_Coordinator.GetComponentType<Transform>());
+    signature.set(e_Coordinator.GetComponentType<Dynamics>());
+    e_Coordinator.SetSystemSignature<PhysicsSystem>(signature);
 }
 
 void PhysicsSystem::Initialize()
@@ -30,8 +30,8 @@ void PhysicsSystem::Update(float dt)
     {
         for (const auto& entity1 : m_Entities)
         {
-            auto& transform = g_Coordinator.GetComponent<Transform>(entity1);
-            auto& dynamics = g_Coordinator.GetComponent<Dynamics>(entity1);
+            auto& transform = e_Coordinator.GetComponent<Transform>(entity1);
+            auto& dynamics = e_Coordinator.GetComponent<Dynamics>(entity1);
 
             transform.Position = transform.Position + (dynamics.Velocity * stepDT);
             dynamics.Velocity = dynamics.Velocity + (s_Gravity * stepDT);
