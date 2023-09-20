@@ -53,7 +53,7 @@ void PhysicsSystem::Update(float dt)
                 const auto& transform2 = e_Scenario.GetComponent<Transform>(e2);
 
                 // Check if collision cubes overlap
-                if (!IsIntersect(transform1, transform2))
+                if (not IsIntersect(transform1, transform2))
                     continue;
 
                 const auto lower1 = glm::vec3(transform1.Position - (transform1.Scale / 2.0f));
@@ -65,9 +65,10 @@ void PhysicsSystem::Update(float dt)
                 const auto y = glm::min(glm::abs(upper1.y - lower2.y), glm::abs(upper2.y - lower1.y));
                 const auto z = glm::min(glm::abs(upper1.z - lower2.z), glm::abs(upper2.z - lower1.z));
 
+                // TODO : find better way to resolve collision to where both entities react
                 if (x < y and x < z)
                 {
-                    rigidBody1.Velocity.x *= -1.0f;
+                    rigidBody1.Velocity.x = -rigidBody1.Velocity.x;
                     while (IsIntersect(transform1, transform2))
                     {
                         transform1.Position += (rigidBody1.Velocity * stepDT);
@@ -75,7 +76,7 @@ void PhysicsSystem::Update(float dt)
                 }
                 if (y < x and y < z)
                 {
-                    rigidBody1.Velocity.y *= -1.0f;
+                    rigidBody1.Velocity.y = -rigidBody1.Velocity.y;
                     while (IsIntersect(transform1, transform2))
                     {
                         transform1.Position += (rigidBody1.Velocity * stepDT);
@@ -83,7 +84,7 @@ void PhysicsSystem::Update(float dt)
                 }
                 if (z < x and z < y)
                 {
-                    rigidBody1.Velocity.z *= -1.0f;
+                    rigidBody1.Velocity.z = -rigidBody1.Velocity.z;
                     while (IsIntersect(transform1, transform2))
                     {
                         transform1.Position += (rigidBody1.Velocity * stepDT);

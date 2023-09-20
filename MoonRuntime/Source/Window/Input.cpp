@@ -42,7 +42,7 @@ bool Input::IsMouseCaptured()
 glm::vec2 Input::GetCapturedMouseMovement()
 {
     // This is intended to be called per-frame
-    if (!IsMouseCaptured())
+    if (not IsMouseCaptured())
         return {0.0f, 0.0f};
 
     const auto mousepos = GetMousePosition();

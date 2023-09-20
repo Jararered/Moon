@@ -17,7 +17,7 @@ struct Texture
     {
         // stbi_set_flip_vertically_on_load(true);
         unsigned char* data = stbi_load(textureFile.c_str(), &Width, &Height, &Channels, 0);
-        if (!data)
+        if (not data)
         {
             std::println("Unable to load specified file: {}", textureFile);
         }

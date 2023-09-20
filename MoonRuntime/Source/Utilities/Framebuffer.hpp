@@ -65,7 +65,7 @@ public:
 
         // Check if the m_FBO was made successfully
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-            std::println("Framebuffer is not complete!");
+            std::println("Framebuffer is not complete");
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         std::println("Created FBO: {}, TBO: {}, RBO: {}", m_FBO, m_TBO, m_RBO);
@@ -176,7 +176,7 @@ public:
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_RBO);
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-            std::println("Framebuffer is not complete!");
+            std::println("Framebuffer is not complete");
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         // Intermediate frame buffer object

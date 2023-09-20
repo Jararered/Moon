@@ -40,5 +40,5 @@ void OpenGLWindow::Update()
 
 bool OpenGLWindow::IsRunning()
 {
-    return !glfwWindowShouldClose(p_GLFWwindow);
+    return not glfwWindowShouldClose(p_GLFWwindow);
 }

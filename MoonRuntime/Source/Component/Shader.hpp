@@ -24,7 +24,7 @@ struct Shader
         glShaderSource(vertexID, 1, &vertexChar, NULL);
         glCompileShader(vertexID);
         glGetShaderiv(vertexID, GL_COMPILE_STATUS, &success);
-        if (!success)
+        if (not success)
         {
             glDeleteShader(vertexID);
             glGetShaderInfoLog(vertexID, 512, NULL, info);
@@ -40,7 +40,7 @@ struct Shader
         glShaderSource(fragmentID, 1, &fragmentChar, NULL);
         glCompileShader(fragmentID);
         glGetShaderiv(fragmentID, GL_COMPILE_STATUS, &success);
-        if (!success)
+        if (not success)
         {
             glGetShaderInfoLog(fragmentID, 512, NULL, info);
             glDeleteShader(fragmentID);
@@ -54,7 +54,7 @@ struct Shader
         glAttachShader(shaderID, fragmentID);
         glLinkProgram(shaderID);
         glGetProgramiv(shaderID, GL_LINK_STATUS, &success);
-        if (!success)
+        if (not success)
         {
             glDeleteProgram(shaderID);
             glGetProgramInfoLog(shaderID, 512, NULL, info);
