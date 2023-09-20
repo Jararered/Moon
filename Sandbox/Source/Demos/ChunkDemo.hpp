@@ -4,7 +4,7 @@
 
 #include "Meshes/ChunkMesh.hpp"
 
-extern Coordinator e_Coordinator;
+extern Scenario e_Scenario;
 
 class ChunkDemo final : public Engine
 {
@@ -31,11 +31,11 @@ public:
                     const auto chunkData = std::make_shared<ChunkData>(glm::ivec3(x, y, z));
                     const auto mesh = std::make_shared<ChunkMesh>(chunkData);
 
-                    Entity entity = e_Coordinator.CreateEntity();
-                    e_Coordinator.AddComponent<Mesh>(entity, mesh);
-                    e_Coordinator.AddComponent<Transform>(entity, Transform{.Position = {x * c_ChunkSize, y * c_ChunkSize, z * c_ChunkSize}});
-                    e_Coordinator.AddComponent<Shader>(entity, shader);
-                    e_Coordinator.AddComponent<Texture>(entity, texture);
+                    Entity entity = e_Scenario.CreateEntity();
+                    e_Scenario.AddComponent<Mesh>(entity, mesh);
+                    e_Scenario.AddComponent<Transform>(entity, Transform{.Position = {x * c_ChunkSize, y * c_ChunkSize, z * c_ChunkSize}});
+                    e_Scenario.AddComponent<Shader>(entity, shader);
+                    e_Scenario.AddComponent<Texture>(entity, texture);
                 }
             }
         }

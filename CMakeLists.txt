@@ -14,8 +14,7 @@ set(MoonIncludeDirs
     ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/Layer
     ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/Systems
     ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/Utilities
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/Window
-)
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/Window)
 
 set(LibraryIncludeDirs
     ${CMAKE_SOURCE_DIR}/Libraries/FastNoiseLite/include
@@ -23,8 +22,7 @@ set(LibraryIncludeDirs
     ${CMAKE_SOURCE_DIR}/Libraries/glfw/include
     ${CMAKE_SOURCE_DIR}/Libraries/glm/include
     ${CMAKE_SOURCE_DIR}/Libraries/octree/include
-    ${CMAKE_SOURCE_DIR}/Libraries/stb_image/include
-)
- 
+    ${CMAKE_SOURCE_DIR}/Libraries/stb_image/include)
+
 add_subdirectory(MoonRuntime)
 add_subdirectory(Sandbox)

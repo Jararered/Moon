@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Mesh.hpp>
+#include <Component/Mesh.hpp>
 
 class SquareMesh : public MeshTemplate<Vertex3D<glm::vec3, glm::vec3, glm::vec2>> // Position, Color, Texture
 {
@@ -20,7 +20,7 @@ public:
         indices.reserve(6);
         indices.insert(VertexBuffer.GetIndices().end(), {0, 1, 2, 2, 3, 0});
 
-        VertexBuffer.UploadToGPU();
+        VertexBuffer.BufferData();
     }
 
     SquareMesh(float brightness = 1.0f)
@@ -38,6 +38,6 @@ public:
         indices.reserve(6);
         indices.insert(VertexBuffer.GetIndices().end(), {0, 1, 2, 2, 3, 0});
 
-        VertexBuffer.UploadToGPU();
+        VertexBuffer.BufferData();
     }
 };

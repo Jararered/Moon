@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Mesh.hpp>
+#include <Component/Mesh.hpp>
 
 #include <FastNoiseLite.h>
 #include <octree/octree.h>
@@ -208,6 +208,6 @@ public:
                 }
             }
         }
-        VertexBuffer.UploadToGPU();
+        VertexBuffer.BufferData();
     }
 };
