@@ -1,14 +1,14 @@
 #pragma once
 
+#include "Component/Mesh.hpp"
+#include "Component/Shader.hpp"
 #include "Entity.hpp"
-#include "Mesh.hpp"
-#include "Shader.hpp"
 
 #include <glad/gl.h>
 #include <glfw/glfw3.h>
 #include <print>
 
-class Framebuffer final
+class Framebuffer
 {
 public:
     Framebuffer() = default;
@@ -17,7 +17,7 @@ public:
     void Bind() { glBindFramebuffer(GL_FRAMEBUFFER, m_FBO); }
     void Unbind() { glBindFramebuffer(GL_FRAMEBUFFER, 0); }
 
-    void Draw()
+    virtual void Draw()
     {
         // Draw 2D Frame Quad
         glDisable(GL_DEPTH_TEST);
@@ -28,7 +28,7 @@ public:
         m_FrameMesh.Draw();
     }
 
-    void Create(int width, int height)
+    virtual void Create(int width, int height)
     {
         if (m_FrameShader.ID == 0)
             m_FrameShader = Shader("Shaders/PositionTexture.vert", "Shaders/PositionTexture.frag");
@@ -71,7 +71,7 @@ public:
         std::println("Created FBO: {}, TBO: {}, RBO: {}", m_FBO, m_TBO, m_RBO);
     }
 
-    void Delete()
+    virtual void Delete()
     {
         glDeleteFramebuffers(1, &m_FBO);
         glDeleteTextures(1, &m_TBO);
@@ -79,10 +79,13 @@ public:
         std::println("Deleted FBO: {}, TBO: {}, RBO: {}", m_FBO, m_TBO, m_RBO);
     }
 
-private:
-    unsigned int m_FBO;
-    unsigned int m_TBO;
-    unsigned int m_RBO;
+protected:
+    int m_Width = 0;
+    int m_Height = 0;
+
+    unsigned int m_FBO = 0;
+    unsigned int m_TBO = 0;
+    unsigned int m_RBO = 0;
 
     class Frame : public MeshTemplate<Vertex2D<glm::vec2, glm::vec2>> // Position, Texture
     {
@@ -102,7 +105,7 @@ private:
             indices.reserve(6);
             indices.insert(VertexBuffer.GetIndices().end(), {0, 1, 2, 2, 3, 0});
 
-            VertexBuffer.UploadToGPU();
+            VertexBuffer.BufferData();
         }
     };
 
@@ -110,16 +113,13 @@ private:
     Frame m_FrameMesh;
 };
 
-class MSAAFramebuffer final
+class MSAAFramebuffer final : public Framebuffer
 {
 public:
     MSAAFramebuffer() = default;
     ~MSAAFramebuffer() = default;
 
-    void Bind() { glBindFramebuffer(GL_FRAMEBUFFER, m_FBO); }
-    void Unbind() { glBindFramebuffer(GL_FRAMEBUFFER, 0); }
-
-    void Draw()
+    void Draw() override
     {
         glBindFramebuffer(GL_READ_FRAMEBUFFER, m_FBO);
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_IFBO);
@@ -137,7 +137,7 @@ public:
         m_FrameMesh.Draw();
     }
 
-    void Create(int width, int height)
+    void Create(int width, int height) override
     {
         m_Width = width;
         m_Height = height;
@@ -194,7 +194,7 @@ public:
         std::println("Created FBO: {}, IFBO: {}, TBO: {}, MSTBO: {}, RBO: {}", m_FBO, m_IFBO, m_TBO, m_MSTBO, m_RBO);
     }
 
-    void Delete()
+    void Delete() override
     {
         glDeleteFramebuffers(1, &m_FBO);
         glDeleteFramebuffers(1, &m_IFBO);
@@ -205,37 +205,6 @@ public:
     }
 
 private:
-    unsigned int m_FBO = 0;
-    unsigned int m_TBO = 0;
-    unsigned int m_RBO = 0;
     unsigned int m_IFBO = 0;
     unsigned int m_MSTBO = 0;
-
-    int m_Width = 0;
-    int m_Height = 0;
-
-    class Frame : public MeshTemplate<Vertex2D<glm::vec2, glm::vec2>> // Position, Texture
-    {
-    public:
-        Frame()
-        {
-            using Vertex = Vertex2D<glm::vec2, glm::vec2>;
-
-            auto& vertices = VertexBuffer.GetVertices();
-            vertices.reserve(4);
-            vertices.emplace_back(Vertex({+1.0f, -1.0f}, {1.0f, 0.0f}));
-            vertices.emplace_back(Vertex({+1.0f, +1.0f}, {1.0f, 1.0f}));
-            vertices.emplace_back(Vertex({-1.0f, +1.0f}, {0.0f, 1.0f}));
-            vertices.emplace_back(Vertex({-1.0f, -1.0f}, {0.0f, 0.0f}));
-
-            auto& indices = VertexBuffer.GetIndices();
-            indices.reserve(6);
-            indices.insert(VertexBuffer.GetIndices().end(), {0, 1, 2, 2, 3, 0});
-
-            VertexBuffer.UploadToGPU();
-        }
-    };
-
-    Shader m_FrameShader;
-    Frame m_FrameMesh;
 };
