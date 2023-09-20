@@ -7,10 +7,6 @@ class Timer
 {
 public:
     Timer() = default;
-    Timer(const Timer&) = default;
-    Timer(Timer&&) = default;
-    Timer& operator=(const Timer&) = default;
-    Timer& operator=(Timer&&) = default;
     virtual ~Timer() = default;
 
     Timer(const std::string& name = "Timer");
@@ -29,27 +25,17 @@ class ScopedTimer final : protected Timer
 {
 public:
     ScopedTimer() = default;
-    ScopedTimer(const ScopedTimer&) = default;
-    ScopedTimer(ScopedTimer&&) = default;
-    ScopedTimer& operator=(const ScopedTimer&) = default;
-    ScopedTimer& operator=(ScopedTimer&&) = default;
+    ~ScopedTimer() override;
 
-public:
     ScopedTimer(const std::string& name = "Timer");
-    ~ScopedTimer();
 };
 
 class ManualTimer final : protected Timer
 {
 public:
     ManualTimer() = default;
-    ManualTimer(const ManualTimer&) = default;
-    ManualTimer(ManualTimer&&) = default;
-    ManualTimer& operator=(const ManualTimer&) = default;
-    ManualTimer& operator=(ManualTimer&&) = default;
-    ~ManualTimer() = default;
+    ~ManualTimer() override = default;
 
-public:
     ManualTimer(const std::string& name = "Timer");
 
     void Start();

@@ -128,11 +128,11 @@ public:
                 for (int x = 0; x < c_ChunkSize; x++)
                 {
                     const int currentBlockID = chunkData->GetBlock(x, y, z).ID;
-                    bool px = true, nx = true, py = true, ny = true, pz = true, nz = true;
 
                     if (currentBlockID == 0)
                         continue;
 
+                    bool px = true, nx = true, py = true, ny = true, pz = true, nz = true;
                     if (x > 0)
                         nx = chunkData->GetBlock(x - 1, y, z).ID == 0;
                     if (x < c_ChunkSize - 1)

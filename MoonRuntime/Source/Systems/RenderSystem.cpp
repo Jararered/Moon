@@ -38,6 +38,7 @@ void RenderSystem::Initialize()
 
     glfwSetWindowUserPointer(glfwGetCurrentContext(), this);
     glfwGetFramebufferSize(glfwGetCurrentContext(), &m_Width, &m_Height);
+    m_Framebuffer.Create(m_Width, m_Height);
 
     m_Camera = e_Scenario.CreateEntity();
 
@@ -50,8 +51,6 @@ void RenderSystem::Initialize()
     const auto projMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
     const auto viewMatrix = glm::mat4(1.0f);
     e_Scenario.AddComponent(m_Camera, Camera{.ViewMatrix = viewMatrix, .ProjectionMatrix = projMatrix});
-
-    m_Framebuffer.Create(m_Width, m_Height);
 
     const auto framebufferSizeCallback = [](GLFWwindow* window, int width, int height)
     {

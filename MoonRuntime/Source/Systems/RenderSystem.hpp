@@ -9,10 +9,10 @@ class RenderSystem final : public System
 {
 public:
     RenderSystem() = default;
-    RenderSystem(const RenderSystem&) = default;
-    RenderSystem(RenderSystem&&) = default;
-    RenderSystem& operator=(const RenderSystem&) = default;
-    RenderSystem& operator=(RenderSystem&&) = default;
+    RenderSystem(const RenderSystem&) = delete;
+    RenderSystem(RenderSystem&&) = delete;
+    RenderSystem& operator=(const RenderSystem&) = delete;
+    RenderSystem& operator=(RenderSystem&&) = delete;
     ~RenderSystem() override = default;
 
 public:

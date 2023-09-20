@@ -6,10 +6,10 @@ class CameraSystem final : public System
 {
 public:
     CameraSystem() = default;
-    CameraSystem(const CameraSystem&) = default;
-    CameraSystem(CameraSystem&&) = default;
-    CameraSystem& operator=(const CameraSystem&) = default;
-    CameraSystem& operator=(CameraSystem&&) = default;
+    CameraSystem(const CameraSystem&) = delete;
+    CameraSystem(CameraSystem&&) = delete;
+    CameraSystem& operator=(const CameraSystem&) = delete;
+    CameraSystem& operator=(CameraSystem&&) = delete;
     ~CameraSystem() override = default;
 
 public:

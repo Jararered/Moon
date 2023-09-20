@@ -6,10 +6,10 @@ class IndexSystem final : public System
 {
 public:
     IndexSystem() = default;
-    IndexSystem(const IndexSystem&) = default;
-    IndexSystem(IndexSystem&&) = default;
-    IndexSystem& operator=(const IndexSystem&) = default;
-    IndexSystem& operator=(IndexSystem&&) = default;
+    IndexSystem(const IndexSystem&) = delete;
+    IndexSystem(IndexSystem&&) = delete;
+    IndexSystem& operator=(const IndexSystem&) = delete;
+    IndexSystem& operator=(IndexSystem&&) = delete;
     ~IndexSystem() override = default;
 
 public:
