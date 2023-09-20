@@ -58,7 +58,7 @@ public:
     {
         for (const auto entityIndex : m_EntityToIndexArray)
         {
-            if (entity = entityIndex)
+            if (entity == entityIndex)
             {
                 RemoveData(entity);
             }
