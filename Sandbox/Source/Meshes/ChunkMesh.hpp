@@ -13,7 +13,7 @@ class DepricatedTextureMap
 public:
     void Configure(int width, int height, int resolution)
     {
-        if (!(width > 0) || !(width < 10000) || !(height > 0) || !(height < 10000))
+        if (!(width > 0) or !(width < 10000) or !(height > 0) or !(height < 10000))
             return;
 
         for (int j = 0; j < height; j += resolution)

@@ -68,7 +68,7 @@ void CameraSystem::Update(float dt)
 
         // Fixes diagonal directed movement to not be faster than along an axis.
         // Only happens when holding two buttons that are off axis from each other.
-        if ((positionDelta.x != 0.0f) || (positionDelta.z != 0.0f))
+        if ((positionDelta.x != 0.0f) or (positionDelta.z != 0.0f))
             positionDelta = glm::normalize(positionDelta);
 
         // Still perform up/down movements after normalization.

@@ -9,7 +9,7 @@ class TextureMap
 public:
     TextureMap(int width, int height, int resolution) : m_Width(width), m_Height(height), m_Resolution(resolution)
     {
-        if (!(width > 0) || !(width < 10000) || !(height > 0) || !(height < 10000))
+        if (!(width > 0) or !(width < 10000) or !(height > 0) or !(height < 10000))
         {
             std::println("TextureMap::TextureMap(): Unexpected image parameters.");
             return;

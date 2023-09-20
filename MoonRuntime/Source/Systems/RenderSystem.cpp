@@ -125,10 +125,10 @@ void RenderSystem::PollDebugControls()
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     // Cull back faces
-    if (Input::IsKeyPressed(KEY_MINUS) && Input::IsKeyPressed(KEY_RIGHT_SHIFT))
+    if (Input::IsKeyPressed(KEY_MINUS) and Input::IsKeyPressed(KEY_RIGHT_SHIFT))
         glEnable(GL_CULL_FACE);
 
     // Do not cull back faces
-    if (Input::IsKeyPressed(KEY_EQUAL) && Input::IsKeyPressed(KEY_RIGHT_SHIFT))
+    if (Input::IsKeyPressed(KEY_EQUAL) and Input::IsKeyPressed(KEY_RIGHT_SHIFT))
         glDisable(GL_CULL_FACE);
 }

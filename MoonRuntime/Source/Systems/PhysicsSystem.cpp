@@ -23,6 +23,9 @@ void PhysicsSystem::Initialize()
 
 void PhysicsSystem::Update(float dt)
 {
+    // Pause physics if frame rate is running slower than 60fps
+    if (dt > 1 / 60.0f or dt == 0.0f)
+        dt = 1 / 60.0f;
     const auto stepDT = dt / static_cast<float>(m_SubStepCount);
 
     for (unsigned int step = 0; step < m_SubStepCount; step++)
@@ -32,51 +35,61 @@ void PhysicsSystem::Update(float dt)
             auto& transform1 = e_Scenario.GetComponent<Transform>(e1);
             auto& rigidBody1 = e_Scenario.GetComponent<RigidBody>(e1);
 
+            // Ignore any entities without mass
             if (rigidBody1.Mass == 0.0f)
                 continue;
 
-            auto newPosition1 = transform1.Position + (rigidBody1.Velocity * stepDT);
-            auto newVelocity1 = rigidBody1.Velocity + (s_Gravity * stepDT);
+            // Update position and velocity w.r.t. time
+            transform1.Position += (rigidBody1.Velocity * stepDT);
+            rigidBody1.Velocity = rigidBody1.Velocity + (s_Gravity * stepDT);
 
+            // Loop through all other entities, including massless entities, to check for collisions
             for (const auto& e2 : m_Entities)
             {
+                // Skip collision test if checking against same entity
                 if (e1 == e2)
                     continue;
 
                 const auto& transform2 = e_Scenario.GetComponent<Transform>(e2);
-                const auto& rigidBody2 = e_Scenario.GetComponent<RigidBody>(e2);
 
-                const auto lower1 = newPosition1 - (transform1.Scale / 2.0f);
-                const auto upper1 = newPosition1 + (transform1.Scale / 2.0f);
-                const auto lower2 = transform2.Position - (transform2.Scale / 2.0f);
-                const auto upper2 = transform2.Position + (transform2.Scale / 2.0f);
-
-                if (!IsIntersect(lower1, lower2, upper1, upper2))
+                // Check if collision cubes overlap
+                if (!IsIntersect(transform1, transform2))
                     continue;
+
+                const auto lower1 = glm::vec3(transform1.Position - (transform1.Scale / 2.0f));
+                const auto upper1 = glm::vec3(transform1.Position + (transform1.Scale / 2.0f));
+                const auto lower2 = glm::vec3(transform2.Position - (transform2.Scale / 2.0f));
+                const auto upper2 = glm::vec3(transform2.Position + (transform2.Scale / 2.0f));
 
                 const auto x = glm::min(glm::abs(upper1.x - lower2.x), glm::abs(upper2.x - lower1.x));
                 const auto y = glm::min(glm::abs(upper1.y - lower2.y), glm::abs(upper2.y - lower1.y));
                 const auto z = glm::min(glm::abs(upper1.z - lower2.z), glm::abs(upper2.z - lower1.z));
 
-                if (x < y && x < z)
+                if (x < y and x < z)
                 {
-                    newPosition1.x = transform1.Position.x;
-                    newVelocity1.x *= -1.0f;
+                    rigidBody1.Velocity.x *= -1.0f;
+                    while (IsIntersect(transform1, transform2))
+                    {
+                        transform1.Position += (rigidBody1.Velocity * stepDT);
+                    }
                 }
-                if (y < x && y < z)
+                if (y < x and y < z)
                 {
-                    newPosition1.y = transform1.Position.y;
-                    newVelocity1.y *= -1.0f;
+                    rigidBody1.Velocity.y *= -1.0f;
+                    while (IsIntersect(transform1, transform2))
+                    {
+                        transform1.Position += (rigidBody1.Velocity * stepDT);
+                    }
                 }
-                if (z < x && z < y)
+                if (z < x and z < y)
                 {
-                    newPosition1.z = transform1.Position.z;
-                    newVelocity1.z *= -1.0f;
+                    rigidBody1.Velocity.z *= -1.0f;
+                    while (IsIntersect(transform1, transform2))
+                    {
+                        transform1.Position += (rigidBody1.Velocity * stepDT);
+                    }
                 }
             }
-
-            transform1.Position = newPosition1;
-            rigidBody1.Velocity = newVelocity1;
         }
     }
 }
@@ -85,13 +98,18 @@ void PhysicsSystem::Finalize()
 {
 }
 
-bool PhysicsSystem::IsIntersect(const glm::vec3& lower1, const glm::vec3& lower2, const glm::vec3& upper1, const glm::vec3& upper2)
+bool PhysicsSystem::IsIntersect(const Transform& transform1, const Transform& transform2)
 {
+    const auto lower1 = transform1.Position - (transform1.Scale / 2.0f);
+    const auto upper1 = transform1.Position + (transform1.Scale / 2.0f);
+    const auto lower2 = transform2.Position - (transform2.Scale / 2.0f);
+    const auto upper2 = transform2.Position + (transform2.Scale / 2.0f);
+
     // clang-format off
-    return ((upper1.x > lower2.x) && 
-            (upper1.y > lower2.y) && 
-            (upper1.z > lower2.z) && 
-            (upper2.x > lower1.x) && 
-            (upper2.y > lower1.y) && 
+    return ((upper1.x > lower2.x) and 
+            (upper1.y > lower2.y) and 
+            (upper1.z > lower2.z) and 
+            (upper2.x > lower1.x) and 
+            (upper2.y > lower1.y) and 
             (upper2.z > lower1.z));
 }

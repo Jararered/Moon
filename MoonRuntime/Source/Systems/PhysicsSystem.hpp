@@ -2,6 +2,8 @@
 
 #include "System.hpp"
 
+#include "Component/Transform.hpp"
+
 #include <glm/vec3.hpp>
 
 class PhysicsSystem final : public System
@@ -23,7 +25,7 @@ public:
     inline static glm::vec3 s_Gravity = glm::vec3(0.0f, -10.0f, 0.0f);
 
 private:
-    [[nodiscard]] bool IsIntersect(const glm::vec3& lower1, const glm::vec3& upper1, const glm::vec3& lower2, const glm::vec3& upper2);
+    [[nodiscard]] bool IsIntersect(const Transform& transform1, const Transform& transform2);
 
     unsigned int m_SubStepCount = 1;
 };
