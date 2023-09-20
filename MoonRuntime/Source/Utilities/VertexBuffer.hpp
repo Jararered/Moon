@@ -10,7 +10,7 @@ public:
     VertexBuffer() = default;
     ~VertexBuffer() = default;
 
-    void UploadToGPU()
+    void BufferData()
     {
         glGenVertexArrays(1, &m_VAO);
         glBindVertexArray(m_VAO);
@@ -47,7 +47,7 @@ public:
 
     void Unbind() { glBindVertexArray(0); }
 
-    void Draw() { glDrawElements(GL_TRIANGLES, m_Indices.size(), GL_UNSIGNED_INT, 0); }
+    void Draw() { glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_Indices.size()), GL_UNSIGNED_INT, 0); }
 
     void Update()
     {
