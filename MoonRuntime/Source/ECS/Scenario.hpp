@@ -4,7 +4,7 @@
 #include "EntityManager.hpp"
 #include "SystemManager.hpp"
 
-class Coordinator
+class Scenario
 {
 public:
     void Initialize()
