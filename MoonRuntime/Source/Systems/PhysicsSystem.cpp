@@ -65,7 +65,7 @@ void PhysicsSystem::Update(float dt)
                 const auto y = glm::min(glm::abs(upper1.y - lower2.y), glm::abs(upper2.y - lower1.y));
                 const auto z = glm::min(glm::abs(upper1.z - lower2.z), glm::abs(upper2.z - lower1.z));
 
-                // TODO : find better way to resolve collision to where both entities react
+                // TODO Find better way to resolve collision to where both entities react
                 if (x < y and x < z)
                 {
                     rigidBody1.Velocity.x = -rigidBody1.Velocity.x;
