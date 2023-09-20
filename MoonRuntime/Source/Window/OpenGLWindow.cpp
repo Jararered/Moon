@@ -27,7 +27,7 @@ OpenGLWindow::~OpenGLWindow()
 {
 }
 
-void OpenGLWindow::Update(float dt)
+void OpenGLWindow::Update()
 {
     glfwPollEvents();
 

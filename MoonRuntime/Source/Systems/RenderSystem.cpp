@@ -6,25 +6,25 @@
 #include <glm/gtx/euler_angles.hpp>
 #include <glm/trigonometric.hpp>
 
-#include "Coordinator.hpp"
 #include "Input.hpp"
+#include "Scenario.hpp"
 
-#include "Components/Camera.hpp"
-#include "Components/Mesh.hpp"
-#include "Components/Shader.hpp"
-#include "Components/Texture.hpp"
-#include "Components/Transform.hpp"
+#include "Component/Camera.hpp"
+#include "Component/Mesh.hpp"
+#include "Component/Shader.hpp"
+#include "Component/Texture.hpp"
+#include "Component/Transform.hpp"
 
-extern Coordinator e_Coordinator;
+extern Scenario e_Scenario;
 
 void RenderSystem::Register()
 {
     Signature signature;
-    signature.set(e_Coordinator.GetComponentType<Mesh>());
-    signature.set(e_Coordinator.GetComponentType<Transform>());
-    signature.set(e_Coordinator.GetComponentType<Shader>());
-    signature.set(e_Coordinator.GetComponentType<Texture>());
-    e_Coordinator.SetSystemSignature<RenderSystem>(signature);
+    signature.set(e_Scenario.GetComponentType<Mesh>());
+    signature.set(e_Scenario.GetComponentType<Transform>());
+    signature.set(e_Scenario.GetComponentType<Shader>());
+    signature.set(e_Scenario.GetComponentType<Texture>());
+    e_Scenario.SetSystemSignature<RenderSystem>(signature);
 }
 
 void RenderSystem::Initialize()
@@ -39,17 +39,17 @@ void RenderSystem::Initialize()
     glfwSetWindowUserPointer(glfwGetCurrentContext(), this);
     glfwGetFramebufferSize(glfwGetCurrentContext(), &m_Width, &m_Height);
 
-    m_Camera = e_Coordinator.CreateEntity();
+    m_Camera = e_Scenario.CreateEntity();
 
     const auto position = glm::vec3(0.0f, 0.0f, 0.0f);
     const auto rotation = glm::vec3(0.0f, glm::radians(-90.0f), 0.0f); // Looking into the screen
-    e_Coordinator.AddComponent(m_Camera, Transform{.Position = position, .Rotation = rotation});
+    e_Scenario.AddComponent(m_Camera, Transform{.Position = position, .Rotation = rotation});
 
     const auto fov = glm::radians(90.0f);
     const auto aspectRatio = 16.0f / 9.0f;
     const auto projMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
     const auto viewMatrix = glm::mat4(1.0f);
-    e_Coordinator.AddComponent(m_Camera, Camera{.ViewMatrix = viewMatrix, .ProjectionMatrix = projMatrix});
+    e_Scenario.AddComponent(m_Camera, Camera{.ViewMatrix = viewMatrix, .ProjectionMatrix = projMatrix});
 
     m_Framebuffer.Create(m_Width, m_Height);
 
@@ -57,7 +57,7 @@ void RenderSystem::Initialize()
     {
         glViewport(0, 0, width, height);
 
-        const auto renderer = static_cast<RenderSystem*>(glfwGetWindowUserPointer(glfwGetCurrentContext()));
+        const auto renderer = static_cast<RenderSystem*>(glfwGetWindowUserPointer(window));
 
         renderer->m_Width = width;
         renderer->m_Height = height;
@@ -67,7 +67,7 @@ void RenderSystem::Initialize()
         const auto fov = glm::radians(90.0f);
         const auto aspectRatio = static_cast<float>(width) / static_cast<float>(height);
         const auto projMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
-        auto& camera = e_Coordinator.GetComponent<Camera>(renderer->m_Camera);
+        auto& camera = e_Scenario.GetComponent<Camera>(renderer->m_Camera);
         camera.ProjectionMatrix = projMatrix;
     };
     glfwSetFramebufferSizeCallback(glfwGetCurrentContext(), framebufferSizeCallback);
@@ -82,16 +82,16 @@ void RenderSystem::Update(float dt)
     glEnable(GL_DEPTH_TEST);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    const auto& camera = e_Coordinator.GetComponent<Camera>(m_Camera);
+    const auto& camera = e_Scenario.GetComponent<Camera>(m_Camera);
     for (const auto& entity : m_Entities)
     {
-        const auto& shader = e_Coordinator.GetComponent<Shader>(entity);
+        const auto& shader = e_Scenario.GetComponent<Shader>(entity);
         glUseProgram(shader.ID);
 
-        const auto& texture = e_Coordinator.GetComponent<Texture>(entity);
+        const auto& texture = e_Scenario.GetComponent<Texture>(entity);
         glBindTexture(GL_TEXTURE_2D, texture.ID);
 
-        const auto& transform = e_Coordinator.GetComponent<Transform>(entity);
+        const auto& transform = e_Scenario.GetComponent<Transform>(entity);
         const auto translationMatrix = glm::translate(glm::mat4(1.0f), transform.Position);
         const auto scaleMatrix = glm::scale(glm::mat4(1.0f), transform.Scale);
         const auto rotationMatrix = glm::eulerAngleXYZ(transform.Rotation.x, transform.Rotation.y, transform.Rotation.z);
@@ -101,7 +101,7 @@ void RenderSystem::Update(float dt)
         glUniformMatrix4fv(glGetUniformLocation(shader.ID, "u_ViewMatrix"), 1, GL_FALSE, (float*)&camera.ViewMatrix);
         glUniformMatrix4fv(glGetUniformLocation(shader.ID, "u_ProjectionMatrix"), 1, GL_FALSE, (float*)&camera.ProjectionMatrix);
 
-        const auto& mesh = e_Coordinator.GetComponent<Mesh>(entity);
+        const auto& mesh = e_Scenario.GetComponent<Mesh>(entity);
         mesh->Draw();
     }
 

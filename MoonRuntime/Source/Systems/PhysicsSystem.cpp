@@ -1,20 +1,19 @@
 #include "PhysicsSystem.hpp"
 
-#include "Coordinator.hpp"
-
-#include "Components/Dynamics.hpp"
-#include "Components/Transform.hpp"
+#include "Component/RigidBody.hpp"
+#include "Component/Transform.hpp"
+#include "Scenario.hpp"
 
 #include <print>
 
-extern Coordinator e_Coordinator;
+extern Scenario e_Scenario;
 
 void PhysicsSystem::Register()
 {
     Signature signature;
-    signature.set(e_Coordinator.GetComponentType<Transform>());
-    signature.set(e_Coordinator.GetComponentType<Dynamics>());
-    e_Coordinator.SetSystemSignature<PhysicsSystem>(signature);
+    signature.set(e_Scenario.GetComponentType<Transform>());
+    signature.set(e_Scenario.GetComponentType<RigidBody>());
+    e_Scenario.SetSystemSignature<PhysicsSystem>(signature);
 }
 
 void PhysicsSystem::Initialize()
@@ -28,13 +27,15 @@ void PhysicsSystem::Update(float dt)
 
     for (unsigned int step = 0; step < m_SubStepCount; step++)
     {
-        for (const auto& entity1 : m_Entities)
+        for (const auto& entity : m_Entities)
         {
-            auto& transform = e_Coordinator.GetComponent<Transform>(entity1);
-            auto& dynamics = e_Coordinator.GetComponent<Dynamics>(entity1);
+            auto& transform = e_Scenario.GetComponent<Transform>(entity);
+            auto& rigidBody = e_Scenario.GetComponent<RigidBody>(entity);
 
-            transform.Position = transform.Position + (dynamics.Velocity * stepDT);
-            dynamics.Velocity = dynamics.Velocity + (s_Gravity * stepDT);
+            // const float magnitude = rigidBody.Mass * glm::length(rigidBody.Velocity);
+
+            transform.Position = transform.Position + (rigidBody.Velocity * stepDT);
+            rigidBody.Velocity = rigidBody.Velocity + (s_Gravity * stepDT);
         }
     }
 }

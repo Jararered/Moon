@@ -1,23 +1,23 @@
 #include "CameraSystem.hpp"
 
-#include "Coordinator.hpp"
 #include "Input.hpp"
+#include "Scenario.hpp"
 
-#include "Components/Camera.hpp"
-#include "Components/Transform.hpp"
+#include "Component/Camera.hpp"
+#include "Component/Transform.hpp"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/trigonometric.hpp>
 #include <print>
 
-extern Coordinator e_Coordinator;
+extern Scenario e_Scenario;
 
 void CameraSystem::Register()
 {
     Signature signature;
-    signature.set(e_Coordinator.GetComponentType<Transform>());
-    signature.set(e_Coordinator.GetComponentType<Camera>());
-    e_Coordinator.SetSystemSignature<CameraSystem>(signature);
+    signature.set(e_Scenario.GetComponentType<Transform>());
+    signature.set(e_Scenario.GetComponentType<Camera>());
+    e_Scenario.SetSystemSignature<CameraSystem>(signature);
 }
 
 void CameraSystem::Initialize()
@@ -28,7 +28,7 @@ void CameraSystem::Update(float dt)
 {
     for (const auto& entity : m_Entities)
     {
-        auto& transform = e_Coordinator.GetComponent<Transform>(entity);
+        auto& transform = e_Scenario.GetComponent<Transform>(entity);
         // Set Yaw and Pitch rotations based on mouse movement
         const auto mouseMovement = Input::GetCapturedMouseMovement() / 5.0f;
 
@@ -82,7 +82,7 @@ void CameraSystem::Update(float dt)
 
         transform.Position += positionDelta * dt * 10.0f;
 
-        auto& camera = e_Coordinator.GetComponent<Camera>(entity);
+        auto& camera = e_Scenario.GetComponent<Camera>(entity);
         camera.ViewMatrix = glm::lookAt(transform.Position, (transform.Position + direction), glm::vec3(0.0f, 1.0f, 0.0f));
     }
 }

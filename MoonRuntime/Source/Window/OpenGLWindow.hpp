@@ -10,7 +10,7 @@ public:
     OpenGLWindow(const WindowSpecification& spec);
     ~OpenGLWindow() override;
 
-    void Update(float dt) override;
+    void Update() override;
     bool IsRunning() override;
 
 private:

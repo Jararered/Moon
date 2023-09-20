@@ -1,20 +1,20 @@
 #include "IndexSystem.hpp"
 
-#include "Coordinator.hpp"
+#include "Scenario.hpp"
 
-#include "Components/Index.hpp"
-#include "Components/Transform.hpp"
+#include "Component/Index.hpp"
+#include "Component/Transform.hpp"
 
 #include <print>
 
-extern Coordinator e_Coordinator;
+extern Scenario e_Scenario;
 
 void IndexSystem::Register()
 {
     Signature signature;
-    signature.set(e_Coordinator.GetComponentType<Transform>());
-    signature.set(e_Coordinator.GetComponentType<Index>());
-    e_Coordinator.SetSystemSignature<IndexSystem>(signature);
+    signature.set(e_Scenario.GetComponentType<Transform>());
+    signature.set(e_Scenario.GetComponentType<Index>());
+    e_Scenario.SetSystemSignature<IndexSystem>(signature);
 }
 
 void IndexSystem::Initialize()
@@ -26,8 +26,8 @@ void IndexSystem::Update(float dt)
 {
     for (const auto entity : m_Entities)
     {
-        const auto transform = e_Coordinator.GetComponent<Transform>(entity);
-        auto& index = e_Coordinator.GetComponent<Index>(entity);
+        const auto transform = e_Scenario.GetComponent<Transform>(entity);
+        auto& index = e_Scenario.GetComponent<Index>(entity);
         index = GetIndex(transform.Position, m_Scale);
 
         // std::print("Position: {}, {}, {}     ", (int)transform.Position.x, (int)transform.Position.y, (int)transform.Position.z);

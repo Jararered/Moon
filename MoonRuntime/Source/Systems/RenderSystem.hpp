@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Components/Mesh.hpp"
-#include "Components/Shader.hpp"
+#include "Component/Mesh.hpp"
+#include "Component/Shader.hpp"
 #include "Framebuffer.hpp"
 #include "System.hpp"
 
