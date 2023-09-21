@@ -59,19 +59,23 @@ public:
         const auto blueShader = Shader("Shaders/PositionNormalTexture.vert", "Shaders/Normal.frag");
         for (unsigned int i = 0; i < 200; i++)
         {
-            const auto randomX = Random::Value<float>(-10, 10);
-            const auto randomY = Random::Value<float>(0, 10);
-            const auto randomZ = Random::Value<float>(-10, 10);
+            const auto randX = Random::Value<float>(-10, 10);
+            const auto randY = Random::Value<float>(0, 10);
+            const auto randZ = Random::Value<float>(-10, 10);
 
-            const auto velocityX = Random::Value<float>(5, 10);
-            const auto velocityZ = Random::Value<float>(5, 10);
+            const auto randScaleX = Random::Value<float>(0.2, 2);
+            const auto randScaleY = Random::Value<float>(0.2, 2);
+            const auto randScaleZ = Random::Value<float>(0.2, 2);
+
+            const auto randVelocityX = Random::Value<float>(5, 10);
+            const auto randVelocityZ = Random::Value<float>(5, 10);
 
             const Entity entity = e_Scenario.CreateEntity();
             e_Scenario.AddComponent<Mesh>(entity, cube);
             e_Scenario.AddComponent<Shader>(entity, blueShader);
             e_Scenario.AddComponent<Texture>(entity);
-            e_Scenario.AddComponent<Transform>(entity, Transform{.Position = {randomX, randomY, randomZ}, .Rotation = {0, 0, 0}, .Scale = {1, 1, 1}});
-            e_Scenario.AddComponent<RigidBody>(entity, RigidBody{.Velocity{velocityX, 0, velocityZ}, .Acceleration{0, 0, 0}, .Mass = 0.0f});
+            e_Scenario.AddComponent<Transform>(entity, Transform{.Position = {randX, randY, randZ}, .Rotation = {0, 0, 0}, .Scale = {randScaleX, randScaleY, randScaleZ}});
+            e_Scenario.AddComponent<RigidBody>(entity, RigidBody{.Velocity{randVelocityX, 0, randVelocityZ}, .Acceleration{0, 0, 0}, .Mass = 0.0f});
         }
     }
 };

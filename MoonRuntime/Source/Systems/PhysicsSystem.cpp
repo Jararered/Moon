@@ -71,20 +71,25 @@ void PhysicsSystem::Update(float dt)
                 const auto z = glm::min(glm::abs(upper1.z - lower2.z), glm::abs(upper2.z - lower1.z));
 
                 // TODO Find better way to resolve collision to where both entities react
+                const auto stepThreshold = 0.3f;
                 if (x < y and x < z)
                 {
+                    if (upper2.y - lower1.y < stepThreshold and rigidBody1.MovementStatus == Status::Grounded)
+                    {
+                        transform1.Position.y += upper2.y - lower1.y;
+                        continue;
+                    }
+
                     for (unsigned int i = 0; i < 5; i++)
-                    // while (IsIntersect(transform1, transform2))
                     {
                         if (IsIntersect(transform1, transform2))
                             transform1.Position.x += (-rigidBody1.Velocity.x * stepDT);
                     }
-                    rigidBody1.Velocity.x = -rigidBody1.Velocity.x * rigidBody1.Compressability;
+                    rigidBody1.Velocity.x = 0.0f;
                 }
                 if (y < x and y < z)
                 {
                     for (unsigned int i = 0; i < 5; i++)
-                    // while (IsIntersect(transform1, transform2))
                     {
                         if (IsIntersect(transform1, transform2))
                             transform1.Position.y += (-rigidBody1.Velocity.y * stepDT);
@@ -93,17 +98,22 @@ void PhysicsSystem::Update(float dt)
                     if (rigidBody1.Velocity.y < 0.0f)
                         rigidBody1.MovementStatus = Status::Grounded;
 
-                    rigidBody1.Velocity.y = -rigidBody1.Velocity.y * rigidBody1.Compressability;
+                    rigidBody1.Velocity.y = 0.0f;
                 }
                 if (z < x and z < y)
                 {
+                    if (upper2.y - lower1.y < stepThreshold and rigidBody1.MovementStatus == Status::Grounded)
+                    {
+                        transform1.Position.y += upper2.y - lower1.y;
+                        continue;
+                    }
+
                     for (unsigned int i = 0; i < 5; i++)
-                    // while (IsIntersect(transform1, transform2))
                     {
                         if (IsIntersect(transform1, transform2))
                             transform1.Position.z += (-rigidBody1.Velocity.z * stepDT);
                     }
-                    rigidBody1.Velocity.z = -rigidBody1.Velocity.z * rigidBody1.Compressability;
+                    rigidBody1.Velocity.z = 0.0f;
                 }
             }
         }

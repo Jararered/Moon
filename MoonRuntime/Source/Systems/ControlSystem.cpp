@@ -63,24 +63,21 @@ void ControlSystem::Update(float dt)
         // Don't care about limiting speed along verticals.
         if (Input::IsKeyPressed(Key::Space) and rigidBody.MovementStatus == Status::Grounded)
         {
-            positionDelta += glm::vec3(0.0f, 10.0f, 0.0f);
+            positionDelta += glm::vec3(0.0f, 5.0f, 0.0f);
             rigidBody.MovementStatus = Status::Falling;
         }
 
         if (Input::IsKeyPressed(Key::LeftShift))
             positionDelta -= glm::vec3(0.0f, 1.0f, 0.0f);
 
-        if (Input::IsKeyPressed(Key::LeftControl))
-        {
-            positionDelta.x *= 10.0f;
-            positionDelta.z *= 10.0f;
-        }
-
         // Apply velocity increment
         rigidBody.Velocity += positionDelta;
 
+        auto speedLimit = 1.5f;
+        if (Input::IsKeyPressed(Key::LeftControl))
+            speedLimit *= 2.0f;
+
         // Check velocity in x-z plane, limit magnitude
-        const auto speedLimit = 10.0f;
         const auto velocityXZ = glm::vec3(rigidBody.Velocity.x, 0.0f, rigidBody.Velocity.z);
         if (glm::length(velocityXZ) > speedLimit)
         {
@@ -88,8 +85,6 @@ void ControlSystem::Update(float dt)
             rigidBody.Velocity.x = clampedVelocityXZ.x;
             rigidBody.Velocity.z = clampedVelocityXZ.z;
         }
-
-        rigidBody.Velocity.y = glm::clamp(rigidBody.Velocity.y, -speedLimit, speedLimit);
     }
 }
 
