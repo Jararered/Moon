@@ -85,8 +85,6 @@ void ControlSystem::Update(float dt)
         }
 
         rigidBody.Velocity.y = glm::clamp(rigidBody.Velocity.y, -speedLimit, speedLimit);
-
-        std::println("Speed: {:5.5f}", glm::length(rigidBody.Velocity));
     }
 }
 
