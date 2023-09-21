@@ -1,6 +1,7 @@
 #include "Demos/ChunkDemo.hpp"
 #include "Demos/CollisionDemo.hpp"
 #include "Demos/CubesFalling.hpp"
+#include "Demos/StairsDemo.hpp"
 #include "Demos/TexturedCubeDemo.hpp"
 
 int main(int argc, char* argv[])

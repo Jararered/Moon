@@ -29,5 +29,5 @@ private:
 
     unsigned int m_SubStepCount = 1;
 
-    float m_AirResistance = 0.2f;
+    float m_AirResistance = 0.01f;
 };
