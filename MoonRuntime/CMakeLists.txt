@@ -11,17 +11,24 @@ file(GLOB_RECURSE ProjectHeaderFiles Source/*.hpp)
 set(LibrarySourceFiles
     ${CMAKE_SOURCE_DIR}/Libraries/glad/source/gl.c
     ${CMAKE_SOURCE_DIR}/Libraries/stb_image/source/stb_image.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/imgui_draw.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/imgui_tables.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/imgui_widgets.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/imgui.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/backends/imgui_impl_glfw.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/backends/imgui_impl_opengl3.cpp
+
 )
 
 add_library(${Project} ${ProjectSourceFiles} ${ProjectHeaderFiles} ${LibrarySourceFiles})
 
 if(UNIX)
-  add_definitions(-DUNIX)
-  find_package(glfw3 3.3.8 REQUIRED)
+    add_definitions(-DUNIX)
+    find_package(glfw3 3.3.8 REQUIRED)
 endif(UNIX)
 
 if(WIN32)
-  target_link_libraries(${Project} ${CMAKE_SOURCE_DIR}/Libraries/glfw/lib/glfw3.lib)
+    target_link_libraries(${Project} ${CMAKE_SOURCE_DIR}/Libraries/glfw/lib/glfw3.lib)
 endif(WIN32)
 
 add_definitions(-DGLFW_INCLUDE_NONE)

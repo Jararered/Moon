@@ -5,6 +5,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/euler_angles.hpp>
 #include <glm/trigonometric.hpp>
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
 #include "Input.hpp"
 #include "Scenario.hpp"
@@ -108,14 +111,11 @@ void RenderSystem::Update(float dt)
         glUniformMatrix4fv(glGetUniformLocation(shader.ID, "u_ViewMatrix"), 1, GL_FALSE, (float*)&camera.ViewMatrix);
         glUniformMatrix4fv(glGetUniformLocation(shader.ID, "u_ProjectionMatrix"), 1, GL_FALSE, (float*)&camera.ProjectionMatrix);
 
-        const auto& mesh = e_Scenario.GetComponent<Mesh>(entity);
-        mesh->Draw();
+        e_Scenario.GetComponent<Mesh>(entity)->Draw();
     }
 
     m_Framebuffer.Unbind();
     m_Framebuffer.Draw();
-
-    glfwSwapBuffers(glfwGetCurrentContext());
 }
 
 void RenderSystem::Finalize()

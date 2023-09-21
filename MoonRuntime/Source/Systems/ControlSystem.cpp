@@ -85,6 +85,9 @@ void ControlSystem::Update(float dt)
             rigidBody.Velocity.x = clampedVelocityXZ.x;
             rigidBody.Velocity.z = clampedVelocityXZ.z;
         }
+
+        if (rigidBody.Mass == 0.0f)
+            transform.Position += positionDelta * speedLimit * dt;
     }
 }
 

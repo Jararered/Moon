@@ -22,7 +22,10 @@ set(LibraryIncludeDirs
     ${CMAKE_SOURCE_DIR}/Libraries/glfw/include
     ${CMAKE_SOURCE_DIR}/Libraries/glm/include
     ${CMAKE_SOURCE_DIR}/Libraries/octree/include
-    ${CMAKE_SOURCE_DIR}/Libraries/stb_image/include)
+    ${CMAKE_SOURCE_DIR}/Libraries/stb_image/include
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/backends
+)
 
 add_subdirectory(MoonRuntime)
 add_subdirectory(Sandbox)

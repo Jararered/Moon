@@ -5,6 +5,8 @@
 #include "Framebuffer.hpp"
 #include "System.hpp"
 
+#include <glm/mat4x4.hpp>
+
 class RenderSystem final : public System
 {
 public:
@@ -20,6 +22,9 @@ public:
     void Initialize() override;
     void Update(float dt) override;
     void Finalize() override;
+
+public:
+    void SetMatrix(int id, const std::string& location, const glm::mat4& matrix) { glUniformMatrix4fv(glGetUniformLocation(id, location.c_str()), 1, GL_FALSE, (float*)&matrix); }
 
 private:
     int m_Width = 0;

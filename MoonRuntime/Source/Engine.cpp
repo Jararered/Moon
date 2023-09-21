@@ -61,12 +61,14 @@ void Engine::Start()
     {
         const auto frameStartTime = std::chrono::high_resolution_clock::now();
 
-        p_Window->Update();
+        p_Window->NewFrame();
 
         for (const auto [_, system] : m_SystemMap)
         {
             system->Update(m_DT);
         }
+
+        p_Window->EndFrame();
 
         const auto frameEndTime = std::chrono::high_resolution_clock::now();
         m_DT = std::chrono::duration<float, std::chrono::seconds::period>(frameEndTime - frameStartTime).count();

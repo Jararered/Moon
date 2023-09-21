@@ -10,7 +10,8 @@ public:
     OpenGLWindow(const WindowSpecification& spec);
     ~OpenGLWindow() override;
 
-    void Update() override;
+    void NewFrame() override;
+    void EndFrame() override;
     bool IsRunning() override;
 
 private:
