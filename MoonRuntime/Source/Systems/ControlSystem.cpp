@@ -5,9 +5,11 @@
 #include "Signature.hpp"
 
 #include "Component/Control.hpp"
+#include "Component/RigidBody.hpp"
 #include "Component/Transform.hpp"
 
 #include <glm/trigonometric.hpp>
+#include <print>
 
 extern Scenario e_Scenario;
 
@@ -16,6 +18,7 @@ void ControlSystem::Register()
     Signature signature;
     signature.set(e_Scenario.GetComponentType<Transform>());
     signature.set(e_Scenario.GetComponentType<Control>());
+    signature.set(e_Scenario.GetComponentType<RigidBody>());
     e_Scenario.SetSystemSignature<ControlSystem>(signature);
 }
 
@@ -28,6 +31,7 @@ void ControlSystem::Update(float dt)
     for (const auto& entity : m_Entities)
     {
         auto& transform = e_Scenario.GetComponent<Transform>(entity);
+        auto& rigidBody = e_Scenario.GetComponent<RigidBody>(entity);
 
         auto direction = glm::vec3(0.0f);
         direction.x = glm::cos(transform.Rotation.y) * glm::cos(transform.Rotation.x);
@@ -57,14 +61,32 @@ void ControlSystem::Update(float dt)
 
         // Still perform up/down movements after normalization.
         // Don't care about limiting speed along verticals.
-        if (Input::IsKeyPressed(Key::Space))
-            positionDelta += glm::vec3(0.0f, 1.0f, 0.0f);
+        if (Input::IsKeyPressed(Key::Space) and rigidBody.Velocity.y == 0.0f)
+            positionDelta += glm::vec3(0.0f, 10.0f, 0.0f);
         if (Input::IsKeyPressed(Key::LeftShift))
             positionDelta -= glm::vec3(0.0f, 1.0f, 0.0f);
         if (Input::IsKeyPressed(Key::LeftControl))
-            positionDelta *= 10.0f;
+        {
+            positionDelta.x *= 10.0f;
+            positionDelta.z *= 10.0f;
+        }
 
-        transform.Position += positionDelta * dt * 10.0f;
+        // Apply velocity increment
+        rigidBody.Velocity += positionDelta;
+
+        // Check velocity in x-z plane, limit magnitude
+        const auto speedLimit = 10.0f;
+        const auto velocityXZ = glm::vec3(rigidBody.Velocity.x, 0.0f, rigidBody.Velocity.z);
+        if (glm::length(velocityXZ) > speedLimit)
+        {
+            const auto clampedVelocityXZ = glm::normalize(velocityXZ) * speedLimit;
+            rigidBody.Velocity.x = clampedVelocityXZ.x;
+            rigidBody.Velocity.z = clampedVelocityXZ.z;
+        }
+
+        rigidBody.Velocity.y = glm::clamp(rigidBody.Velocity.y, -speedLimit, speedLimit);
+
+        std::println("Speed: {:5.5f}", glm::length(rigidBody.Velocity));
     }
 }
 

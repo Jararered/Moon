@@ -46,7 +46,7 @@ void RenderSystem::Initialize()
 
     const auto position = glm::vec3(0.0f, 10.0f, 0.0f);
     const auto rotation = glm::vec3(0.0f, glm::radians(-90.0f), 0.0f); // Looking into the screen
-    const auto scale = glm::vec3(1.0f, 2.0f, 1.0f);
+    const auto scale = glm::vec3(0.5f, 1.0f, 0.5f);
     e_Scenario.AddComponent<Transform>(m_Camera, Transform{.Position = position, .Rotation = rotation, .Scale = scale});
 
     const auto fov = glm::radians(90.0f);

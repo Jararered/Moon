@@ -44,6 +44,10 @@ void PhysicsSystem::Update(float dt)
             transform1.Position += (rigidBody1.Velocity * stepDT);
             rigidBody1.Velocity = rigidBody1.Velocity + (s_Gravity * stepDT);
 
+            // Apply resistances
+            rigidBody1.Velocity.x *= 1.0f - m_AirResistance;
+            rigidBody1.Velocity.z *= 1.0f - m_AirResistance;
+
             // Loop through all other entities, including massless entities, to check for collisions
             for (const auto& e2 : m_Entities)
             {

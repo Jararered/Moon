@@ -30,30 +30,26 @@ void CameraSystem::Update(float dt)
     {
         auto& transform = e_Scenario.GetComponent<Transform>(entity);
         // Set Yaw and Pitch rotations based on mouse movement
-        const auto mouseMovement = Input::GetCapturedMouseMovement() / 5.0f;
+        const auto mouseMovement = Input::GetCapturedMouseMovement() * m_Sensitivity;
 
         // Rotation
         transform.Rotation.x += glm::radians(mouseMovement.y);
         transform.Rotation.y += glm::radians(mouseMovement.x);
-        transform.Rotation.z = 0.0f;
 
-        if (transform.Rotation.x > glm::radians(90.0f))
-            transform.Rotation.x = glm::radians(89.9f);
-        if (transform.Rotation.x < glm::radians(-90.0f))
-            transform.Rotation.x = glm::radians(-89.9f);
+        // Clamp looking up and down to near +/- 90 degrees
+        transform.Rotation.x = glm::clamp(transform.Rotation.x, glm::radians(-89.99f), glm::radians(89.99f));
 
         auto direction = glm::vec3(0.0f);
         direction.x = glm::cos(transform.Rotation.y) * glm::cos(transform.Rotation.x);
         direction.y = glm::sin(transform.Rotation.x);
         direction.z = glm::sin(transform.Rotation.y) * glm::cos(transform.Rotation.x);
 
-        // Normalize Direction vector and update Right vector
-        direction = glm::normalize(direction);
-        const auto right = glm::cross(direction, glm::vec3(0.0f, 1.0f, 0.0f));
+        // Sets camera position to be at roughly 75% of the height of the entity
+        const auto cameraHeight = transform.Position.y + (transform.Scale.y * 0.25f);
+        const auto cameraPosition = glm::vec3(transform.Position.x, cameraHeight, transform.Position.z);
 
         auto& camera = e_Scenario.GetComponent<Camera>(entity);
-        const auto viewMatrix = glm::lookAt(transform.Position, (transform.Position + direction), glm::vec3(0.0f, 1.0f, 0.0f));
-        camera.ViewMatrix = viewMatrix;
+        camera.ViewMatrix = glm::lookAt(cameraPosition, (cameraPosition + direction), glm::vec3(0.0f, 1.0f, 0.0f));
     }
 }
 
