@@ -61,10 +61,15 @@ void ControlSystem::Update(float dt)
 
         // Still perform up/down movements after normalization.
         // Don't care about limiting speed along verticals.
-        if (Input::IsKeyPressed(Key::Space) and rigidBody.Velocity.y == 0.0f)
+        if (Input::IsKeyPressed(Key::Space) and rigidBody.MovementStatus == Status::Grounded)
+        {
             positionDelta += glm::vec3(0.0f, 10.0f, 0.0f);
+            rigidBody.MovementStatus = Status::Falling;
+        }
+
         if (Input::IsKeyPressed(Key::LeftShift))
             positionDelta -= glm::vec3(0.0f, 1.0f, 0.0f);
+
         if (Input::IsKeyPressed(Key::LeftControl))
         {
             positionDelta.x *= 10.0f;
