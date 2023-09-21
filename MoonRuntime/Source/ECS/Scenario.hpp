@@ -34,7 +34,7 @@ public:
         m_ComponentManager->RegisterComponent<T>();
     }
 
-    template <typename T> void AddComponent(Entity entity, T component)
+    template <typename T> void AddComponent(Entity entity, const T& component)
     {
         m_ComponentManager->AddComponent<T>(entity, component);
 

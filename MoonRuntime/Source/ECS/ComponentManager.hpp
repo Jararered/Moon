@@ -32,7 +32,7 @@ public:
         return m_ComponentTypes[typeName];
     }
 
-    template <typename T> void AddComponent(Entity entity, T component)
+    template <typename T> void AddComponent(Entity entity, const T& component)
     {
         // Add a component to the array for an entity
         GetComponentArray<T>()->InsertData(entity, component);
