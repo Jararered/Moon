@@ -51,39 +51,9 @@ void CameraSystem::Update(float dt)
         direction = glm::normalize(direction);
         const auto right = glm::cross(direction, glm::vec3(0.0f, 1.0f, 0.0f));
 
-        // Position
-        // Basic movement processing
-        const auto fowardXZ = glm::vec3(direction.x, 0.0f, direction.z);
-
-        // WASD movement
-        auto positionDelta = glm::vec3(0.0f);
-        if (Input::IsKeyPressed(KEY_W))
-            positionDelta += fowardXZ;
-        if (Input::IsKeyPressed(KEY_S))
-            positionDelta -= fowardXZ;
-        if (Input::IsKeyPressed(KEY_A))
-            positionDelta -= right;
-        if (Input::IsKeyPressed(KEY_D))
-            positionDelta += right;
-
-        // Fixes diagonal directed movement to not be faster than along an axis.
-        // Only happens when holding two buttons that are off axis from each other.
-        if ((positionDelta.x != 0.0f) or (positionDelta.z != 0.0f))
-            positionDelta = glm::normalize(positionDelta);
-
-        // Still perform up/down movements after normalization.
-        // Don't care about limiting speed along verticals.
-        if (Input::IsKeyPressed(KEY_SPACE))
-            positionDelta += glm::vec3(0.0f, 1.0f, 0.0f);
-        if (Input::IsKeyPressed(KEY_LEFT_SHIFT))
-            positionDelta -= glm::vec3(0.0f, 1.0f, 0.0f);
-        if (Input::IsKeyPressed(KEY_LEFT_CONTROL))
-            positionDelta *= 10.0f;
-
-        transform.Position += positionDelta * dt * 10.0f;
-
         auto& camera = e_Scenario.GetComponent<Camera>(entity);
-        camera.ViewMatrix = glm::lookAt(transform.Position, (transform.Position + direction), glm::vec3(0.0f, 1.0f, 0.0f));
+        const auto viewMatrix = glm::lookAt(transform.Position, (transform.Position + direction), glm::vec3(0.0f, 1.0f, 0.0f));
+        camera.ViewMatrix = viewMatrix;
     }
 }
 

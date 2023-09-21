@@ -9,7 +9,7 @@ Timer::Timer(const std::string& name) : m_Name(name)
 
 float Timer::GetDelta()
 {
-    auto delta = std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - m_Last).count();
+    auto delta = std::chrono::duration<float, std::chrono::milliseconds::period>(std::chrono::high_resolution_clock::now() - m_Last).count();
     m_Last = std::chrono::high_resolution_clock::now();
     return delta;
 }
@@ -21,7 +21,7 @@ ScopedTimer::ScopedTimer(const std::string& name) : Timer(name)
 ScopedTimer::~ScopedTimer()
 {
     m_Stop = std::chrono::high_resolution_clock::now();
-    std::println("{} took: {} seconds.", m_Name, std::chrono::duration<float, std::chrono::seconds::period>(m_Stop - m_Start).count());
+    std::println("{} took: {:5.5f} ms.", m_Name, std::chrono::duration<float, std::chrono::milliseconds::period>(m_Stop - m_Start).count());
 }
 
 ManualTimer::ManualTimer(const std::string& name) : Timer(name)
@@ -36,10 +36,10 @@ void ManualTimer::Start()
 void ManualTimer::Stop()
 {
     m_Stop = std::chrono::high_resolution_clock::now();
-    std::println("{} took: {} seconds.", m_Name, std::chrono::duration<float, std::chrono::seconds::period>(m_Stop - m_Start).count());
+    std::println("{} took: {:5.5f} ms.", m_Name, std::chrono::duration<float, std::chrono::milliseconds::period>(m_Stop - m_Start).count());
 }
 
 float ManualTimer::GetTime()
 {
-    return std::chrono::duration<float, std::chrono::seconds::period>(m_Stop - m_Start).count();
+    return std::chrono::duration<float, std::chrono::milliseconds::period>(m_Stop - m_Start).count();
 }

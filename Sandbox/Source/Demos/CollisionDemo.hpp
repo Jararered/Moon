@@ -57,7 +57,7 @@ public:
 
         // Dynamic Cubes
         const auto blueShader = Shader("Shaders/PositionNormalTexture.vert", "Shaders/Blue.frag");
-        for (unsigned int i = 0; i < 50; i++)
+        for (unsigned int i = 0; i < 0; i++)
         {
             const auto randomX = Random::Value<float>(-8, 8);
             const auto randomY = Random::Value<float>(2, 8);

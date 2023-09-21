@@ -16,13 +16,13 @@ bool Input::IsMouseButtonPressed(int mouseButtonCode)
 
 bool Input::IsLeftClick()
 {
-    const auto state = glfwGetMouseButton(glfwGetCurrentContext(), MOUSE_BUTTON_LEFT);
+    const auto state = glfwGetMouseButton(glfwGetCurrentContext(), Mouse::ButtonLeft);
     return state == GLFW_PRESS;
 }
 
 bool Input::IsRightClick()
 {
-    const auto state = glfwGetMouseButton(glfwGetCurrentContext(), MOUSE_BUTTON_RIGHT);
+    const auto state = glfwGetMouseButton(glfwGetCurrentContext(), Mouse::ButtonRight);
     return state == GLFW_PRESS;
 }
 
@@ -74,6 +74,6 @@ void Input::PollEvents()
 {
     glfwPollEvents();
 
-    if (IsKeyPressed(KEY_ESCAPE))
+    if (IsKeyPressed(Key::Escape))
         Input::ReleaseCursor();
 }

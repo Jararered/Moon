@@ -10,7 +10,9 @@
 #include "Scenario.hpp"
 
 #include "Component/Camera.hpp"
+#include "Component/Control.hpp"
 #include "Component/Mesh.hpp"
+#include "Component/RigidBody.hpp"
 #include "Component/Shader.hpp"
 #include "Component/Texture.hpp"
 #include "Component/Transform.hpp"
@@ -42,15 +44,21 @@ void RenderSystem::Initialize()
 
     m_Camera = e_Scenario.CreateEntity();
 
-    const auto position = glm::vec3(0.0f, 0.0f, 0.0f);
+    const auto position = glm::vec3(0.0f, 10.0f, 0.0f);
     const auto rotation = glm::vec3(0.0f, glm::radians(-90.0f), 0.0f); // Looking into the screen
-    e_Scenario.AddComponent(m_Camera, Transform{.Position = position, .Rotation = rotation});
+    const auto scale = glm::vec3(1.0f, 2.0f, 1.0f);
+    e_Scenario.AddComponent<Transform>(m_Camera, Transform{.Position = position, .Rotation = rotation, .Scale = scale});
 
     const auto fov = glm::radians(90.0f);
     const auto aspectRatio = 16.0f / 9.0f;
-    const auto projMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
+    const auto projectionMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
     const auto viewMatrix = glm::mat4(1.0f);
-    e_Scenario.AddComponent(m_Camera, Camera{.ViewMatrix = viewMatrix, .ProjectionMatrix = projMatrix});
+    e_Scenario.AddComponent<Camera>(m_Camera, Camera{.ViewMatrix = viewMatrix, .ProjectionMatrix = projectionMatrix});
+
+    // Adding a rigid body to the camera so that it cannot pass through other objects
+    e_Scenario.AddComponent<RigidBody>(m_Camera, RigidBody{.Velocity = {0.0f, 0.0f, 0.0f}, .Acceleration = {0.0f, 0.0f, 0.0f}, .Mass = 1.0f});
+
+    e_Scenario.AddComponent<Control>(m_Camera);
 
     const auto framebufferSizeCallback = [](GLFWwindow* window, int width, int height)
     {
@@ -65,9 +73,9 @@ void RenderSystem::Initialize()
 
         const auto fov = glm::radians(90.0f);
         const auto aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-        const auto projMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
+        const auto projectionMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
         auto& camera = e_Scenario.GetComponent<Camera>(renderer->m_Camera);
-        camera.ProjectionMatrix = projMatrix;
+        camera.ProjectionMatrix = projectionMatrix;
     };
     glfwSetFramebufferSizeCallback(glfwGetCurrentContext(), framebufferSizeCallback);
 }
@@ -117,18 +125,18 @@ void RenderSystem::Finalize()
 void RenderSystem::PollDebugControls()
 {
     // Do not fill polygons
-    if (Input::IsKeyPressed(KEY_MINUS))
+    if (Input::IsKeyPressed(Key::Minus))
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     // Fill polygons
-    if (Input::IsKeyPressed(KEY_EQUAL))
+    if (Input::IsKeyPressed(Key::Equal))
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     // Cull back faces
-    if (Input::IsKeyPressed(KEY_MINUS) and Input::IsKeyPressed(KEY_RIGHT_SHIFT))
+    if (Input::IsKeyPressed(Key::Minus) and Input::IsKeyPressed(Key::RightShift))
         glEnable(GL_CULL_FACE);
 
     // Do not cull back faces
-    if (Input::IsKeyPressed(KEY_EQUAL) and Input::IsKeyPressed(KEY_RIGHT_SHIFT))
+    if (Input::IsKeyPressed(Key::Minus) and Input::IsKeyPressed(Key::RightShift))
         glDisable(GL_CULL_FACE);
 }

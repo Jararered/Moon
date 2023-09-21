@@ -34,7 +34,7 @@ void OpenGLWindow::Update()
     if (!Input::IsMouseCaptured() and Input::IsLeftClick())
         Input::CaptureCursor();
 
-    if (Input::IsKeyPressed(KEY_ESCAPE) and Input::IsMouseCaptured())
+    if (Input::IsKeyPressed(Key::Escape) and Input::IsMouseCaptured())
         Input::ReleaseCursor();
 }
 

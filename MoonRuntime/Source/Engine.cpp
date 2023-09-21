@@ -7,10 +7,12 @@
 #include "Scenario.hpp"
 
 #include "Systems/CameraSystem.hpp"
+#include "Systems/ControlSystem.hpp"
 #include "Systems/PhysicsSystem.hpp"
 #include "Systems/RenderSystem.hpp"
 
 #include "Component/Camera.hpp"
+#include "Component/Control.hpp"
 #include "Component/Mesh.hpp"
 #include "Component/RigidBody.hpp"
 #include "Component/Shader.hpp"
@@ -26,15 +28,18 @@ void Engine::Initialize()
 
     e_Scenario.Initialize();
     e_Scenario.RegisterComponent<Camera>();
+    e_Scenario.RegisterComponent<Control>();
     e_Scenario.RegisterComponent<Mesh>();
     e_Scenario.RegisterComponent<RigidBody>();
     e_Scenario.RegisterComponent<Shader>();
     e_Scenario.RegisterComponent<Texture>();
     e_Scenario.RegisterComponent<Transform>();
 
-    m_SystemMap.emplace(1, e_Scenario.RegisterSystem<PhysicsSystem>());
+    // Emplace back systems in initialization and update order
+    m_SystemMap.emplace(1, e_Scenario.RegisterSystem<ControlSystem>());
     m_SystemMap.emplace(2, e_Scenario.RegisterSystem<CameraSystem>());
-    m_SystemMap.emplace(3, e_Scenario.RegisterSystem<RenderSystem>());
+    m_SystemMap.emplace(3, e_Scenario.RegisterSystem<PhysicsSystem>());
+    m_SystemMap.emplace(4, e_Scenario.RegisterSystem<RenderSystem>());
 
     for (const auto [_, system] : m_SystemMap)
     {
@@ -49,14 +54,14 @@ void Engine::Initialize()
 
 void Engine::Start()
 {
+    if (!p_Window)
+        return;
+
     while (p_Window->IsRunning())
     {
         const auto frameStartTime = std::chrono::high_resolution_clock::now();
 
-        if (p_Window)
-        {
-            p_Window->Update();
-        }
+        p_Window->Update();
 
         for (const auto [_, system] : m_SystemMap)
         {

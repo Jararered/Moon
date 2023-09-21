@@ -3,6 +3,7 @@
 #include "Component/RigidBody.hpp"
 #include "Component/Transform.hpp"
 #include "Scenario.hpp"
+#include "Utilities/Timer.hpp"
 
 #include <print>
 
@@ -56,10 +57,10 @@ void PhysicsSystem::Update(float dt)
                 if (not IsIntersect(transform1, transform2))
                     continue;
 
-                const auto lower1 = glm::vec3(transform1.Position - (transform1.Scale / 2.0f));
-                const auto upper1 = glm::vec3(transform1.Position + (transform1.Scale / 2.0f));
-                const auto lower2 = glm::vec3(transform2.Position - (transform2.Scale / 2.0f));
-                const auto upper2 = glm::vec3(transform2.Position + (transform2.Scale / 2.0f));
+                const auto lower1 = transform1.Position - transform1.Scale / 2.0f;
+                const auto upper1 = transform1.Position + transform1.Scale / 2.0f;
+                const auto lower2 = transform2.Position - transform2.Scale / 2.0f;
+                const auto upper2 = transform2.Position + transform2.Scale / 2.0f;
 
                 const auto x = glm::min(glm::abs(upper1.x - lower2.x), glm::abs(upper2.x - lower1.x));
                 const auto y = glm::min(glm::abs(upper1.y - lower2.y), glm::abs(upper2.y - lower1.y));
@@ -68,27 +69,33 @@ void PhysicsSystem::Update(float dt)
                 // TODO Find better way to resolve collision to where both entities react
                 if (x < y and x < z)
                 {
-                    rigidBody1.Velocity.x = -rigidBody1.Velocity.x;
-                    while (IsIntersect(transform1, transform2))
+                    for (unsigned int i = 0; i < 5; i++)
+                    // while (IsIntersect(transform1, transform2))
                     {
-                        transform1.Position += (rigidBody1.Velocity * stepDT);
+                        if (IsIntersect(transform1, transform2))
+                            transform1.Position += (-rigidBody1.Velocity * stepDT);
                     }
+                    rigidBody1.Velocity.x = -rigidBody1.Velocity.x * rigidBody1.Compressability;
                 }
                 if (y < x and y < z)
                 {
-                    rigidBody1.Velocity.y = -rigidBody1.Velocity.y;
-                    while (IsIntersect(transform1, transform2))
+                    for (unsigned int i = 0; i < 5; i++)
+                    // while (IsIntersect(transform1, transform2))
                     {
-                        transform1.Position += (rigidBody1.Velocity * stepDT);
+                        if (IsIntersect(transform1, transform2))
+                            transform1.Position += (-rigidBody1.Velocity * stepDT);
                     }
+                    rigidBody1.Velocity.y = -rigidBody1.Velocity.y * rigidBody1.Compressability;
                 }
                 if (z < x and z < y)
                 {
-                    rigidBody1.Velocity.z = -rigidBody1.Velocity.z;
-                    while (IsIntersect(transform1, transform2))
+                    for (unsigned int i = 0; i < 5; i++)
+                    // while (IsIntersect(transform1, transform2))
                     {
-                        transform1.Position += (rigidBody1.Velocity * stepDT);
+                        if (IsIntersect(transform1, transform2))
+                            transform1.Position += (-rigidBody1.Velocity * stepDT);
                     }
+                    rigidBody1.Velocity.z = -rigidBody1.Velocity.z * rigidBody1.Compressability;
                 }
             }
         }
