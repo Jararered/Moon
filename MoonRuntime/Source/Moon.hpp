@@ -16,8 +16,10 @@
 #include "Systems/RenderSystem.hpp"
 
 #include "Component/Camera.hpp"
+#include "Component/Control.hpp"
 #include "Component/Mesh.hpp"
 #include "Component/RigidBody.hpp"
+#include "Component/Script.hpp"
 #include "Component/Shader.hpp"
 #include "Component/Texture.hpp"
 #include "Component/Transform.hpp"

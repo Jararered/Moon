@@ -5,6 +5,8 @@
 #include "Scenario.hpp"
 #include "Utilities/Timer.hpp"
 
+#include <imgui.h>
+
 extern Scenario e_Scenario;
 
 void PhysicsSystem::Register()
@@ -22,22 +24,32 @@ void PhysicsSystem::Initialize()
 
 void PhysicsSystem::Update(float dt)
 {
+    ImGui::Begin("Physics Settings");
+    ImGui::SliderFloat3("Gravity", &s_Gravity.x, -20.0f, 20.0f);
+    ImGui::SliderInt("Calculation Steps", &m_SubStepCount, 1, 10);
+    ImGui::End();
+
     // Pause physics if frame rate is running slower than 60fps
     if (dt > 1 / 60.0f or dt == 0.0f)
         dt = 1 / 60.0f;
     const auto stepDT = dt / static_cast<float>(m_SubStepCount);
 
-    for (unsigned int step = 0; step < m_SubStepCount; step++)
+    ImGui::Begin("Physics Objects");
+
+    for (const auto e1 : m_Entities)
     {
-        for (const auto& e1 : m_Entities)
+        auto& transform1 = e_Scenario.GetComponent<Transform>(e1);
+        auto& rigidBody1 = e_Scenario.GetComponent<RigidBody>(e1);
+
+        auto label = std::string("Entity: ") + std::to_string(e1);
+        ImGui::SliderFloat3(label.c_str(), &transform1.Position.x, -10.0f, 10.0f);
+
+        // Ignore any entities without mass
+        if (rigidBody1.Mass == 0.0f)
+            continue;
+
+        for (unsigned int step = 0; step < m_SubStepCount; step++)
         {
-            auto& transform1 = e_Scenario.GetComponent<Transform>(e1);
-            auto& rigidBody1 = e_Scenario.GetComponent<RigidBody>(e1);
-
-            // Ignore any entities without mass
-            if (rigidBody1.Mass == 0.0f)
-                continue;
-
             // Update position and velocity w.r.t. time
             transform1.Position += (rigidBody1.Velocity * stepDT);
             rigidBody1.Velocity = rigidBody1.Velocity + (s_Gravity * stepDT);
@@ -47,7 +59,7 @@ void PhysicsSystem::Update(float dt)
             rigidBody1.Velocity.z *= (1.0f - m_AirResistance);
 
             // Loop through all other entities, including massless entities, to check for collisions
-            for (const auto& e2 : m_Entities)
+            for (const auto e2 : m_Entities)
             {
                 // Skip collision test if checking against same entity
                 if (e1 == e2)
@@ -116,6 +128,8 @@ void PhysicsSystem::Update(float dt)
             }
         }
     }
+
+    ImGui::End();
 }
 
 void PhysicsSystem::Finalize()

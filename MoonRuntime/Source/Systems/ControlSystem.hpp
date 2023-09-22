@@ -17,4 +17,7 @@ public:
     void Initialize() override;
     void Update(float dt) override;
     void Finalize() override;
+
+private:
+    float m_SpeedLimit = 0.0f;
 };

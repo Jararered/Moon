@@ -9,7 +9,7 @@ public:
     Timer() = default;
     virtual ~Timer() = default;
 
-    Timer(const std::string& name = "Timer");
+    Timer(std::string_view name = "Timer");
 
     // Returns the amount of time that has passed since last calling GetTime() or GetDelta()
     [[nodiscard]] float GetDelta();
@@ -27,7 +27,7 @@ public:
     ScopedTimer() = default;
     ~ScopedTimer() override;
 
-    ScopedTimer(const std::string& name = "Timer");
+    ScopedTimer(std::string_view name = "Timer");
 };
 
 class ManualTimer final : protected Timer
@@ -36,7 +36,7 @@ public:
     ManualTimer() = default;
     ~ManualTimer() override = default;
 
-    ManualTimer(const std::string& name = "Timer");
+    ManualTimer(std::string_view name = "Timer");
 
     void Start();
     void Stop();

@@ -1,6 +1,7 @@
 #include "Demos/ChunkDemo.hpp"
 #include "Demos/CollisionDemo.hpp"
 #include "Demos/CubesFalling.hpp"
+#include "Demos/ScriptDemo.hpp"
 #include "Demos/StairsDemo.hpp"
 #include "Demos/TexturedCubeDemo.hpp"
 
@@ -12,7 +13,7 @@ int main(int argc, char* argv[])
     spec.VSync = true;
     spec.Title = "Moon (OpenGL)";
 
-    CubesFalling app;
+    ScriptDemo app;
     app.CreateWindow(spec);
     app.Initialize();
 

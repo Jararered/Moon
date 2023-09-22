@@ -10,11 +10,13 @@
 #include "Systems/ControlSystem.hpp"
 #include "Systems/PhysicsSystem.hpp"
 #include "Systems/RenderSystem.hpp"
+#include "Systems/ScriptSystem.hpp"
 
 #include "Component/Camera.hpp"
 #include "Component/Control.hpp"
 #include "Component/Mesh.hpp"
 #include "Component/RigidBody.hpp"
+#include "Component/Script.hpp"
 #include "Component/Shader.hpp"
 #include "Component/Texture.hpp"
 #include "Component/Transform.hpp"
@@ -31,6 +33,7 @@ void Engine::Initialize()
     e_Scenario.RegisterComponent<Control>();
     e_Scenario.RegisterComponent<Mesh>();
     e_Scenario.RegisterComponent<RigidBody>();
+    e_Scenario.RegisterComponent<Script>();
     e_Scenario.RegisterComponent<Shader>();
     e_Scenario.RegisterComponent<Texture>();
     e_Scenario.RegisterComponent<Transform>();
@@ -38,8 +41,9 @@ void Engine::Initialize()
     // Emplace back systems in initialization and update order
     m_SystemMap.emplace(1, e_Scenario.RegisterSystem<ControlSystem>());
     m_SystemMap.emplace(2, e_Scenario.RegisterSystem<CameraSystem>());
-    m_SystemMap.emplace(3, e_Scenario.RegisterSystem<PhysicsSystem>());
-    m_SystemMap.emplace(4, e_Scenario.RegisterSystem<RenderSystem>());
+    m_SystemMap.emplace(3, e_Scenario.RegisterSystem<ScriptSystem>());
+    m_SystemMap.emplace(4, e_Scenario.RegisterSystem<PhysicsSystem>());
+    m_SystemMap.emplace(5, e_Scenario.RegisterSystem<RenderSystem>());
 
     for (const auto [_, system] : m_SystemMap)
     {
@@ -77,8 +81,6 @@ void Engine::Start()
 
 std::shared_ptr<Window> Engine::CreateWindow(const WindowSpecification& spec)
 {
-    std::println("Creating window with size {}x{}", spec.Width, spec.Height);
-
     p_Window = std::make_shared<OpenGLWindow>(spec);
     return p_Window;
 }

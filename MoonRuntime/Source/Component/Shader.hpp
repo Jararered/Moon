@@ -10,14 +10,14 @@ struct Shader
     unsigned int ID = 0;
 
     Shader() = default;
-    Shader(const std::string& vertexPath, const std::string& fragmentPath)
+    Shader(std::string_view vertexPath, std::string_view fragmentPath)
     {
         int success;
         char info[512];
 
         // Vertex Shader
         unsigned int vertexID;
-        std::ifstream vertexFile(vertexPath);
+        std::ifstream vertexFile(vertexPath.data());
         std::string vertexString((std::istreambuf_iterator<char>(vertexFile)), std::istreambuf_iterator<char>());
         const char* vertexChar = vertexString.c_str();
         vertexID = glCreateShader(GL_VERTEX_SHADER);
@@ -33,7 +33,7 @@ struct Shader
 
         // Fragment Shader
         unsigned int fragmentID;
-        std::ifstream fragmentFile(fragmentPath);
+        std::ifstream fragmentFile(fragmentPath.data());
         std::string fragmentString((std::istreambuf_iterator<char>(fragmentFile)), std::istreambuf_iterator<char>());
         const char* fragmentChar = fragmentString.c_str();
         fragmentID = glCreateShader(GL_FRAGMENT_SHADER);

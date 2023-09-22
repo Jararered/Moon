@@ -52,11 +52,11 @@ void RenderSystem::Initialize()
     const auto scale = glm::vec3(0.5f, 1.0f, 0.5f);
     e_Scenario.AddComponent<Transform>(m_Camera, Transform{.Position = position, .Rotation = rotation, .Scale = scale});
 
-    const auto fov = glm::radians(90.0f);
+    const auto fov = 85.0f;
     const auto aspectRatio = 16.0f / 9.0f;
-    const auto projectionMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
+    const auto projectionMatrix = glm::perspective(glm::radians(fov), aspectRatio, 0.1f, 1000.0f);
     const auto viewMatrix = glm::mat4(1.0f);
-    e_Scenario.AddComponent<Camera>(m_Camera, Camera{.ViewMatrix = viewMatrix, .ProjectionMatrix = projectionMatrix});
+    e_Scenario.AddComponent<Camera>(m_Camera, Camera{.ViewMatrix = viewMatrix, .ProjectionMatrix = projectionMatrix, .FOV = fov});
 
     // Adding a rigid body to the camera so that it cannot pass through other objects
     e_Scenario.AddComponent<RigidBody>(m_Camera, RigidBody{.Velocity = {0.0f, 0.0f, 0.0f}, .Acceleration = {0.0f, 0.0f, 0.0f}, .Mass = 1.0f});
@@ -74,10 +74,8 @@ void RenderSystem::Initialize()
         renderer->m_Framebuffer.Delete();
         renderer->m_Framebuffer.Create(width, height);
 
-        const auto fov = glm::radians(90.0f);
-        const auto aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-        const auto projectionMatrix = glm::perspective(fov, aspectRatio, 0.1f, 1000.0f);
         auto& camera = e_Scenario.GetComponent<Camera>(renderer->m_Camera);
+        const auto projectionMatrix = glm::perspective(glm::radians(camera.FOV), static_cast<float>(width) / static_cast<float>(height), 0.1f, 1000.0f);
         camera.ProjectionMatrix = projectionMatrix;
     };
     glfwSetFramebufferSizeCallback(glfwGetCurrentContext(), framebufferSizeCallback);
@@ -92,7 +90,7 @@ void RenderSystem::Update(float dt)
     glEnable(GL_DEPTH_TEST);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    const auto& camera = e_Scenario.GetComponent<Camera>(m_Camera);
+    const auto camera = e_Scenario.GetComponent<Camera>(m_Camera);
     for (const auto& entity : m_Entities)
     {
         const auto& shader = e_Scenario.GetComponent<Shader>(entity);

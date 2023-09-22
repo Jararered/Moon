@@ -27,7 +27,6 @@ public:
 private:
     [[nodiscard]] bool IsIntersect(const Transform& transform1, const Transform& transform2);
 
-    unsigned int m_SubStepCount = 1;
-
+    int m_SubStepCount = 1;
     float m_AirResistance = 0.01f;
 };

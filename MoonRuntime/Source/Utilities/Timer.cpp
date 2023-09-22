@@ -2,7 +2,7 @@
 
 #include <print>
 
-Timer::Timer(const std::string& name) : m_Name(name)
+Timer::Timer(std::string_view name) : m_Name(name.data())
 {
     m_Start = std::chrono::high_resolution_clock::now();
 }
@@ -14,7 +14,7 @@ float Timer::GetDelta()
     return delta;
 }
 
-ScopedTimer::ScopedTimer(const std::string& name) : Timer(name)
+ScopedTimer::ScopedTimer(std::string_view name) : Timer(name.data())
 {
 }
 
@@ -24,7 +24,7 @@ ScopedTimer::~ScopedTimer()
     std::println("{} took: {:5.5f} ms.", m_Name, std::chrono::duration<float, std::chrono::milliseconds::period>(m_Stop - m_Start).count());
 }
 
-ManualTimer::ManualTimer(const std::string& name) : Timer(name)
+ManualTimer::ManualTimer(std::string_view name) : Timer(name.data())
 {
 }
 

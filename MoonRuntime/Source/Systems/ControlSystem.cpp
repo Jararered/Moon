@@ -9,6 +9,7 @@
 #include "Component/Transform.hpp"
 
 #include <glm/trigonometric.hpp>
+#include <imgui.h>
 
 extern Scenario e_Scenario;
 
@@ -23,11 +24,16 @@ void ControlSystem::Register()
 
 void ControlSystem::Initialize()
 {
+    m_SpeedLimit = 1.5f;
 }
 
 void ControlSystem::Update(float dt)
 {
-    for (const auto& entity : m_Entities)
+    ImGui::Begin("Control Settings");
+    ImGui::SliderFloat("Speed", &m_SpeedLimit, 0.0f, 5.0f);
+    ImGui::End();
+
+    for (const auto entity : m_Entities)
     {
         auto& transform = e_Scenario.GetComponent<Transform>(entity);
         auto& rigidBody = e_Scenario.GetComponent<RigidBody>(entity);
@@ -72,7 +78,7 @@ void ControlSystem::Update(float dt)
         // Apply velocity increment
         rigidBody.Velocity += positionDelta;
 
-        auto speedLimit = 1.5f;
+        auto speedLimit = m_SpeedLimit;
         if (Input::IsKeyPressed(Key::LeftControl))
             speedLimit *= 2.0f;
 

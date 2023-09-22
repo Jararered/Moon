@@ -54,20 +54,16 @@ void OpenGLWindow::NewFrame()
         Input::ReleaseCursor();
 }
 
-float test = 1.0f;
-
 void OpenGLWindow::EndFrame()
 {
-    ImGui::Begin("Hello, world!");
+    ImGui::Begin("Statistics");
     ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-    ImGui::DragFloat("Drag", &test, 0.0f, 10.0f);
-    ImGui::SliderFloat("Slider", &test, 0.0f, 10.0f);
     ImGui::End();
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-    glfwSwapBuffers(glfwGetCurrentContext());
+    glfwSwapBuffers(p_GLFWwindow);
 }
 
 bool OpenGLWindow::IsRunning()

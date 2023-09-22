@@ -13,10 +13,10 @@ struct Texture
     int Channels = 0;
 
     Texture() = default;
-    Texture(const std::string& textureFile)
+    Texture(std::string_view textureFile)
     {
         // stbi_set_flip_vertically_on_load(true);
-        unsigned char* data = stbi_load(textureFile.c_str(), &Width, &Height, &Channels, 0);
+        unsigned char* data = stbi_load(textureFile.data(), &Width, &Height, &Channels, 0);
         if (not data)
         {
             std::println("Unable to load specified file: {}", textureFile);

@@ -24,7 +24,7 @@ public:
     void Finalize() override;
 
 public:
-    void SetMatrix(int id, const std::string& location, const glm::mat4& matrix) { glUniformMatrix4fv(glGetUniformLocation(id, location.c_str()), 1, GL_FALSE, (float*)&matrix); }
+    void SetMatrix(int id, std::string_view location, const glm::mat4& matrix) { glUniformMatrix4fv(glGetUniformLocation(id, location.data()), 1, GL_FALSE, (float*)&matrix); }
 
 private:
     int m_Width = 0;
