@@ -5,8 +5,6 @@
 #include "Scenario.hpp"
 #include "Utilities/Timer.hpp"
 
-#include <print>
-
 extern Scenario e_Scenario;
 
 void PhysicsSystem::Register()
@@ -19,7 +17,7 @@ void PhysicsSystem::Register()
 
 void PhysicsSystem::Initialize()
 {
-    std::println("Physics using {} substeps between each frame.", m_SubStepCount);
+    // std::println("Physics using {} substeps between each frame.", m_SubStepCount);
 }
 
 void PhysicsSystem::Update(float dt)
@@ -45,8 +43,8 @@ void PhysicsSystem::Update(float dt)
             rigidBody1.Velocity = rigidBody1.Velocity + (s_Gravity * stepDT);
 
             // Apply resistances
-            rigidBody1.Velocity.x *= 1.0f - m_AirResistance;
-            rigidBody1.Velocity.z *= 1.0f - m_AirResistance;
+            rigidBody1.Velocity.x *= (1.0f - m_AirResistance);
+            rigidBody1.Velocity.z *= (1.0f - m_AirResistance);
 
             // Loop through all other entities, including massless entities, to check for collisions
             for (const auto& e2 : m_Entities)

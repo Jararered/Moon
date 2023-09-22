@@ -33,5 +33,5 @@ private:
     void PollDebugControls();
 
     Entity m_Camera;
-    MSAAFramebuffer m_Framebuffer;
+    Framebuffer m_Framebuffer;
 };

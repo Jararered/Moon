@@ -8,7 +8,6 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/trigonometric.hpp>
-#include <print>
 
 extern Scenario e_Scenario;
 

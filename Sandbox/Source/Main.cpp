@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
     spec.VSync = true;
     spec.Title = "Moon (OpenGL)";
 
-    CollisionDemo app;
+    CubesFalling app;
     app.CreateWindow(spec);
     app.Initialize();
 

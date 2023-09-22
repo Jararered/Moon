@@ -9,7 +9,6 @@
 #include "Component/Transform.hpp"
 
 #include <glm/trigonometric.hpp>
-#include <print>
 
 extern Scenario e_Scenario;
 
