@@ -10,6 +10,8 @@
 
 OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
 {
+    glfwInit();
+
 #ifdef UNIX
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_TRUE);
@@ -18,7 +20,6 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    glfwInit();
     p_GLFWwindow = glfwCreateWindow(spec.Width, spec.Height, spec.Title.c_str(), NULL, NULL);
     glfwMakeContextCurrent(p_GLFWwindow);
 
@@ -31,7 +32,7 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     ImGui::StyleColorsDark();
 
     ImGui_ImplGlfw_InitForOpenGL(p_GLFWwindow, true);
-    ImGui_ImplOpenGL3_Init("#version 130");
+    ImGui_ImplOpenGL3_Init("#version 150");
 }
 
 OpenGLWindow::~OpenGLWindow()
