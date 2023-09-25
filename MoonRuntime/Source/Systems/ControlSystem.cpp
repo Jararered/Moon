@@ -81,7 +81,7 @@ void ControlSystem::Update(float dt)
         }
 
         // Apply velocity increment
-        rigidBody.ApplyVelocity(velocityDelta);
+        rigidBody.Velocity += velocityDelta;
 
         // Check velocity in x - z plane, limit magnitude
         const auto velocityXZ = glm::vec3(rigidBody.Velocity.x, 0.0f, rigidBody.Velocity.z);
