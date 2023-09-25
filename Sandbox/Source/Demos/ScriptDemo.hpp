@@ -4,7 +4,7 @@
 
 #include "Meshes/Cube.hpp"
 
-#include "Scripts/SlowRotate.hpp"
+#include "Scripts/Rotation.hpp"
 
 extern Scenario e_Scenario;
 
