@@ -1,4 +1,3 @@
-#include "Demos/ChunkDemo.hpp"
 #include "Demos/CollisionDemo.hpp"
 #include "Demos/CubesFalling.hpp"
 #include "Demos/ScriptDemo.hpp"

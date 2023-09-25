@@ -1,7 +1,6 @@
 #pragma once
 
 #include <glm/vec2.hpp>
-#include <print>
 #include <vector>
 
 class TextureMap
@@ -11,7 +10,6 @@ public:
     {
         if (not(width > 0) or not(width < 10000) or not(height > 0) or not(height < 10000))
         {
-            std::println("TextureMap::TextureMap(): Unexpected image parameters.");
             return;
         }
 

@@ -58,6 +58,7 @@ class ChunkData final
 public:
     struct Block final
     {
+        Block(int id) : ID(id){};
         unsigned int ID = 0;
     };
 
@@ -72,7 +73,7 @@ public:
 
     void GenerateChunkData()
     {
-        m_OctreeData.setEmptyValue(Block(0));
+        m_OctreeData.setEmptyValue(Block{.ID = 0});
         for (int z = 0; z < c_ChunkSize; z++)
         {
             const float zGlobal = z + m_ChunkIndex.z * c_ChunkSize;
@@ -96,7 +97,7 @@ public:
 
                     if (noise < 0.8f)
                     {
-                        SetBlock(x, y, z, Block(1));
+                        SetBlock(x, y, z, Block{.ID = 1});
                     }
                 }
             }

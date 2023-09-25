@@ -6,7 +6,6 @@
 
 #include <glad/gl.h>
 #include <glfw/glfw3.h>
-#include <print>
 
 class Framebuffer
 {
@@ -65,10 +64,8 @@ public:
 
         // Check if the m_FBO was made successfully
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-            std::println("Framebuffer is not complete");
+            return;
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-        std::println("Created FBO: {}, TBO: {}, RBO: {}", m_FBO, m_TBO, m_RBO);
     }
 
     virtual void Delete()
@@ -76,7 +73,6 @@ public:
         glDeleteFramebuffers(1, &m_FBO);
         glDeleteTextures(1, &m_TBO);
         glDeleteRenderbuffers(1, &m_RBO);
-        std::println("Deleted FBO: {}, TBO: {}, RBO: {}", m_FBO, m_TBO, m_RBO);
     }
 
 protected:
@@ -176,7 +172,7 @@ public:
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_RBO);
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-            std::println("Framebuffer is not complete");
+            return;
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         // Intermediate frame buffer object
@@ -190,8 +186,6 @@ public:
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_TBO, 0);
-
-        std::println("Created FBO: {}, IFBO: {}, TBO: {}, MSTBO: {}, RBO: {}", m_FBO, m_IFBO, m_TBO, m_MSTBO, m_RBO);
     }
 
     void Delete() override
@@ -201,7 +195,6 @@ public:
         glDeleteTextures(1, &m_TBO);
         glDeleteTextures(1, &m_MSTBO);
         glDeleteRenderbuffers(1, &m_RBO);
-        std::println("Deleted FBO: {}, IFBO: {}, TBO: {}, MSTBO: {}, RBO: {}", m_FBO, m_IFBO, m_TBO, m_MSTBO, m_RBO);
     }
 
 private:

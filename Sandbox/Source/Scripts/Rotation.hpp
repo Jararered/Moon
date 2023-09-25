@@ -4,8 +4,6 @@
 #include "Component/Script.hpp"
 #include "Component/Transform.hpp"
 
-#include <print>
-
 struct SlowRotate : public ScriptInterface
 {
     void Update(Entity entity, float dt) override

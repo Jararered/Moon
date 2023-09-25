@@ -1,7 +1,5 @@
 #include "Timer.hpp"
 
-#include <print>
-
 Timer::Timer(std::string_view name) : m_Name(name.data())
 {
     m_Start = std::chrono::high_resolution_clock::now();
@@ -21,7 +19,7 @@ ScopedTimer::ScopedTimer(std::string_view name) : Timer(name.data())
 ScopedTimer::~ScopedTimer()
 {
     m_Stop = std::chrono::high_resolution_clock::now();
-    std::println("{} took: {:5.5f} ms.", m_Name, std::chrono::duration<float, std::chrono::milliseconds::period>(m_Stop - m_Start).count());
+    // std::println("{} took: {:5.5f} ms.", m_Name, std::chrono::duration<float, std::chrono::milliseconds::period>(m_Stop - m_Start).count());
 }
 
 ManualTimer::ManualTimer(std::string_view name) : Timer(name.data())
@@ -36,7 +34,7 @@ void ManualTimer::Start()
 void ManualTimer::Stop()
 {
     m_Stop = std::chrono::high_resolution_clock::now();
-    std::println("{} took: {:5.5f} ms.", m_Name, std::chrono::duration<float, std::chrono::milliseconds::period>(m_Stop - m_Start).count());
+    // std::println("{} took: {:5.5f} ms.", m_Name, std::chrono::duration<float, std::chrono::milliseconds::period>(m_Stop - m_Start).count());
 }
 
 float ManualTimer::GetTime()

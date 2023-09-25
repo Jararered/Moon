@@ -2,7 +2,6 @@
 
 #include <fstream>
 #include <glad/gl.h>
-#include <print>
 #include <string>
 
 struct Shader
@@ -28,7 +27,6 @@ struct Shader
         {
             glDeleteShader(vertexID);
             glGetShaderInfoLog(vertexID, 512, NULL, info);
-            std::println("Compilation failed: {}", std::string(info));
         }
 
         // Fragment Shader
@@ -44,7 +42,6 @@ struct Shader
         {
             glGetShaderInfoLog(fragmentID, 512, NULL, info);
             glDeleteShader(fragmentID);
-            std::println("Compilation failed: {}", std::string(info));
         }
 
         // Linking
@@ -58,13 +55,11 @@ struct Shader
         {
             glDeleteProgram(shaderID);
             glGetProgramInfoLog(shaderID, 512, NULL, info);
-            std::println("Linking failed: {}", std::string(info));
         }
 
         glDeleteShader(vertexID);
         glDeleteShader(fragmentID);
 
-        std::println("Shader: {}", shaderID);
         ID = shaderID;
     }
 };

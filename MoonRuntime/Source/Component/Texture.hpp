@@ -1,7 +1,6 @@
 #pragma once
 
 #include <glad/gl.h>
-#include <print>
 #include <stb_image.h>
 #include <string>
 
@@ -19,7 +18,7 @@ struct Texture
         unsigned char* data = stbi_load(textureFile.data(), &Width, &Height, &Channels, 0);
         if (not data)
         {
-            std::println("Unable to load specified file: {}", textureFile);
+            return;
         }
 
         glGenTextures(1, &ID);

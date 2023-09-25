@@ -6,10 +6,8 @@
 class Timer
 {
 public:
-    Timer() = default;
-    virtual ~Timer() = default;
-
     Timer(std::string_view name = "Timer");
+    virtual ~Timer() = default;
 
     // Returns the amount of time that has passed since last calling GetTime() or GetDelta()
     [[nodiscard]] float GetDelta();

@@ -25,9 +25,6 @@ Scenario e_Scenario;
 
 void Engine::Initialize()
 {
-    std::println("Initializing...");
-    std::println("Current working directory: {}", std::filesystem::current_path().string());
-
     e_Scenario.Initialize();
     e_Scenario.RegisterComponent<Camera>();
     e_Scenario.RegisterComponent<Control>();
