@@ -5,6 +5,7 @@
 #include "Scenario.hpp"
 #include "Utilities/Timer.hpp"
 
+#include <glm/trigonometric.hpp>
 #include <imgui.h>
 
 extern Scenario e_Scenario;
@@ -50,13 +51,21 @@ void PhysicsSystem::Update(float dt)
 
         for (unsigned int step = 0; step < m_SubStepCount; step++)
         {
-            // Update position and velocity w.r.t. time
-            transform1.Position += (rigidBody1.Velocity * stepDT);
+            // Update position and velocity
             rigidBody1.Velocity = rigidBody1.Velocity + (s_Gravity * stepDT);
+            transform1.Position += (rigidBody1.Velocity * stepDT);
 
-            // Apply resistances
-            rigidBody1.Velocity.x *= (1.0f - m_AirResistance);
-            rigidBody1.Velocity.z *= (1.0f - m_AirResistance);
+            // Momentum in X-Z plane
+            const auto velocityXZ = glm::vec3(rigidBody1.Velocity.x, 0.0f, rigidBody1.Velocity.z);
+            if (glm::length(velocityXZ) > 0.0f)
+            {
+                const auto velocityLossPerSecond = 30.0f;
+                const auto momentum = rigidBody1.Mass * glm::length(velocityXZ);
+                const auto newMomentum = momentum - glm::min(momentum, velocityLossPerSecond * stepDT);
+                const auto newVelocityXZ = glm::normalize(velocityXZ) * newMomentum;
+                rigidBody1.Velocity.x = newVelocityXZ.x;
+                rigidBody1.Velocity.z = newVelocityXZ.z;
+            }
 
             // Loop through all other entities, including massless entities, to check for collisions
             for (const auto e2 : m_Entities)
@@ -80,7 +89,6 @@ void PhysicsSystem::Update(float dt)
                 const auto y = glm::min(glm::abs(upper1.y - lower2.y), glm::abs(upper2.y - lower1.y));
                 const auto z = glm::min(glm::abs(upper1.z - lower2.z), glm::abs(upper2.z - lower1.z));
 
-                // TODO Find better way to resolve collision to where both entities react
                 if (x < y and x < z)
                 {
                     // +X Collision
@@ -98,7 +106,9 @@ void PhysicsSystem::Update(float dt)
                     }
 
                     rigidBody1.Velocity.x = 0.0f;
+                    continue;
                 }
+
                 if (y < x and y < z)
                 {
                     // +Y Collision
@@ -117,7 +127,9 @@ void PhysicsSystem::Update(float dt)
                     }
 
                     rigidBody1.Velocity.y = 0.0f;
+                    continue;
                 }
+
                 if (z < x and z < y)
                 {
                     // +Z Collision
@@ -135,6 +147,7 @@ void PhysicsSystem::Update(float dt)
                     }
 
                     rigidBody1.Velocity.z = 0.0f;
+                    continue;
                 }
             }
         }

@@ -24,65 +24,66 @@ void ControlSystem::Register()
 
 void ControlSystem::Initialize()
 {
-    m_SpeedLimit = 1.5f;
+    m_SpeedLimit = 5.0f;
 }
 
 void ControlSystem::Update(float dt)
 {
-    ImGui::Begin("Control Settings");
-    ImGui::SliderFloat("Speed", &m_SpeedLimit, 0.0f, 5.0f);
-    ImGui::End();
-
     for (const auto entity : m_Entities)
     {
         auto& transform = e_Scenario.GetComponent<Transform>(entity);
         auto& rigidBody = e_Scenario.GetComponent<RigidBody>(entity);
 
+        ImGui::Begin("Control Settings");
+        ImGui::SliderFloat("Limit", &m_SpeedLimit, 0.0f, 10.0f);
+        ImGui::SliderFloat3("Velocity", &rigidBody.Velocity.x, 0.0f, 10.0f);
+        ImGui::End();
+
+        // X - Z Movement
         auto direction = glm::vec3(0.0f);
         direction.x = glm::cos(transform.Rotation.y) * glm::cos(transform.Rotation.x);
         direction.y = glm::sin(transform.Rotation.x);
         direction.z = glm::sin(transform.Rotation.y) * glm::cos(transform.Rotation.x);
-
-        // Normalize Direction vector and update Right vector
         direction = glm::normalize(direction);
-        const auto right = glm::cross(direction, glm::vec3(0.0f, 1.0f, 0.0f));
-        const auto fowardXZ = glm::vec3(direction.x, 0.0f, direction.z);
-
-        // WASD movement
-        auto positionDelta = glm::vec3(0.0f);
-        if (Input::IsKeyPressed(Key::W))
-            positionDelta += fowardXZ;
-        if (Input::IsKeyPressed(Key::S))
-            positionDelta -= fowardXZ;
-        if (Input::IsKeyPressed(Key::A))
-            positionDelta -= right;
-        if (Input::IsKeyPressed(Key::D))
-            positionDelta += right;
-
-        // Fixes diagonal directed movement to not be faster than along an axis.
-        // Only happens when holding two buttons that are off axis from each other.
-        if ((positionDelta.x != 0.0f) or (positionDelta.z != 0.0f))
-            positionDelta = glm::normalize(positionDelta);
-
-        // Still perform up/down movements after normalization.
-        // Don't care about limiting speed along verticals.
-        if (Input::IsKeyPressed(Key::Space) and rigidBody.MovementStatus == Status::Grounded)
-        {
-            positionDelta += glm::vec3(0.0f, 5.0f, 0.0f);
-            rigidBody.MovementStatus = Status::Falling;
-        }
-
-        if (Input::IsKeyPressed(Key::LeftShift))
-            positionDelta -= glm::vec3(0.0f, 1.0f, 0.0f);
-
-        // Apply velocity increment
-        rigidBody.Velocity += positionDelta;
 
         auto speedLimit = m_SpeedLimit;
         if (Input::IsKeyPressed(Key::LeftControl))
             speedLimit *= 2.0f;
+        if (Input::IsKeyPressed(Key::LeftShift))
+            speedLimit *= 0.5f;
 
-        // Check velocity in x-z plane, limit magnitude
+        const auto right = glm::cross(direction, glm::vec3(0.0f, 1.0f, 0.0f));
+        const auto forward = glm::vec3(direction.x, 0.0f, direction.z);
+
+        // WASD movement
+        auto velocityDelta = glm::vec3(0.0f);
+        if (Input::IsKeyPressed(Key::W))
+            velocityDelta += forward;
+        if (Input::IsKeyPressed(Key::S))
+            velocityDelta -= forward;
+        if (Input::IsKeyPressed(Key::A))
+            velocityDelta -= right;
+        if (Input::IsKeyPressed(Key::D))
+            velocityDelta += right;
+
+        // Fixes diagonal directed movement to not be faster than along an axis.
+        // Only happens when holding two buttons that are off axis from each other.
+        if (velocityDelta.x != 0.0f or velocityDelta.z != 0.0f)
+            velocityDelta = glm::normalize(velocityDelta);
+
+        // Y Movement
+        // Still perform up/down movements after normalization.
+        // Don't care about limiting speed along verticals.
+        if (Input::IsKeyPressed(Key::Space) and rigidBody.MovementStatus == Status::Grounded)
+        {
+            velocityDelta.y += 5.0f;
+            rigidBody.MovementStatus = Status::Falling;
+        }
+
+        // Apply velocity increment
+        rigidBody.ApplyVelocity(velocityDelta);
+
+        // Check velocity in x - z plane, limit magnitude
         const auto velocityXZ = glm::vec3(rigidBody.Velocity.x, 0.0f, rigidBody.Velocity.z);
         if (glm::length(velocityXZ) > speedLimit)
         {
@@ -90,9 +91,6 @@ void ControlSystem::Update(float dt)
             rigidBody.Velocity.x = clampedVelocityXZ.x;
             rigidBody.Velocity.z = clampedVelocityXZ.z;
         }
-
-        if (rigidBody.Mass == 0.0f)
-            transform.Position += positionDelta * speedLimit * dt;
     }
 }
 
