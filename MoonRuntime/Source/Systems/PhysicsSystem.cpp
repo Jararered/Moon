@@ -81,48 +81,59 @@ void PhysicsSystem::Update(float dt)
                 const auto z = glm::min(glm::abs(upper1.z - lower2.z), glm::abs(upper2.z - lower1.z));
 
                 // TODO Find better way to resolve collision to where both entities react
-                const auto stepThreshold = 0.3f;
                 if (x < y and x < z)
                 {
-                    if (upper2.y - lower1.y < stepThreshold and rigidBody1.MovementStatus == Status::Grounded)
+                    // +X Collision
+                    if (upper1.x > lower2.x and transform1.Position.x < transform2.Position.x)
                     {
-                        transform1.Position.y += upper2.y - lower1.y;
-                        continue;
+                        const auto fix = upper1.x - lower2.x;
+                        transform1.Position.x -= fix;
                     }
 
-                    for (unsigned int i = 0; i < 5; i++)
+                    // -X Collision
+                    if (lower1.x < upper2.x and transform1.Position.x > transform2.Position.x)
                     {
-                        if (IsIntersect(transform1, transform2))
-                            transform1.Position.x += (-rigidBody1.Velocity.x * stepDT);
+                        const auto fix = upper2.x - lower1.x;
+                        transform1.Position.x += fix;
                     }
+
                     rigidBody1.Velocity.x = 0.0f;
                 }
                 if (y < x and y < z)
                 {
-                    for (unsigned int i = 0; i < 5; i++)
+                    // +Y Collision
+                    if (upper1.y > lower2.y and transform1.Position.y < transform2.Position.y)
                     {
-                        if (IsIntersect(transform1, transform2))
-                            transform1.Position.y += (-rigidBody1.Velocity.y * stepDT);
+                        const auto fix = upper1.y - lower2.y;
+                        transform1.Position.y -= fix;
                     }
-                    // Standing on ground
-                    if (rigidBody1.Velocity.y < 0.0f)
+
+                    // -Y Collision
+                    if (lower1.y < upper2.y and transform1.Position.y > transform2.Position.y)
+                    {
+                        const auto fix = upper2.y - lower1.y;
+                        transform1.Position.y += fix;
                         rigidBody1.MovementStatus = Status::Grounded;
+                    }
 
                     rigidBody1.Velocity.y = 0.0f;
                 }
                 if (z < x and z < y)
                 {
-                    if (upper2.y - lower1.y < stepThreshold and rigidBody1.MovementStatus == Status::Grounded)
+                    // +Z Collision
+                    if (upper1.z > lower2.z and transform1.Position.z < transform2.Position.z)
                     {
-                        transform1.Position.y += upper2.y - lower1.y;
-                        continue;
+                        const auto fix = upper1.z - lower2.z;
+                        transform1.Position.z -= fix;
                     }
 
-                    for (unsigned int i = 0; i < 5; i++)
+                    // -Z Collision
+                    if (lower1.z < upper2.z and transform1.Position.z > transform2.Position.z)
                     {
-                        if (IsIntersect(transform1, transform2))
-                            transform1.Position.z += (-rigidBody1.Velocity.z * stepDT);
+                        const auto fix = upper2.z - lower1.z;
+                        transform1.Position.z += fix;
                     }
+
                     rigidBody1.Velocity.z = 0.0f;
                 }
             }
