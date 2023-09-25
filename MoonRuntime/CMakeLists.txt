@@ -25,6 +25,7 @@ add_library(${Project} ${ProjectSourceFiles} ${ProjectHeaderFiles} ${LibrarySour
 if(UNIX)
     add_definitions(-DUNIX)
     find_package(glfw3 3.3.8 REQUIRED)
+    target_link_libraries(${Project} glfw)
 endif(UNIX)
 
 if(WIN32)
