@@ -20,30 +20,24 @@ void PhysicsSystem::Register()
 
 void PhysicsSystem::Initialize()
 {
+    m_Name = "Physics System";
     // std::println("Physics using {} substeps between each frame.", m_SubStepCount);
 }
 
 void PhysicsSystem::Update(float dt)
 {
-    ImGui::Begin("Physics Settings");
     ImGui::SliderFloat3("Gravity", &s_Gravity.x, -20.0f, 20.0f);
-    ImGui::SliderInt("Calculation Steps", &m_SubStepCount, 1, 10);
-    ImGui::End();
+    ImGui::SliderInt("Steps", &m_SubStepCount, 1, 10);
 
     // Pause physics if frame rate is running slower than 60fps
     if (dt > 1 / 60.0f or dt == 0.0f)
         dt = 1 / 60.0f;
     const auto stepDT = dt / static_cast<float>(m_SubStepCount);
 
-    ImGui::Begin("Physics Objects");
-
     for (const auto e1 : m_Entities)
     {
         auto& transform1 = e_Scenario.GetComponent<Transform>(e1);
         auto& rigidBody1 = e_Scenario.GetComponent<RigidBody>(e1);
-
-        auto label = std::string("Entity: ") + std::to_string(e1);
-        ImGui::SliderFloat3(label.c_str(), &transform1.Position.x, -10.0f, 10.0f);
 
         // Ignore any entities without mass
         if (rigidBody1.Mass == 0.0f)
@@ -152,8 +146,6 @@ void PhysicsSystem::Update(float dt)
             }
         }
     }
-
-    ImGui::End();
 }
 
 void PhysicsSystem::Finalize()

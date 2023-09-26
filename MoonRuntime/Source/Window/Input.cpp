@@ -28,9 +28,9 @@ bool Input::IsRightClick()
 
 glm::vec2 Input::GetMousePosition()
 {
-    auto position = glm::dvec2(0.0, 0.0);
+    auto position = glm::dvec2(0.0);
     glfwGetCursorPos(glfwGetCurrentContext(), &position.x, &position.y);
-    return {static_cast<float>(position.x), static_cast<float>(-position.y)};
+    return glm::vec2(static_cast<float>(position.x), static_cast<float>(-position.y));
 }
 
 bool Input::IsMouseCaptured()
@@ -43,7 +43,7 @@ glm::vec2 Input::GetCapturedMouseMovement()
 {
     // This is intended to be called per-frame
     if (not IsMouseCaptured())
-        return {0.0f, 0.0f};
+        return glm::vec2(0.0f);
 
     const auto mousepos = GetMousePosition();
     glfwSetCursorPos(glfwGetCurrentContext(), 0.0, 0.0);
@@ -64,7 +64,7 @@ void Input::CaptureCursor()
 
 void Input::ReleaseCursor()
 {
-    auto position = glm::ivec2(0, 0);
+    auto position = glm::ivec2(0);
     glfwGetWindowSize(glfwGetCurrentContext(), &position.x, &position.y);
     glfwSetInputMode(glfwGetCurrentContext(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     glfwSetCursorPos(glfwGetCurrentContext(), static_cast<double>(position.x / 2), static_cast<double>(position.y / 2));
@@ -73,7 +73,4 @@ void Input::ReleaseCursor()
 void Input::PollEvents()
 {
     glfwPollEvents();
-
-    if (IsKeyPressed(Key::Escape))
-        Input::ReleaseCursor();
 }

@@ -1,8 +1,5 @@
 #include "Engine.hpp"
 
-#include <filesystem>
-#include <glfw/glfw3.h>
-
 #include "OpenGLWindow.hpp"
 #include "Scenario.hpp"
 
@@ -20,6 +17,10 @@
 #include "Component/Shader.hpp"
 #include "Component/Texture.hpp"
 #include "Component/Transform.hpp"
+
+#include <filesystem>
+#include <glfw/glfw3.h>
+#include <imgui.h>
 
 Scenario e_Scenario;
 
@@ -64,10 +65,15 @@ void Engine::Start()
 
         p_Window->NewFrame();
 
-        for (const auto [_, system] : m_SystemMap)
+        ImGui::Begin("Engine Systems");
+        ImGui::Separator();
+        for (const auto [systemID, system] : m_SystemMap)
         {
+            ImGui::LabelText("", system->m_Name.c_str());
             system->Update(m_DT);
+            ImGui::Separator();
         }
+        ImGui::End();
 
         p_Window->EndFrame();
 

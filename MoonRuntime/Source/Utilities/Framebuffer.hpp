@@ -21,6 +21,9 @@ public:
         // Draw 2D Frame Quad
         glDisable(GL_DEPTH_TEST);
 
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glEnable(GL_CULL_FACE);
+
         glUseProgram(m_FrameShader.ID);
         glBindTexture(GL_TEXTURE_2D, m_TBO);
 

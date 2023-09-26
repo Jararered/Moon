@@ -1,8 +1,8 @@
 #pragma once
 
-#include "System.hpp"
+#include "SystemInterface.hpp"
 
-class ControlSystem final : public System
+class ControlSystem final : public SystemInterface
 {
 public:
     ControlSystem() = default;

@@ -16,11 +16,12 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_TRUE);
 #endif
+
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    p_GLFWwindow = glfwCreateWindow(spec.Width, spec.Height, spec.Title.c_str(), NULL, NULL);
+    p_GLFWwindow = glfwCreateWindow(m_WindowSpecification.Width, m_WindowSpecification.Height, m_WindowSpecification.Title.c_str(), NULL, NULL);
     glfwMakeContextCurrent(p_GLFWwindow);
 
     gladLoadGL(glfwGetProcAddress);
@@ -29,8 +30,6 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-    (void)io;
     ImGui::StyleColorsDark();
 
     ImGui_ImplGlfw_InitForOpenGL(p_GLFWwindow, true);
@@ -43,18 +42,21 @@ OpenGLWindow::~OpenGLWindow()
 
 void OpenGLWindow::NewFrame()
 {
-    glfwPollEvents();
+    Input::PollEvents();
 
-    // Start the Dear ImGui frame
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
+    if (Input::IsKeyPressed(Key::Escape))
+        Input::ReleaseCursor();
 
     if (!Input::IsMouseCaptured() and Input::IsLeftClick() and !(ImGui::GetIO().WantCaptureMouse))
         Input::CaptureCursor();
 
     if (Input::IsKeyPressed(Key::Escape) and Input::IsMouseCaptured())
         Input::ReleaseCursor();
+
+    // Start the Dear ImGui frame
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
 }
 
 void OpenGLWindow::EndFrame()

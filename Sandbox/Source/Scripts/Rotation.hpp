@@ -4,29 +4,19 @@
 #include "Component/Script.hpp"
 #include "Component/Transform.hpp"
 
-struct SlowRotate : public ScriptInterface
-{
-    void Update(Entity entity, float dt) override
-    {
-        auto& transform = e_Scenario.GetComponent<Transform>(entity);
-        transform.Rotation.y += 0.5f * dt;
-    }
-};
+#include <glm/trigonometric.hpp>
 
-struct MediumRotate : public ScriptInterface
+struct RotateScript : public ScriptInterface
 {
-    void Update(Entity entity, float dt) override
-    {
-        auto& transform = e_Scenario.GetComponent<Transform>(entity);
-        transform.Rotation.y += dt;
-    }
-};
+    RotateScript(float speed) : m_Speed(speed) {}
 
-struct FastRotate : public ScriptInterface
-{
     void Update(Entity entity, float dt) override
     {
         auto& transform = e_Scenario.GetComponent<Transform>(entity);
-        transform.Rotation.y += 2.0f * dt;
+        transform.Rotation.y += m_Speed * dt;
+        transform.FixRotation(transform.Rotation.y);
     }
+
+private:
+    float m_Speed = glm::radians(360.0f);
 };

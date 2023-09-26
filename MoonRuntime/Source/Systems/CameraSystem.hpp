@@ -1,8 +1,8 @@
 #pragma once
 
-#include "System.hpp"
+#include "SystemInterface.hpp"
 
-class CameraSystem final : public System
+class CameraSystem final : public SystemInterface
 {
 public:
     CameraSystem() = default;

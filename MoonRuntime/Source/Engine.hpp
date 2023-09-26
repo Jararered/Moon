@@ -5,7 +5,7 @@
 #include <memory>
 #include <string>
 
-#include "System.hpp"
+#include "SystemInterface.hpp"
 #include "Window.hpp"
 
 class Engine
@@ -24,6 +24,6 @@ protected:
 
     std::shared_ptr<Window> p_Window;
 
-    std::vector<std::shared_ptr<System>> m_Systems;
-    std::map<unsigned int, std::shared_ptr<System>> m_SystemMap;
+    std::vector<std::shared_ptr<SystemInterface>> m_Systems;
+    std::map<unsigned int, std::shared_ptr<SystemInterface>> m_SystemMap;
 };

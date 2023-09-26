@@ -25,6 +25,7 @@ void ControlSystem::Register()
 void ControlSystem::Initialize()
 {
     m_SpeedLimit = 5.0f;
+    m_Name = "Control System";
 }
 
 void ControlSystem::Update(float dt)
@@ -34,10 +35,8 @@ void ControlSystem::Update(float dt)
         auto& transform = e_Scenario.GetComponent<Transform>(entity);
         auto& rigidBody = e_Scenario.GetComponent<RigidBody>(entity);
 
-        ImGui::Begin("Control Settings");
         ImGui::SliderFloat("Limit", &m_SpeedLimit, 0.0f, 10.0f);
         ImGui::SliderFloat3("Velocity", &rigidBody.Velocity.x, 0.0f, 10.0f);
-        ImGui::End();
 
         // X - Z Movement
         auto direction = glm::vec3(0.0f);

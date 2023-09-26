@@ -12,6 +12,7 @@ public:
 
     void NewFrame() override;
     void EndFrame() override;
+
     bool IsRunning() override;
 
 private:

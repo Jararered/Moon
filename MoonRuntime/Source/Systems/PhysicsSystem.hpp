@@ -1,12 +1,12 @@
 #pragma once
 
-#include "System.hpp"
+#include "SystemInterface.hpp"
 
 #include "Component/Transform.hpp"
 
 #include <glm/vec3.hpp>
 
-class PhysicsSystem final : public System
+class PhysicsSystem final : public SystemInterface
 {
 public:
     PhysicsSystem() = default;

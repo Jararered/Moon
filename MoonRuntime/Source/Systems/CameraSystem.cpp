@@ -23,6 +23,7 @@ void CameraSystem::Register()
 
 void CameraSystem::Initialize()
 {
+    m_Name = "Camera System";
 }
 
 void CameraSystem::Update(float dt)
@@ -41,6 +42,7 @@ void CameraSystem::Update(float dt)
 
         // Clamp looking up and down to near +/- 90 degrees
         transform.Rotation.x = glm::clamp(transform.Rotation.x, glm::radians(-89.99f), glm::radians(89.99f));
+        transform.FixRotation(transform.Rotation.y);
 
         auto direction = glm::vec3(0.0f);
         direction.x = glm::cos(transform.Rotation.y) * glm::cos(transform.Rotation.x);
@@ -53,10 +55,8 @@ void CameraSystem::Update(float dt)
 
         camera.ViewMatrix = glm::lookAt(cameraPosition, (cameraPosition + direction), glm::vec3(0.0f, 1.0f, 0.0f));
 
-        ImGui::Begin("Camera Settings");
         if (ImGui::SliderFloat("FOV", &camera.FOV, 10.0f, 170.0f))
             UpdatePerspective(entity);
-        ImGui::End();
     }
 }
 

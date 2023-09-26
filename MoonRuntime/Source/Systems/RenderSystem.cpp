@@ -34,6 +34,10 @@ void RenderSystem::Register()
 
 void RenderSystem::Initialize()
 {
+    m_Name = "Render System";
+    m_NearClip = 0.1f;
+    m_FarClip = 1000.0f;
+
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glCullFace(GL_BACK);
@@ -54,7 +58,7 @@ void RenderSystem::Initialize()
 
     const auto fov = 85.0f;
     const auto aspectRatio = 16.0f / 9.0f;
-    const auto projectionMatrix = glm::perspective(glm::radians(fov), aspectRatio, 0.1f, 1000.0f);
+    const auto projectionMatrix = glm::perspective(glm::radians(fov), aspectRatio, m_NearClip, m_FarClip);
     const auto viewMatrix = glm::mat4(1.0f);
     e_Scenario.AddComponent<Camera>(m_Camera, Camera{.ViewMatrix = viewMatrix, .ProjectionMatrix = projectionMatrix, .FOV = fov});
 
@@ -65,30 +69,25 @@ void RenderSystem::Initialize()
 
     const auto framebufferSizeCallback = [](GLFWwindow* window, int width, int height)
     {
-        glViewport(0, 0, width, height);
-
         const auto renderer = static_cast<RenderSystem*>(glfwGetWindowUserPointer(window));
-
-        renderer->m_Width = width;
-        renderer->m_Height = height;
-        renderer->m_Framebuffer.Delete();
-        renderer->m_Framebuffer.Create(width, height);
-
-        auto& camera = e_Scenario.GetComponent<Camera>(renderer->m_Camera);
-        const auto projectionMatrix = glm::perspective(glm::radians(camera.FOV), static_cast<float>(width) / static_cast<float>(height), 0.1f, 1000.0f);
-        camera.ProjectionMatrix = projectionMatrix;
+        renderer->CreateFramebuffer(width, height);
     };
     glfwSetFramebufferSizeCallback(glfwGetCurrentContext(), framebufferSizeCallback);
 }
 
 void RenderSystem::Update(float dt)
 {
-    PollDebugControls();
-
     m_Framebuffer.Bind();
 
     glEnable(GL_DEPTH_TEST);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    PollDebugControls();
+
+    if (ImGui::SliderFloat("Near Clip", &m_NearClip, 0.01f, 1.0f))
+        CreateFramebuffer(m_Width, m_Height);
+    if (ImGui::SliderFloat("Far Clip", &m_FarClip, 1.0f, 1000.0f))
+        CreateFramebuffer(m_Width, m_Height);
 
     const auto camera = e_Scenario.GetComponent<Camera>(m_Camera);
     for (const auto& entity : m_Entities)
@@ -137,4 +136,18 @@ void RenderSystem::PollDebugControls()
     // Do not cull back faces
     if (Input::IsKeyPressed(Key::Minus) and Input::IsKeyPressed(Key::RightShift))
         glDisable(GL_CULL_FACE);
+}
+
+void RenderSystem::CreateFramebuffer(int width, int height)
+{
+    glViewport(0, 0, width, height);
+
+    m_Width = width;
+    m_Height = height;
+
+    m_Framebuffer.Delete();
+    m_Framebuffer.Create(width, height);
+
+    auto& camera = e_Scenario.GetComponent<Camera>(m_Camera);
+    camera.ProjectionMatrix = glm::perspective(glm::radians(camera.FOV), static_cast<float>(width) / static_cast<float>(height), m_NearClip, m_FarClip);
 }

@@ -2,7 +2,7 @@
 
 #include "Entity.hpp"
 #include "Signature.hpp"
-#include "System.hpp"
+#include "SystemInterface.hpp"
 
 #include <assert.h>
 #include <memory>
@@ -68,5 +68,5 @@ private:
     std::unordered_map<const char*, Signature> m_Signatures{};
 
     // Map from system type string pointer to a system pointer
-    std::unordered_map<const char*, std::shared_ptr<System>> m_Systems{};
+    std::unordered_map<const char*, std::shared_ptr<SystemInterface>> m_Systems{};
 };

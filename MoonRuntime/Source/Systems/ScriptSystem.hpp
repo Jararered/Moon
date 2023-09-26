@@ -1,8 +1,8 @@
 #pragma once
 
-#include "System.hpp"
+#include "SystemInterface.hpp"
 
-class ScriptSystem final : public System
+class ScriptSystem final : public SystemInterface
 {
 public:
     ScriptSystem() = default;
@@ -17,4 +17,7 @@ public:
     void Initialize() override;
     void Update(float dt) override;
     void Finalize() override;
+
+private:
+    float m_TimeScale = 1.0f;
 };

@@ -9,7 +9,7 @@
 #include "Entity.hpp"
 #include "Scenario.hpp"
 #include "Signature.hpp"
-#include "System.hpp"
+#include "SystemInterface.hpp"
 
 #include "Systems/CameraSystem.hpp"
 #include "Systems/PhysicsSystem.hpp"
