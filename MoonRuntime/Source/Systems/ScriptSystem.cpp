@@ -4,6 +4,7 @@
 #include "Signature.hpp"
 
 #include "Component/Script.hpp"
+#include "Component/Transform.hpp"
 
 #include <glm/glm.hpp>
 
@@ -13,6 +14,7 @@ void ScriptSystem::Register()
 {
     Signature signature;
     signature.set(e_Scenario.GetComponentType<Script>());
+    signature.set(e_Scenario.GetComponentType<Transform>());
     e_Scenario.SetSystemSignature<ScriptSystem>(signature);
 }
 

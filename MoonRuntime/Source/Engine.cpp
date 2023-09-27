@@ -98,6 +98,7 @@ void Engine::UpdateUI()
 {
     static Entity selectedEntity = 0;
     static Transform selectedTransform = Transform{};
+    static RigidBody selectedRigidBody = RigidBody{};
     static std::string selectedMesh = "None";
     static std::string selectedTexture = "None";
     static std::string selectedScript = "None";
@@ -108,10 +109,16 @@ void Engine::UpdateUI()
     auto fmt = std::string("Current entity: ") + std::to_string(selectedEntity);
     ImGui::LabelText("", fmt.c_str());
 
+    ImGui::LabelText("", "Transform");
     ImGui::InputFloat3("Position", &selectedTransform.Position.x);
     ImGui::InputFloat3("Rotation", &selectedTransform.Rotation.x);
     ImGui::InputFloat3("Scale", &selectedTransform.Scale.x);
 
+    ImGui::LabelText("", "Rigid Body");
+    ImGui::InputFloat3("Velocity", &selectedRigidBody.Velocity.x);
+    ImGui::InputFloat("Mass", &selectedRigidBody.Mass);
+
+    ImGui::LabelText("", "Renderables");
     if (!m_AvaliableMeshesMap.empty())
     {
         if (ImGui::BeginCombo("Avaliable Meshes", selectedMesh.c_str()))
@@ -181,7 +188,7 @@ void Engine::UpdateUI()
     {
         selectedEntity = e_Scenario.CreateEntity();
         e_Scenario.AddComponent<Transform>(selectedEntity, selectedTransform);
-        e_Scenario.AddComponent<RigidBody>(selectedEntity);
+        e_Scenario.AddComponent<RigidBody>(selectedEntity, selectedRigidBody);
 
         if (selectedMesh != "None")
             e_Scenario.AddComponent<Mesh>(selectedEntity, m_AvaliableMeshesMap[selectedMesh]);
