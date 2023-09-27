@@ -65,14 +65,18 @@ void Engine::Start()
 
         p_Window->NewFrame();
 
-        ImGui::Begin("Engine Systems");
-        ImGui::Separator();
+        ImGui::Begin("Engine Systems", NULL, ImGuiWindowFlags_AlwaysAutoResize);
+
         for (const auto [systemID, system] : m_SystemMap)
         {
-            ImGui::LabelText("", system->m_Name.c_str());
+            if (ImGui::CollapsingHeader(system->m_Name.c_str()))
+            {
+                system->UpdateUI();
+            }
+
             system->Update(m_DT);
-            ImGui::Separator();
         }
+
         ImGui::End();
 
         p_Window->EndFrame();
