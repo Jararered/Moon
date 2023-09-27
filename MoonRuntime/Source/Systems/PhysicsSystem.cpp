@@ -21,14 +21,13 @@ void PhysicsSystem::Register()
 void PhysicsSystem::Initialize()
 {
     m_Name = "Physics System";
-    // std::println("Physics using {} substeps between each frame.", m_SubStepCount);
+    m_SubStepCount = 2;
+    m_AirFriction = 5.0f;
+    m_SolidFriction = 50.0f;
 }
 
 void PhysicsSystem::Update(float dt)
 {
-    ImGui::SliderFloat3("Gravity", &s_Gravity.x, -20.0f, 20.0f);
-    ImGui::SliderInt("Steps", &m_SubStepCount, 1, 10);
-
     // Pause physics if frame rate is running slower than 60fps
     if (dt > 1 / 60.0f or dt == 0.0f)
         dt = 1 / 60.0f;
@@ -53,9 +52,12 @@ void PhysicsSystem::Update(float dt)
             const auto velocityXZ = glm::vec3(rigidBody1.Velocity.x, 0.0f, rigidBody1.Velocity.z);
             if (glm::length(velocityXZ) > 0.0f)
             {
-                const auto velocityLossPerSecond = 30.0f;
                 const auto momentum = rigidBody1.Mass * glm::length(velocityXZ);
-                const auto newMomentum = momentum - glm::min(momentum, velocityLossPerSecond * stepDT);
+                auto newMomentum = 0.0f;
+                if (rigidBody1.MovementStatus == Status::Falling)
+                    newMomentum = momentum - glm::min(momentum, m_AirFriction * stepDT);
+                if (rigidBody1.MovementStatus == Status::Grounded)
+                    newMomentum = momentum - glm::min(momentum, m_SolidFriction * stepDT);
                 const auto newVelocityXZ = glm::normalize(velocityXZ) * newMomentum;
                 rigidBody1.Velocity.x = newVelocityXZ.x;
                 rigidBody1.Velocity.z = newVelocityXZ.z;
@@ -146,6 +148,14 @@ void PhysicsSystem::Update(float dt)
             }
         }
     }
+}
+
+void PhysicsSystem::UpdateUI()
+{
+    ImGui::SliderInt("Steps", &m_SubStepCount, 1, 10);
+    ImGui::SliderFloat3("Gravity", &s_Gravity.x, -20.0f, 20.0f);
+    ImGui::InputFloat("Air Friction", &m_AirFriction, 0.0f, 100.0f);
+    ImGui::InputFloat("Solid Friction", &m_SolidFriction, 0.0f, 100.0f);
 }
 
 void PhysicsSystem::Finalize()
