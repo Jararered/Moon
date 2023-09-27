@@ -14,7 +14,8 @@ struct Texture
     Texture() = default;
     Texture(std::string_view textureFile)
     {
-        // stbi_set_flip_vertically_on_load(true);
+        stbi_set_flip_vertically_on_load(true);
+
         unsigned char* data = stbi_load(textureFile.data(), &Width, &Height, &Channels, 0);
         if (not data)
         {

@@ -53,7 +53,7 @@ void RenderSystem::Initialize()
 
     const auto position = glm::vec3(0.0f, 10.0f, 0.0f);
     const auto rotation = glm::vec3(0.0f, glm::radians(-90.0f), 0.0f); // Looking into the screen
-    const auto scale = glm::vec3(0.5f, 1.0f, 0.5f);
+    const auto scale = glm::vec3(0.5f, 2.0f, 0.5f);
     e_Scenario.AddComponent<Transform>(m_Camera, Transform{.Position = position, .Rotation = rotation, .Scale = scale});
 
     const auto fov = 85.0f;
@@ -81,6 +81,7 @@ void RenderSystem::Update(float dt)
 
     glEnable(GL_DEPTH_TEST);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glPolygonMode(GL_FRONT_AND_BACK, m_PolygonMode);
 
     PollDebugControls();
 
@@ -97,11 +98,11 @@ void RenderSystem::Update(float dt)
         const auto translationMatrix = glm::translate(glm::mat4(1.0f), transform.Position);
         const auto scaleMatrix = glm::scale(glm::mat4(1.0f), transform.Scale);
         const auto rotationMatrix = glm::eulerAngleXYZ(transform.Rotation.x, transform.Rotation.y, transform.Rotation.z);
-        const auto modelMatrix = translationMatrix * scaleMatrix * rotationMatrix;
+        const auto modelMatrix = translationMatrix * rotationMatrix * scaleMatrix;
 
-        glUniformMatrix4fv(glGetUniformLocation(shader.ID, "u_ModelMatrix"), 1, GL_FALSE, (float*)&modelMatrix);
-        glUniformMatrix4fv(glGetUniformLocation(shader.ID, "u_ViewMatrix"), 1, GL_FALSE, (float*)&camera.ViewMatrix);
-        glUniformMatrix4fv(glGetUniformLocation(shader.ID, "u_ProjectionMatrix"), 1, GL_FALSE, (float*)&camera.ProjectionMatrix);
+        glUniformMatrix4fv(glGetUniformLocation(shader.ID, "u_ModelMatrix"), 1, GL_FALSE, &modelMatrix[0][0]);
+        glUniformMatrix4fv(glGetUniformLocation(shader.ID, "u_ViewMatrix"), 1, GL_FALSE, &camera.ViewMatrix[0][0]);
+        glUniformMatrix4fv(glGetUniformLocation(shader.ID, "u_ProjectionMatrix"), 1, GL_FALSE, &camera.ProjectionMatrix[0][0]);
 
         e_Scenario.GetComponent<Mesh>(entity)->Draw();
     }
@@ -112,10 +113,16 @@ void RenderSystem::Update(float dt)
 
 void RenderSystem::UpdateUI()
 {
-    if (ImGui::SliderFloat("Near Clip", &m_NearClip, 0.01f, 1.0f))
+    if (ImGui::InputFloat("Near", &m_NearClip))
         CreateFramebuffer(m_Width, m_Height);
-    if (ImGui::SliderFloat("Far Clip", &m_FarClip, 1.0f, 1000.0f))
+    ImGui::SameLine();
+    if (ImGui::InputFloat("Far", &m_FarClip))
         CreateFramebuffer(m_Width, m_Height);
+    if (ImGui::Button("Enable Wireframe"))
+        m_PolygonMode = GL_LINE;
+    ImGui::SameLine();
+    if (ImGui::Button("Disable Wireframe"))
+        m_PolygonMode = GL_FILL;
 }
 
 void RenderSystem::Finalize()
@@ -126,19 +133,11 @@ void RenderSystem::PollDebugControls()
 {
     // Do not fill polygons
     if (Input::IsKeyPressed(Key::Minus))
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        m_PolygonMode = GL_LINE;
 
     // Fill polygons
     if (Input::IsKeyPressed(Key::Equal))
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-    // Cull back faces
-    if (Input::IsKeyPressed(Key::Minus) and Input::IsKeyPressed(Key::RightShift))
-        glEnable(GL_CULL_FACE);
-
-    // Do not cull back faces
-    if (Input::IsKeyPressed(Key::Minus) and Input::IsKeyPressed(Key::RightShift))
-        glDisable(GL_CULL_FACE);
+        m_PolygonMode = GL_FILL;
 }
 
 void RenderSystem::CreateFramebuffer(int width, int height)

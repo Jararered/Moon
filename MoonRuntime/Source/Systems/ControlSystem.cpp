@@ -43,10 +43,13 @@ void ControlSystem::Update(float dt)
         direction = glm::normalize(direction);
 
         auto speedLimit = m_SpeedLimit;
-        if (Input::IsKeyPressed(Key::LeftControl))
-            speedLimit *= 2.0f;
-        if (Input::IsKeyPressed(Key::LeftShift))
-            speedLimit *= 0.5f;
+        if (rigidBody.MovementStatus == Status::Grounded)
+        {
+            if (Input::IsKeyPressed(Key::LeftControl))
+                speedLimit *= 2.0f;
+            if (Input::IsKeyPressed(Key::LeftShift))
+                speedLimit *= 0.5f;
+        }
 
         const auto right = glm::cross(direction, glm::vec3(0.0f, 1.0f, 0.0f));
         const auto forward = glm::vec3(direction.x, 0.0f, direction.z);

@@ -35,6 +35,9 @@ private:
     float m_NearClip;
     float m_FarClip;
 
+    int m_PolygonMode;
+
     Entity m_Camera;
     Framebuffer m_Framebuffer;
+    Framebuffer m_WireFramebuffer;
 };

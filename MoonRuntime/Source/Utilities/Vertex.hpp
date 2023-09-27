@@ -2,8 +2,9 @@
 
 #include <glad/gl.h>
 
-template <typename T1> struct Vertex1D final
+template <typename T1> class Vertex1D final
 {
+public:
     Vertex1D(const T1& data1) : m_Data1(data1) {}
 
     static void EnableVertexAttributes()
@@ -12,11 +13,13 @@ template <typename T1> struct Vertex1D final
         glEnableVertexAttribArray(0);
     }
 
+private:
     T1 m_Data1;
 };
 
-template <typename T1, typename T2> struct Vertex2D final
+template <typename T1, typename T2> class Vertex2D final
 {
+public:
     Vertex2D(const T1& data1, const T2& data2) : m_Data1(data1), m_Data2(data2) {}
 
     static void EnableVertexAttributes()
@@ -27,12 +30,14 @@ template <typename T1, typename T2> struct Vertex2D final
         glEnableVertexAttribArray(1);
     }
 
+private:
     T1 m_Data1;
     T2 m_Data2;
 };
 
-template <typename T1, typename T2, typename T3> struct Vertex3D final
+template <typename T1, typename T2, typename T3> class Vertex3D final
 {
+public:
     Vertex3D(const T1& data1, const T2& data2, const T3& data3) : m_Data1(data1), m_Data2(data2), m_Data3(data3) {}
 
     static void EnableVertexAttributes()
@@ -45,13 +50,15 @@ template <typename T1, typename T2, typename T3> struct Vertex3D final
         glEnableVertexAttribArray(2);
     }
 
+private:
     T1 m_Data1;
     T2 m_Data2;
     T3 m_Data3;
 };
 
-template <typename T1, typename T2, typename T3, typename T4> struct Vertex4D final
+template <typename T1, typename T2, typename T3, typename T4> class Vertex4D final
 {
+public:
     Vertex4D(const T1& data1, const T2& data2, const T3& data3, const T4& data4) : m_Data1(data1), m_Data2(data2), m_Data3(data3), m_Data4(data4) {}
 
     static void EnableVertexAttributes()
@@ -66,6 +73,7 @@ template <typename T1, typename T2, typename T3, typename T4> struct Vertex4D fi
         glEnableVertexAttribArray(3);
     }
 
+private:
     T1 m_Data1;
     T2 m_Data2;
     T3 m_Data3;

@@ -22,7 +22,7 @@ void PhysicsSystem::Initialize()
 {
     m_Name = "Physics System";
     m_SubStepCount = 2;
-    m_AirFriction = 5.0f;
+    m_AirFriction = 10.0f;
     m_SolidFriction = 50.0f;
 }
 
@@ -152,8 +152,8 @@ void PhysicsSystem::Update(float dt)
 
 void PhysicsSystem::UpdateUI()
 {
-    ImGui::SliderInt("Steps", &m_SubStepCount, 1, 10);
-    ImGui::SliderFloat3("Gravity", &s_Gravity.x, -20.0f, 20.0f);
+    ImGui::InputInt("Steps", &m_SubStepCount);
+    ImGui::InputFloat3("Gravity", &s_Gravity.x);
     ImGui::InputFloat("Air Friction", &m_AirFriction, 0.0f, 100.0f);
     ImGui::InputFloat("Solid Friction", &m_SolidFriction, 0.0f, 100.0f);
 }
