@@ -3,7 +3,7 @@
 #include <glad/gl.h>
 #include <vector>
 
-template <class T> class VertexBuffer final
+template <typename T> class VertexBuffer final
 {
 public:
     VertexBuffer() = default;

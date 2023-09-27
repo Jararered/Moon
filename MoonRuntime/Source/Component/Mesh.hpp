@@ -16,8 +16,10 @@ struct MeshInterface
     virtual void Draw() = 0;
 };
 
-template <typename VertexType> struct MeshTemplate : public MeshInterface
+template <typename T> struct MeshTemplate : public MeshInterface
 {
+    ~MeshTemplate() override = default;
+
     void Draw() override
     {
         VertexBuffer.Bind();
@@ -25,7 +27,7 @@ template <typename VertexType> struct MeshTemplate : public MeshInterface
         VertexBuffer.Unbind();
     }
 
-    VertexBuffer<VertexType> VertexBuffer;
+    VertexBuffer<T> VertexBuffer;
 };
 
 typedef std::shared_ptr<MeshInterface> Mesh;
