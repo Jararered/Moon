@@ -35,9 +35,6 @@ void ControlSystem::Update(float dt)
         auto& transform = e_Scenario.GetComponent<Transform>(entity);
         auto& rigidBody = e_Scenario.GetComponent<RigidBody>(entity);
 
-        ImGui::SliderFloat("Limit", &m_SpeedLimit, 0.0f, 10.0f);
-        ImGui::SliderFloat3("Velocity", &rigidBody.Velocity.x, 0.0f, 10.0f);
-
         // X - Z Movement
         auto direction = glm::vec3(0.0f);
         direction.x = glm::cos(transform.Rotation.y) * glm::cos(transform.Rotation.x);
@@ -90,6 +87,17 @@ void ControlSystem::Update(float dt)
             rigidBody.Velocity.x = clampedVelocityXZ.x;
             rigidBody.Velocity.z = clampedVelocityXZ.z;
         }
+    }
+}
+
+void ControlSystem::UpdateUI()
+{
+    for (const auto entity : m_Entities)
+    {
+        auto& rigidBody = e_Scenario.GetComponent<RigidBody>(entity);
+
+        ImGui::SliderFloat("Limit", &m_SpeedLimit, 0.0f, 10.0f);
+        ImGui::SliderFloat3("Velocity", &rigidBody.Velocity.x, 0.0f, 10.0f);
     }
 }
 

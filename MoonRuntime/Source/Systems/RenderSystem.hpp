@@ -21,6 +21,7 @@ public:
     void Register() override;
     void Initialize() override;
     void Update(float dt) override;
+    void UpdateUI() override;
     void Finalize() override;
 
 private:

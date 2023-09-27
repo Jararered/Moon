@@ -54,6 +54,14 @@ void CameraSystem::Update(float dt)
         const auto cameraPosition = glm::vec3(transform.Position.x, cameraHeight, transform.Position.z);
 
         camera.ViewMatrix = glm::lookAt(cameraPosition, (cameraPosition + direction), glm::vec3(0.0f, 1.0f, 0.0f));
+    }
+}
+
+void CameraSystem::UpdateUI()
+{
+    for (const auto entity : m_Entities)
+    {
+        auto& camera = e_Scenario.GetComponent<Camera>(entity);
 
         if (ImGui::SliderFloat("FOV", &camera.FOV, 10.0f, 170.0f))
             UpdatePerspective(entity);

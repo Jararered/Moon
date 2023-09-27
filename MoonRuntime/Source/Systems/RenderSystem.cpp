@@ -84,11 +84,6 @@ void RenderSystem::Update(float dt)
 
     PollDebugControls();
 
-    if (ImGui::SliderFloat("Near Clip", &m_NearClip, 0.01f, 1.0f))
-        CreateFramebuffer(m_Width, m_Height);
-    if (ImGui::SliderFloat("Far Clip", &m_FarClip, 1.0f, 1000.0f))
-        CreateFramebuffer(m_Width, m_Height);
-
     const auto camera = e_Scenario.GetComponent<Camera>(m_Camera);
     for (const auto& entity : m_Entities)
     {
@@ -113,6 +108,14 @@ void RenderSystem::Update(float dt)
 
     m_Framebuffer.Unbind();
     m_Framebuffer.Draw();
+}
+
+void RenderSystem::UpdateUI()
+{
+    if (ImGui::SliderFloat("Near Clip", &m_NearClip, 0.01f, 1.0f))
+        CreateFramebuffer(m_Width, m_Height);
+    if (ImGui::SliderFloat("Far Clip", &m_FarClip, 1.0f, 1000.0f))
+        CreateFramebuffer(m_Width, m_Height);
 }
 
 void RenderSystem::Finalize()
