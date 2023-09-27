@@ -25,7 +25,6 @@ public:
     void Finalize() override;
 
 private:
-    void PollDebugControls();
     void CreateFramebuffer(int width, int height);
 
 private:

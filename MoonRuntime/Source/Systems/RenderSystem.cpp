@@ -83,8 +83,6 @@ void RenderSystem::Update(float dt)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glPolygonMode(GL_FRONT_AND_BACK, m_PolygonMode);
 
-    PollDebugControls();
-
     const auto camera = e_Scenario.GetComponent<Camera>(m_Camera);
     for (const auto& entity : m_Entities)
     {
@@ -127,17 +125,6 @@ void RenderSystem::UpdateUI()
 
 void RenderSystem::Finalize()
 {
-}
-
-void RenderSystem::PollDebugControls()
-{
-    // Do not fill polygons
-    if (Input::IsKeyPressed(Key::Minus))
-        m_PolygonMode = GL_LINE;
-
-    // Fill polygons
-    if (Input::IsKeyPressed(Key::Equal))
-        m_PolygonMode = GL_FILL;
 }
 
 void RenderSystem::CreateFramebuffer(int width, int height)
