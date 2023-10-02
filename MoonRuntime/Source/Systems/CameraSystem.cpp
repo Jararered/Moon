@@ -65,6 +65,12 @@ void CameraSystem::UpdateUI()
 
         if (ImGui::SliderFloat("FOV", &camera.FOV, 10.0f, 170.0f))
             UpdatePerspective(entity);
+
+        if (ImGui::Button("Reset Position"))
+        {
+            auto& transform = m_Scenario->GetComponent<Transform>(entity);
+            transform.Position = glm::vec3(0.0f);
+        }
     }
 }
 
