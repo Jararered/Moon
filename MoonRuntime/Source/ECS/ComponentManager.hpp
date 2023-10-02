@@ -62,13 +62,13 @@ public:
 
 private:
     // Map from type string pointer to a component type
-    std::unordered_map<const char*, ComponentType> m_ComponentTypes{};
+    std::unordered_map<const char*, ComponentType> m_ComponentTypes;
 
     // Map from type string pointer to a component array
-    std::unordered_map<const char*, std::shared_ptr<ComponentArrayInterface>> m_ComponentArrays{};
+    std::unordered_map<const char*, std::shared_ptr<ComponentArrayInterface>> m_ComponentArrays;
 
     // The component type to be assigned to the next registered component - starting at 0
-    ComponentType m_NextComponentType{};
+    ComponentType m_NextComponentType;
 
     // Convenience function to get the statically casted pointer to the ComponentArray of type T.
     template <typename T> std::shared_ptr<ComponentArrayTemplate<T>> GetComponentArray()

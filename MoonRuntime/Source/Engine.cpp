@@ -24,6 +24,9 @@
 
 void Engine::Initialize()
 {
+    if (m_Status = EngineStatus::Initialized)
+        return;
+
     m_Scenario = std::make_shared<Scenario>();
 
     m_Scenario->Initialize();
@@ -52,11 +55,13 @@ void Engine::Initialize()
     {
         system->Initialize();
     }
+
+    m_Status = EngineStatus::Initialized;
 }
 
 void Engine::Start()
 {
-    if (!p_Window)
+    if (!p_Window or m_Status == EngineStatus::Uninitialized)
         return;
 
     while (p_Window->IsRunning())
@@ -79,7 +84,7 @@ void Engine::Start()
 
         ImGui::End();
 
-        UpdateUI();
+        // UpdateUI();
 
         p_Window->EndFrame();
 
@@ -91,6 +96,10 @@ void Engine::Start()
 std::shared_ptr<Window> Engine::CreateWindow(const WindowSpecification& spec)
 {
     p_Window = std::make_shared<OpenGLWindow>(spec);
+
+    if (m_Status == EngineStatus::Uninitialized)
+        Initialize();
+
     return p_Window;
 }
 

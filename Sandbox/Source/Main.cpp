@@ -1,8 +1,4 @@
-#include "Demos/CollisionDemo.hpp"
-#include "Demos/CubesFalling.hpp"
-#include "Demos/EntityCreationDemo.hpp"
-#include "Demos/ScriptDemo.hpp"
-#include "Demos/TexturedCubeDemo.hpp"
+#include "Demos/PhysicsDemo.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -12,10 +8,8 @@ int main(int argc, char* argv[])
     spec.VSync = true;
     spec.Title = "Moon (OpenGL)";
 
-    EntityCreationDemo app;
+    PhysicsDemo app;
     app.CreateWindow(spec);
-    app.Initialize();
-
     app.CreateScene();
 
     app.Start();

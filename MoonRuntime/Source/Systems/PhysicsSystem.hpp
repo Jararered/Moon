@@ -2,6 +2,7 @@
 
 #include "SystemInterface.hpp"
 
+#include "Component/RigidBody.hpp"
 #include "Component/Transform.hpp"
 
 #include <glm/vec3.hpp>
@@ -27,6 +28,10 @@ public:
 
 private:
     [[nodiscard]] bool IsIntersect(const Transform& transform1, const Transform& transform2);
+
+    void UpdateStep(float dt, Entity entity);
+    void UpdateCollision(float dt, Entity entity);
+    void UpdateFriction(float dt, Entity entity);
 
     int m_SubStepCount = 1;
     float m_AirFriction = 5.0f;    // Velocity lost per second due to movement through air

@@ -51,7 +51,7 @@ void RenderSystem::Initialize()
 
     m_Camera = m_Scenario->CreateEntity();
 
-    const auto position = glm::vec3(0.0f, 10.0f, 0.0f);
+    const auto position = glm::vec3(0.0f, 0.0f, 5.0f);
     const auto rotation = glm::vec3(0.0f, glm::radians(-90.0f), 0.0f); // Looking into the screen
     const auto scale = glm::vec3(0.5f, 2.0f, 0.5f);
     m_Scenario->AddComponent<Transform>(m_Camera, Transform{.Position = position, .Rotation = rotation, .Scale = scale});

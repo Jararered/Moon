@@ -18,6 +18,12 @@
 #include "Component/Texture.hpp"
 #include "Component/Transform.hpp"
 
+enum EngineStatus
+{
+    Initialized,
+    Uninitialized
+};
+
 class Engine
 {
 public:
@@ -37,6 +43,7 @@ protected:
     std::shared_ptr<Scenario> m_Scenario;
 
     std::shared_ptr<Window> p_Window;
+    EngineStatus m_Status = EngineStatus::Uninitialized;
 
     std::vector<std::shared_ptr<SystemInterface>> m_Systems;
     std::map<unsigned int, std::shared_ptr<SystemInterface>> m_SystemMap;
