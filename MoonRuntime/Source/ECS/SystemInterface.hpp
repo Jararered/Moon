@@ -3,8 +3,11 @@
 #include "Entity.hpp"
 
 #include <imgui.h>
+#include <memory>
 #include <set>
 #include <string>
+
+class Scenario;
 
 class SystemInterface
 {
@@ -17,7 +20,7 @@ public:
     virtual ~SystemInterface() = default;
 
 public:
-    virtual void Register() = 0;
+    virtual void Register(std::shared_ptr<Scenario>) = 0;
     virtual void Initialize() = 0;
     virtual void Update(float dt) = 0;
     virtual void UpdateUI() = 0;
@@ -25,4 +28,5 @@ public:
 
     std::string m_Name;
     std::set<Entity> m_Entities;
+    std::shared_ptr<Scenario> m_Scenario;
 };

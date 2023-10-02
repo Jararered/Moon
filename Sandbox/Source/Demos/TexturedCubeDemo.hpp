@@ -7,8 +7,6 @@
 
 #include "Utilities/TextureMap.hpp"
 
-extern Scenario e_Scenario;
-
 class TexturedCubeDemo final : public Engine
 {
 public:
@@ -24,11 +22,11 @@ public:
             {
                 for (int z = -10; z < 10; z += 2)
                 {
-                    const Entity entity = e_Scenario.CreateEntity();
-                    e_Scenario.AddComponent<Mesh>(entity, mesh);
-                    e_Scenario.AddComponent<Shader>(entity, shader);
-                    e_Scenario.AddComponent<Texture>(entity, texture);
-                    e_Scenario.AddComponent<Transform>(entity, Transform{.Position{x, y, z}});
+                    const Entity entity = m_Scenario->CreateEntity();
+                    m_Scenario->AddComponent<Mesh>(entity, mesh);
+                    m_Scenario->AddComponent<Shader>(entity, shader);
+                    m_Scenario->AddComponent<Texture>(entity, texture);
+                    m_Scenario->AddComponent<Transform>(entity, Transform{.Position{x, y, z}});
                 }
             }
         }

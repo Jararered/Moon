@@ -8,14 +8,14 @@
 #include <glm/trigonometric.hpp>
 #include <imgui.h>
 
-extern Scenario e_Scenario;
-
-void PhysicsSystem::Register()
+void PhysicsSystem::Register(std::shared_ptr<Scenario> scenario)
 {
+    m_Scenario = scenario;
+
     Signature signature;
-    signature.set(e_Scenario.GetComponentType<Transform>());
-    signature.set(e_Scenario.GetComponentType<RigidBody>());
-    e_Scenario.SetSystemSignature<PhysicsSystem>(signature);
+    signature.set(m_Scenario->GetComponentType<Transform>());
+    signature.set(m_Scenario->GetComponentType<RigidBody>());
+    m_Scenario->SetSystemSignature<PhysicsSystem>(signature);
 }
 
 void PhysicsSystem::Initialize()
@@ -35,8 +35,8 @@ void PhysicsSystem::Update(float dt)
 
     for (const auto e1 : m_Entities)
     {
-        auto& transform1 = e_Scenario.GetComponent<Transform>(e1);
-        auto& rigidBody1 = e_Scenario.GetComponent<RigidBody>(e1);
+        auto& transform1 = m_Scenario->GetComponent<Transform>(e1);
+        auto& rigidBody1 = m_Scenario->GetComponent<RigidBody>(e1);
 
         // Ignore any entities without mass
         if (rigidBody1.Mass == 0.0f)
@@ -70,7 +70,7 @@ void PhysicsSystem::Update(float dt)
                 if (e1 == e2)
                     continue;
 
-                const auto& transform2 = e_Scenario.GetComponent<Transform>(e2);
+                const auto& transform2 = m_Scenario->GetComponent<Transform>(e2);
 
                 // Check if collision cubes overlap
                 if (not IsIntersect(transform1, transform2))

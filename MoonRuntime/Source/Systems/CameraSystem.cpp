@@ -11,14 +11,14 @@
 #include <glm/trigonometric.hpp>
 #include <imgui.h>
 
-extern Scenario e_Scenario;
-
-void CameraSystem::Register()
+void CameraSystem::Register(std::shared_ptr<Scenario> scenario)
 {
+    m_Scenario = scenario;
+
     Signature signature;
-    signature.set(e_Scenario.GetComponentType<Transform>());
-    signature.set(e_Scenario.GetComponentType<Camera>());
-    e_Scenario.SetSystemSignature<CameraSystem>(signature);
+    signature.set(m_Scenario->GetComponentType<Transform>());
+    signature.set(m_Scenario->GetComponentType<Camera>());
+    m_Scenario->SetSystemSignature<CameraSystem>(signature);
 }
 
 void CameraSystem::Initialize()
@@ -30,8 +30,8 @@ void CameraSystem::Update(float dt)
 {
     for (const auto entity : m_Entities)
     {
-        auto& transform = e_Scenario.GetComponent<Transform>(entity);
-        auto& camera = e_Scenario.GetComponent<Camera>(entity);
+        auto& transform = m_Scenario->GetComponent<Transform>(entity);
+        auto& camera = m_Scenario->GetComponent<Camera>(entity);
 
         // Set Yaw and Pitch rotations based on mouse movement
         const auto mouseMovement = Input::GetCapturedMouseMovement() * m_Sensitivity;
@@ -61,7 +61,7 @@ void CameraSystem::UpdateUI()
 {
     for (const auto entity : m_Entities)
     {
-        auto& camera = e_Scenario.GetComponent<Camera>(entity);
+        auto& camera = m_Scenario->GetComponent<Camera>(entity);
 
         if (ImGui::SliderFloat("FOV", &camera.FOV, 10.0f, 170.0f))
             UpdatePerspective(entity);
@@ -77,6 +77,6 @@ void CameraSystem::UpdatePerspective(Entity entity)
     int width, height;
     glfwGetFramebufferSize(glfwGetCurrentContext(), &width, &height);
 
-    auto& camera = e_Scenario.GetComponent<Camera>(entity);
+    auto& camera = m_Scenario->GetComponent<Camera>(entity);
     camera.ProjectionMatrix = glm::perspective(glm::radians(camera.FOV), static_cast<float>(width) / static_cast<float>(height), 0.1f, 1000.0f);
 }

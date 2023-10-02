@@ -11,15 +11,15 @@
 #include <glm/trigonometric.hpp>
 #include <imgui.h>
 
-extern Scenario e_Scenario;
-
-void ControlSystem::Register()
+void ControlSystem::Register(std::shared_ptr<Scenario> scenario)
 {
+    m_Scenario = scenario;
+
     Signature signature;
-    signature.set(e_Scenario.GetComponentType<Transform>());
-    signature.set(e_Scenario.GetComponentType<Control>());
-    signature.set(e_Scenario.GetComponentType<RigidBody>());
-    e_Scenario.SetSystemSignature<ControlSystem>(signature);
+    signature.set(m_Scenario->GetComponentType<Transform>());
+    signature.set(m_Scenario->GetComponentType<Control>());
+    signature.set(m_Scenario->GetComponentType<RigidBody>());
+    m_Scenario->SetSystemSignature<ControlSystem>(signature);
 }
 
 void ControlSystem::Initialize()
@@ -32,8 +32,8 @@ void ControlSystem::Update(float dt)
 {
     for (const auto entity : m_Entities)
     {
-        auto& transform = e_Scenario.GetComponent<Transform>(entity);
-        auto& rigidBody = e_Scenario.GetComponent<RigidBody>(entity);
+        auto& transform = m_Scenario->GetComponent<Transform>(entity);
+        auto& rigidBody = m_Scenario->GetComponent<RigidBody>(entity);
 
         // X - Z Movement
         auto direction = glm::vec3(0.0f);
@@ -97,7 +97,7 @@ void ControlSystem::UpdateUI()
 {
     for (const auto entity : m_Entities)
     {
-        auto& rigidBody = e_Scenario.GetComponent<RigidBody>(entity);
+        auto& rigidBody = m_Scenario->GetComponent<RigidBody>(entity);
 
         ImGui::SliderFloat("Limit", &m_SpeedLimit, 0.0f, 10.0f);
         ImGui::SliderFloat3("Velocity", &rigidBody.Velocity.x, 0.0f, 10.0f);

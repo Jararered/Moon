@@ -6,8 +6,6 @@
 
 #include "Scripts/Rotation.hpp"
 
-extern Scenario e_Scenario;
-
 class EntityCreationDemo final : public Engine
 {
 public:
@@ -26,12 +24,12 @@ public:
 
         // Floor
         {
-            const Entity entity = e_Scenario.CreateEntity();
-            e_Scenario.AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
-            e_Scenario.AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
-            e_Scenario.AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug"]);
-            e_Scenario.AddComponent<Transform>(entity, Transform{.Position = {0, 0, 0}, .Rotation = {0, 0, 0}, .Scale = {20, 1, 20}});
-            e_Scenario.AddComponent<RigidBody>(entity);
+            const Entity entity = m_Scenario->CreateEntity();
+            m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
+            m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
+            m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug"]);
+            m_Scenario->AddComponent<Transform>(entity, Transform{.Position = {0, -1, 0}, .Rotation = {0, 0, 0}, .Scale = {20, 1, 20}});
+            m_Scenario->AddComponent<RigidBody>(entity);
         }
     }
 };

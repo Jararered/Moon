@@ -6,8 +6,6 @@
 
 #include "Scripts/Rotation.hpp"
 
-extern Scenario e_Scenario;
-
 class ScriptDemo final : public Engine
 {
 public:
@@ -31,43 +29,43 @@ public:
 
         // Floor
         {
-            const Entity entity = e_Scenario.CreateEntity();
-            e_Scenario.AddComponent<Mesh>(entity, cube);
-            e_Scenario.AddComponent<Shader>(entity, staticShader);
-            e_Scenario.AddComponent<Texture>(entity, texture);
-            e_Scenario.AddComponent<Transform>(entity, Transform{.Position = {0, 0, 0}, .Rotation = {0, 0, 0}, .Scale = {20, 1, 20}});
-            e_Scenario.AddComponent<RigidBody>(entity);
+            const Entity entity = m_Scenario->CreateEntity();
+            m_Scenario->AddComponent<Mesh>(entity, cube);
+            m_Scenario->AddComponent<Shader>(entity, staticShader);
+            m_Scenario->AddComponent<Texture>(entity, texture);
+            m_Scenario->AddComponent<Transform>(entity, Transform{.Position = {0, 0, 0}, .Rotation = {0, 0, 0}, .Scale = {20, 1, 20}});
+            m_Scenario->AddComponent<RigidBody>(entity);
         }
 
         // Cube with Script
         {
-            const Entity entity = e_Scenario.CreateEntity();
-            e_Scenario.AddComponent<Mesh>(entity, cube);
-            e_Scenario.AddComponent<Shader>(entity, staticShader);
-            e_Scenario.AddComponent<Texture>(entity, texture);
-            e_Scenario.AddComponent<Transform>(entity, Transform{.Position = {-5.0f, 2.0f, 0.0f}, .Rotation = {0, 0, 0}, .Scale = {3, 3, 3}});
-            e_Scenario.AddComponent<RigidBody>(entity);
-            e_Scenario.AddComponent<Script>(entity, script1);
+            const Entity entity = m_Scenario->CreateEntity();
+            m_Scenario->AddComponent<Mesh>(entity, cube);
+            m_Scenario->AddComponent<Shader>(entity, staticShader);
+            m_Scenario->AddComponent<Texture>(entity, texture);
+            m_Scenario->AddComponent<Transform>(entity, Transform{.Position = {-5.0f, 2.0f, 0.0f}, .Rotation = {0, 0, 0}, .Scale = {3, 3, 3}});
+            m_Scenario->AddComponent<RigidBody>(entity);
+            m_Scenario->AddComponent<Script>(entity, script1);
         }
         // Cube with Script
         {
-            const Entity entity = e_Scenario.CreateEntity();
-            e_Scenario.AddComponent<Mesh>(entity, cube);
-            e_Scenario.AddComponent<Shader>(entity, staticShader);
-            e_Scenario.AddComponent<Texture>(entity, texture);
-            e_Scenario.AddComponent<Transform>(entity, Transform{.Position = {0.0f, 1.5f, 0.0f}, .Rotation = {0, 0, 0}, .Scale = {2, 2, 2}});
-            e_Scenario.AddComponent<RigidBody>(entity);
-            e_Scenario.AddComponent<Script>(entity, script2);
+            const Entity entity = m_Scenario->CreateEntity();
+            m_Scenario->AddComponent<Mesh>(entity, cube);
+            m_Scenario->AddComponent<Shader>(entity, staticShader);
+            m_Scenario->AddComponent<Texture>(entity, texture);
+            m_Scenario->AddComponent<Transform>(entity, Transform{.Position = {0.0f, 1.5f, 0.0f}, .Rotation = {0, 0, 0}, .Scale = {2, 2, 2}});
+            m_Scenario->AddComponent<RigidBody>(entity);
+            m_Scenario->AddComponent<Script>(entity, script2);
         }
         // Cube with Script
         {
-            const Entity entity = e_Scenario.CreateEntity();
-            e_Scenario.AddComponent<Mesh>(entity, cube);
-            e_Scenario.AddComponent<Shader>(entity, staticShader);
-            e_Scenario.AddComponent<Texture>(entity, texture);
-            e_Scenario.AddComponent<Transform>(entity, Transform{.Position = {3.5f, 1.0f, 0.0f}, .Rotation = {0, 0, 0}, .Scale = {1, 1, 1}});
-            e_Scenario.AddComponent<RigidBody>(entity);
-            e_Scenario.AddComponent<Script>(entity, script3);
+            const Entity entity = m_Scenario->CreateEntity();
+            m_Scenario->AddComponent<Mesh>(entity, cube);
+            m_Scenario->AddComponent<Shader>(entity, staticShader);
+            m_Scenario->AddComponent<Texture>(entity, texture);
+            m_Scenario->AddComponent<Transform>(entity, Transform{.Position = {3.5f, 1.0f, 0.0f}, .Rotation = {0, 0, 0}, .Scale = {1, 1, 1}});
+            m_Scenario->AddComponent<RigidBody>(entity);
+            m_Scenario->AddComponent<Script>(entity, script3);
         }
     }
 };

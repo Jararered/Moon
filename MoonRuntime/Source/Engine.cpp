@@ -22,30 +22,30 @@
 #include <glfw/glfw3.h>
 #include <imgui.h>
 
-Scenario e_Scenario;
-
 void Engine::Initialize()
 {
-    e_Scenario.Initialize();
-    e_Scenario.RegisterComponent<Camera>();
-    e_Scenario.RegisterComponent<Control>();
-    e_Scenario.RegisterComponent<Mesh>();
-    e_Scenario.RegisterComponent<RigidBody>();
-    e_Scenario.RegisterComponent<Script>();
-    e_Scenario.RegisterComponent<Shader>();
-    e_Scenario.RegisterComponent<Texture>();
-    e_Scenario.RegisterComponent<Transform>();
+    m_Scenario = std::make_shared<Scenario>();
+
+    m_Scenario->Initialize();
+    m_Scenario->RegisterComponent<Camera>();
+    m_Scenario->RegisterComponent<Control>();
+    m_Scenario->RegisterComponent<Mesh>();
+    m_Scenario->RegisterComponent<RigidBody>();
+    m_Scenario->RegisterComponent<Script>();
+    m_Scenario->RegisterComponent<Shader>();
+    m_Scenario->RegisterComponent<Texture>();
+    m_Scenario->RegisterComponent<Transform>();
 
     // Emplace back systems in initialization and update order
-    m_SystemMap.emplace(1, e_Scenario.RegisterSystem<ControlSystem>());
-    m_SystemMap.emplace(2, e_Scenario.RegisterSystem<CameraSystem>());
-    m_SystemMap.emplace(3, e_Scenario.RegisterSystem<ScriptSystem>());
-    m_SystemMap.emplace(4, e_Scenario.RegisterSystem<PhysicsSystem>());
-    m_SystemMap.emplace(5, e_Scenario.RegisterSystem<RenderSystem>());
+    m_SystemMap.emplace(1, m_Scenario->RegisterSystem<ControlSystem>());
+    m_SystemMap.emplace(2, m_Scenario->RegisterSystem<CameraSystem>());
+    m_SystemMap.emplace(3, m_Scenario->RegisterSystem<ScriptSystem>());
+    m_SystemMap.emplace(4, m_Scenario->RegisterSystem<PhysicsSystem>());
+    m_SystemMap.emplace(5, m_Scenario->RegisterSystem<RenderSystem>());
 
     for (const auto [_, system] : m_SystemMap)
     {
-        system->Register();
+        system->Register(m_Scenario);
     }
 
     for (const auto [_, system] : m_SystemMap)
@@ -186,18 +186,18 @@ void Engine::UpdateUI()
 
     if (ImGui::Button("Create Entity"))
     {
-        selectedEntity = e_Scenario.CreateEntity();
-        e_Scenario.AddComponent<Transform>(selectedEntity, selectedTransform);
-        e_Scenario.AddComponent<RigidBody>(selectedEntity, selectedRigidBody);
+        selectedEntity = m_Scenario->CreateEntity();
+        m_Scenario->AddComponent<Transform>(selectedEntity, selectedTransform);
+        m_Scenario->AddComponent<RigidBody>(selectedEntity, selectedRigidBody);
 
         if (selectedMesh != "None")
-            e_Scenario.AddComponent<Mesh>(selectedEntity, m_AvaliableMeshesMap[selectedMesh]);
+            m_Scenario->AddComponent<Mesh>(selectedEntity, m_AvaliableMeshesMap[selectedMesh]);
         if (selectedTexture != "None")
-            e_Scenario.AddComponent<Texture>(selectedEntity, m_AvaliableTexturesMap[selectedTexture]);
+            m_Scenario->AddComponent<Texture>(selectedEntity, m_AvaliableTexturesMap[selectedTexture]);
         if (selectedScript != "None")
-            e_Scenario.AddComponent<Script>(selectedEntity, m_AvaliableScriptsMap[selectedScript]);
+            m_Scenario->AddComponent<Script>(selectedEntity, m_AvaliableScriptsMap[selectedScript]);
         if (selectedShader != "None")
-            e_Scenario.AddComponent<Shader>(selectedEntity, m_AvaliableShadersMap[selectedShader]);
+            m_Scenario->AddComponent<Shader>(selectedEntity, m_AvaliableShadersMap[selectedShader]);
     }
 
     ImGui::End();

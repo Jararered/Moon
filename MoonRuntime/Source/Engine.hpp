@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 
+#include "Scenario.hpp"
 #include "SystemInterface.hpp"
 #include "Window.hpp"
 
@@ -32,6 +33,8 @@ public:
 
 protected:
     float m_DT = 0.0f;
+
+    std::shared_ptr<Scenario> m_Scenario;
 
     std::shared_ptr<Window> p_Window;
 

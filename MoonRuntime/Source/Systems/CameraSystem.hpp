@@ -13,7 +13,7 @@ public:
     ~CameraSystem() override = default;
 
 public:
-    void Register() override;
+    void Register(std::shared_ptr<Scenario> scenario) override;
     void Initialize() override;
     void Update(float dt) override;
     void UpdateUI() override;
