@@ -21,19 +21,18 @@ void PhysicsSystem::Initialize()
     m_Name = "Physics System";
     m_SubStepCount = 2;
     m_AirFriction = 10.0f;
-    m_SolidFriction = 50.0f;
+    m_SolidFriction = 0.0f;
 }
 
 void PhysicsSystem::Update(float dt)
 {
     // Pause physics if frame rate is running slower than 60fps
-    if (dt > 1 / 60.0f or dt == 0.0f)
-        dt = 1 / 60.0f;
-    const auto stepDT = dt / static_cast<float>(m_SubStepCount);
+    if (dt > 1.0f / 60.0f or dt == 0.0f)
+        dt = 1.0f / 60.0f;
+    dt = dt / static_cast<float>(m_SubStepCount);
 
     for (const auto entity : m_Entities)
     {
-        auto& transform1 = m_Scenario->GetComponent<Transform>(entity);
         auto& rigidBody1 = m_Scenario->GetComponent<RigidBody>(entity);
 
         // Ignore any entities without mass
@@ -42,7 +41,7 @@ void PhysicsSystem::Update(float dt)
 
         for (unsigned int step = 0; step < m_SubStepCount; step++)
         {
-            UpdateStep(stepDT, entity);
+            UpdateStep(dt, entity);
         }
     }
 }
@@ -126,14 +125,24 @@ void PhysicsSystem::UpdateCollision(float dt, Entity entity)
                 transform1.Position.x += upper2.x - lower1.x;
 
             // Update velocities
-            auto c1 = (2 * rigidBody1.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
-            auto c2 = (rigidBody1.Mass - rigidBody2.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
+            if (rigidBody2.Mass != 0.0f)
+            {
+                auto c1 = (2 * rigidBody1.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
+                auto c2 = (rigidBody1.Mass - rigidBody2.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
 
-            auto newXVelocity2 = c1 * rigidBody1.Velocity.x - c2 * rigidBody2.Velocity.x;
-            auto newXVelocity1 = c2 * rigidBody1.Velocity.x + c1 * rigidBody2.Velocity.x;
+                auto newXVelocity2 = c1 * rigidBody1.Velocity.x - c2 * rigidBody2.Velocity.x;
+                auto newXVelocity1 = c2 * rigidBody1.Velocity.x + c1 * rigidBody2.Velocity.x;
 
-            rigidBody1.Velocity.x = newXVelocity1;
-            rigidBody2.Velocity.x = newXVelocity2;
+                rigidBody1.Velocity.x = newXVelocity1;
+                rigidBody2.Velocity.x = newXVelocity2;
+            }
+            else
+            {
+                auto momentum = rigidBody1.Velocity.x * rigidBody1.Mass;
+                momentum = momentum - m_SolidFriction;
+                auto newVelocity = momentum / rigidBody1.Mass;
+                rigidBody1.Velocity.x = -newVelocity;
+            }
 
             continue;
         }
@@ -149,7 +158,18 @@ void PhysicsSystem::UpdateCollision(float dt, Entity entity)
                 rigidBody1.MovementStatus = Status::Grounded;
             }
 
+            // Update velocities
+            // auto c1 = (2.0f * rigidBody1.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
+            // auto c2 = (rigidBody1.Mass - rigidBody2.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
+
+            // auto newYVelocity2 = c1 * rigidBody1.Velocity.y - c2 * rigidBody2.Velocity.y;
+            // auto newYVelocity1 = c2 * rigidBody1.Velocity.y + c1 * rigidBody2.Velocity.y;
+
+            // rigidBody1.Velocity.y = newYVelocity1;
+            // rigidBody2.Velocity.y = newYVelocity2;
+
             rigidBody1.Velocity.y = 0.0f;
+
             continue;
         }
 
@@ -162,14 +182,24 @@ void PhysicsSystem::UpdateCollision(float dt, Entity entity)
                 transform1.Position.z += upper2.z - lower1.z;
 
             // Update velocities
-            auto c1 = (2 * rigidBody1.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
-            auto c2 = (rigidBody1.Mass - rigidBody2.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
+            if (rigidBody2.Mass != 0.0f)
+            {
+                auto c1 = (2.0f * rigidBody1.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
+                auto c2 = (rigidBody1.Mass - rigidBody2.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
 
-            auto newZVelocity2 = c1 * rigidBody1.Velocity.z - c2 * rigidBody2.Velocity.z;
-            auto newZVelocity1 = c2 * rigidBody1.Velocity.z + c1 * rigidBody2.Velocity.z;
+                auto newZVelocity2 = c1 * rigidBody1.Velocity.z - c2 * rigidBody2.Velocity.z;
+                auto newZVelocity1 = c2 * rigidBody1.Velocity.z + c1 * rigidBody2.Velocity.z;
 
-            rigidBody1.Velocity.z = newZVelocity1;
-            rigidBody2.Velocity.z = newZVelocity2;
+                rigidBody1.Velocity.z = newZVelocity1;
+                rigidBody2.Velocity.z = newZVelocity2;
+            }
+            else
+            {
+                auto momentum = rigidBody1.Velocity.z * rigidBody1.Mass;
+                momentum = momentum - m_SolidFriction;
+                auto newVelocity = momentum / rigidBody1.Mass;
+                rigidBody1.Velocity.z = -newVelocity;
+            }
 
             continue;
         }
