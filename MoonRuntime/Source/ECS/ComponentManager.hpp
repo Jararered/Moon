@@ -12,9 +12,10 @@ class ComponentManager
 public:
     template <typename T> void RegisterComponent()
     {
-        const char* typeName = typeid(T).name();
 
         assert(!IsRegistered<T>() and "Registering component type more than once.");
+
+        const char* typeName = typeid(T).name();
 
         // Add this component type to the component type map
         m_ComponentTypes.insert({typeName, m_NextComponentType});
@@ -28,9 +29,9 @@ public:
 
     template <typename T> [[nodiscard]] ComponentType GetComponentType()
     {
-        const char* typeName = typeid(T).name();
-
         assert(IsRegistered<T>() and "Component not registered before use.");
+
+        const char* typeName = typeid(T).name();
 
         // Return this component's type - used for creating signatures
         return m_ComponentTypes[typeName];

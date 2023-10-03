@@ -19,6 +19,7 @@ public:
         const char* typeName = typeid(T).name();
         const auto system = std::make_shared<T>();
         m_Systems.insert({typeName, system});
+
         return system;
     }
 
