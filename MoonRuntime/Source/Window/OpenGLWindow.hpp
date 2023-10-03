@@ -13,7 +13,7 @@ public:
     void NewFrame() override;
     void EndFrame() override;
 
-    bool IsRunning() override;
+    [[nodiscard]] bool IsRunning() override;
 
 private:
     GLFWwindow* p_GLFWwindow = nullptr;
