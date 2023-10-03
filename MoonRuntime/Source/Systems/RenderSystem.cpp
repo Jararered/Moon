@@ -113,7 +113,6 @@ void RenderSystem::UpdateUI()
 {
     if (ImGui::InputFloat("Near", &m_NearClip))
         CreateFramebuffer(m_Width, m_Height);
-    ImGui::SameLine();
     if (ImGui::InputFloat("Far", &m_FarClip))
         CreateFramebuffer(m_Width, m_Height);
     if (ImGui::Button("Enable Wireframe"))

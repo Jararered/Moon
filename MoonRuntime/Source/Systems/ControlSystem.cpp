@@ -24,7 +24,7 @@ void ControlSystem::Register(std::shared_ptr<Scenario> scenario)
 
 void ControlSystem::Initialize()
 {
-    m_SpeedLimit = 5.0f;
+    m_SpeedLimit = 3.0f;
     m_Name = "Control System";
 }
 
@@ -48,7 +48,7 @@ void ControlSystem::Update(float dt)
             if (Input::IsKeyPressed(Key::LeftControl))
                 speedLimit *= 2.0f;
             if (Input::IsKeyPressed(Key::LeftShift))
-                speedLimit *= 0.5f;
+                speedLimit *= 0.25f;
         }
 
         const auto right = glm::cross(direction, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -75,7 +75,7 @@ void ControlSystem::Update(float dt)
         // Don't care about limiting speed along verticals.
         if (Input::IsKeyPressed(Key::Space) and rigidBody.MovementStatus == Status::Grounded)
         {
-            velocityDelta.y += 5.0f;
+            velocityDelta.y += 6.0f;
             rigidBody.MovementStatus = Status::Falling;
         }
 

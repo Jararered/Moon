@@ -16,6 +16,12 @@ public:
         m_AvaliableTexturesMap.emplace("Grass", Texture("Textures/grass.png"));
         m_AvaliableShadersMap.emplace("Simple", Shader("Shaders/PositionNormalTexture.vert", "Shaders/PositionNormalTexture.frag"));
 
+        CreateBase();
+        // CreatePillars();
+    }
+
+    void CreateBase()
+    {
         // Floor
         {
             Entity entity = m_Scenario->CreateEntity();
@@ -26,6 +32,7 @@ public:
             m_Scenario->AddComponent<RigidBody>(entity);
         }
 
+        // Walls
         {
             Entity entity = m_Scenario->CreateEntity();
             m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
@@ -58,25 +65,24 @@ public:
             m_Scenario->AddComponent<Transform>(entity, Transform{.Position = {0, 0, -10}, .Rotation = {0, 0, 0}, .Scale = {20, 1, 1}});
             m_Scenario->AddComponent<RigidBody>(entity);
         }
+    }
 
-        // Cube 1
+    void CreatePillars()
+    {
+        int offset = -8;
+        for (int i = 0; i < 9; i++)
         {
-            Entity entity = m_Scenario->CreateEntity();
-            m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
-            m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
-            m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
-            m_Scenario->AddComponent<Transform>(entity, Transform{.Position = {10, 2, 0}, .Rotation = {0, 0, 0}, .Scale = {1, 1, 1}});
-            m_Scenario->AddComponent<RigidBody>(entity, RigidBody{.Velocity = {-25, 0, 0}, .Acceleration = {0, 0, 0}, .Mass = 2});
-        }
+            for (int j = 0; j < 9; j++)
+            {
+                Entity entity = m_Scenario->CreateEntity();
 
-        // Cube 2
-        {
-            Entity entity = m_Scenario->CreateEntity();
-            m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
-            m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
-            m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
-            m_Scenario->AddComponent<Transform>(entity, Transform{.Position = {0, 0, 0}, .Rotation = {0, 0, 0}, .Scale = {1, 1, 1}});
-            m_Scenario->AddComponent<RigidBody>(entity, RigidBody{.Velocity = {0, 0, 0}, .Acceleration = {0, 0, 0}, .Mass = 1});
+                const auto y = Random::Value<float>(1.0f, 5.0f);
+                m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
+                m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
+                m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
+                m_Scenario->AddComponent<Transform>(entity, Transform{.Position = {2 * i + offset, y * 0.5f - 0.5f, 2 * j + offset}, .Rotation = {0, 0, 0}, .Scale = {1, y, 1}});
+                m_Scenario->AddComponent<RigidBody>(entity);
+            }
         }
     }
 };

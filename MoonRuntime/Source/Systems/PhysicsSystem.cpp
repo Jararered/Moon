@@ -19,16 +19,17 @@ void PhysicsSystem::Register(std::shared_ptr<Scenario> scenario)
 void PhysicsSystem::Initialize()
 {
     m_Name = "Physics System";
-    m_SubStepCount = 2;
-    m_AirFriction = 10.0f;
-    m_SolidFriction = 0.0f;
+    m_SubStepCount = 4;
+    m_AirFriction = 30.0f;
+    m_SolidFriction = 50.0f;
+    m_Gravity = glm::vec3(0.0f, -15.0f, 0.0f);
 }
 
 void PhysicsSystem::Update(float dt)
 {
-    // Pause physics if frame rate is running slower than 60fps
-    if (dt > 1.0f / 60.0f or dt == 0.0f)
-        dt = 1.0f / 60.0f;
+    // Ensures physics will always run at a minimum of 60hz
+    if (dt > 1.0f / 100.0f or dt == 0.0f)
+        dt = 1.0f / 100.0f;
     dt = dt / static_cast<float>(m_SubStepCount);
 
     for (const auto entity : m_Entities)
@@ -42,6 +43,8 @@ void PhysicsSystem::Update(float dt)
         for (unsigned int step = 0; step < m_SubStepCount; step++)
         {
             UpdateStep(dt, entity);
+            UpdateFriction(dt, entity);
+            UpdateCollision(dt, entity);
         }
     }
 }
@@ -49,7 +52,7 @@ void PhysicsSystem::Update(float dt)
 void PhysicsSystem::UpdateUI()
 {
     ImGui::InputInt("Steps", &m_SubStepCount);
-    ImGui::InputFloat3("Gravity", &s_Gravity.x);
+    ImGui::InputFloat3("Gravity", &m_Gravity.x);
     ImGui::InputFloat("Air Friction", &m_AirFriction, 0.0f, 100.0f);
     ImGui::InputFloat("Solid Friction", &m_SolidFriction, 0.0f, 100.0f);
 }
@@ -81,11 +84,8 @@ void PhysicsSystem::UpdateStep(float dt, Entity entity)
     auto& rigidBody = m_Scenario->GetComponent<RigidBody>(entity);
 
     // Update position and velocity
-    rigidBody.Velocity = rigidBody.Velocity + (s_Gravity * dt);
+    rigidBody.Velocity = rigidBody.Velocity + (m_Gravity * dt);
     transform.Position = transform.Position + (rigidBody.Velocity * dt);
-
-    UpdateFriction(dt, entity);
-    UpdateCollision(dt, entity);
 }
 
 void PhysicsSystem::UpdateCollision(float dt, Entity entity)
@@ -127,21 +127,27 @@ void PhysicsSystem::UpdateCollision(float dt, Entity entity)
             // Update velocities
             if (rigidBody2.Mass != 0.0f)
             {
-                auto c1 = (2 * rigidBody1.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
-                auto c2 = (rigidBody1.Mass - rigidBody2.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
+                const auto c1 = (2.0f * rigidBody1.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
+                const auto c2 = (rigidBody1.Mass - rigidBody2.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
 
-                auto newXVelocity2 = c1 * rigidBody1.Velocity.x - c2 * rigidBody2.Velocity.x;
-                auto newXVelocity1 = c2 * rigidBody1.Velocity.x + c1 * rigidBody2.Velocity.x;
+                const auto newVelocityX2 = c1 * rigidBody1.Velocity.x - c2 * rigidBody2.Velocity.x;
+                const auto newVelocityX1 = c2 * rigidBody1.Velocity.x + c1 * rigidBody2.Velocity.x;
 
-                rigidBody1.Velocity.x = newXVelocity1;
-                rigidBody2.Velocity.x = newXVelocity2;
+                rigidBody1.Velocity.x = newVelocityX1;
+                rigidBody2.Velocity.x = newVelocityX2;
             }
             else
             {
-                auto momentum = rigidBody1.Velocity.x * rigidBody1.Mass;
-                momentum = momentum - m_SolidFriction;
-                auto newVelocity = momentum / rigidBody1.Mass;
-                rigidBody1.Velocity.x = -newVelocity;
+                auto momentum = rigidBody1.Mass * glm::abs(rigidBody1.Velocity.x);
+                momentum -= glm::min(momentum, m_SolidFriction * dt);
+
+                auto newVelocityX = 0.0f;
+                if (rigidBody1.Velocity.x < 0.0f)
+                    newVelocityX = -momentum / rigidBody1.Mass;
+                else
+                    newVelocityX = momentum / rigidBody1.Mass;
+
+                rigidBody1.Velocity.x = newVelocityX;
             }
 
             continue;
@@ -157,16 +163,6 @@ void PhysicsSystem::UpdateCollision(float dt, Entity entity)
                 transform1.Position.y += upper2.y - lower1.y;
                 rigidBody1.MovementStatus = Status::Grounded;
             }
-
-            // Update velocities
-            // auto c1 = (2.0f * rigidBody1.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
-            // auto c2 = (rigidBody1.Mass - rigidBody2.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
-
-            // auto newYVelocity2 = c1 * rigidBody1.Velocity.y - c2 * rigidBody2.Velocity.y;
-            // auto newYVelocity1 = c2 * rigidBody1.Velocity.y + c1 * rigidBody2.Velocity.y;
-
-            // rigidBody1.Velocity.y = newYVelocity1;
-            // rigidBody2.Velocity.y = newYVelocity2;
 
             rigidBody1.Velocity.y = 0.0f;
 
@@ -184,21 +180,27 @@ void PhysicsSystem::UpdateCollision(float dt, Entity entity)
             // Update velocities
             if (rigidBody2.Mass != 0.0f)
             {
-                auto c1 = (2.0f * rigidBody1.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
-                auto c2 = (rigidBody1.Mass - rigidBody2.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
+                const auto c1 = (2.0f * rigidBody1.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
+                const auto c2 = (rigidBody1.Mass - rigidBody2.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
 
-                auto newZVelocity2 = c1 * rigidBody1.Velocity.z - c2 * rigidBody2.Velocity.z;
-                auto newZVelocity1 = c2 * rigidBody1.Velocity.z + c1 * rigidBody2.Velocity.z;
+                const auto newVelocityZ2 = c1 * rigidBody1.Velocity.z - c2 * rigidBody2.Velocity.z;
+                const auto newVelocityZ1 = c2 * rigidBody1.Velocity.z + c1 * rigidBody2.Velocity.z;
 
-                rigidBody1.Velocity.z = newZVelocity1;
-                rigidBody2.Velocity.z = newZVelocity2;
+                rigidBody1.Velocity.z = newVelocityZ1;
+                rigidBody2.Velocity.z = newVelocityZ2;
             }
             else
             {
-                auto momentum = rigidBody1.Velocity.z * rigidBody1.Mass;
-                momentum = momentum - m_SolidFriction;
-                auto newVelocity = momentum / rigidBody1.Mass;
-                rigidBody1.Velocity.z = -newVelocity;
+                auto momentum = rigidBody1.Mass * glm::abs(rigidBody1.Velocity.z);
+                momentum -= glm::min(momentum, m_SolidFriction * dt);
+
+                auto newVelocityZ = 0.0f;
+                if (rigidBody1.Velocity.z < 0.0f)
+                    newVelocityZ = -momentum / rigidBody1.Mass;
+                else
+                    newVelocityZ = momentum / rigidBody1.Mass;
+
+                rigidBody1.Velocity.z = newVelocityZ;
             }
 
             continue;
@@ -222,7 +224,7 @@ void PhysicsSystem::UpdateFriction(float dt, Entity entity)
         if (rigidBody.MovementStatus == Status::Grounded)
             newMomentum = momentum - glm::min(momentum, m_SolidFriction * dt);
 
-        const auto newVelocityXZ = glm::normalize(velocityXZ) * newMomentum;
+        const auto newVelocityXZ = glm::normalize(velocityXZ) * newMomentum / rigidBody.Mass;
         rigidBody.Velocity.x = newVelocityXZ.x;
         rigidBody.Velocity.z = newVelocityXZ.z;
     }

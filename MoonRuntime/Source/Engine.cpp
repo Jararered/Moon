@@ -70,21 +70,12 @@ void Engine::Start()
 
         p_Window->NewFrame();
 
-        ImGui::Begin("Engine Systems", NULL, ImGuiWindowFlags_AlwaysAutoResize);
-        ImGui::PushItemWidth(100);
         for (const auto [systemID, system] : m_SystemMap)
         {
-            if (ImGui::CollapsingHeader(system->m_Name.c_str()))
-            {
-                system->UpdateUI();
-            }
-
             system->Update(m_DT);
         }
 
-        ImGui::End();
-
-        // UpdateUI();
+        UpdateUI();
 
         p_Window->EndFrame();
 
@@ -105,9 +96,20 @@ std::shared_ptr<Window> Engine::CreateWindow(const WindowSpecification& spec)
 
 void Engine::UpdateUI()
 {
-    static Entity selectedEntity = 0;
-    static Transform selectedTransform = Transform{};
-    static RigidBody selectedRigidBody = RigidBody{};
+    ImGui::Begin("Engine Systems", NULL, ImGuiWindowFlags_AlwaysAutoResize);
+    for (const auto [systemID, system] : m_SystemMap)
+    {
+        if (ImGui::CollapsingHeader(system->m_Name.c_str()))
+        {
+            system->UpdateUI();
+        }
+    }
+
+    ImGui::End();
+
+    static Entity selectedEntity;
+    static Transform selectedTransform;
+    static RigidBody selectedRigidBody;
     static std::string selectedMesh = "None";
     static std::string selectedTexture = "None";
     static std::string selectedScript = "None";

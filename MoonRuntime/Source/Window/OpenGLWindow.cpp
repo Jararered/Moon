@@ -26,7 +26,10 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
 
     gladLoadGL(glfwGetProcAddress);
 
-    glfwSwapInterval(0);
+    if (m_WindowSpecification.VSync)
+        glfwSwapInterval(1);
+    else
+        glfwSwapInterval(0);
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();

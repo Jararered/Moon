@@ -14,6 +14,8 @@ public:
     {
         const char* typeName = typeid(T).name();
 
+        assert(m_ComponentTypes.find(typeName) == m_ComponentTypes.end() && "Registering component type more than once.");
+
         // Add this component type to the component type map
         m_ComponentTypes.insert({typeName, m_NextComponentType});
 
@@ -27,6 +29,8 @@ public:
     template <typename T> ComponentType GetComponentType()
     {
         const char* typeName = typeid(T).name();
+
+        assert(m_ComponentTypes.find(typeName) != m_ComponentTypes.end() && "Component not registered before use.");
 
         // Return this component's type - used for creating signatures
         return m_ComponentTypes[typeName];
@@ -49,6 +53,8 @@ public:
         // Get a reference to a component from the array for an entity
         return GetComponentArray<T>()->GetData(entity);
     }
+
+    template <typename T> bool HasComponent(Entity entity) { return GetComponentArray<T>()->HasData(entity); }
 
     void EntityDestroyed(Entity entity)
     {
@@ -74,6 +80,8 @@ private:
     template <typename T> std::shared_ptr<ComponentArrayTemplate<T>> GetComponentArray()
     {
         const char* typeName = typeid(T).name();
+
+        assert(m_ComponentTypes.find(typeName) != m_ComponentTypes.end() && "Component not registered before use.");
 
         return std::static_pointer_cast<ComponentArrayTemplate<T>>(m_ComponentArrays[typeName]);
     }
