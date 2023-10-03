@@ -68,7 +68,9 @@ public:
     {
         // Remove the entity's component if it existed
         if (HasData(entity))
+        {
             RemoveData(entity);
+        }
     }
 
 private:
