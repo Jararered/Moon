@@ -49,14 +49,14 @@ public:
         {
             const auto& systemSignature = m_Signatures[type];
 
-            // Entity signature matches system signature - insert into set
             if ((entitySignature & systemSignature) == systemSignature)
             {
+                // Entity signature matches system signature - insert into set
                 system->m_Entities.insert(entity);
             }
-            // Entity signature does not match system signature - erase from set
             else
             {
+                // Entity signature does not match system signature - erase from set
                 system->m_Entities.erase(entity);
             }
         }
