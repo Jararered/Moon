@@ -6,7 +6,9 @@ project(${Project})
 file(GLOB_RECURSE ProjectSourceFiles Source/*.cpp)
 file(GLOB_RECURSE ProjectHeaderFiles Source/*.hpp)
 
-add_executable(${Project} ${ProjectSourceFiles} ${ProjectHeaderFiles})
+file(GLOB_RECURSE ProjectScriptFiles Scripts/*.hpp)
+
+add_executable(${Project} ${ProjectSourceFiles} ${ProjectHeaderFiles} ${ProjectScriptFiles})
 
 target_include_directories(${Project} PUBLIC Source)
 target_link_libraries(${Project} MoonRuntime)

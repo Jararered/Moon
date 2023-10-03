@@ -3,6 +3,8 @@
 #include <Moon.hpp>
 
 #include "Meshes/Cube.hpp"
+#include "Scripts/Rotation.hpp"
+#include "Scripts/TestScript.hpp"
 
 class PhysicsDemo final : public Engine
 {
@@ -15,6 +17,8 @@ public:
         m_AvaliableTexturesMap.emplace("Mud", Texture("Textures/mud.png"));
         m_AvaliableTexturesMap.emplace("Grass", Texture("Textures/grass.png"));
         m_AvaliableShadersMap.emplace("Simple", Shader("Shaders/PositionNormalTexture.vert", "Shaders/PositionNormalTexture.frag"));
+        m_AvaliableScriptsMap.emplace("Rotate", std::make_shared<RotateScript>(1.0f));
+        m_AvaliableScriptsMap.emplace("Test Script", std::make_shared<TestScript>());
 
         CreateBase();
         // CreatePillars();

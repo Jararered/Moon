@@ -15,6 +15,7 @@
 #include "Component/RigidBody.hpp"
 #include "Component/Script.hpp"
 #include "Component/Shader.hpp"
+#include "Component/TestComponent.hpp"
 #include "Component/Texture.hpp"
 #include "Component/Transform.hpp"
 
@@ -38,6 +39,7 @@ void Engine::Initialize()
     m_Scenario->RegisterComponent<Shader>();
     m_Scenario->RegisterComponent<Texture>();
     m_Scenario->RegisterComponent<Transform>();
+    m_Scenario->RegisterComponent<TestComponent>();
 
     // Emplace back systems in initialization and update order
     m_SystemMap.emplace(1, m_Scenario->RegisterSystem<ControlSystem>());
