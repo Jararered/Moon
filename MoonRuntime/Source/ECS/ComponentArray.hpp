@@ -24,7 +24,7 @@ public:
 
     void InsertData(Entity entity, T component)
     {
-        assert(m_EntityToIndexMap.find(entity) == m_EntityToIndexMap.end() && "Component added to same entity more than once.");
+        assert(!HasData(entity) and "Component added to same entity more than once.");
 
         // Put new entry at end and update the maps
         const size_t newIndex = m_Size;
@@ -36,7 +36,7 @@ public:
 
     void RemoveData(Entity entity)
     {
-        assert(m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end() && "Removing non-existent component.");
+        assert(HasData(entity) and "Removing non-existent component.");
 
         // Copy element at end into deleted element's place to maintain density
         const size_t indexOfRemovedEntity = m_EntityToIndexMap[entity];
@@ -56,7 +56,7 @@ public:
 
     T& GetData(Entity entity)
     {
-        assert(m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end() && "Retrieving non-existent component.");
+        assert(HasData(entity) and "Retrieving non-existent component.");
 
         // Return a reference to the entity's component
         return m_ComponentArray[m_EntityToIndexMap[entity]];
@@ -66,11 +66,9 @@ public:
 
     void EntityDestroyed(Entity entity) override
     {
-        if (m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end())
-        {
-            // Remove the entity's component if it existed
+        // Remove the entity's component if it existed
+        if (HasData(entity))
             RemoveData(entity);
-        }
     }
 
 private:

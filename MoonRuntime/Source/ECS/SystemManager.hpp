@@ -13,11 +13,10 @@ class SystemManager
 public:
     template <typename T> std::shared_ptr<T> RegisterSystem()
     {
-        const char* typeName = typeid(T).name();
-
-        assert(m_Systems.find(typeName) == m_Systems.end() && "Registering system more than once.");
+        assert(!IsRegistered<T>() and "Registering system more than once.");
 
         // Create a pointer to the system and return it so it can be used externally
+        const char* typeName = typeid(T).name();
         const auto system = std::make_shared<T>();
         m_Systems.insert({typeName, system});
         return system;
@@ -25,11 +24,10 @@ public:
 
     template <typename T> void SetSignature(Signature signature)
     {
-        const char* typeName = typeid(T).name();
-
-        assert(m_Systems.find(typeName) != m_Systems.end() && "System used before registered.");
+        assert(IsRegistered<T>() and "System used before registered.");
 
         // Set the signature for this system
+        const char* typeName = typeid(T).name();
         m_Signatures.insert({typeName, signature});
     }
 
@@ -62,6 +60,8 @@ public:
             }
         }
     }
+
+    template <typename T> bool IsRegistered() { return m_Systems.find(typeid(T).name()) != m_Systems.end(); }
 
 private:
     // Map from system type string pointer to a signature
