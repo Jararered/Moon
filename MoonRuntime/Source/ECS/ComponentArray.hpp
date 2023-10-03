@@ -54,7 +54,7 @@ public:
         m_Size--;
     }
 
-    T& GetData(Entity entity)
+    [[nodiscard]] T& GetData(Entity entity)
     {
         assert(HasData(entity) and "Retrieving non-existent component.");
 
@@ -62,7 +62,7 @@ public:
         return m_ComponentArray[m_EntityToIndexMap[entity]];
     }
 
-    bool HasData(Entity entity) { return (m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end()); }
+    [[nodiscard]] bool HasData(Entity entity) { return (m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end()); }
 
     void EntityDestroyed(Entity entity) override
     {

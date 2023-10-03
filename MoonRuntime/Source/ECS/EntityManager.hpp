@@ -19,7 +19,7 @@ public:
         }
     }
 
-    Entity CreateEntity()
+    [[nodiscard]] Entity CreateEntity()
     {
         // Take an ID from the front of the queue
         const Entity id = m_AvailableEntities.front();
@@ -45,7 +45,7 @@ public:
         m_Signatures[entity] = signature;
     }
 
-    Signature GetSignature(Entity entity)
+    [[nodiscard]] Signature GetSignature(Entity entity)
     {
         // Get this entity's signature from the array
         return m_Signatures[entity];

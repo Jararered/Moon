@@ -11,7 +11,7 @@
 class SystemManager
 {
 public:
-    template <typename T> std::shared_ptr<T> RegisterSystem()
+    template <typename T> [[nodiscard]] std::shared_ptr<T> RegisterSystem()
     {
         assert(!IsRegistered<T>() and "Registering system more than once.");
 
@@ -61,7 +61,7 @@ public:
         }
     }
 
-    template <typename T> bool IsRegistered() { return m_Systems.find(typeid(T).name()) != m_Systems.end(); }
+    template <typename T> [[nodiscard]] bool IsRegistered() { return m_Systems.find(typeid(T).name()) != m_Systems.end(); }
 
 private:
     // Map from system type string pointer to a signature

@@ -26,7 +26,7 @@ public:
         m_NextComponentType++;
     }
 
-    template <typename T> ComponentType GetComponentType()
+    template <typename T> [[nodiscard]] ComponentType GetComponentType()
     {
         const char* typeName = typeid(T).name();
 
@@ -48,16 +48,16 @@ public:
         GetComponentArray<T>()->RemoveData(entity);
     }
 
-    template <typename T> T& GetComponent(Entity entity)
+    template <typename T> [[nodiscard]] T& GetComponent(Entity entity)
     {
         // Get a reference to a component from the array for an entity
         return GetComponentArray<T>()->GetData(entity);
     }
 
     // Check for if component array includes entity
-    template <typename T> bool HasComponent(Entity entity) { return GetComponentArray<T>()->HasData(entity); }
+    template <typename T> [[nodiscard]] bool HasComponent(Entity entity) { return GetComponentArray<T>()->HasData(entity); }
 
-    template <typename T> bool IsRegistered() { return m_ComponentTypes.find(typeid(T).name()) != m_ComponentTypes.end(); }
+    template <typename T> [[nodiscard]] bool IsRegistered() { return m_ComponentTypes.find(typeid(T).name()) != m_ComponentTypes.end(); }
 
     void EntityDestroyed(Entity entity)
     {
