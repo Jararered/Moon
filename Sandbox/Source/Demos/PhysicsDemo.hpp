@@ -26,13 +26,16 @@ public:
 
     void CreateBase()
     {
+        const auto length = 10.0f;
+        const auto width = 500.0f;
+
         // Floor
         {
             Entity entity = m_Scenario->CreateEntity();
             m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
             m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
             m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
-            m_Scenario->AddComponent<Transform>(entity, Transform{.Position = {0, -1, 0}, .Rotation = {0, 0, 0}, .Scale = {20, 1, 20}});
+            m_Scenario->AddComponent<Transform>(entity, Transform{{0, -1, 0}, {0, 0, 0}, {length, 1, width}});
             m_Scenario->AddComponent<RigidBody>(entity);
         }
 
@@ -42,7 +45,7 @@ public:
             m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
             m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
             m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
-            m_Scenario->AddComponent<Transform>(entity, Transform{.Position = {10, 0, 0}, .Rotation = {0, 0, 0}, .Scale = {1, 1, 20}});
+            m_Scenario->AddComponent<Transform>(entity, Transform{{length / 2.0f, 0, 0}, {0, 0, 0}, {1, 1, width}});
             m_Scenario->AddComponent<RigidBody>(entity);
         }
         {
@@ -50,7 +53,7 @@ public:
             m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
             m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
             m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
-            m_Scenario->AddComponent<Transform>(entity, Transform{.Position = {-10, 0, 0}, .Rotation = {0, 0, 0}, .Scale = {1, 1, 20}});
+            m_Scenario->AddComponent<Transform>(entity, Transform{{-length / 2.0f, 0, 0}, {0, 0, 0}, {1, 1, width}});
             m_Scenario->AddComponent<RigidBody>(entity);
         }
         {
@@ -58,7 +61,7 @@ public:
             m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
             m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
             m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
-            m_Scenario->AddComponent<Transform>(entity, Transform{.Position = {0, 0, 10}, .Rotation = {0, 0, 0}, .Scale = {20, 1, 1}});
+            m_Scenario->AddComponent<Transform>(entity, Transform{{0, 0, width / 2.0f}, {0, 0, 0}, {length, 1, 1}});
             m_Scenario->AddComponent<RigidBody>(entity);
         }
         {
@@ -66,7 +69,7 @@ public:
             m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
             m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
             m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
-            m_Scenario->AddComponent<Transform>(entity, Transform{.Position = {0, 0, -10}, .Rotation = {0, 0, 0}, .Scale = {20, 1, 1}});
+            m_Scenario->AddComponent<Transform>(entity, Transform{{0, 0, -width / 2.0f}, {0, 0, 0}, {length, 1, 1}});
             m_Scenario->AddComponent<RigidBody>(entity);
         }
     }
@@ -84,7 +87,7 @@ public:
                 m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
                 m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
                 m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
-                m_Scenario->AddComponent<Transform>(entity, Transform{.Position = {2 * i + offset, y * 0.5f - 0.5f, 2 * j + offset}, .Rotation = {0, 0, 0}, .Scale = {1, y, 1}});
+                m_Scenario->AddComponent<Transform>(entity, Transform{{2 * i + offset, y * 0.5f - 0.5f, 2 * j + offset}, {0, 0, 0}, {1, y, 1}});
                 m_Scenario->AddComponent<RigidBody>(entity);
             }
         }
