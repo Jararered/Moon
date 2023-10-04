@@ -8,13 +8,11 @@ uniform mat4 u_ModelMatrix;
 uniform mat4 u_ViewMatrix;
 uniform mat4 u_ProjectionMatrix;
 
-out vec3 v_Position;
 out vec3 v_Normal;
 out vec2 v_TextureCoordinate;
 
 void main()
 {
-    v_Position = a_Position;
     v_Normal = a_Normal;
     v_TextureCoordinate = a_TextureCoordinate;
 
