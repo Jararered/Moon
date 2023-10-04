@@ -28,8 +28,8 @@ void PhysicsSystem::Initialize()
 void PhysicsSystem::Update(float dt)
 {
     // Ensures physics will always run at a minimum of 60hz
-    if (dt > 1.0f / 100.0f or dt == 0.0f)
-        dt = 1.0f / 100.0f;
+    if (dt > 1.0f / 60.0f or dt == 0.0f)
+        dt = 1.0f / 60.0f;
     dt = dt / static_cast<float>(m_SubStepCount);
 
     for (const auto entity : m_Entities)
