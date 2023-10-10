@@ -27,6 +27,6 @@ public:
     virtual void Finalize() = 0;
 
     std::string m_Name;
-    std::set<Entity> m_Entities;
+    std::set<EntityID> m_Entities;
     std::shared_ptr<Scenario> m_Scenario;
 };

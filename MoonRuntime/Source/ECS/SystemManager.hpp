@@ -32,7 +32,7 @@ public:
         m_Signatures.insert({typeName, signature});
     }
 
-    void EntityDestroyed(Entity entity)
+    void EntityDestroyed(EntityID entity)
     {
         // Erase a destroyed entity from all system lists
         // m_Entities is a set so no check needed
@@ -42,7 +42,7 @@ public:
         }
     }
 
-    void EntitySignatureChanged(Entity entity, Signature entitySignature)
+    void EntitySignatureChanged(EntityID entity, Signature entitySignature)
     {
         // Notify each system that an entity's signature changed
         for (const auto& [type, system] : m_Systems)

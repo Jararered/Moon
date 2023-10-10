@@ -27,9 +27,9 @@ public:
 private:
     [[nodiscard]] bool IsIntersect(const Transform& transform1, const Transform& transform2);
 
-    void UpdateStep(float dt, Entity entity);
-    void UpdateCollision(float dt, Entity entity);
-    void UpdateFriction(float dt, Entity entity);
+    void UpdateStep(float dt, EntityID entity);
+    void UpdateCollision(float dt, EntityID entity);
+    void UpdateFriction(float dt, EntityID entity);
 
     int m_SubStepCount;
     float m_AirFriction;   // Velocity lost per second due to movement through air

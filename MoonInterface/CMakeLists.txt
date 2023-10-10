@@ -13,5 +13,5 @@ add_executable(${Project} ${ProjectSourceFiles} ${ProjectHeaderFiles} ${ProjectS
 target_include_directories(${Project} PUBLIC Source)
 target_link_libraries(${Project} MoonRuntime)
 
-install(DIRECTORY Shaders DESTINATION ${CMAKE_SOURCE_DIR}/Build/Sandbox)
-install(DIRECTORY Textures DESTINATION ${CMAKE_SOURCE_DIR}/Build/Sandbox)
+install(DIRECTORY Shaders DESTINATION ${CMAKE_SOURCE_DIR}/Build/${Project})
+install(DIRECTORY Textures DESTINATION ${CMAKE_SOURCE_DIR}/Build/${Project})

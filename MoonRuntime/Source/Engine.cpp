@@ -33,6 +33,7 @@ namespace Moon
         m_Scenario = std::make_shared<Scenario>();
 
         m_Scenario->Initialize();
+
         m_Scenario->RegisterComponent<Camera>();
         m_Scenario->RegisterComponent<Control>();
         m_Scenario->RegisterComponent<Mesh>();
@@ -111,7 +112,7 @@ namespace Moon
 
         ImGui::End();
 
-        static Entity selectedEntity;
+        static EntityID selectedEntity;
         static Transform selectedTransform;
         static RigidBody selectedRigidBody;
         static std::string selectedMesh = "None";

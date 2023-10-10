@@ -36,7 +36,7 @@ private:
 
     int m_PolygonMode;
 
-    Entity m_Camera;
+    EntityID m_Camera;
     MSAAFramebuffer m_Framebuffer;
     Framebuffer m_WireFramebuffer;
 };

@@ -1,4 +1,4 @@
-#include "Demos/PhysicsDemo.hpp"
+#include "Demos/Demo.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
     spec.VSync = true;
     spec.Title = "Moon (OpenGL)";
 
-    PhysicsDemo app;
+    Demo app;
     app.CreateWindow(spec);
     app.CreateScene();
 

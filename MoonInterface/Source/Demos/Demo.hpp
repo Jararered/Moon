@@ -6,7 +6,7 @@
 #include "Scripts/Rotation.hpp"
 #include "Scripts/TestScript.hpp"
 
-class PhysicsDemo final : public Moon::Engine
+class Demo final : public Moon::Engine
 {
 public:
     void CreateScene()
@@ -31,7 +31,7 @@ public:
 
         // Floor
         {
-            Entity entity = m_Scenario->CreateEntity();
+            EntityID entity = m_Scenario->CreateEntity();
             m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
             m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
             m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
@@ -41,7 +41,7 @@ public:
 
         // Walls
         {
-            Entity entity = m_Scenario->CreateEntity();
+            EntityID entity = m_Scenario->CreateEntity();
             m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
             m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
             m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
@@ -49,7 +49,7 @@ public:
             m_Scenario->AddComponent<RigidBody>(entity);
         }
         {
-            Entity entity = m_Scenario->CreateEntity();
+            EntityID entity = m_Scenario->CreateEntity();
             m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
             m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
             m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
@@ -57,7 +57,7 @@ public:
             m_Scenario->AddComponent<RigidBody>(entity);
         }
         {
-            Entity entity = m_Scenario->CreateEntity();
+            EntityID entity = m_Scenario->CreateEntity();
             m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
             m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
             m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
@@ -65,7 +65,7 @@ public:
             m_Scenario->AddComponent<RigidBody>(entity);
         }
         {
-            Entity entity = m_Scenario->CreateEntity();
+            EntityID entity = m_Scenario->CreateEntity();
             m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
             m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
             m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
@@ -81,7 +81,7 @@ public:
         {
             for (int j = 0; j < 9; j++)
             {
-                Entity entity = m_Scenario->CreateEntity();
+                EntityID entity = m_Scenario->CreateEntity();
 
                 const auto y = Random::Value<float>(1.0f, 5.0f);
                 m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);

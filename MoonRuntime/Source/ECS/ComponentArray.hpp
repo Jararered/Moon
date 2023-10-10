@@ -14,7 +14,7 @@ class ComponentArrayInterface
 {
 public:
     virtual ~ComponentArrayInterface() = default;
-    virtual void EntityDestroyed(Entity entity) = 0;
+    virtual void EntityDestroyed(EntityID entity) = 0;
 };
 
 template <typename T> class ComponentArrayTemplate : public ComponentArrayInterface
@@ -22,7 +22,7 @@ template <typename T> class ComponentArrayTemplate : public ComponentArrayInterf
 public:
     ~ComponentArrayTemplate() override = default;
 
-    void InsertData(Entity entity, T component)
+    void InsertData(EntityID entity, T component)
     {
         assert(!HasData(entity) and "Component added to same entity more than once.");
 
@@ -34,7 +34,7 @@ public:
         m_Size++;
     }
 
-    void RemoveData(Entity entity)
+    void RemoveData(EntityID entity)
     {
         assert(HasData(entity) and "Removing non-existent component.");
 
@@ -44,7 +44,7 @@ public:
         m_ComponentArray[indexOfRemovedEntity] = m_ComponentArray[indexOfLastElement];
 
         // Update map to point to moved spot
-        const Entity entityOfLastElement = m_IndexToEntityMap[indexOfLastElement];
+        const EntityID entityOfLastElement = m_IndexToEntityMap[indexOfLastElement];
         m_EntityToIndexMap[entityOfLastElement] = indexOfRemovedEntity;
         m_IndexToEntityMap[indexOfRemovedEntity] = entityOfLastElement;
 
@@ -54,7 +54,7 @@ public:
         m_Size--;
     }
 
-    [[nodiscard]] T& GetData(Entity entity)
+    [[nodiscard]] T& GetData(EntityID entity)
     {
         assert(HasData(entity) and "Retrieving non-existent component.");
 
@@ -62,9 +62,9 @@ public:
         return m_ComponentArray[m_EntityToIndexMap[entity]];
     }
 
-    [[nodiscard]] bool HasData(Entity entity) { return (m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end()); }
+    [[nodiscard]] bool HasData(EntityID entity) { return (m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end()); }
 
-    void EntityDestroyed(Entity entity) override
+    void EntityDestroyed(EntityID entity) override
     {
         // Remove the entity's component if it existed
         if (HasData(entity))
@@ -81,10 +81,10 @@ private:
     std::array<T, MAX_ENTITIES> m_ComponentArray;
 
     // Map from an entity ID to an array index.
-    std::unordered_map<Entity, size_t> m_EntityToIndexMap;
+    std::unordered_map<EntityID, size_t> m_EntityToIndexMap;
 
     // Map from an array index to an entity ID.
-    std::unordered_map<size_t, Entity> m_IndexToEntityMap;
+    std::unordered_map<size_t, EntityID> m_IndexToEntityMap;
 
     // Total size of valid entries in the array.
     size_t m_Size;
