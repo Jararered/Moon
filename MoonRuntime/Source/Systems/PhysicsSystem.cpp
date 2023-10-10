@@ -20,8 +20,8 @@ void PhysicsSystem::Initialize()
 {
     m_Name = "Physics System";
     m_SubStepCount = 4;
-    m_AirFriction = 30.0f;
-    m_SolidFriction = 50.0f;
+    m_AirFrictionCoefficient = 30.0f;
+    m_SolidFrictionCoefficient = 50.0f;
     m_Gravity = glm::vec3(0.0f, -15.0f, 0.0f);
 }
 
@@ -53,8 +53,8 @@ void PhysicsSystem::UpdateUI()
 {
     ImGui::InputInt("Steps", &m_SubStepCount);
     ImGui::InputFloat3("Gravity", &m_Gravity.x);
-    ImGui::InputFloat("Air Friction", &m_AirFriction, 0.0f, 100.0f);
-    ImGui::InputFloat("Solid Friction", &m_SolidFriction, 0.0f, 100.0f);
+    ImGui::InputFloat("Air Friction", &m_AirFrictionCoefficient, 0.0f, 100.0f);
+    ImGui::InputFloat("Solid Friction", &m_SolidFrictionCoefficient, 0.0f, 100.0f);
 }
 
 void PhysicsSystem::Finalize()
@@ -139,7 +139,7 @@ void PhysicsSystem::UpdateCollision(float dt, Entity entity)
             else
             {
                 auto momentum = rigidBody1.Mass * glm::abs(rigidBody1.Velocity.x);
-                momentum -= glm::min(momentum, m_SolidFriction * dt);
+                momentum -= glm::min(momentum, m_SolidFrictionCoefficient * dt);
 
                 auto newVelocityX = 0.0f;
                 if (rigidBody1.Velocity.x < 0.0f)
@@ -192,7 +192,7 @@ void PhysicsSystem::UpdateCollision(float dt, Entity entity)
             else
             {
                 auto momentum = rigidBody1.Mass * glm::abs(rigidBody1.Velocity.z);
-                momentum -= glm::min(momentum, m_SolidFriction * dt);
+                momentum -= glm::min(momentum, m_SolidFrictionCoefficient * dt);
 
                 auto newVelocityZ = 0.0f;
                 if (rigidBody1.Velocity.z < 0.0f)
@@ -220,9 +220,9 @@ void PhysicsSystem::UpdateFriction(float dt, Entity entity)
         auto newMomentum = 0.0f;
 
         if (rigidBody.MovementStatus == Status::Falling)
-            newMomentum = momentum - glm::min(momentum, m_AirFriction * dt);
+            newMomentum = momentum - glm::min(momentum, m_AirFrictionCoefficient * dt);
         if (rigidBody.MovementStatus == Status::Grounded)
-            newMomentum = momentum - glm::min(momentum, m_SolidFriction * dt);
+            newMomentum = momentum - glm::min(momentum, m_SolidFrictionCoefficient * dt);
 
         const auto newVelocityXZ = glm::normalize(velocityXZ) * newMomentum / rigidBody.Mass;
         rigidBody.Velocity.x = newVelocityXZ.x;

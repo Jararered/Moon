@@ -26,8 +26,8 @@ public:
 
     void CreateBase()
     {
-        const auto length = 10.0f;
-        const auto width = 500.0f;
+        const auto length = 20.0f;
+        const auto width = 20.0f;
 
         // Floor
         {

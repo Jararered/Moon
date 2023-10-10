@@ -36,30 +36,30 @@ public:
         return m_ComponentTypes[typeName];
     }
 
-    template <typename T> void AddComponent(EntityID entity, const T& component)
+    template <typename T> void AddComponent(Entity entity, const T& component)
     {
         // Add a component to the array for an entity
         GetComponentArray<T>()->InsertData(entity, component);
     }
 
-    template <typename T> void RemoveComponent(EntityID entity)
+    template <typename T> void RemoveComponent(Entity entity)
     {
         // Remove a component from the array for an entity
         GetComponentArray<T>()->RemoveData(entity);
     }
 
-    template <typename T> [[nodiscard]] T& GetComponent(EntityID entity)
+    template <typename T> [[nodiscard]] T& GetComponent(Entity entity)
     {
         // Get a reference to a component from the array for an entity
         return GetComponentArray<T>()->GetData(entity);
     }
 
     // Check for if component array includes entity
-    template <typename T> [[nodiscard]] bool HasComponent(EntityID entity) { return GetComponentArray<T>()->HasData(entity); }
+    template <typename T> [[nodiscard]] bool HasComponent(Entity entity) { return GetComponentArray<T>()->HasData(entity); }
 
     template <typename T> [[nodiscard]] bool IsRegistered() { return m_ComponentTypes.find(typeid(T).name()) != m_ComponentTypes.end(); }
 
-    void EntityDestroyed(EntityID entity)
+    void EntityDestroyed(Entity entity)
     {
         // Notify each component array that an entity has been destroyed
         // If it has a component for that entity, it will remove it

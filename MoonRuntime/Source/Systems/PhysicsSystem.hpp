@@ -27,12 +27,12 @@ public:
 private:
     [[nodiscard]] bool IsIntersect(const Transform& transform1, const Transform& transform2);
 
-    void UpdateStep(float dt, EntityID entity);
-    void UpdateCollision(float dt, EntityID entity);
-    void UpdateFriction(float dt, EntityID entity);
+    void UpdateStep(float dt, Entity entity);
+    void UpdateCollision(float dt, Entity entity);
+    void UpdateFriction(float dt, Entity entity);
 
     int m_SubStepCount;
-    float m_AirFriction;   // Velocity lost per second due to movement through air
-    float m_SolidFriction; // Velocity lost per second due to physical collision
-    glm::vec3 m_Gravity;
+    float m_AirFrictionCoefficient;   // Velocity lost due to movement through air
+    float m_SolidFrictionCoefficient; // Velocity lost due to physical collision
+    glm::vec3 m_Gravity;              // Acceleration downwards
 };
