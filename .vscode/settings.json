@@ -4,10 +4,10 @@
     "files.exclude": {
         ".vscode": true,
         "Build": true,
-        "Libraries": true,
+        //     "Libraries": true,
         ".clang-format": true,
         ".gitignore": true,
         "README.md": true,
-        "**/CMakeLists.txt": true,
+        //     "**/CMakeLists.txt": true,
     }
 }
