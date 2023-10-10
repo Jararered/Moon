@@ -6,7 +6,7 @@
 #include "Scripts/Rotation.hpp"
 #include "Scripts/TestScript.hpp"
 
-class PhysicsDemo final : public Engine
+class PhysicsDemo final : public Moon::Engine
 {
 public:
     void CreateScene()
