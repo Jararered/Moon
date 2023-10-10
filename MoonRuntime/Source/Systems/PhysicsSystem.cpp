@@ -78,7 +78,7 @@ bool PhysicsSystem::IsIntersect(const Transform& transform1, const Transform& tr
     // clang-format on
 }
 
-void PhysicsSystem::UpdateStep(float dt, EntityID entity)
+void PhysicsSystem::UpdateStep(float dt, Entity entity)
 {
     auto& transform = m_Scenario->GetComponent<Transform>(entity);
     auto& rigidBody = m_Scenario->GetComponent<RigidBody>(entity);
@@ -88,7 +88,7 @@ void PhysicsSystem::UpdateStep(float dt, EntityID entity)
     transform.Position = transform.Position + (rigidBody.Velocity * dt);
 }
 
-void PhysicsSystem::UpdateCollision(float dt, EntityID entity)
+void PhysicsSystem::UpdateCollision(float dt, Entity entity)
 {
     auto& transform1 = m_Scenario->GetComponent<Transform>(entity);
     auto& rigidBody1 = m_Scenario->GetComponent<RigidBody>(entity);
@@ -208,7 +208,7 @@ void PhysicsSystem::UpdateCollision(float dt, EntityID entity)
     }
 }
 
-void PhysicsSystem::UpdateFriction(float dt, EntityID entity)
+void PhysicsSystem::UpdateFriction(float dt, Entity entity)
 {
     auto& rigidBody = m_Scenario->GetComponent<RigidBody>(entity);
 

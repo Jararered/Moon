@@ -15,13 +15,13 @@ public:
         m_SystemManager = std::make_unique<SystemManager>();
     }
 
-    [[nodiscard]] EntityID CreateEntity()
+    [[nodiscard]] Entity CreateEntity()
     {
         // Entity methods
         return m_EntityManager->CreateEntity();
     }
 
-    void DestroyEntity(EntityID entity)
+    void DestroyEntity(Entity entity)
     {
         m_EntityManager->DestroyEntity(entity);
         m_ComponentManager->EntityDestroyed(entity);
@@ -34,7 +34,7 @@ public:
         m_ComponentManager->RegisterComponent<T>();
     }
 
-    template <typename T> void AddComponent(EntityID entity, const T& component)
+    template <typename T> void AddComponent(Entity entity, const T& component)
     {
         m_ComponentManager->AddComponent<T>(entity, component);
 
@@ -46,7 +46,7 @@ public:
     }
 
     // Added for adding components using the default constructor of the component
-    template <typename T> void AddComponent(EntityID entity)
+    template <typename T> void AddComponent(Entity entity)
     {
         m_ComponentManager->AddComponent<T>(entity, T());
 
@@ -57,7 +57,7 @@ public:
         m_SystemManager->EntitySignatureChanged(entity, signature);
     }
 
-    template <typename T> void RemoveComponent(EntityID entity)
+    template <typename T> void RemoveComponent(Entity entity)
     {
         m_ComponentManager->RemoveComponent<T>(entity);
 
@@ -68,12 +68,12 @@ public:
         m_SystemManager->EntitySignatureChanged(entity, signature);
     }
 
-    template <typename T> [[nodiscard]] T& GetComponent(EntityID entity) { return m_ComponentManager->GetComponent<T>(entity); }
+    template <typename T> [[nodiscard]] T& GetComponent(Entity entity) { return m_ComponentManager->GetComponent<T>(entity); }
 
     template <typename T> [[nodiscard]] ComponentType GetComponentType() { return m_ComponentManager->GetComponentType<T>(); }
 
     // Check for if entity has component type
-    template <typename T> bool HasComponent(EntityID entity) { return m_ComponentManager->HasComponent<T>(entity); }
+    template <typename T> bool HasComponent(Entity entity) { return m_ComponentManager->HasComponent<T>(entity); }
 
     // System methods
     template <typename T> [[nodiscard]] std::shared_ptr<T> RegisterSystem() { return m_SystemManager->RegisterSystem<T>(); }

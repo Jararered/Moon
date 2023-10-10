@@ -112,7 +112,7 @@ namespace Moon
 
         ImGui::End();
 
-        static EntityID selectedEntity;
+        static Entity selectedEntity;
         static Transform selectedTransform;
         static RigidBody selectedRigidBody;
         static std::string selectedMesh = "None";

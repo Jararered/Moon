@@ -19,7 +19,7 @@ public:
     void UpdateUI() override;
     void Finalize() override;
 
-    void UpdatePerspective(EntityID entity);
+    void UpdatePerspective(Entity entity);
 
 private:
     float m_Sensitivity = 0.2f;

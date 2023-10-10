@@ -78,7 +78,7 @@ void CameraSystem::Finalize()
 {
 }
 
-void CameraSystem::UpdatePerspective(EntityID entity)
+void CameraSystem::UpdatePerspective(Entity entity)
 {
     int width, height;
     glfwGetFramebufferSize(glfwGetCurrentContext(), &width, &height);

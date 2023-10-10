@@ -10,7 +10,7 @@ struct RotateScript : public ScriptInterface
 {
     RotateScript(float speed) : m_Speed(speed) {}
 
-    void Update(std::shared_ptr<Scenario> scenario, EntityID entity, float dt) override
+    void Update(std::shared_ptr<Scenario> scenario, Entity entity, float dt) override
     {
         auto& transform = scenario->GetComponent<Transform>(entity);
         transform.Rotation.y += m_Speed * dt;
