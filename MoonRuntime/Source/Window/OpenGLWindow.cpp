@@ -8,6 +8,11 @@
 
 #include "Input.hpp"
 
+ImVec4 rgba(int r, int g, int b, int a)
+{
+    return ImVec4(r / 255.0f, g / 255.0f, b / 255.0f, a);
+}
+
 OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
 {
     glfwInit();
@@ -33,7 +38,19 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGui::StyleColorsDark();
+    ImGui::StyleColorsLight();
+
+    ImGuiStyle& style = ImGui::GetStyle();
+
+    // style.Colors[ImGuiCol_Button] = rgba(255, 255, 255, 1);
+    // style.Colors[ImGuiCol_ButtonHovered] = rgba(229, 229, 229, 1);
+    // style.Colors[ImGuiCol_Text] = rgba(0, 0, 0, 1);
+    // style.Colors[ImGuiCol_Header] = rgba(232, 234, 237, 1);
+    // style.Colors[ImGuiCol_HeaderActive] = rgba(255, 255, 255, 1);
+    // style.Colors[ImGuiCol_HeaderHovered];
+
+    ImGuiIO& io = ImGui::GetIO();
+    io.Fonts->AddFontFromFileTTF("Fonts/segoeui.ttf", 18.0f);
 
     ImGui_ImplGlfw_InitForOpenGL(p_GLFWwindow, true);
     ImGui_ImplOpenGL3_Init("#version 150");

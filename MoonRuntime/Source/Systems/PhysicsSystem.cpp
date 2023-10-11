@@ -124,31 +124,14 @@ void PhysicsSystem::UpdateCollision(float dt, Entity entity)
             if (lower1.x < upper2.x and transform1.Position.x > transform2.Position.x)
                 transform1.Position.x += upper2.x - lower1.x;
 
-            // Update velocities
-            if (rigidBody2.Mass != 0.0f)
-            {
-                const auto c1 = (2.0f * rigidBody1.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
-                const auto c2 = (rigidBody1.Mass - rigidBody2.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
-
-                const auto newVelocityX2 = c1 * rigidBody1.Velocity.x - c2 * rigidBody2.Velocity.x;
-                const auto newVelocityX1 = c2 * rigidBody1.Velocity.x + c1 * rigidBody2.Velocity.x;
-
-                rigidBody1.Velocity.x = newVelocityX1;
-                rigidBody2.Velocity.x = newVelocityX2;
-            }
+            auto momentum = rigidBody1.Mass * glm::abs(rigidBody1.Velocity.x);
+            auto newVelocity = 0.0f;
+            if (rigidBody1.Velocity.x < 0.0f)
+                newVelocity = -momentum / rigidBody1.Mass;
             else
-            {
-                auto momentum = rigidBody1.Mass * glm::abs(rigidBody1.Velocity.x);
-                momentum -= glm::min(momentum, m_SolidFrictionCoefficient * dt);
+                newVelocity = momentum / rigidBody1.Mass;
 
-                auto newVelocityX = 0.0f;
-                if (rigidBody1.Velocity.x < 0.0f)
-                    newVelocityX = -momentum / rigidBody1.Mass;
-                else
-                    newVelocityX = momentum / rigidBody1.Mass;
-
-                rigidBody1.Velocity.x = newVelocityX;
-            }
+            rigidBody1.Velocity.x = newVelocity;
 
             continue;
         }
@@ -177,31 +160,14 @@ void PhysicsSystem::UpdateCollision(float dt, Entity entity)
             if (lower1.z < upper2.z and transform1.Position.z > transform2.Position.z)
                 transform1.Position.z += upper2.z - lower1.z;
 
-            // Update velocities
-            if (rigidBody2.Mass != 0.0f)
-            {
-                const auto c1 = (2.0f * rigidBody1.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
-                const auto c2 = (rigidBody1.Mass - rigidBody2.Mass) / (rigidBody1.Mass + rigidBody2.Mass);
-
-                const auto newVelocityZ2 = c1 * rigidBody1.Velocity.z - c2 * rigidBody2.Velocity.z;
-                const auto newVelocityZ1 = c2 * rigidBody1.Velocity.z + c1 * rigidBody2.Velocity.z;
-
-                rigidBody1.Velocity.z = newVelocityZ1;
-                rigidBody2.Velocity.z = newVelocityZ2;
-            }
+            auto momentum = rigidBody1.Mass * glm::abs(rigidBody1.Velocity.z);
+            auto newVelocity = 0.0f;
+            if (rigidBody1.Velocity.z < 0.0f)
+                newVelocity = -momentum / rigidBody1.Mass;
             else
-            {
-                auto momentum = rigidBody1.Mass * glm::abs(rigidBody1.Velocity.z);
-                momentum -= glm::min(momentum, m_SolidFrictionCoefficient * dt);
+                newVelocity = momentum / rigidBody1.Mass;
 
-                auto newVelocityZ = 0.0f;
-                if (rigidBody1.Velocity.z < 0.0f)
-                    newVelocityZ = -momentum / rigidBody1.Mass;
-                else
-                    newVelocityZ = momentum / rigidBody1.Mass;
-
-                rigidBody1.Velocity.z = newVelocityZ;
-            }
+            rigidBody1.Velocity.z = newVelocity;
 
             continue;
         }

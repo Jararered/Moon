@@ -15,3 +15,4 @@ target_link_libraries(${Project} MoonRuntime)
 
 install(DIRECTORY Shaders DESTINATION ${CMAKE_SOURCE_DIR}/Build/${Project})
 install(DIRECTORY Textures DESTINATION ${CMAKE_SOURCE_DIR}/Build/${Project})
+install(DIRECTORY Fonts DESTINATION ${CMAKE_SOURCE_DIR}/Build/${Project})

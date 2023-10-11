@@ -32,44 +32,44 @@ public:
         // Floor
         {
             Entity entity = m_Scenario->CreateEntity();
-            m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
             m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
             m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
             m_Scenario->AddComponent<Transform>(entity, Transform{{0, -1, 0}, {0, 0, 0}, {length, 1, width}});
+            m_Scenario->AddComponent<Mesh>(entity, std::make_shared<TexturedCubeMesh>(glm::vec3(length, 1, width)));
             m_Scenario->AddComponent<RigidBody>(entity);
         }
 
         // Walls
         {
             Entity entity = m_Scenario->CreateEntity();
-            m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
             m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
             m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
-            m_Scenario->AddComponent<Transform>(entity, Transform{{length / 2.0f, 0, 0}, {0, 0, 0}, {1, 1, width}});
+            m_Scenario->AddComponent<Transform>(entity, Transform{{length / 2.0f + 0.5f, 0, 0}, {0, 0, 0}, {1, 1, width}});
+            m_Scenario->AddComponent<Mesh>(entity, std::make_shared<TexturedCubeMesh>(glm::vec3(1, 1, width)));
             m_Scenario->AddComponent<RigidBody>(entity);
         }
         {
             Entity entity = m_Scenario->CreateEntity();
-            m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
             m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
             m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
-            m_Scenario->AddComponent<Transform>(entity, Transform{{-length / 2.0f, 0, 0}, {0, 0, 0}, {1, 1, width}});
+            m_Scenario->AddComponent<Transform>(entity, Transform{{-length / 2.0f - 0.5f, 0, 0}, {0, 0, 0}, {1, 1, width}});
+            m_Scenario->AddComponent<Mesh>(entity, std::make_shared<TexturedCubeMesh>(glm::vec3(1, 1, width)));
             m_Scenario->AddComponent<RigidBody>(entity);
         }
         {
             Entity entity = m_Scenario->CreateEntity();
-            m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
             m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
             m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
-            m_Scenario->AddComponent<Transform>(entity, Transform{{0, 0, width / 2.0f}, {0, 0, 0}, {length, 1, 1}});
+            m_Scenario->AddComponent<Transform>(entity, Transform{{0, 0, width / 2.0f + 0.5f}, {0, 0, 0}, {length, 1, 1}});
+            m_Scenario->AddComponent<Mesh>(entity, std::make_shared<TexturedCubeMesh>(glm::vec3(length, 1, 1)));
             m_Scenario->AddComponent<RigidBody>(entity);
         }
         {
             Entity entity = m_Scenario->CreateEntity();
-            m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
             m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Simple"]);
             m_Scenario->AddComponent<Texture>(entity, m_AvaliableTexturesMap["Debug 32x32"]);
-            m_Scenario->AddComponent<Transform>(entity, Transform{{0, 0, -width / 2.0f}, {0, 0, 0}, {length, 1, 1}});
+            m_Scenario->AddComponent<Transform>(entity, Transform{{0, 0, -width / 2.0f - 0.5f}, {0, 0, 0}, {length, 1, 1}});
+            m_Scenario->AddComponent<Mesh>(entity, std::make_shared<TexturedCubeMesh>(glm::vec3(length, 1, 1)));
             m_Scenario->AddComponent<RigidBody>(entity);
         }
     }

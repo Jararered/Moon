@@ -24,7 +24,7 @@ void ControlSystem::Register(std::shared_ptr<Scenario> scenario)
 
 void ControlSystem::Initialize()
 {
-    m_SpeedLimit = 3.0f;
+    m_SpeedLimit = 1.0f;
     m_Name = "Control System";
 }
 
@@ -32,8 +32,8 @@ void ControlSystem::Update(float dt)
 {
     for (const auto entity : m_Entities)
     {
-        const auto jumpMagnitude = 50.0f;
-        const auto walkMagnitude = 50.0f;
+        const auto jumpMagnitude = 7.5f;
+        const auto walkMagnitude = 5.0f;
 
         auto& transform = m_Scenario->GetComponent<Transform>(entity);
         auto& rigidBody = m_Scenario->GetComponent<RigidBody>(entity);
@@ -44,35 +44,42 @@ void ControlSystem::Update(float dt)
         const auto up = glm::vec3(0.0f, 1.0f, 0.0f);
         const auto right = glm::cross(forward, up);
 
-        auto accelerationDirection = glm::vec3(0.0f);
+        auto velocityDirection = glm::vec3(0.0f);
 
         // WASD movement
         if (Input::IsKeyPressed(Key::W))
-            accelerationDirection += forward;
+            velocityDirection += forward;
         if (Input::IsKeyPressed(Key::S))
-            accelerationDirection -= forward;
+            velocityDirection -= forward;
         if (Input::IsKeyPressed(Key::A))
-            accelerationDirection -= right;
+            velocityDirection -= right;
         if (Input::IsKeyPressed(Key::D))
-            accelerationDirection += right;
+            velocityDirection += right;
 
-        if (glm::length(accelerationDirection) != 0.0f)
-            accelerationDirection = glm::normalize(accelerationDirection);
+        if (glm::length(velocityDirection) != 0.0f)
+            velocityDirection = glm::normalize(velocityDirection);
 
         if (Input::IsKeyPressed(Key::Space) and rigidBody.MovementStatus == Status::Grounded)
         {
-            accelerationDirection += up;
+            velocityDirection += up;
             rigidBody.MovementStatus = Status::Falling;
         }
 
         // Apply velocity increment
-        auto acceleration = glm::vec3(0.0f);
-        acceleration.x = walkMagnitude * accelerationDirection.x;
-        acceleration.y = jumpMagnitude * accelerationDirection.y;
-        acceleration.z = walkMagnitude * accelerationDirection.z;
+        auto velocity = glm::vec3(0.0f);
+        velocity.x = walkMagnitude * velocityDirection.x;
+        velocity.y = jumpMagnitude * velocityDirection.y;
+        velocity.z = walkMagnitude * velocityDirection.z;
+        rigidBody.Velocity += velocity;
 
-        rigidBody.Acceleration = acceleration;
-        rigidBody.Velocity += rigidBody.Acceleration * dt;
+        // Limit velocity in x,z directions
+        auto xz = glm::vec3(rigidBody.Velocity.x, 0.0f, rigidBody.Velocity.z);
+        if (glm::length(xz) > m_SpeedLimit and glm::length(xz) != 0.0f)
+        {
+            auto newxz = glm::normalize(xz) * m_SpeedLimit;
+            rigidBody.Velocity.x = newxz.x;
+            rigidBody.Velocity.z = newxz.z;
+        }
     }
 }
 

@@ -5,7 +5,7 @@
 class TexturedCubeMesh : public MeshTemplate<Vertex3D<glm::vec3, glm::vec3, glm::vec2>> // Position, Normal, Texture Coordinate
 {
 public:
-    TexturedCubeMesh()
+    TexturedCubeMesh(glm::vec3 scale = glm::vec3(1.0f))
     {
         using Vertex = Vertex3D<glm::vec3, glm::vec3, glm::vec2>;
 
@@ -13,33 +13,33 @@ public:
         vertices.reserve(24);
 
         vertices.emplace_back(Vertex({-0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}));
-        vertices.emplace_back(Vertex({+0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}));
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f}));
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}));
+        vertices.emplace_back(Vertex({+0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {scale.x, 0.0f}));
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {scale.x, scale.y}));
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, scale.y}));
 
         vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, 0.0f}));
-        vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.0f, 0.0f}));
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.0f, 1.0f}));
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, 1.0f}));
+        vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {scale.x, 0.0f}));
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {scale.x, scale.y}));
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, scale.y}));
 
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, +0.5f}, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}));
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, +0.5f}, {1.0f, 0.0f, 0.0f}, {0.0f, scale.y}));
         vertices.emplace_back(Vertex({+0.5f, -0.5f, +0.5f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}));
-        vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}));
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}));
+        vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {scale.z, 0.0f}));
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {scale.z, scale.y}));
 
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}));
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.0f, scale.y}));
         vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}));
-        vertices.emplace_back(Vertex({-0.5f, -0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}));
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}));
+        vertices.emplace_back(Vertex({-0.5f, -0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {scale.z, 0.0f}));
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {scale.z, scale.y}));
 
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 1.0f}));
-        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 1.0f}));
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {scale.x, scale.z}));
+        vertices.emplace_back(Vertex({-0.5f, +0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, scale.z}));
         vertices.emplace_back(Vertex({-0.5f, +0.5f, +0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}));
-        vertices.emplace_back(Vertex({+0.5f, +0.5f, +0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f}));
+        vertices.emplace_back(Vertex({+0.5f, +0.5f, +0.5f}, {0.0f, 1.0f, 0.0f}, {scale.x, 0.0f}));
 
-        vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 1.0f}));
-        vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f}));
-        vertices.emplace_back(Vertex({+0.5f, -0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 0.0f}));
+        vertices.emplace_back(Vertex({-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, scale.z}));
+        vertices.emplace_back(Vertex({+0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {scale.x, scale.z}));
+        vertices.emplace_back(Vertex({+0.5f, -0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {scale.x, 0.0f}));
         vertices.emplace_back(Vertex({-0.5f, -0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 0.0f}));
 
         auto& indices = VertexBuffer.GetIndices();
