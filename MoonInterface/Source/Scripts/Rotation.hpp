@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Component/RigidBody.hpp"
-#include "Component/Script.hpp"
-#include "Component/Transform.hpp"
+#include "Components/RigidBody.hpp"
+#include "Components/Script.hpp"
+#include "Components/Transform.hpp"
 
 #include <glm/trigonometric.hpp>
 

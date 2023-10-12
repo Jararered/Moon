@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Component/Mesh.hpp"
-#include "Component/Shader.hpp"
+#include "Components/Mesh.hpp"
+#include "Components/Shader.hpp"
 #include "Entity.hpp"
 
 #include <glad/gl.h>

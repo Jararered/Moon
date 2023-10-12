@@ -1,10 +1,10 @@
 #include "ScriptSystem.hpp"
 
-#include "Scenario.hpp"
-#include "Signature.hpp"
+#include "Core/Scenario.hpp"
+#include "Core/Signature.hpp"
 
-#include "Component/Script.hpp"
-#include "Component/Transform.hpp"
+#include "Components/Script.hpp"
+#include "Components/Transform.hpp"
 
 #include <glm/glm.hpp>
 

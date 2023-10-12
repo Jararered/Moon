@@ -26,12 +26,12 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    p_GLFWwindow = glfwCreateWindow(m_WindowSpecification.Width, m_WindowSpecification.Height, m_WindowSpecification.Title.c_str(), NULL, NULL);
+    p_GLFWwindow = glfwCreateWindow(spec.Width, spec.Height, spec.Title.c_str(), NULL, NULL);
     glfwMakeContextCurrent(p_GLFWwindow);
 
     gladLoadGL(glfwGetProcAddress);
 
-    if (m_WindowSpecification.VSync)
+    if (spec.VSync)
         glfwSwapInterval(1);
     else
         glfwSwapInterval(0);
@@ -41,13 +41,6 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     ImGui::StyleColorsLight();
 
     ImGuiStyle& style = ImGui::GetStyle();
-
-    // style.Colors[ImGuiCol_Button] = rgba(255, 255, 255, 1);
-    // style.Colors[ImGuiCol_ButtonHovered] = rgba(229, 229, 229, 1);
-    // style.Colors[ImGuiCol_Text] = rgba(0, 0, 0, 1);
-    // style.Colors[ImGuiCol_Header] = rgba(232, 234, 237, 1);
-    // style.Colors[ImGuiCol_HeaderActive] = rgba(255, 255, 255, 1);
-    // style.Colors[ImGuiCol_HeaderHovered];
 
     ImGuiIO& io = ImGui::GetIO();
     io.Fonts->AddFontFromFileTTF("Fonts/segoeui.ttf", 18.0f);

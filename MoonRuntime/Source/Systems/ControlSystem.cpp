@@ -1,12 +1,12 @@
 #include "ControlSystem.hpp"
 
-#include "Input.hpp"
-#include "Scenario.hpp"
-#include "Signature.hpp"
+#include "Core/Input.hpp"
+#include "Core/Scenario.hpp"
+#include "Core/Signature.hpp"
 
-#include "Component/Control.hpp"
-#include "Component/RigidBody.hpp"
-#include "Component/Transform.hpp"
+#include "Components/Control.hpp"
+#include "Components/RigidBody.hpp"
+#include "Components/Transform.hpp"
 
 #include <glm/trigonometric.hpp>
 #include <imgui.h>
@@ -24,7 +24,7 @@ void ControlSystem::Register(std::shared_ptr<Scenario> scenario)
 
 void ControlSystem::Initialize()
 {
-    m_SpeedLimit = 1.0f;
+    m_SpeedLimit = 2.0f;
     m_Name = "Control System";
 }
 
@@ -32,7 +32,7 @@ void ControlSystem::Update(float dt)
 {
     for (const auto entity : m_Entities)
     {
-        const auto jumpMagnitude = 7.5f;
+        const auto jumpMagnitude = 5.0f;
         const auto walkMagnitude = 5.0f;
 
         auto& transform = m_Scenario->GetComponent<Transform>(entity);

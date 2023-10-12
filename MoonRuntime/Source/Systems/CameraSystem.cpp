@@ -1,10 +1,10 @@
 #include "CameraSystem.hpp"
 
-#include "Input.hpp"
-#include "Scenario.hpp"
+#include "Core/Input.hpp"
+#include "Core/Scenario.hpp"
 
-#include "Component/Camera.hpp"
-#include "Component/Transform.hpp"
+#include "Components/Camera.hpp"
+#include "Components/Transform.hpp"
 
 #include <glfw/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>

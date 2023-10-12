@@ -1,9 +1,9 @@
 #pragma once
 
-#include "SystemInterface.hpp"
+#include "Core/SystemInterface.hpp"
 
-#include "Component/RigidBody.hpp"
-#include "Component/Transform.hpp"
+#include "Components/RigidBody.hpp"
+#include "Components/Transform.hpp"
 
 #include <glm/vec3.hpp>
 

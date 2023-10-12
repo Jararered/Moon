@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Entity.hpp"
-#include "Scenario.hpp"
+#include "Core/Entity.hpp"
+#include "Core/Scenario.hpp"
 
 #include <memory>
 

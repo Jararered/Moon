@@ -9,12 +9,6 @@ set(InstallDir ${CMAKE_SOURCE_DIR})
 
 set(MoonIncludeDirs
     ${CMAKE_SOURCE_DIR}/MoonRuntime/Source
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/Components
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/ECS
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/Layer
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/Systems
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/Utilities
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/Window
 )
 
 set(LibraryIncludeDirs

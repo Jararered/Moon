@@ -9,14 +9,14 @@
 #include "SystemInterface.hpp"
 #include "Window.hpp"
 
-#include "Component/Camera.hpp"
-#include "Component/Control.hpp"
-#include "Component/Mesh.hpp"
-#include "Component/RigidBody.hpp"
-#include "Component/Script.hpp"
-#include "Component/Shader.hpp"
-#include "Component/Texture.hpp"
-#include "Component/Transform.hpp"
+#include "Components/Camera.hpp"
+#include "Components/Control.hpp"
+#include "Components/Mesh.hpp"
+#include "Components/RigidBody.hpp"
+#include "Components/Script.hpp"
+#include "Components/Shader.hpp"
+#include "Components/Texture.hpp"
+#include "Components/Transform.hpp"
 
 enum EngineStatus
 {

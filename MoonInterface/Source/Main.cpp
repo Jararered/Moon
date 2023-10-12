@@ -5,7 +5,7 @@ int main(int argc, char* argv[])
     WindowSpecification spec;
     spec.Width = 1280;
     spec.Height = 720;
-    spec.VSync = true;
+    spec.VSync = false;
     spec.Title = "Moon (OpenGL)";
 
     Demo app;

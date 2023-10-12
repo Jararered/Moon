@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SystemInterface.hpp"
+#include "Core/SystemInterface.hpp"
 
 class ControlSystem final : public SystemInterface
 {

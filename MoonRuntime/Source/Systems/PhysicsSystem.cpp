@@ -1,7 +1,7 @@
 #include "PhysicsSystem.hpp"
 
-#include "Scenario.hpp"
-#include "Utilities/Timer.hpp"
+#include "Core/Scenario.hpp"
+#include "Core/Timer.hpp"
 
 #include <glm/trigonometric.hpp>
 #include <imgui.h>
@@ -19,10 +19,13 @@ void PhysicsSystem::Register(std::shared_ptr<Scenario> scenario)
 void PhysicsSystem::Initialize()
 {
     m_Name = "Physics System";
+
     m_SubStepCount = 4;
-    m_AirFrictionCoefficient = 30.0f;
-    m_SolidFrictionCoefficient = 50.0f;
-    m_Gravity = glm::vec3(0.0f, -15.0f, 0.0f);
+
+    m_AirFrictionCoefficient = 20.0f;
+    m_SolidFrictionCoefficient = 20.0f;
+
+    m_Gravity = glm::vec3(0.0f, -9.81f, 0.0f);
 }
 
 void PhysicsSystem::Update(float dt)
@@ -52,7 +55,7 @@ void PhysicsSystem::Update(float dt)
 void PhysicsSystem::UpdateUI()
 {
     ImGui::InputInt("Steps", &m_SubStepCount);
-    ImGui::InputFloat3("Gravity", &m_Gravity.x);
+    ImGui::SliderFloat("Gravity", &m_Gravity.y, -10.0f, 10.0f);
     ImGui::InputFloat("Air Friction", &m_AirFrictionCoefficient, 0.0f, 100.0f);
     ImGui::InputFloat("Solid Friction", &m_SolidFrictionCoefficient, 0.0f, 100.0f);
 }
@@ -69,12 +72,9 @@ bool PhysicsSystem::IsIntersect(const Transform& transform1, const Transform& tr
     const auto upper2 = transform2.Position + (transform2.Scale / 2.0f);
 
     // clang-format off
-    return ((upper1.x > lower2.x) and 
-            (upper1.y > lower2.y) and 
-            (upper1.z > lower2.z) and 
-            (upper2.x > lower1.x) and 
-            (upper2.y > lower1.y) and 
-            (upper2.z > lower1.z));
+    return ((upper1.x > lower2.x) and (upper1.y > lower2.y) and 
+            (upper1.z > lower2.z) and (upper2.x > lower1.x) and 
+            (upper2.y > lower1.y) and (upper2.z > lower1.z));
     // clang-format on
 }
 
@@ -123,16 +123,6 @@ void PhysicsSystem::UpdateCollision(float dt, Entity entity)
                 transform1.Position.x -= upper1.x - lower2.x;
             if (lower1.x < upper2.x and transform1.Position.x > transform2.Position.x)
                 transform1.Position.x += upper2.x - lower1.x;
-
-            auto momentum = rigidBody1.Mass * glm::abs(rigidBody1.Velocity.x);
-            auto newVelocity = 0.0f;
-            if (rigidBody1.Velocity.x < 0.0f)
-                newVelocity = -momentum / rigidBody1.Mass;
-            else
-                newVelocity = momentum / rigidBody1.Mass;
-
-            rigidBody1.Velocity.x = newVelocity;
-
             continue;
         }
 
@@ -159,16 +149,6 @@ void PhysicsSystem::UpdateCollision(float dt, Entity entity)
                 transform1.Position.z -= upper1.z - lower2.z;
             if (lower1.z < upper2.z and transform1.Position.z > transform2.Position.z)
                 transform1.Position.z += upper2.z - lower1.z;
-
-            auto momentum = rigidBody1.Mass * glm::abs(rigidBody1.Velocity.z);
-            auto newVelocity = 0.0f;
-            if (rigidBody1.Velocity.z < 0.0f)
-                newVelocity = -momentum / rigidBody1.Mass;
-            else
-                newVelocity = momentum / rigidBody1.Mass;
-
-            rigidBody1.Velocity.z = newVelocity;
-
             continue;
         }
     }
@@ -179,19 +159,20 @@ void PhysicsSystem::UpdateFriction(float dt, Entity entity)
     auto& rigidBody = m_Scenario->GetComponent<RigidBody>(entity);
 
     // Momentum in X-Z plane
-    const auto velocityXZ = glm::vec3(rigidBody.Velocity.x, 0.0f, rigidBody.Velocity.z);
-    if (glm::length(velocityXZ) > 0.0f)
+    auto xz = glm::vec3(rigidBody.Velocity.x, 0.0f, rigidBody.Velocity.z);
+    auto xzMag = glm::length(xz);
+    if (glm::length(xz) > 0.0f)
     {
-        const auto momentum = rigidBody.Mass * glm::length(velocityXZ);
-        auto newMomentum = 0.0f;
+        auto momentum = rigidBody.Mass * glm::length(xz);
 
         if (rigidBody.MovementStatus == Status::Falling)
-            newMomentum = momentum - glm::min(momentum, m_AirFrictionCoefficient * dt);
-        if (rigidBody.MovementStatus == Status::Grounded)
-            newMomentum = momentum - glm::min(momentum, m_SolidFrictionCoefficient * dt);
+            xzMag -= glm::min(xzMag, m_AirFrictionCoefficient * dt);
 
-        const auto newVelocityXZ = glm::normalize(velocityXZ) * newMomentum / rigidBody.Mass;
-        rigidBody.Velocity.x = newVelocityXZ.x;
-        rigidBody.Velocity.z = newVelocityXZ.z;
+        if (rigidBody.MovementStatus == Status::Grounded)
+            xzMag -= glm::min(xzMag, m_SolidFrictionCoefficient * dt);
+
+        auto xzNew = glm::normalize(xz) * xzMag;
+        rigidBody.Velocity.x = xzNew.x;
+        rigidBody.Velocity.z = xzNew.z;
     }
 }

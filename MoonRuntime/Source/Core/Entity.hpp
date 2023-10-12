@@ -6,4 +6,4 @@
 using Entity = unsigned long long;
 
 // Used to define the size of arrays later on
-const Entity MAX_ENTITIES = 10000;
+const unsigned long long MAX_ENTITIES = 10000;

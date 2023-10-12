@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Component/Mesh.hpp>
+#include <Components/Mesh.hpp>
 
 class SquareMesh : public MeshTemplate<Vertex3D<glm::vec3, glm::vec3, glm::vec2>> // Position, Color, Texture
 {

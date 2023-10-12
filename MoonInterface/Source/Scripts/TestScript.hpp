@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Component/Script.hpp"
-#include "Component/TestComponent.hpp"
+#include "Components/Script.hpp"
+#include "Components/TestComponent.hpp"
 
 #include <iostream>
 
