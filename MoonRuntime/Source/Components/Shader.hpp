@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <glad/gl.h>
+#include <iostream>
 #include <string>
 
 struct Shader
@@ -11,55 +12,108 @@ struct Shader
     Shader() = default;
     Shader(std::string_view vertexPath, std::string_view fragmentPath)
     {
-        int success;
-        char info[512];
-
         // Vertex Shader
-        unsigned int vertexID;
-        std::ifstream vertexFile(vertexPath.data());
-        std::string vertexString((std::istreambuf_iterator<char>(vertexFile)), std::istreambuf_iterator<char>());
-        const char* vertexChar = vertexString.c_str();
-        vertexID = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vertexID, 1, &vertexChar, NULL);
+        auto vertexID = glCreateShader(GL_VERTEX_SHADER);
+        auto vertexSource = OpenFile(vertexPath);
+        auto vertexSourceChar = vertexSource.c_str();
+        glShaderSource(vertexID, 1, &vertexSourceChar, NULL);
         glCompileShader(vertexID);
-        glGetShaderiv(vertexID, GL_COMPILE_STATUS, &success);
-        if (not success)
-        {
-            glDeleteShader(vertexID);
-            glGetShaderInfoLog(vertexID, 512, NULL, info);
-        }
+        CheckCompileStatus(vertexID);
 
         // Fragment Shader
-        unsigned int fragmentID;
-        std::ifstream fragmentFile(fragmentPath.data());
-        std::string fragmentString((std::istreambuf_iterator<char>(fragmentFile)), std::istreambuf_iterator<char>());
-        const char* fragmentChar = fragmentString.c_str();
-        fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderSource(fragmentID, 1, &fragmentChar, NULL);
+        auto fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
+        auto fragmentSource = OpenFile(fragmentPath);
+        auto fragmentSourceChar = fragmentSource.c_str();
+        glShaderSource(fragmentID, 1, &fragmentSourceChar, NULL);
         glCompileShader(fragmentID);
-        glGetShaderiv(fragmentID, GL_COMPILE_STATUS, &success);
-        if (not success)
-        {
-            glGetShaderInfoLog(fragmentID, 512, NULL, info);
-            glDeleteShader(fragmentID);
-        }
+        CheckCompileStatus(fragmentID);
 
         // Linking
-        unsigned int shaderID;
-        shaderID = glCreateProgram();
+        auto shaderID = glCreateProgram();
         glAttachShader(shaderID, vertexID);
         glAttachShader(shaderID, fragmentID);
         glLinkProgram(shaderID);
-        glGetProgramiv(shaderID, GL_LINK_STATUS, &success);
-        if (not success)
-        {
-            glDeleteProgram(shaderID);
-            glGetProgramInfoLog(shaderID, 512, NULL, info);
-        }
+        CheckLinkingStatus(shaderID);
 
         glDeleteShader(vertexID);
         glDeleteShader(fragmentID);
 
         ID = shaderID;
+    }
+
+    Shader(std::string_view vertexPath, std::string_view geometryPath, std::string_view fragmentPath)
+    {
+        // Vertex Shader
+        auto vertexID = glCreateShader(GL_VERTEX_SHADER);
+        auto vertexSource = OpenFile(vertexPath);
+        auto vertexSourceChar = vertexSource.c_str();
+        glShaderSource(vertexID, 1, &vertexSourceChar, NULL);
+        glCompileShader(vertexID);
+        CheckCompileStatus(vertexID);
+
+        // Geometry Shader
+        auto geometryID = glCreateShader(GL_GEOMETRY_SHADER);
+        auto geometrySource = OpenFile(geometryPath);
+        auto geometrySourceChar = geometrySource.c_str();
+        glShaderSource(geometryID, 1, &geometrySourceChar, NULL);
+        glCompileShader(geometryID);
+        CheckCompileStatus(geometryID);
+
+        // Fragment Shader
+        auto fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
+        auto fragmentSource = OpenFile(fragmentPath);
+        auto fragmentSourceChar = fragmentSource.c_str();
+        glShaderSource(fragmentID, 1, &fragmentSourceChar, NULL);
+        glCompileShader(fragmentID);
+        CheckCompileStatus(fragmentID);
+
+        // Linking
+        auto shaderID = glCreateProgram();
+        glAttachShader(shaderID, vertexID);
+        glAttachShader(shaderID, geometryID);
+        glAttachShader(shaderID, fragmentID);
+        glLinkProgram(shaderID);
+        CheckLinkingStatus(shaderID);
+
+        glDeleteShader(vertexID);
+        glDeleteShader(geometryID);
+        glDeleteShader(fragmentID);
+
+        ID = shaderID;
+    }
+
+    std::string OpenFile(std::string_view file)
+    {
+        std::ifstream fileStream(file.data());
+        std::string fileString((std::istreambuf_iterator<char>(fileStream)), std::istreambuf_iterator<char>());
+        return fileString;
+    }
+
+    void CheckCompileStatus(unsigned int id)
+    {
+        int success;
+        char info[512];
+
+        glGetShaderiv(id, GL_COMPILE_STATUS, &success);
+        if (not success)
+        {
+            glGetShaderInfoLog(id, 512, NULL, info);
+            std::cout << "Shader::CheckCompileStatus(): " << info << "\n";
+            glDeleteShader(id);
+        }
+    }
+
+    void CheckLinkingStatus(unsigned int id)
+    {
+        int success;
+        char info[512];
+
+        glGetProgramiv(id, GL_LINK_STATUS, &success);
+        if (not success)
+        {
+            glGetProgramInfoLog(id, 512, NULL, info);
+            std::cout << "Shader::CheckLinkingStatus(): " << info << "\n";
+            glDeleteProgram(id);
+        }
     }
 };
