@@ -33,7 +33,7 @@ public:
     virtual void Create(int width, int height)
     {
         if (m_FrameShader.ID == 0)
-            m_FrameShader = Shader("Shaders/PositionTexture.vert", "Shaders/PositionTexture.frag");
+            m_FrameShader = Shader("Shaders/Framebuffer.vert", "Shaders/Framebuffer.frag");
 
         // Delete previous buffers if they exist
         if (m_FBO != 0)
@@ -142,7 +142,7 @@ public:
         m_Height = height;
 
         if (m_FrameShader.ID == 0)
-            m_FrameShader = Shader("Shaders/PositionTexture.vert", "Shaders/PositionTexture.frag");
+            m_FrameShader = Shader("Shaders/Framebuffer.vert", "Shaders/Framebuffer.frag");
 
         // Delete previous buffers if they exist
         if (m_FBO != 0)
