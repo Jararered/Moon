@@ -109,7 +109,7 @@ private:
     glm::ivec3 m_ChunkIndex = {0, 0, 0};
 };
 
-class ChunkMesh final : public MeshTemplate<Vertex3D<glm::vec3, glm::vec3, glm::vec2>> // Position, Normal, Texture
+class ChunkMesh final : public VertexMeshTemplate<Vertex3D<glm::vec3, glm::vec3, glm::vec2>> // Position, Normal, Texture
 {
 public:
     static DepricatedTextureMap s_TextureMap;
