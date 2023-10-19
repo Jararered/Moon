@@ -7,89 +7,92 @@ uniform mat4 u_ModelMatrix;
 uniform mat4 u_ViewMatrix;
 uniform mat4 u_ProjectionMatrix;
 
-void main(void)
+void main()
 {
-    vec4 position = gl_in[0].gl_Position + vec4(-0.5, -0.5, +0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    mat4 ModelViewProjection = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix;
+    vec4 position;
+
+    position = gl_in[0].gl_Position + vec4(-0.5, -0.5, +0.5, 0.0);
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(+0.5, -0.5, +0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(+0.5, +0.5, +0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(-0.5, +0.5, +0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     EndPrimitive();
 
     position = gl_in[0].gl_Position + vec4(+0.5, -0.5, -0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(-0.5, -0.5, -0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(-0.5, +0.5, -0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(+0.5, +0.5, -0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     EndPrimitive();
 
     position = gl_in[0].gl_Position + vec4(+0.5, +0.5, +0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(+0.5, -0.5, +0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(+0.5, -0.5, -0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(+0.5, +0.5, -0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     EndPrimitive();
 
     position = gl_in[0].gl_Position + vec4(-0.5, +0.5, -0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(-0.5, -0.5, -0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(-0.5, -0.5, +0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(-0.5, +0.5, +0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     EndPrimitive();
 
     position = gl_in[0].gl_Position + vec4(+0.5, +0.5, -0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(-0.5, +0.5, -0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(-0.5, +0.5, +0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(+0.5, +0.5, +0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     EndPrimitive();
 
     position = gl_in[0].gl_Position + vec4(-0.5, -0.5, -0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(+0.5, -0.5, -0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(+0.5, -0.5, +0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     position = gl_in[0].gl_Position + vec4(-0.5, -0.5, +0.5, 0.0);
-    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * position;
+    gl_Position = ModelViewProjection * position;
     EmitVertex();
     EndPrimitive();
 }
