@@ -1,6 +1,6 @@
 #pragma once
 
-struct TestComponent
+struct Test
 {
     int Data;
 };

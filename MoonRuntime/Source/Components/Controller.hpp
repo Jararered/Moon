@@ -1,8 +1,6 @@
 #pragma once
 
-#include <set>
-
-struct Control
+struct Controller
 {
     bool Enabled = true;
 };
