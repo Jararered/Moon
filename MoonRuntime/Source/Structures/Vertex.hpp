@@ -2,6 +2,11 @@
 
 #include <glad/gl.h>
 
+// Types intended to be used with these templates
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
+
 template <typename T1> class Vertex1D final
 {
 public:
