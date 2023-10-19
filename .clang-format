@@ -8,4 +8,4 @@ IndentAccessModifiers: false
 EmptyLineBeforeAccessModifier: Always
 AllowShortFunctionsOnASingleLine: InlineOnly
 FixNamespaceComments: false
-NamespaceIndentation: All
+NamespaceIndentation: None
