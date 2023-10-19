@@ -3,7 +3,7 @@
 #include <Moon.hpp>
 
 #include "Meshes/Cube.hpp"
-#include "Meshes/Voxel.hpp"
+#include "Meshes/SingleVoxel.hpp"
 #include "Scripts/TestScript.hpp"
 
 class Demo final : public Moon::Engine
@@ -11,20 +11,27 @@ class Demo final : public Moon::Engine
 public:
     void CreateScene()
     {
-
-        m_AvaliableMeshesMap.emplace("Voxel", std::make_shared<Voxel>());
         m_AvaliableMeshesMap.emplace("Cube", std::make_shared<TexturedCubeMesh>());
+        m_AvaliableMeshesMap.emplace("Voxel", std::make_shared<SingleVoxel>());
 
         m_AvaliableTexturesMap.emplace("Checker 32x32", Texture("Textures/checker32.png"));
         m_AvaliableTexturesMap.emplace("Debug 32x32", Texture("Textures/debug32.png"));
 
         m_AvaliableShadersMap.emplace("Simple", Shader("Shaders/PositionNormalTexture.vert", "Shaders/Texture.frag"));
+        m_AvaliableShadersMap.emplace("White", Shader("Shaders/PositionNormalTexture.vert", "Shaders/White.frag"));
         m_AvaliableShadersMap.emplace("Voxel", Shader("Shaders/Voxel.vert", "Shaders/Voxel.geom", "Shaders/Voxel.frag"));
 
         m_AvaliableScriptsMap.emplace("Test Script", std::make_shared<TestScript>());
 
         CreateBase();
-        // CreatePillars();
+
+        {
+            Entity entity = m_Scenario->CreateEntity();
+            m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
+            m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["White"]);
+            m_Scenario->AddComponent<Transform>(entity, Transform{{0, 2, 0}, {0, 0, 0}, {1, 1, 1}});
+            m_Scenario->AddComponent<RigidBody>(entity);
+        }
     }
 
     void CreateBase()
