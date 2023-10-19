@@ -1,17 +1,21 @@
 #pragma once
 
-#include "Components/Mesh.hpp"
 #include "Components/Shader.hpp"
+#include "Components/Mesh.hpp"
 #include "Entity.hpp"
+#include "Structures/Vertex.hpp"
+#include "Structures/VertexBuffer.hpp"
+#include "Structures/VertexMeshTemplate.hpp"
 
 #include <glad/gl.h>
 #include <glfw/glfw3.h>
+#include <glm/vec2.hpp>
 
 class Framebuffer
 {
 public:
     Framebuffer() = default;
-    ~Framebuffer() = default;
+    virtual ~Framebuffer() = default;
 
     void Bind() { glBindFramebuffer(GL_FRAMEBUFFER, m_FBO); }
     void Unbind() { glBindFramebuffer(GL_FRAMEBUFFER, 0); }
@@ -86,25 +90,25 @@ protected:
     unsigned int m_TBO = 0;
     unsigned int m_RBO = 0;
 
-    class Frame : public MeshTemplate<Vertex2D<glm::vec2, glm::vec2>> // Position, Texture
+    class Frame : public VertexMeshTemplate<Vertex2D<glm::vec2, glm::vec2>> // Position, Texture
     {
     public:
         Frame()
         {
             using Vertex = Vertex2D<glm::vec2, glm::vec2>;
 
-            auto& vertices = VertexBuffer.GetVertices();
+            auto& vertices = Buffer->GetVertices();
             vertices.reserve(4);
             vertices.emplace_back(Vertex({+1.0f, -1.0f}, {1.0f, 0.0f}));
             vertices.emplace_back(Vertex({+1.0f, +1.0f}, {1.0f, 1.0f}));
             vertices.emplace_back(Vertex({-1.0f, +1.0f}, {0.0f, 1.0f}));
             vertices.emplace_back(Vertex({-1.0f, -1.0f}, {0.0f, 0.0f}));
 
-            auto& indices = VertexBuffer.GetIndices();
+            auto& indices = Buffer->GetIndices();
             indices.reserve(6);
-            indices.insert(VertexBuffer.GetIndices().end(), {0, 1, 2, 2, 3, 0});
+            indices.insert(Buffer->GetIndices().end(), {0, 1, 2, 2, 3, 0});
 
-            VertexBuffer.BufferData();
+            Buffer->BufferData();
         }
     };
 
@@ -116,7 +120,7 @@ class MSAAFramebuffer final : public Framebuffer
 {
 public:
     MSAAFramebuffer() = default;
-    ~MSAAFramebuffer() = default;
+    ~MSAAFramebuffer() override = default;
 
     void Draw() override
     {

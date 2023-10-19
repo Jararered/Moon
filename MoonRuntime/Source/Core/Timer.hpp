@@ -3,6 +3,8 @@
 #include <chrono>
 #include <string>
 
+namespace Utilities
+{
 class Timer
 {
 public:
@@ -42,3 +44,4 @@ public:
     // Returns the amount of time since the construction of the timer
     [[nodiscard]] float GetTime();
 };
+}

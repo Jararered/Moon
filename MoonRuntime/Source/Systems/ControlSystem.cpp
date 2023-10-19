@@ -4,7 +4,7 @@
 #include "Core/Scenario.hpp"
 #include "Core/Signature.hpp"
 
-#include "Components/Control.hpp"
+#include "Components/Controller.hpp"
 #include "Components/RigidBody.hpp"
 #include "Components/Transform.hpp"
 
@@ -17,7 +17,7 @@ void ControlSystem::Register(std::shared_ptr<Scenario> scenario)
 
     Signature signature;
     signature.set(m_Scenario->GetComponentType<Transform>());
-    signature.set(m_Scenario->GetComponentType<Control>());
+    signature.set(m_Scenario->GetComponentType<Controller>());
     signature.set(m_Scenario->GetComponentType<RigidBody>());
     m_Scenario->SetSystemSignature<ControlSystem>(signature);
 }

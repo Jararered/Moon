@@ -10,7 +10,7 @@
 #include "Window.hpp"
 
 #include "Components/Camera.hpp"
-#include "Components/Control.hpp"
+#include "Components/Controller.hpp"
 #include "Components/Mesh.hpp"
 #include "Components/RigidBody.hpp"
 #include "Components/Script.hpp"
@@ -26,33 +26,33 @@ enum EngineStatus
 
 namespace Moon
 {
-    class Engine
-    {
-    public:
-        Engine() = default;
-        virtual ~Engine() = default;
+class Engine
+{
+public:
+    Engine() = default;
+    virtual ~Engine() = default;
 
-        std::shared_ptr<Window> CreateWindow(const WindowSpecification& spec);
+    std::shared_ptr<Window> CreateWindow(const WindowSpecification& spec);
 
-        void Initialize();
-        void Start();
+    void Initialize();
+    void Start();
 
-        void UpdateUI();
+    void UpdateUI();
 
-    protected:
-        float m_DT = 0.0f;
+protected:
+    float m_DT = 0.0f;
 
-        std::shared_ptr<Scenario> m_Scenario;
+    std::shared_ptr<Scenario> m_Scenario;
 
-        std::shared_ptr<Window> p_Window;
-        EngineStatus m_Status = EngineStatus::Uninitialized;
+    std::shared_ptr<Window> p_Window;
+    EngineStatus m_Status = EngineStatus::Uninitialized;
 
-        std::vector<std::shared_ptr<SystemInterface>> m_Systems;
-        std::map<unsigned int, std::shared_ptr<SystemInterface>> m_SystemMap;
+    std::vector<std::shared_ptr<SystemInterface>> m_Systems;
+    std::map<unsigned int, std::shared_ptr<SystemInterface>> m_SystemMap;
 
-        std::unordered_map<std::string, std::shared_ptr<MeshInterface>> m_AvaliableMeshesMap;
-        std::unordered_map<std::string, Script> m_AvaliableScriptsMap;
-        std::unordered_map<std::string, Texture> m_AvaliableTexturesMap;
-        std::unordered_map<std::string, Shader> m_AvaliableShadersMap;
-    };
+    std::unordered_map<std::string, std::shared_ptr<MeshInterface>> m_AvaliableMeshesMap;
+    std::unordered_map<std::string, Script> m_AvaliableScriptsMap;
+    std::unordered_map<std::string, Texture> m_AvaliableTexturesMap;
+    std::unordered_map<std::string, Shader> m_AvaliableShadersMap;
+};
 }

@@ -15,7 +15,7 @@
 #include "Systems/RenderSystem.hpp"
 
 #include "Components/Camera.hpp"
-#include "Components/Control.hpp"
+#include "Components/Controller.hpp"
 #include "Components/Mesh.hpp"
 #include "Components/RigidBody.hpp"
 #include "Components/Script.hpp"

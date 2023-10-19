@@ -1,5 +1,7 @@
 #include "Timer.hpp"
 
+using namespace Utilities;
+
 Timer::Timer(std::string_view name) : m_Name(name.data())
 {
     m_Start = std::chrono::high_resolution_clock::now();

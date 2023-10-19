@@ -4,7 +4,7 @@
 #include "Core/Scenario.hpp"
 
 #include "Components/Camera.hpp"
-#include "Components/Control.hpp"
+#include "Components/Controller.hpp"
 #include "Components/Mesh.hpp"
 #include "Components/RigidBody.hpp"
 #include "Components/Shader.hpp"
@@ -28,7 +28,6 @@ void RenderSystem::Register(std::shared_ptr<Scenario> scenario)
     signature.set(m_Scenario->GetComponentType<Mesh>());
     signature.set(m_Scenario->GetComponentType<Transform>());
     signature.set(m_Scenario->GetComponentType<Shader>());
-    signature.set(m_Scenario->GetComponentType<Texture>());
     m_Scenario->SetSystemSignature<RenderSystem>(signature);
 }
 
@@ -63,7 +62,7 @@ void RenderSystem::Initialize()
     // Adding a rigid body to the camera so that it cannot pass through other objects
     m_Scenario->AddComponent<RigidBody>(m_Camera, RigidBody{.Velocity = {0.0f, 0.0f, 0.0f}, .Acceleration = {0.0f, 0.0f, 0.0f}, .Mass = 1.0f});
 
-    m_Scenario->AddComponent<Control>(m_Camera);
+    m_Scenario->AddComponent<Controller>(m_Camera);
 
     ConfigureCallbacks();
 }
@@ -82,8 +81,12 @@ void RenderSystem::Update(float dt)
         const auto& shader = m_Scenario->GetComponent<Shader>(entity);
         glUseProgram(shader.ID);
 
-        const auto& texture = m_Scenario->GetComponent<Texture>(entity);
-        glBindTexture(GL_TEXTURE_2D, texture.ID);
+        glBindTexture(GL_TEXTURE_2D, 0);
+        if (m_Scenario->HasComponent<Texture>(entity))
+        {
+            const auto& texture = m_Scenario->GetComponent<Texture>(entity);
+            glBindTexture(GL_TEXTURE_2D, texture.ID);
+        }
 
         const auto& transform = m_Scenario->GetComponent<Transform>(entity);
         const auto translationMatrix = glm::translate(glm::mat4(1.0f), transform.Position);
