@@ -24,7 +24,9 @@ void ControlSystem::Register(std::shared_ptr<Scenario> scenario)
 
 void ControlSystem::Initialize()
 {
-    m_SpeedLimit = 2.0f;
+    m_SpeedLimit = 2.5f;
+    m_JumpMagnitude = 7.5f;
+    m_WalkMagnitude = 5.0f;
     m_Name = "Control System";
 }
 
@@ -32,11 +34,9 @@ void ControlSystem::Update(float dt)
 {
     for (const auto entity : m_Entities)
     {
-        const auto jumpMagnitude = 5.0f;
-        const auto walkMagnitude = 5.0f;
-
         auto& transform = m_Scenario->GetComponent<Transform>(entity);
         auto& rigidBody = m_Scenario->GetComponent<RigidBody>(entity);
+        auto speedLimit = m_SpeedLimit;
 
         // X - Z Movement
         const auto direction = glm::vec3(glm::cos(transform.Rotation.y) * glm::cos(transform.Rotation.x), 0.0f, glm::sin(transform.Rotation.y) * glm::cos(transform.Rotation.x));
@@ -67,16 +67,21 @@ void ControlSystem::Update(float dt)
 
         // Apply velocity increment
         auto velocity = glm::vec3(0.0f);
-        velocity.x = walkMagnitude * velocityDirection.x;
-        velocity.y = jumpMagnitude * velocityDirection.y;
-        velocity.z = walkMagnitude * velocityDirection.z;
+        velocity.x = m_WalkMagnitude * velocityDirection.x;
+        velocity.y = m_JumpMagnitude * velocityDirection.y;
+        velocity.z = m_WalkMagnitude * velocityDirection.z;
         rigidBody.Velocity += velocity;
+
+        if (Input::IsKeyPressed(Key::LeftControl))
+            speedLimit *= 1.5f;
+        if (Input::IsKeyPressed(Key::LeftShift))
+            speedLimit *= 0.5f;
 
         // Limit velocity in x,z directions
         auto xz = glm::vec3(rigidBody.Velocity.x, 0.0f, rigidBody.Velocity.z);
-        if (glm::length(xz) > m_SpeedLimit and glm::length(xz) != 0.0f)
+        if (glm::length(xz) > speedLimit and glm::length(xz) != 0.0f)
         {
-            auto newxz = glm::normalize(xz) * m_SpeedLimit;
+            auto newxz = glm::normalize(xz) * speedLimit;
             rigidBody.Velocity.x = newxz.x;
             rigidBody.Velocity.z = newxz.z;
         }
@@ -94,6 +99,9 @@ void ControlSystem::UpdateUI()
         ImGui::InputFloat3("Position", &transform.Position.x);
         ImGui::InputFloat3("Velocity", &rigidBody.Velocity.x);
         ImGui::InputFloat3("Acceleration", &rigidBody.Acceleration.x);
+
+        ImGui::InputFloat("Jump Magnitude", &m_JumpMagnitude);
+        ImGui::InputFloat("Walk Magnitude", &m_WalkMagnitude);
     }
 }
 
