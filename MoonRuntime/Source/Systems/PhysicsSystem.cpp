@@ -25,7 +25,7 @@ void PhysicsSystem::Initialize()
     m_AirFrictionCoefficient = 20.0f;
     m_SolidFrictionCoefficient = 20.0f;
 
-    m_Gravity = glm::vec3(0.0f, -9.81f, 0.0f);
+    m_Gravity = glm::vec3(0.0f, -20.0f, 0.0f);
 }
 
 void PhysicsSystem::Update(float dt)
@@ -55,9 +55,9 @@ void PhysicsSystem::Update(float dt)
 void PhysicsSystem::UpdateUI()
 {
     ImGui::InputInt("Steps", &m_SubStepCount);
-    ImGui::SliderFloat("Gravity", &m_Gravity.y, -10.0f, 10.0f);
-    ImGui::InputFloat("Air Friction", &m_AirFrictionCoefficient, 0.0f, 100.0f);
-    ImGui::InputFloat("Solid Friction", &m_SolidFrictionCoefficient, 0.0f, 100.0f);
+    ImGui::InputFloat("Gravity", &m_Gravity.y);
+    ImGui::InputFloat("Air Friction", &m_AirFrictionCoefficient);
+    ImGui::InputFloat("Solid Friction", &m_SolidFrictionCoefficient);
 }
 
 void PhysicsSystem::Finalize()
@@ -133,6 +133,11 @@ void PhysicsSystem::UpdateCollision(float dt, Entity entity)
                 transform1.Position.y -= upper1.y - lower2.y;
             if (lower1.y < upper2.y and transform1.Position.y > transform2.Position.y)
             {
+                if (rigidBody1.Velocity.y > 0.0f)
+                {
+                    transform1.Position.y += upper2.y - lower1.y;
+                    continue;
+                }
                 transform1.Position.y += upper2.y - lower1.y;
                 rigidBody1.MovementStatus = Status::Grounded;
             }
