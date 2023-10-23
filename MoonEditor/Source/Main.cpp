@@ -1,6 +1,6 @@
 #include "Demos/Demo.hpp"
 
-int main(int argc, char* argv[])
+int main()
 {
     WindowSpecification spec;
     spec.Width = 1280;

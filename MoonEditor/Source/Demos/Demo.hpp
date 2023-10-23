@@ -14,8 +14,8 @@ public:
         m_AvaliableMeshesMap.emplace("Cube", std::make_shared<TexturedCubeMesh>());
         m_AvaliableMeshesMap.emplace("Voxel", std::make_shared<SingleVoxel>());
 
-        m_AvaliableTexturesMap.emplace("Checker 32x32", Texture("Textures/checker32.png"));
-        m_AvaliableTexturesMap.emplace("Debug 32x32", Texture("Textures/debug32.png"));
+        m_AvaliableTexturesMap.emplace("Checker 32x32", Texture("Textures/checker.png"));
+        m_AvaliableTexturesMap.emplace("Debug 32x32", Texture("Textures/debug.png"));
 
         m_AvaliableShadersMap.emplace("Simple", Shader("Shaders/PositionNormalTexture.vert", "Shaders/Texture.frag"));
         m_AvaliableShadersMap.emplace("White", Shader("Shaders/PositionNormalTexture.vert", "Shaders/White.frag"));
