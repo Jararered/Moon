@@ -32,7 +32,7 @@ public:
     Engine() = default;
     virtual ~Engine() = default;
 
-    std::shared_ptr<Window> CreateWindow(const WindowSpecification& spec);
+    void CreateWindow(const WindowSpecification& spec);
 
     void Initialize();
     void Start();

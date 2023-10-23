@@ -89,14 +89,13 @@ void Engine::Start()
     }
 }
 
-std::shared_ptr<Window> Engine::CreateWindow(const WindowSpecification& spec)
+void Engine::CreateWindow(const WindowSpecification& spec)
 {
-    p_Window = std::make_shared<OpenGLWindow>(spec);
+    if (!p_Window)
+        p_Window = std::make_shared<OpenGLWindow>(spec);
 
     if (m_Status == EngineStatus::Uninitialized)
         Initialize();
-
-    return p_Window;
 }
 
 void Engine::UpdateUI()
