@@ -3,8 +3,8 @@
 #include "Core/Scenario.hpp"
 #include "Core/Signature.hpp"
 
-#include "Components/Script.hpp"
-#include "Components/Transform.hpp"
+#include "Component/Script.hpp"
+#include "Component/Transform.hpp"
 
 #include <glm/glm.hpp>
 

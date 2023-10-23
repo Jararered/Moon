@@ -2,8 +2,8 @@
 
 #include "Core/SystemInterface.hpp"
 
-#include "Components/RigidBody.hpp"
-#include "Components/Transform.hpp"
+#include "Component/RigidBody.hpp"
+#include "Component/Transform.hpp"
 
 #include <glm/vec3.hpp>
 

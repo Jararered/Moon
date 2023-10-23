@@ -3,8 +3,8 @@
 #include "Core/Input.hpp"
 #include "Core/Scenario.hpp"
 
-#include "Components/Camera.hpp"
-#include "Components/Transform.hpp"
+#include "Component/Camera.hpp"
+#include "Component/Transform.hpp"
 
 #include <glfw/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>

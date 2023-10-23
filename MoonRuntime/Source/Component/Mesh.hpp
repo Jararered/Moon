@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Structures/MeshInterface.hpp"
+#include "Structure/MeshInterface.hpp"
 
 #include <memory>
 

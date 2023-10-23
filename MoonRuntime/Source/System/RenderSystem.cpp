@@ -3,13 +3,13 @@
 #include "Core/Input.hpp"
 #include "Core/Scenario.hpp"
 
-#include "Components/Camera.hpp"
-#include "Components/Controller.hpp"
-#include "Components/Mesh.hpp"
-#include "Components/RigidBody.hpp"
-#include "Components/Shader.hpp"
-#include "Components/Texture.hpp"
-#include "Components/Transform.hpp"
+#include "Component/Camera.hpp"
+#include "Component/Controller.hpp"
+#include "Component/Mesh.hpp"
+#include "Component/RigidBody.hpp"
+#include "Component/Shader.hpp"
+#include "Component/Texture.hpp"
+#include "Component/Transform.hpp"
 
 #include <glad/gl.h>
 #include <glfw/glfw3.h>

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Components/Mesh.hpp>
-#include <Structures/Vertex.hpp>
-#include <Structures/VertexMeshTemplate.hpp>
+#include <Component/Mesh.hpp>
+#include <Structure/Vertex.hpp>
+#include <Structure/VertexMeshTemplate.hpp>
 
 class TexturedCubeMesh : public VertexMeshTemplate<Vertex3D<glm::vec3, glm::vec3, glm::vec2>> // Position, Normal, Texture Coordinate
 {

@@ -3,8 +3,8 @@
 #include "Core/Framebuffer.hpp"
 #include "Core/SystemInterface.hpp"
 
-#include "Components/Mesh.hpp"
-#include "Components/Shader.hpp"
+#include "Component/Mesh.hpp"
+#include "Component/Shader.hpp"
 
 #include <glm/mat4x4.hpp>
 

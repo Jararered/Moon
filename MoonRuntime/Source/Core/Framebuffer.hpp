@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Components/Shader.hpp"
-#include "Components/Mesh.hpp"
+#include "Component/Shader.hpp"
+#include "Component/Mesh.hpp"
 #include "Entity.hpp"
-#include "Structures/Vertex.hpp"
-#include "Structures/VertexBuffer.hpp"
-#include "Structures/VertexMeshTemplate.hpp"
+#include "Structure/Vertex.hpp"
+#include "Structure/VertexBuffer.hpp"
+#include "Structure/VertexMeshTemplate.hpp"
 
 #include <glad/gl.h>
 #include <glfw/glfw3.h>

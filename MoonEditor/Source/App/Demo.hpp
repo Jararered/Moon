@@ -2,9 +2,9 @@
 
 #include <Moon.hpp>
 
-#include "Meshes/Cube.hpp"
-#include "Meshes/SingleVoxel.hpp"
-#include "Scripts/TestScript.hpp"
+#include "Mesh/Cube.hpp"
+#include "Mesh/SingleVoxel.hpp"
+#include "Script/TestScript.hpp"
 
 class Demo final : public Moon::Engine
 {

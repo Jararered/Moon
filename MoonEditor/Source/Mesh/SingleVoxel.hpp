@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Structures/VoxelMeshTemplate.hpp"
+#include "Structure/VoxelMeshTemplate.hpp"
 
 class SingleVoxel : public VoxelMeshTemplate
 {

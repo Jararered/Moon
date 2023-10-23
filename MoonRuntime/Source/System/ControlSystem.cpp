@@ -4,9 +4,9 @@
 #include "Core/Scenario.hpp"
 #include "Core/Signature.hpp"
 
-#include "Components/Controller.hpp"
-#include "Components/RigidBody.hpp"
-#include "Components/Transform.hpp"
+#include "Component/Controller.hpp"
+#include "Component/RigidBody.hpp"
+#include "Component/Transform.hpp"
 
 #include <glm/trigonometric.hpp>
 #include <imgui.h>
