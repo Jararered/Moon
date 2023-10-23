@@ -43,11 +43,11 @@ void PhysicsSystem::Update(float dt)
         if (rigidBody1.Mass == 0.0f)
             continue;
 
-        for (unsigned int step = 0; step < m_SubStepCount; step++)
+        for (int step = 0; step < m_SubStepCount; step++)
         {
             UpdateStep(dt, entity);
             UpdateFriction(dt, entity);
-            UpdateCollision(dt, entity);
+            UpdateCollision(entity);
         }
     }
 }
@@ -88,7 +88,7 @@ void PhysicsSystem::UpdateStep(float dt, Entity entity)
     transform.Position = transform.Position + (rigidBody.Velocity * dt);
 }
 
-void PhysicsSystem::UpdateCollision(float dt, Entity entity)
+void PhysicsSystem::UpdateCollision(Entity entity)
 {
     auto& transform1 = m_Scenario->GetComponent<Transform>(entity);
     auto& rigidBody1 = m_Scenario->GetComponent<RigidBody>(entity);
@@ -104,8 +104,6 @@ void PhysicsSystem::UpdateCollision(float dt, Entity entity)
         // Check if collision cubes overlap
         if (not IsIntersect(transform1, transform2))
             continue;
-
-        auto& rigidBody2 = m_Scenario->GetComponent<RigidBody>(other);
 
         const auto lower1 = transform1.Position - transform1.Scale / 2.0f;
         const auto lower2 = transform2.Position - transform2.Scale / 2.0f;
@@ -168,8 +166,6 @@ void PhysicsSystem::UpdateFriction(float dt, Entity entity)
     auto xzMag = glm::length(xz);
     if (glm::length(xz) > 0.0f)
     {
-        auto momentum = rigidBody.Mass * glm::length(xz);
-
         if (rigidBody.MovementStatus == Status::Falling)
             xzMag -= glm::min(xzMag, m_AirFrictionCoefficient * dt);
 

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-
 // A simple type alias
 using Entity = unsigned long long;
 

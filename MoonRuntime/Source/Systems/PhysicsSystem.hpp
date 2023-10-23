@@ -28,7 +28,7 @@ private:
     [[nodiscard]] bool IsIntersect(const Transform& transform1, const Transform& transform2);
 
     void UpdateStep(float dt, Entity entity);
-    void UpdateCollision(float dt, Entity entity);
+    void UpdateCollision(Entity entity);
     void UpdateFriction(float dt, Entity entity);
 
     int m_SubStepCount;

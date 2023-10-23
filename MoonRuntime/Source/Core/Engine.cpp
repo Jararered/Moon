@@ -27,7 +27,7 @@ namespace Moon
 {
 void Engine::Initialize()
 {
-    if (m_Status = EngineStatus::Initialized)
+    if (m_Status == EngineStatus::Initialized)
         return;
 
     m_Scenario = std::make_shared<Scenario>();

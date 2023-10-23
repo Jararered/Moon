@@ -26,7 +26,7 @@ void CameraSystem::Initialize()
     m_Name = "Camera System";
 }
 
-void CameraSystem::Update(float dt)
+void CameraSystem::Update(float)
 {
     for (const auto entity : m_Entities)
     {

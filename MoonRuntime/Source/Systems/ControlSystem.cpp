@@ -30,7 +30,7 @@ void ControlSystem::Initialize()
     m_Name = "Control System";
 }
 
-void ControlSystem::Update(float dt)
+void ControlSystem::Update(float)
 {
     for (const auto entity : m_Entities)
     {

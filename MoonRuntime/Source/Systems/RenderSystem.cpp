@@ -67,7 +67,7 @@ void RenderSystem::Initialize()
     ConfigureCallbacks();
 }
 
-void RenderSystem::Update(float dt)
+void RenderSystem::Update(float)
 {
     m_Framebuffer.Bind();
 

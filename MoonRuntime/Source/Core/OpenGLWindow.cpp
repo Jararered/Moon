@@ -10,7 +10,7 @@
 
 ImVec4 rgba(int r, int g, int b, int a)
 {
-    return ImVec4(r / 255.0f, g / 255.0f, b / 255.0f, a);
+    return ImVec4(static_cast<float>(r) / 255.0f, static_cast<float>(g) / 255.0f, static_cast<float>(b) / 255.0f, static_cast<float>(a));
 }
 
 OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
@@ -39,8 +39,6 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGui::StyleColorsLight();
-
-    ImGuiStyle& style = ImGui::GetStyle();
 
     ImGuiIO& io = ImGui::GetIO();
     io.Fonts->AddFontFromFileTTF("Fonts/segoeui.ttf", 18.0f);

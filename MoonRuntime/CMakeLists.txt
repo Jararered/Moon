@@ -6,7 +6,6 @@ project(${Project})
 set(CMAKE_DEBUG_POSTFIX -debug)
 
 file(GLOB_RECURSE ProjectSourceFiles Source/*.cpp)
-file(GLOB_RECURSE ProjectHeaderFiles Source/*.hpp)
 
 set(LibrarySourceFiles
     ${CMAKE_SOURCE_DIR}/Libraries/glad/source/gl.c
@@ -17,10 +16,12 @@ set(LibrarySourceFiles
     ${CMAKE_SOURCE_DIR}/Libraries/imgui/imgui.cpp
     ${CMAKE_SOURCE_DIR}/Libraries/imgui/backends/imgui_impl_glfw.cpp
     ${CMAKE_SOURCE_DIR}/Libraries/imgui/backends/imgui_impl_opengl3.cpp
-
 )
 
-add_library(${Project} ${ProjectSourceFiles} ${ProjectHeaderFiles} ${LibrarySourceFiles})
+add_library(${Project} 
+    ${ProjectSourceFiles} 
+    ${LibrarySourceFiles}
+)
 
 if(UNIX)
     add_definitions(-DUNIX)
@@ -38,7 +39,7 @@ add_definitions(-DGLM_ENABLE_EXPERIMENTAL)
 target_include_directories(${Project} PUBLIC ${MoonIncludeDirs} ${LibraryIncludeDirs})
 
 # if(MSVC) 
-#   target_compile_options(${Project} PRIVATE /W4 /WX) 
+#     target_compile_options(${Project} PRIVATE /W4 /WX) 
 # else()
-#   target_compile_options(${Project} PRIVATE -Wall -Wextra -Wpedantic -Werror)
+#     target_compile_options(${Project} PRIVATE -Wall -Wextra -Wpedantic -Werror)
 # endif()
