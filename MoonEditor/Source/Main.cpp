@@ -1,4 +1,4 @@
-#include "App/Demo.hpp"
+#include "App/Editor.hpp"
 
 int main()
 {
@@ -8,9 +8,8 @@ int main()
     spec.VSync = false;
     spec.Title = "Moon (OpenGL)";
 
-    Demo app;
-    app.CreateWindow(spec);
-    app.CreateScene();
-
-    app.Start();
+    Editor editor;
+    editor.CreateWindow(spec);
+    editor.CreateScene();
+    editor.Start();
 }

@@ -6,7 +6,7 @@
 #include "Mesh/SingleVoxel.hpp"
 #include "Script/TestScript.hpp"
 
-class Demo final : public Moon::Engine
+class Editor final : public Moon::Engine
 {
 public:
     void CreateScene()
