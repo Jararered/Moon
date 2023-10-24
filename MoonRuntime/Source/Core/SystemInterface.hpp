@@ -20,7 +20,7 @@ public:
     virtual ~SystemInterface() = default;
 
 public:
-    virtual void Register(std::shared_ptr<Scenario>) = 0;
+    virtual void Register(std::shared_ptr<Scenario> scenario) = 0;
     virtual void Initialize() = 0;
     virtual void Update(float dt) = 0;
     virtual void UpdateUI() = 0;
