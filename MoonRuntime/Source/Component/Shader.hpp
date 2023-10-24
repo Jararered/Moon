@@ -98,7 +98,7 @@ struct Shader
         if (not success)
         {
             glGetShaderInfoLog(id, 512, NULL, info);
-            std::cout << "Shader::CheckCompileStatus(): " << info << "\n";
+            std::cout << "Shader::CheckCompileStatus():\n" << info << "\n";
             glDeleteShader(id);
         }
     }
@@ -112,7 +112,7 @@ struct Shader
         if (not success)
         {
             glGetProgramInfoLog(id, 512, NULL, info);
-            std::cout << "Shader::CheckLinkingStatus(): " << info << "\n";
+            std::cout << "Shader::CheckLinkingStatus():\n" << info << "\n";
             glDeleteProgram(id);
         }
     }
