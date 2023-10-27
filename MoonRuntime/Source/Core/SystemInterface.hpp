@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Entity.hpp"
+#include "UUID.hpp"
 
 #include <imgui.h>
 #include <memory>
@@ -13,10 +13,6 @@ class SystemInterface
 {
 public:
     SystemInterface() = default;
-    SystemInterface(const SystemInterface&) = delete;
-    SystemInterface(SystemInterface&&) = delete;
-    SystemInterface& operator=(const SystemInterface&) = delete;
-    SystemInterface& operator=(SystemInterface&&) = delete;
     virtual ~SystemInterface() = default;
 
 public:
@@ -27,6 +23,6 @@ public:
     virtual void Finalize() = 0;
 
     std::string m_Name;
-    std::set<Entity> m_Entities;
+    std::set<UUID> m_UUIDs;
     std::shared_ptr<Scenario> m_Scenario;
 };

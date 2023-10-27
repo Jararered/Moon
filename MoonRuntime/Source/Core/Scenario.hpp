@@ -15,17 +15,17 @@ public:
         m_SystemManager = std::make_unique<SystemManager>();
     }
 
-    [[nodiscard]] Entity CreateEntity()
+    [[nodiscard]] UUID CreateEntity()
     {
-        // Entity methods
+        // UUID methods
         return m_EntityManager->CreateEntity();
     }
 
-    void DestroyEntity(Entity entity)
+    void DestroyEntity(UUID uuid)
     {
-        m_EntityManager->DestroyEntity(entity);
-        m_ComponentManager->EntityDestroyed(entity);
-        m_SystemManager->EntityDestroyed(entity);
+        m_EntityManager->DestroyEntity(uuid);
+        m_ComponentManager->EntityDestroyed(uuid);
+        m_SystemManager->EntityDestroyed(uuid);
     }
 
     template <typename T> void RegisterComponent()
@@ -34,46 +34,46 @@ public:
         m_ComponentManager->RegisterComponent<T>();
     }
 
-    template <typename T> void AddComponent(Entity entity, const T& component)
+    template <typename T> void AddComponent(UUID uuid, const T& component)
     {
-        m_ComponentManager->AddComponent<T>(entity, component);
+        m_ComponentManager->AddComponent<T>(uuid, component);
 
-        auto signature = m_EntityManager->GetSignature(entity);
+        auto signature = m_EntityManager->GetSignature(uuid);
         signature.set(m_ComponentManager->GetComponentType<T>(), true);
-        m_EntityManager->SetSignature(entity, signature);
+        m_EntityManager->SetSignature(uuid, signature);
 
-        m_SystemManager->EntitySignatureChanged(entity, signature);
+        m_SystemManager->EntitySignatureChanged(uuid, signature);
     }
 
     // Added for adding components using the default constructor of the component
-    template <typename T> void AddComponent(Entity entity)
+    template <typename T> void AddComponent(UUID uuid)
     {
-        m_ComponentManager->AddComponent<T>(entity, T());
+        m_ComponentManager->AddComponent<T>(uuid, T());
 
-        auto signature = m_EntityManager->GetSignature(entity);
+        auto signature = m_EntityManager->GetSignature(uuid);
         signature.set(m_ComponentManager->GetComponentType<T>(), true);
-        m_EntityManager->SetSignature(entity, signature);
+        m_EntityManager->SetSignature(uuid, signature);
 
-        m_SystemManager->EntitySignatureChanged(entity, signature);
+        m_SystemManager->EntitySignatureChanged(uuid, signature);
     }
 
-    template <typename T> void RemoveComponent(Entity entity)
+    template <typename T> void RemoveComponent(UUID uuid)
     {
-        m_ComponentManager->RemoveComponent<T>(entity);
+        m_ComponentManager->RemoveComponent<T>(uuid);
 
-        auto signature = m_EntityManager->GetSignature(entity);
+        auto signature = m_EntityManager->GetSignature(uuid);
         signature.set(m_ComponentManager->GetComponentType<T>(), false);
-        m_EntityManager->SetSignature(entity, signature);
+        m_EntityManager->SetSignature(uuid, signature);
 
-        m_SystemManager->EntitySignatureChanged(entity, signature);
+        m_SystemManager->EntitySignatureChanged(uuid, signature);
     }
 
-    template <typename T> [[nodiscard]] T& GetComponent(Entity entity) { return m_ComponentManager->GetComponent<T>(entity); }
+    template <typename T> [[nodiscard]] T& GetComponent(UUID uuid) { return m_ComponentManager->GetComponent<T>(uuid); }
 
     template <typename T> [[nodiscard]] ComponentType GetComponentType() { return m_ComponentManager->GetComponentType<T>(); }
 
-    // Check for if entity has component type
-    template <typename T> [[nodiscard]] bool HasComponent(Entity entity) { return m_ComponentManager->HasComponent<T>(entity); }
+    // Check for if uuid has component type
+    template <typename T> [[nodiscard]] bool HasComponent(UUID uuid) { return m_ComponentManager->HasComponent<T>(uuid); }
 
     // System methods
     template <typename T> [[nodiscard]] std::shared_ptr<T> RegisterSystem() { return m_SystemManager->RegisterSystem<T>(); }

@@ -28,7 +28,7 @@ void CameraSystem::Initialize()
 
 void CameraSystem::Update(float)
 {
-    for (const auto entity : m_Entities)
+    for (const auto entity : m_UUIDs)
     {
         auto& transform = m_Scenario->GetComponent<Transform>(entity);
         auto& camera = m_Scenario->GetComponent<Camera>(entity);
@@ -59,7 +59,7 @@ void CameraSystem::Update(float)
 
 void CameraSystem::UpdateUI()
 {
-    for (const auto entity : m_Entities)
+    for (const auto entity : m_UUIDs)
     {
         auto& camera = m_Scenario->GetComponent<Camera>(entity);
 
@@ -78,7 +78,7 @@ void CameraSystem::Finalize()
 {
 }
 
-void CameraSystem::UpdatePerspective(Entity entity)
+void CameraSystem::UpdatePerspective(UUID entity)
 {
     int width, height;
     glfwGetFramebufferSize(glfwGetCurrentContext(), &width, &height);

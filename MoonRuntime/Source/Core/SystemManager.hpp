@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Entity.hpp"
 #include "Signature.hpp"
 #include "SystemInterface.hpp"
+#include "UUID.hpp"
 
 #include <assert.h>
 #include <memory>
@@ -32,19 +32,19 @@ public:
         m_Signatures.insert({typeName, signature});
     }
 
-    void EntityDestroyed(Entity entity)
+    void EntityDestroyed(UUID uuid)
     {
-        // Erase a destroyed entity from all system lists
-        // m_Entities is a set so no check needed
+        // Erase a destroyed uuid from all system lists
+        // m_UUIDs is a set so no check needed
         for (const auto& [_, system] : m_Systems)
         {
-            system->m_Entities.erase(entity);
+            system->m_UUIDs.erase(uuid);
         }
     }
 
-    void EntitySignatureChanged(Entity entity, Signature entitySignature)
+    void EntitySignatureChanged(UUID uuid, Signature entitySignature)
     {
-        // Notify each system that an entity's signature changed
+        // Notify each system that an uuid's signature changed
         for (const auto& [type, system] : m_Systems)
         {
             const auto& systemSignature = m_Signatures[type];
@@ -52,12 +52,12 @@ public:
             if ((entitySignature & systemSignature) == systemSignature)
             {
                 // Entity signature matches system signature - insert into set
-                system->m_Entities.insert(entity);
+                system->m_UUIDs.insert(uuid);
             }
             else
             {
                 // Entity signature does not match system signature - erase from set
-                system->m_Entities.erase(entity);
+                system->m_UUIDs.erase(uuid);
             }
         }
     }

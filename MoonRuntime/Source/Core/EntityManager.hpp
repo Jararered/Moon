@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Entity.hpp"
 #include "Signature.hpp"
+#include "UUID.hpp"
 
 #include <array>
 #include <bitset>
@@ -12,51 +12,51 @@ class EntityManager
 public:
     EntityManager()
     {
-        // Initialize the queue with all possible entity IDs
-        for (Entity entity = 0; entity < MAX_ENTITIES; entity++)
+        // Initialize the queue with all possible UUIDs
+        for (UUID uuid = 0; uuid < MAX_UUIDS; uuid++)
         {
-            m_AvailableEntities.push(entity);
+            m_AvailableEntities.push(uuid);
         }
     }
 
-    [[nodiscard]] Entity CreateEntity()
+    [[nodiscard]] UUID CreateEntity()
     {
         // Take an ID from the front of the queue
-        const Entity id = m_AvailableEntities.front();
+        const UUID id = m_AvailableEntities.front();
         m_AvailableEntities.pop();
         m_ActiveEntityCount++;
 
         return id;
     }
 
-    void DestroyEntity(Entity entity)
+    void DestroyEntity(UUID uuid)
     {
-        // Invalidate the destroyed entity's signature
-        m_Signatures[entity].reset();
+        // Invalidate the destroyed UUID's signature
+        m_Signatures[uuid].reset();
 
         // Put the destroyed ID at the back of the queue
-        m_AvailableEntities.push(entity);
+        m_AvailableEntities.push(uuid);
         m_ActiveEntityCount--;
     }
 
-    void SetSignature(Entity entity, Signature signature)
+    void SetSignature(UUID uuid, Signature signature)
     {
-        // Put this entity's signature into the array
-        m_Signatures[entity] = signature;
+        // Put this uuid's signature into the array
+        m_Signatures[uuid] = signature;
     }
 
-    [[nodiscard]] Signature GetSignature(Entity entity)
+    [[nodiscard]] Signature GetSignature(UUID uuid)
     {
-        // Get this entity's signature from the array
-        return m_Signatures[entity];
+        // Get this uuid's signature from the array
+        return m_Signatures[uuid];
     }
 
 private:
-    // Queue of unused entity IDs
-    std::queue<Entity> m_AvailableEntities;
+    // Queue of unused uuid IDs
+    std::queue<UUID> m_AvailableEntities;
 
-    // Array of signatures where the index corresponds to the entity ID
-    std::array<Signature, MAX_ENTITIES> m_Signatures;
+    // Array of signatures where the index corresponds to the uuid ID
+    std::array<Signature, MAX_UUIDS> m_Signatures;
 
     // Total living entities - used to keep limits on how many exist
     uint32_t m_ActiveEntityCount;

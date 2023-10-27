@@ -7,7 +7,7 @@
 
 struct TestScript : public ScriptInterface
 {
-    void Update(std::shared_ptr<Scenario> scenario, Entity entity, float dt) override
+    void Update(std::shared_ptr<Scenario> scenario, UUID entity, float dt) override
     {
         if (scenario->HasComponent<Test>(entity))
         {

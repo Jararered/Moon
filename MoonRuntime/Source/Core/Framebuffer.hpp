@@ -131,12 +131,14 @@ public:
         // Draw 2D Frame Quad
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-        // glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         glDisable(GL_DEPTH_TEST);
 
         glUseProgram(m_FrameShader.ID);
         glBindTexture(GL_TEXTURE_2D, m_TBO);
+
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
         m_FrameMesh.Draw();
     }
 

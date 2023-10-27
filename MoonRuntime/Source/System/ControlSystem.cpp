@@ -32,7 +32,7 @@ void ControlSystem::Initialize()
 
 void ControlSystem::Update(float)
 {
-    for (const auto entity : m_Entities)
+    for (const auto entity : m_UUIDs)
     {
         auto& transform = m_Scenario->GetComponent<Transform>(entity);
         auto& rigidBody = m_Scenario->GetComponent<RigidBody>(entity);
@@ -90,7 +90,7 @@ void ControlSystem::Update(float)
 
 void ControlSystem::UpdateUI()
 {
-    for (const auto entity : m_Entities)
+    for (const auto entity : m_UUIDs)
     {
         auto& transform = m_Scenario->GetComponent<Transform>(entity);
         auto& rigidBody = m_Scenario->GetComponent<RigidBody>(entity);

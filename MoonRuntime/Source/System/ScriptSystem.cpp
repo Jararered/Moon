@@ -25,7 +25,7 @@ void ScriptSystem::Initialize()
 
 void ScriptSystem::Update(float dt)
 {
-    for (const auto entity : m_Entities)
+    for (const auto entity : m_UUIDs)
     {
         auto& script = m_Scenario->GetComponent<Script>(entity);
         script->Update(m_Scenario, entity, m_TimeScale * dt);

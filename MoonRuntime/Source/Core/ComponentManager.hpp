@@ -2,7 +2,7 @@
 
 #include "ComponentArray.hpp"
 #include "ComponentType.hpp"
-#include "Entity.hpp"
+#include "UUID.hpp"
 
 #include <memory>
 #include <unordered_map>
@@ -36,36 +36,36 @@ public:
         return m_ComponentTypes[typeName];
     }
 
-    template <typename T> void AddComponent(Entity entity, const T& component)
+    template <typename T> void AddComponent(UUID uuid, const T& component)
     {
-        // Add a component to the array for an entity
-        GetComponentArray<T>()->InsertData(entity, component);
+        // Add a component to the array for an uuid
+        GetComponentArray<T>()->InsertData(uuid, component);
     }
 
-    template <typename T> void RemoveComponent(Entity entity)
+    template <typename T> void RemoveComponent(UUID uuid)
     {
-        // Remove a component from the array for an entity
-        GetComponentArray<T>()->RemoveData(entity);
+        // Remove a component from the array for an uuid
+        GetComponentArray<T>()->RemoveData(uuid);
     }
 
-    template <typename T> [[nodiscard]] T& GetComponent(Entity entity)
+    template <typename T> [[nodiscard]] T& GetComponent(UUID uuid)
     {
-        // Get a reference to a component from the array for an entity
-        return GetComponentArray<T>()->GetData(entity);
+        // Get a reference to a component from the array for an uuid
+        return GetComponentArray<T>()->GetData(uuid);
     }
 
-    // Check for if component array includes entity
-    template <typename T> [[nodiscard]] bool HasComponent(Entity entity) { return GetComponentArray<T>()->HasData(entity); }
+    // Check for if component array includes uuid
+    template <typename T> [[nodiscard]] bool HasComponent(UUID uuid) { return GetComponentArray<T>()->HasData(uuid); }
 
     template <typename T> [[nodiscard]] bool IsRegistered() { return m_ComponentTypes.find(typeid(T).name()) != m_ComponentTypes.end(); }
 
-    void EntityDestroyed(Entity entity)
+    void EntityDestroyed(UUID uuid)
     {
-        // Notify each component array that an entity has been destroyed
-        // If it has a component for that entity, it will remove it
+        // Notify each component array that an uuid has been destroyed
+        // If it has a component for that uuid, it will remove it
         for (const auto& [_, component] : m_ComponentArrays)
         {
-            component->EntityDestroyed(entity);
+            component->EntityDestroyed(uuid);
         }
     }
 

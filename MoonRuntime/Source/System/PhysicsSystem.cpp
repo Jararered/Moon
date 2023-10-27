@@ -35,7 +35,7 @@ void PhysicsSystem::Update(float dt)
         dt = 1.0f / 60.0f;
     dt = dt / static_cast<float>(m_SubStepCount);
 
-    for (const auto entity : m_Entities)
+    for (const auto entity : m_UUIDs)
     {
         auto& rigidBody1 = m_Scenario->GetComponent<RigidBody>(entity);
 
@@ -78,7 +78,7 @@ bool PhysicsSystem::IsIntersect(const Transform& transform1, const Transform& tr
     // clang-format on
 }
 
-void PhysicsSystem::UpdateStep(float dt, Entity entity)
+void PhysicsSystem::UpdateStep(float dt, UUID entity)
 {
     auto& transform = m_Scenario->GetComponent<Transform>(entity);
     auto& rigidBody = m_Scenario->GetComponent<RigidBody>(entity);
@@ -88,12 +88,12 @@ void PhysicsSystem::UpdateStep(float dt, Entity entity)
     transform.Position = transform.Position + (rigidBody.Velocity * dt);
 }
 
-void PhysicsSystem::UpdateCollision(Entity entity)
+void PhysicsSystem::UpdateCollision(UUID entity)
 {
     auto& transform1 = m_Scenario->GetComponent<Transform>(entity);
     auto& rigidBody1 = m_Scenario->GetComponent<RigidBody>(entity);
 
-    for (const auto other : m_Entities)
+    for (const auto other : m_UUIDs)
     {
         // Skip collision test if checking against same entity
         if (entity == other)
@@ -157,7 +157,7 @@ void PhysicsSystem::UpdateCollision(Entity entity)
     }
 }
 
-void PhysicsSystem::UpdateFriction(float dt, Entity entity)
+void PhysicsSystem::UpdateFriction(float dt, UUID entity)
 {
     auto& rigidBody = m_Scenario->GetComponent<RigidBody>(entity);
 
