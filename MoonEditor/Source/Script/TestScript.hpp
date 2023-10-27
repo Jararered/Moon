@@ -1,21 +1,21 @@
 #pragma once
 
 #include "Component/Script.hpp"
-#include "Component/Test.hpp"
+#include "Component/Transform.hpp"
 
 #include <iostream>
 
-struct TestScript : public ScriptInterface
+struct TestScript : public Moon::ScriptInterface
 {
-    void Update(std::shared_ptr<Scenario> scenario, UUID entity, float dt) override
+    void Update(float dt, UUID uuid) override
     {
-        if (scenario->HasComponent<Test>(entity))
+        if (s_Scenario->HasComponent<Transform>(uuid))
         {
-            std::cout << "Entity " << entity << " has a test component!\n";
+            std::cout << "Entity " << uuid << " has a transform component!\n";
         }
         else
         {
-            std::cout << "Entity " << entity << " does not have a test component!\n";
+            std::cout << "Entity " << uuid << " does not have a transform component!\n";
         }
     }
 };

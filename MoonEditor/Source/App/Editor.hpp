@@ -27,17 +27,10 @@ public:
 
         // Voxel Test
         {
-            // New code
             Moon::Entity entity(m_Scenario);
             entity.AddComponent<Mesh>(m_AvaliableMeshesMap["Voxel"]);
             entity.AddComponent<Shader>(m_AvaliableShadersMap["Voxel"]);
             entity.AddComponent<Transform>(Transform{{0, 2, 0}, {0, 0, 0}, {1, 1, 1}});
-
-            // Old code
-            // UUID uuid = m_Scenario->CreateEntity();
-            // m_Scenario->AddComponent<Mesh>(uuid, m_AvaliableMeshesMap["Voxel"]);
-            // m_Scenario->AddComponent<Shader>(uuid, m_AvaliableShadersMap["Voxel"]);
-            // m_Scenario->AddComponent<Transform>(uuid, Transform{{0, 2, 0}, {0, 0, 0}, {1, 1, 1}});
         }
     }
 
