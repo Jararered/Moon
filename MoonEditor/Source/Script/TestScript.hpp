@@ -5,17 +5,22 @@
 
 #include <iostream>
 
-struct TestScript : public Moon::ScriptInterface
+namespace Moon
 {
-    void Update(float dt, UUID uuid) override
+
+    struct TestScript : public ScriptInterface
     {
-        if (s_Scenario->HasComponent<Transform>(uuid))
+        void Update(float dt, UUID uuid) override
         {
-            std::cout << "Entity " << uuid << " has a transform component!\n";
+            if (s_Scenario->HasComponent<Transform>(uuid))
+            {
+                std::cout << "Entity " << uuid << " has a transform component!\n";
+            }
+            else
+            {
+                std::cout << "Entity " << uuid << " does not have a transform component!\n";
+            }
         }
-        else
-        {
-            std::cout << "Entity " << uuid << " does not have a transform component!\n";
-        }
-    }
-};
+    };
+
+}

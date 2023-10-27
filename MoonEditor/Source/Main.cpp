@@ -1,8 +1,10 @@
 #include "App/Editor.hpp"
 
+using namespace Moon;
+
 int main()
 {
-    Moon::WindowSpecification spec;
+    WindowSpecification spec;
     spec.Width = 1280;
     spec.Height = 720;
     spec.VSync = false;
