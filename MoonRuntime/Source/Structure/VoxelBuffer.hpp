@@ -6,64 +6,69 @@
 #include <glad/gl.h>
 #include <vector>
 
-class VoxelBuffer : public BufferInterface
+namespace Moon
 {
-public:
-    VoxelBuffer() = default;
-    ~VoxelBuffer() override = default;
 
-    void BufferData() override
+    class VoxelBuffer : public BufferInterface
     {
-        glGenVertexArrays(1, &m_VAO);
-        glBindVertexArray(m_VAO);
+    public:
+        VoxelBuffer() = default;
+        ~VoxelBuffer() override = default;
 
-        glGenBuffers(1, &m_VBO);
-        glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+        void BufferData() override
+        {
+            glGenVertexArrays(1, &m_VAO);
+            glBindVertexArray(m_VAO);
 
-        glBufferData(GL_ARRAY_BUFFER, m_Data.size() * sizeof(Voxel), nullptr, GL_STATIC_DRAW);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, m_Data.size() * sizeof(Voxel), m_Data.data());
+            glGenBuffers(1, &m_VBO);
+            glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-        glVertexAttribPointer(0, sizeof(Voxel) / sizeof(float), GL_FLOAT, 0, sizeof(Voxel), nullptr);
-        glEnableVertexAttribArray(0);
+            glBufferData(GL_ARRAY_BUFFER, m_Data.size() * sizeof(Voxel), nullptr, GL_STATIC_DRAW);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, m_Data.size() * sizeof(Voxel), m_Data.data());
 
-        glBindVertexArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-    }
+            glVertexAttribPointer(0, sizeof(Voxel) / sizeof(float), GL_FLOAT, 0, sizeof(Voxel), nullptr);
+            glEnableVertexAttribArray(0);
 
-    void Delete() override
-    {
-        glDeleteVertexArrays(1, &m_VAO);
-        glDeleteBuffers(1, &m_VBO);
-    }
+            glBindVertexArray(0);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+        }
 
-    void Bind() override { glBindVertexArray(m_VAO); }
+        void Delete() override
+        {
+            glDeleteVertexArrays(1, &m_VAO);
+            glDeleteBuffers(1, &m_VBO);
+        }
 
-    void Unbind() override { glBindVertexArray(0); }
+        void Bind() override { glBindVertexArray(m_VAO); }
 
-    void Draw() override { glDrawArrays(GL_POINTS, 0, m_Data.size()); }
+        void Unbind() override { glBindVertexArray(0); }
 
-    void Update() override
-    {
-        // Binding
-        glBindVertexArray(m_VAO);
+        void Draw() override { glDrawArrays(GL_POINTS, 0, m_Data.size()); }
 
-        // Bind buffers
-        glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+        void Update() override
+        {
+            // Binding
+            glBindVertexArray(m_VAO);
 
-        // Send data to buffers
-        glBufferSubData(GL_ARRAY_BUFFER, 0, m_Data.size() * sizeof(Voxel), m_Data.data());
+            // Bind buffers
+            glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-        // Unbind Buffers
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+            // Send data to buffers
+            glBufferSubData(GL_ARRAY_BUFFER, 0, m_Data.size() * sizeof(Voxel), m_Data.data());
 
-        glBindVertexArray(0);
-    }
+            // Unbind Buffers
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-public:
-    [[nodiscard]] inline std::vector<Voxel>& GetData() { return m_Data; }
+            glBindVertexArray(0);
+        }
 
-private:
-    std::vector<Voxel> m_Data;
-    unsigned int m_VAO = 0;
-    unsigned int m_VBO = 0;
-};
+    public:
+        [[nodiscard]] inline std::vector<Voxel>& GetData() { return m_Data; }
+
+    private:
+        std::vector<Voxel> m_Data;
+        unsigned int m_VAO = 0;
+        unsigned int m_VBO = 0;
+    };
+
+}

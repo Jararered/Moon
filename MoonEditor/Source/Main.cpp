@@ -2,7 +2,7 @@
 
 int main()
 {
-    WindowSpecification spec;
+    Moon::WindowSpecification spec;
     spec.Width = 1280;
     spec.Height = 720;
     spec.VSync = false;

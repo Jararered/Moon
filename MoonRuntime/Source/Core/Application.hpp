@@ -18,39 +18,41 @@
 #include "Component/Texture.hpp"
 #include "Component/Transform.hpp"
 
-enum ApplicationStatus
-{
-    Initialized,
-    Uninitialized
-};
-
 namespace Moon
 {
-class Application
-{
-public:
-    Application() = default;
-    virtual ~Application() = default;
 
-    void CreateWindow(const WindowSpecification& spec);
+    enum ApplicationStatus
+    {
+        Initialized,
+        Uninitialized
+    };
 
-    void Initialize();
-    void Start();
+    class Application
+    {
+    public:
+        Application() = default;
+        virtual ~Application() = default;
 
-    void UpdateUI();
+        void CreateWindow(const WindowSpecification& spec);
 
-protected:
-    std::shared_ptr<Scenario> m_Scenario;
+        void Initialize();
+        void Start();
 
-    std::shared_ptr<Window> p_Window;
-    ApplicationStatus m_Status = ApplicationStatus::Uninitialized;
+        void UpdateUI();
 
-    std::vector<std::shared_ptr<SystemInterface>> m_Systems;
-    std::map<unsigned int, std::shared_ptr<SystemInterface>> m_SystemMap;
+    protected:
+        std::shared_ptr<Scenario> m_Scenario;
 
-    std::unordered_map<std::string, std::shared_ptr<MeshInterface>> m_AvaliableMeshesMap;
-    std::unordered_map<std::string, Script> m_AvaliableScriptsMap;
-    std::unordered_map<std::string, Texture> m_AvaliableTexturesMap;
-    std::unordered_map<std::string, Shader> m_AvaliableShadersMap;
-};
+        std::shared_ptr<Window> p_Window;
+        ApplicationStatus m_Status = ApplicationStatus::Uninitialized;
+
+        std::vector<std::shared_ptr<SystemInterface>> m_Systems;
+        std::map<unsigned int, std::shared_ptr<SystemInterface>> m_SystemMap;
+
+        std::unordered_map<std::string, std::shared_ptr<MeshInterface>> m_AvaliableMeshesMap;
+        std::unordered_map<std::string, Script> m_AvaliableScriptsMap;
+        std::unordered_map<std::string, Texture> m_AvaliableTexturesMap;
+        std::unordered_map<std::string, Shader> m_AvaliableShadersMap;
+    };
+
 }

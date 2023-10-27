@@ -5,17 +5,22 @@
 
 #include <memory>
 
-template <typename T> struct VertexMeshTemplate : public MeshInterface
+namespace Moon
 {
-    VertexMeshTemplate() { Buffer = std::make_shared<VertexBuffer<T>>(); }
-    ~VertexMeshTemplate() override = default;
 
-    void Draw() override
+    template <typename T> struct VertexMeshTemplate : public MeshInterface
     {
-        Buffer->Bind();
-        Buffer->Draw();
-        Buffer->Unbind();
-    }
+        VertexMeshTemplate() { Buffer = std::make_shared<VertexBuffer<T>>(); }
+        ~VertexMeshTemplate() override = default;
 
-    std::shared_ptr<VertexBuffer<T>> Buffer;
-};
+        void Draw() override
+        {
+            Buffer->Bind();
+            Buffer->Draw();
+            Buffer->Unbind();
+        }
+
+        std::shared_ptr<VertexBuffer<T>> Buffer;
+    };
+
+}

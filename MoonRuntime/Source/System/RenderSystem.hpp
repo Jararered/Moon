@@ -8,37 +8,38 @@
 
 #include <glm/mat4x4.hpp>
 
-class RenderSystem final : public SystemInterface
+namespace Moon
 {
-public:
-    RenderSystem() = default;
-    RenderSystem(const RenderSystem&) = delete;
-    RenderSystem(RenderSystem&&) = delete;
-    RenderSystem& operator=(const RenderSystem&) = delete;
-    RenderSystem& operator=(RenderSystem&&) = delete;
-    ~RenderSystem() override = default;
 
-public:
-    void Register(std::shared_ptr<Scenario> scenario) override;
-    void Initialize() override;
-    void Update(float dt) override;
-    void UpdateUI() override;
-    void Finalize() override;
+    class RenderSystem final : public SystemInterface
+    {
+    public:
+        RenderSystem() = default;
+        ~RenderSystem() override = default;
 
-private:
-    void ConfigureFramebuffer(int width, int height);
-    void ConfigureCallbacks();
+    public:
+        void Register(std::shared_ptr<Scenario> scenario) override;
+        void Initialize() override;
+        void Update(float dt) override;
+        void UpdateUI() override;
+        void Finalize() override;
 
-private:
-    int m_Width = 0;
-    int m_Height = 0;
+    private:
+        void ConfigureFramebuffer(int width, int height);
+        void ConfigureCallbacks();
 
-    float m_NearClip;
-    float m_FarClip;
+    private:
+        int m_Width = 0;
+        int m_Height = 0;
 
-    int m_PolygonMode;
+        float m_NearClip;
+        float m_FarClip;
 
-    UUID m_Camera;
-    MSAAFramebuffer m_Framebuffer;
-    Framebuffer m_WireFramebuffer;
-};
+        int m_PolygonMode;
+
+        UUID m_Camera;
+        MSAAFramebuffer m_Framebuffer;
+        Framebuffer m_WireFramebuffer;
+    };
+
+}

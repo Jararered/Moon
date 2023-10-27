@@ -9,10 +9,6 @@ namespace Moon
     {
     public:
         ScriptSystem() = default;
-        ScriptSystem(const ScriptSystem&) = delete;
-        ScriptSystem(ScriptSystem&&) = delete;
-        ScriptSystem& operator=(const ScriptSystem&) = delete;
-        ScriptSystem& operator=(ScriptSystem&&) = delete;
         ~ScriptSystem() override = default;
 
     public:

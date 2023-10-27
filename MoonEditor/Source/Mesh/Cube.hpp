@@ -4,12 +4,12 @@
 #include <Structure/Vertex.hpp>
 #include <Structure/VertexMeshTemplate.hpp>
 
-class TexturedCubeMesh : public VertexMeshTemplate<Vertex3D<glm::vec3, glm::vec3, glm::vec2>> // Position, Normal, Texture Coordinate
+class TexturedCubeMesh : public Moon::VertexMeshTemplate<Moon::Vertex3D<glm::vec3, glm::vec3, glm::vec2>> // Position, Normal, Texture Coordinate
 {
 public:
     TexturedCubeMesh(glm::vec3 scale = glm::vec3(1.0f))
     {
-        using Vertex = Vertex3D<glm::vec3, glm::vec3, glm::vec2>;
+        using Vertex = Moon::Vertex3D<glm::vec3, glm::vec3, glm::vec2>;
 
         auto& vertices = Buffer->GetVertices();
         vertices.reserve(24);

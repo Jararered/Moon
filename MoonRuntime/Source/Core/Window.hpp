@@ -2,16 +2,21 @@
 
 #include "WindowSpecification.hpp"
 
-class Window
+namespace Moon
 {
-public:
-    Window(const WindowSpecification& spec) : m_WindowSpecification(spec){};
-    virtual ~Window() = default;
 
-    virtual void NewFrame() = 0;
-    virtual void EndFrame() = 0;
+    class Window
+    {
+    public:
+        Window(const WindowSpecification& spec) : m_WindowSpecification(spec){};
+        virtual ~Window() = default;
 
-    virtual bool IsRunning() = 0;
+        virtual void NewFrame() = 0;
+        virtual void EndFrame() = 0;
 
-    WindowSpecification m_WindowSpecification;
-};
+        virtual bool IsRunning() = 0;
+
+        WindowSpecification m_WindowSpecification;
+    };
+
+}

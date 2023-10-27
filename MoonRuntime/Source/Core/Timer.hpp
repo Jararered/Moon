@@ -3,45 +3,47 @@
 #include <chrono>
 #include <string>
 
-namespace Utilities
+namespace Moon
 {
-class Timer
-{
-public:
-    Timer(std::string_view name = "Timer");
-    virtual ~Timer() = default;
 
-    // Returns the amount of time that has passed since last calling GetTime() or GetDelta()
-    [[nodiscard]] float GetDelta();
+    class Timer
+    {
+    public:
+        Timer(std::string_view name = "Timer");
+        virtual ~Timer() = default;
 
-protected:
-    std::string m_Name;
-    std::chrono::steady_clock::time_point m_Start;
-    std::chrono::steady_clock::time_point m_Last;
-    std::chrono::steady_clock::time_point m_Stop;
-};
+        // Returns the amount of time that has passed since last calling GetTime() or GetDelta()
+        [[nodiscard]] float GetDelta();
 
-class ScopedTimer final : protected Timer
-{
-public:
-    ScopedTimer() = default;
-    ~ScopedTimer() override;
+    protected:
+        std::string m_Name;
+        std::chrono::steady_clock::time_point m_Start;
+        std::chrono::steady_clock::time_point m_Last;
+        std::chrono::steady_clock::time_point m_Stop;
+    };
 
-    ScopedTimer(std::string_view name = "Timer");
-};
+    class ScopedTimer final : protected Timer
+    {
+    public:
+        ScopedTimer() = default;
+        ~ScopedTimer() override;
 
-class ManualTimer final : protected Timer
-{
-public:
-    ManualTimer() = default;
-    ~ManualTimer() override = default;
+        ScopedTimer(std::string_view name = "Timer");
+    };
 
-    ManualTimer(std::string_view name = "Timer");
+    class ManualTimer final : protected Timer
+    {
+    public:
+        ManualTimer() = default;
+        ~ManualTimer() override = default;
 
-    void Start();
-    void Stop();
+        ManualTimer(std::string_view name = "Timer");
 
-    // Returns the amount of time since the construction of the timer
-    [[nodiscard]] float GetTime();
-};
+        void Start();
+        void Stop();
+
+        // Returns the amount of time since the construction of the timer
+        [[nodiscard]] float GetTime();
+    };
+
 }

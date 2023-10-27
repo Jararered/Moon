@@ -2,7 +2,7 @@
 
 #include "Structure/VoxelMeshTemplate.hpp"
 
-class SingleVoxel : public VoxelMeshTemplate
+class SingleVoxel : public Moon::VoxelMeshTemplate
 {
 public:
     SingleVoxel(const glm::vec3& position = glm::vec3(0.0f, 0.0f, 0.0f))

@@ -11,6 +11,8 @@ class Editor final : public Moon::Application
 public:
     void CreateScene()
     {
+        using namespace Moon;
+
         m_AvaliableMeshesMap.emplace("Cube", std::make_shared<TexturedCubeMesh>());
         m_AvaliableMeshesMap.emplace("Voxel", std::make_shared<SingleVoxel>());
 
@@ -36,6 +38,8 @@ public:
 
     void CreateBase()
     {
+        using namespace Moon;
+
         const auto length = 21.0f;
         const auto width = 21.0f;
 
@@ -86,6 +90,8 @@ public:
 
     void CreatePillars()
     {
+        using namespace Moon;
+
         float offset = -9.0f;
         for (int i = 0; i < 10; i++)
         {

@@ -24,6 +24,7 @@
 
 namespace Moon
 {
+
     void Application::Initialize()
     {
         if (m_Status == ApplicationStatus::Initialized)
@@ -112,4 +113,5 @@ namespace Moon
         }
         ImGui::End();
     }
+
 }

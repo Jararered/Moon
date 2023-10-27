@@ -1,8 +1,13 @@
 #pragma once
 
-struct MeshInterface
+namespace Moon
 {
-    virtual ~MeshInterface() = default;
 
-    virtual void Draw() = 0;
-};
+    struct MeshInterface
+    {
+        virtual ~MeshInterface() = default;
+
+        virtual void Draw() = 0;
+    };
+
+}
