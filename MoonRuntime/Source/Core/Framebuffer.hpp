@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Component/Shader.hpp"
 #include "Component/Mesh.hpp"
+#include "Component/Shader.hpp"
 #include "Entity.hpp"
 #include "Structure/Vertex.hpp"
 #include "Structure/VertexBuffer.hpp"
@@ -37,7 +37,7 @@ public:
     virtual void Create(int width, int height)
     {
         if (m_FrameShader.ID == 0)
-            m_FrameShader = Shader("Shaders/Framebuffer.vert", "Shaders/Framebuffer.frag");
+            m_FrameShader = Shader("Shader/Framebuffer.vert", "Shader/Framebuffer.frag");
 
         // Delete previous buffers if they exist
         if (m_FBO != 0)
@@ -146,7 +146,7 @@ public:
         m_Height = height;
 
         if (m_FrameShader.ID == 0)
-            m_FrameShader = Shader("Shaders/Framebuffer.vert", "Shaders/Framebuffer.frag");
+            m_FrameShader = Shader("Shader/Framebuffer.vert", "Shader/Framebuffer.frag");
 
         // Delete previous buffers if they exist
         if (m_FBO != 0)

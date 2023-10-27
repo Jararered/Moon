@@ -18,7 +18,7 @@
 #include "Component/Texture.hpp"
 #include "Component/Transform.hpp"
 
-enum EngineStatus
+enum ApplicationStatus
 {
     Initialized,
     Uninitialized
@@ -26,11 +26,11 @@ enum EngineStatus
 
 namespace Moon
 {
-class Engine
+class Application
 {
 public:
-    Engine() = default;
-    virtual ~Engine() = default;
+    Application() = default;
+    virtual ~Application() = default;
 
     void CreateWindow(const WindowSpecification& spec);
 
@@ -40,12 +40,10 @@ public:
     void UpdateUI();
 
 protected:
-    float m_DT = 0.0f;
-
     std::shared_ptr<Scenario> m_Scenario;
 
     std::shared_ptr<Window> p_Window;
-    EngineStatus m_Status = EngineStatus::Uninitialized;
+    ApplicationStatus m_Status = ApplicationStatus::Uninitialized;
 
     std::vector<std::shared_ptr<SystemInterface>> m_Systems;
     std::map<unsigned int, std::shared_ptr<SystemInterface>> m_SystemMap;

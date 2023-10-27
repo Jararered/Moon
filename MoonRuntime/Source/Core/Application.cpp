@@ -1,4 +1,4 @@
-#include "Engine.hpp"
+#include "Application.hpp"
 
 #include "OpenGLWindow.hpp"
 #include "Scenario.hpp"
@@ -25,9 +25,9 @@
 
 namespace Moon
 {
-void Engine::Initialize()
+void Application::Initialize()
 {
-    if (m_Status == EngineStatus::Initialized)
+    if (m_Status == ApplicationStatus::Initialized)
         return;
 
     m_Scenario = std::make_shared<Scenario>();
@@ -61,13 +61,15 @@ void Engine::Initialize()
         system->Initialize();
     }
 
-    m_Status = EngineStatus::Initialized;
+    m_Status = ApplicationStatus::Initialized;
 }
 
-void Engine::Start()
+void Application::Start()
 {
-    if (!p_Window or m_Status == EngineStatus::Uninitialized)
+    if (!p_Window or m_Status == ApplicationStatus::Uninitialized)
         return;
+
+    float dt = 0.0f;
 
     while (p_Window->IsRunning())
     {
@@ -77,7 +79,7 @@ void Engine::Start()
 
         for (const auto [systemID, system] : m_SystemMap)
         {
-            system->Update(m_DT);
+            system->Update(dt);
         }
 
         UpdateUI();
@@ -85,23 +87,23 @@ void Engine::Start()
         p_Window->EndFrame();
 
         const auto frameEndTime = std::chrono::high_resolution_clock::now();
-        m_DT = std::chrono::duration<float, std::chrono::seconds::period>(frameEndTime - frameStartTime).count();
+        dt = std::chrono::duration<float, std::chrono::seconds::period>(frameEndTime - frameStartTime).count();
     }
 }
 
-void Engine::CreateWindow(const WindowSpecification& spec)
+void Application::CreateWindow(const WindowSpecification& spec)
 {
     if (!p_Window)
         p_Window = std::make_shared<OpenGLWindow>(spec);
 
-    if (m_Status == EngineStatus::Uninitialized)
+    if (m_Status == ApplicationStatus::Uninitialized)
         Initialize();
 }
 
-void Engine::UpdateUI()
+void Application::UpdateUI()
 {
-    // Engine Systems UI
-    ImGui::Begin("Engine Systems", NULL, ImGuiWindowFlags_AlwaysAutoResize);
+    // Application Systems UI
+    ImGui::Begin("Application Systems", NULL, ImGuiWindowFlags_AlwaysAutoResize);
     for (const auto [systemID, system] : m_SystemMap)
     {
         if (ImGui::CollapsingHeader(system->m_Name.c_str()))

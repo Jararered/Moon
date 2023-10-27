@@ -7,7 +7,7 @@
 
 struct VoxelMeshTemplate : public MeshInterface
 {
-    VoxelMeshTemplate() = default;
+    VoxelMeshTemplate() { Buffer = std::make_shared<VoxelBuffer>(); }
     ~VoxelMeshTemplate() override = default;
 
     void Draw() override

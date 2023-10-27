@@ -6,7 +6,7 @@
 #include "Mesh/SingleVoxel.hpp"
 #include "Script/TestScript.hpp"
 
-class Editor final : public Moon::Engine
+class Editor final : public Moon::Application
 {
 public:
     void CreateScene()
@@ -14,23 +14,23 @@ public:
         m_AvaliableMeshesMap.emplace("Cube", std::make_shared<TexturedCubeMesh>());
         m_AvaliableMeshesMap.emplace("Voxel", std::make_shared<SingleVoxel>());
 
-        m_AvaliableTexturesMap.emplace("Checker 32x32", Texture("Textures/checker.png"));
-        m_AvaliableTexturesMap.emplace("Debug 32x32", Texture("Textures/debug.png"));
+        m_AvaliableTexturesMap.emplace("Checker 32x32", Texture("Texture/checker.png"));
+        m_AvaliableTexturesMap.emplace("Debug 32x32", Texture("Texture/debug.png"));
 
-        m_AvaliableShadersMap.emplace("Simple", Shader("Shaders/PositionNormalTexture.vert", "Shaders/Texture.frag"));
-        m_AvaliableShadersMap.emplace("White", Shader("Shaders/PositionNormalTexture.vert", "Shaders/White.frag"));
-        m_AvaliableShadersMap.emplace("Voxel", Shader("Shaders/Voxel.vert", "Shaders/Voxel.geom", "Shaders/Voxel.frag"));
+        m_AvaliableShadersMap.emplace("Simple", Shader("Shader/PositionNormalTexture.vert", "Shader/Texture.frag"));
+        m_AvaliableShadersMap.emplace("White", Shader("Shader/PositionNormalTexture.vert", "Shader/White.frag"));
+        m_AvaliableShadersMap.emplace("Voxel", Shader("Shader/Voxel.vert", "Shader/Voxel.geom", "Shader/Voxel.frag"));
 
         m_AvaliableScriptsMap.emplace("Test Script", std::make_shared<TestScript>());
 
         CreateBase();
 
+        // Voxel Test
         {
             Entity entity = m_Scenario->CreateEntity();
-            m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Cube"]);
-            m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["White"]);
+            m_Scenario->AddComponent<Mesh>(entity, m_AvaliableMeshesMap["Voxel"]);
+            m_Scenario->AddComponent<Shader>(entity, m_AvaliableShadersMap["Voxel"]);
             m_Scenario->AddComponent<Transform>(entity, Transform{{0, 2, 0}, {0, 0, 0}, {1, 1, 1}});
-            m_Scenario->AddComponent<RigidBody>(entity);
         }
     }
 

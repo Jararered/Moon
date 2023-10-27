@@ -18,7 +18,8 @@ struct Shader
         auto vertexSourceChar = vertexSource.c_str();
         glShaderSource(vertexID, 1, &vertexSourceChar, NULL);
         glCompileShader(vertexID);
-        CheckCompileStatus(vertexID);
+        if (not CheckCompileStatus(vertexID))
+            return;
 
         // Fragment Shader
         auto fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
@@ -26,14 +27,16 @@ struct Shader
         auto fragmentSourceChar = fragmentSource.c_str();
         glShaderSource(fragmentID, 1, &fragmentSourceChar, NULL);
         glCompileShader(fragmentID);
-        CheckCompileStatus(fragmentID);
+        if (not CheckCompileStatus(fragmentID))
+            return;
 
         // Linking
         auto shaderID = glCreateProgram();
         glAttachShader(shaderID, vertexID);
         glAttachShader(shaderID, fragmentID);
         glLinkProgram(shaderID);
-        CheckLinkingStatus(shaderID);
+        if (not CheckLinkingStatus(shaderID))
+            return;
 
         glDeleteShader(vertexID);
         glDeleteShader(fragmentID);
@@ -49,7 +52,8 @@ struct Shader
         auto vertexSourceChar = vertexSource.c_str();
         glShaderSource(vertexID, 1, &vertexSourceChar, NULL);
         glCompileShader(vertexID);
-        CheckCompileStatus(vertexID);
+        if (not CheckCompileStatus(vertexID))
+            return;
 
         // Geometry Shader
         auto geometryID = glCreateShader(GL_GEOMETRY_SHADER);
@@ -57,7 +61,8 @@ struct Shader
         auto geometrySourceChar = geometrySource.c_str();
         glShaderSource(geometryID, 1, &geometrySourceChar, NULL);
         glCompileShader(geometryID);
-        CheckCompileStatus(geometryID);
+        if (not CheckCompileStatus(geometryID))
+            return;
 
         // Fragment Shader
         auto fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
@@ -65,7 +70,8 @@ struct Shader
         auto fragmentSourceChar = fragmentSource.c_str();
         glShaderSource(fragmentID, 1, &fragmentSourceChar, NULL);
         glCompileShader(fragmentID);
-        CheckCompileStatus(fragmentID);
+        if (not CheckCompileStatus(fragmentID))
+            return;
 
         // Linking
         auto shaderID = glCreateProgram();
@@ -89,31 +95,35 @@ struct Shader
         return fileString;
     }
 
-    void CheckCompileStatus(unsigned int id)
+    bool CheckCompileStatus(unsigned int id)
     {
-        int success;
+        int status;
         char info[512];
 
-        glGetShaderiv(id, GL_COMPILE_STATUS, &success);
-        if (not success)
+        glGetShaderiv(id, GL_COMPILE_STATUS, &status);
+        if (status == GL_FALSE)
         {
             glGetShaderInfoLog(id, 512, NULL, info);
             std::cout << "Shader::CheckCompileStatus():\n" << info << "\n";
             glDeleteShader(id);
         }
+
+        return status;
     }
 
-    void CheckLinkingStatus(unsigned int id)
+    bool CheckLinkingStatus(unsigned int id)
     {
-        int success;
+        int status;
         char info[512];
 
-        glGetProgramiv(id, GL_LINK_STATUS, &success);
-        if (not success)
+        glGetProgramiv(id, GL_LINK_STATUS, &status);
+        if (status == GL_FALSE)
         {
             glGetProgramInfoLog(id, 512, NULL, info);
             std::cout << "Shader::CheckLinkingStatus():\n" << info << "\n";
             glDeleteProgram(id);
         }
+
+        return status;
     }
 };

@@ -41,7 +41,7 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     ImGui::StyleColorsLight();
 
     ImGuiIO& io = ImGui::GetIO();
-    io.Fonts->AddFontFromFileTTF("Fonts/segoeui.ttf", 18.0f);
+    io.Fonts->AddFontFromFileTTF("Font/segoeui.ttf", 18.0f);
 
     ImGui_ImplGlfw_InitForOpenGL(p_GLFWwindow, true);
     ImGui_ImplOpenGL3_Init("#version 150");
