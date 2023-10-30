@@ -3,7 +3,8 @@
 #include <Moon.hpp>
 
 #include "Mesh/Cube.hpp"
-#include "Mesh/SingleVoxel.hpp"
+#include "Mesh/VoxelChunk.hpp"
+#include "Mesh/VoxelSingle.hpp"
 #include "Script/TestScript.hpp"
 
 class Editor final : public Moon::Application
@@ -14,7 +15,8 @@ public:
         using namespace Moon;
 
         m_AvaliableMeshesMap.emplace("Cube", std::make_shared<TexturedCubeMesh>());
-        m_AvaliableMeshesMap.emplace("Voxel", std::make_shared<SingleVoxel>());
+        m_AvaliableMeshesMap.emplace("VoxelSingle", std::make_shared<VoxelSingle>());
+        m_AvaliableMeshesMap.emplace("VoxelChunk", std::make_shared<VoxelChunk>(16));
 
         m_AvaliableTexturesMap.emplace("Checker 32x32", Texture("Texture/checker.png"));
         m_AvaliableTexturesMap.emplace("Debug 32x32", Texture("Texture/debug.png"));
@@ -28,10 +30,17 @@ public:
         CreateBase();
 
         // Voxel Test
+        // {
+        //     Moon::Entity entity(m_Scenario);
+        //     entity.AddComponent<Mesh>(m_AvaliableMeshesMap.at("VoxelSingle"));
+        //     entity.AddComponent<Shader>(m_AvaliableShadersMap.at("Voxel"));
+        //     entity.AddComponent<Transform>(Transform{{0, 2, 0}, {0, 0, 0}, {1, 1, 1}});
+        // }
+
         {
             Moon::Entity entity(m_Scenario);
-            entity.AddComponent<Mesh>(m_AvaliableMeshesMap["Voxel"]);
-            entity.AddComponent<Shader>(m_AvaliableShadersMap["Voxel"]);
+            entity.AddComponent<Mesh>(m_AvaliableMeshesMap.at("VoxelChunk"));
+            entity.AddComponent<Shader>(m_AvaliableShadersMap.at("Voxel"));
             entity.AddComponent<Transform>(Transform{{0, 2, 0}, {0, 0, 0}, {1, 1, 1}});
         }
     }
