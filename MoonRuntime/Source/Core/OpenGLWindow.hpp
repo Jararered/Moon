@@ -4,17 +4,22 @@
 
 struct GLFWwindow;
 
-class OpenGLWindow final : public Window
+namespace Moon
 {
-public:
-    OpenGLWindow(const WindowSpecification& spec);
-    ~OpenGLWindow() override;
 
-    void NewFrame() override;
-    void EndFrame() override;
+    class OpenGLWindow final : public Window
+    {
+    public:
+        OpenGLWindow(const WindowSpecification& spec);
+        ~OpenGLWindow() override;
 
-    [[nodiscard]] bool IsRunning() override;
+        void NewFrame() override;
+        void EndFrame() override;
 
-private:
-    GLFWwindow* p_GLFWwindow = nullptr;
-};
+        [[nodiscard]] bool IsRunning() override;
+
+    private:
+        GLFWwindow* p_GLFWwindow = nullptr;
+    };
+
+}

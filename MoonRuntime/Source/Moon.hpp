@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/Engine.hpp"
+#include "Core/Application.hpp"
 #include "Core/Entity.hpp"
 #include "Core/Input.hpp"
 #include "Core/Random.hpp"

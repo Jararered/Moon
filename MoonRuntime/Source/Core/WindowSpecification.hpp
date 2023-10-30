@@ -2,10 +2,15 @@
 
 #include <string>
 
-struct WindowSpecification
+namespace Moon
 {
-    std::string Title = "Title";
-    int Width = 1280;
-    int Height = 720;
-    bool VSync = true;
-};
+
+    struct WindowSpecification
+    {
+        std::string Title = "Title";
+        int Width = 1280;
+        int Height = 720;
+        bool VSync = true;
+    };
+
+}

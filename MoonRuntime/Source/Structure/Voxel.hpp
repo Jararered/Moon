@@ -2,4 +2,9 @@
 
 #include <glm/vec3.hpp>
 
-using Voxel = glm::vec3;
+namespace Moon
+{
+
+    using Voxel = glm::vec3;
+
+}

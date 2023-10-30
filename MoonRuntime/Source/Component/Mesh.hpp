@@ -4,4 +4,9 @@
 
 #include <memory>
 
-typedef std::shared_ptr<MeshInterface> Mesh;
+namespace Moon
+{
+
+    typedef std::shared_ptr<MeshInterface> Mesh;
+
+}

@@ -2,25 +2,26 @@
 
 #include "Core/SystemInterface.hpp"
 
-class CameraSystem final : public SystemInterface
+namespace Moon
 {
-public:
-    CameraSystem() = default;
-    CameraSystem(const CameraSystem&) = delete;
-    CameraSystem(CameraSystem&&) = delete;
-    CameraSystem& operator=(const CameraSystem&) = delete;
-    CameraSystem& operator=(CameraSystem&&) = delete;
-    ~CameraSystem() override = default;
 
-public:
-    void Register(std::shared_ptr<Scenario> scenario) override;
-    void Initialize() override;
-    void Update(float dt) override;
-    void UpdateUI() override;
-    void Finalize() override;
+    class CameraSystem final : public SystemInterface
+    {
+    public:
+        CameraSystem() = default;
+        ~CameraSystem() override = default;
 
-    void UpdatePerspective(Entity entity);
+    public:
+        void Register(std::shared_ptr<Scenario> scenario) override;
+        void Initialize() override;
+        void Update(float dt) override;
+        void UpdateUI() override;
+        void Finalize() override;
 
-private:
-    float m_Sensitivity = 0.2f;
-};
+        void UpdatePerspective(UUID entity);
+
+    private:
+        float m_Sensitivity = 0.2f;
+    };
+
+}

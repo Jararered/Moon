@@ -5,78 +5,83 @@
 #include <glad/gl.h>
 #include <vector>
 
-template <typename VertexType> class VertexBuffer final : public BufferInterface
+namespace Moon
 {
-public:
-    VertexBuffer() = default;
-    ~VertexBuffer() override = default;
 
-    void BufferData() override
+    template <typename VertexType> class VertexBuffer final : public BufferInterface
     {
-        glGenVertexArrays(1, &m_VAO);
-        glBindVertexArray(m_VAO);
+    public:
+        VertexBuffer() = default;
+        ~VertexBuffer() override = default;
 
-        glGenBuffers(1, &m_VBO);
-        glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+        void BufferData() override
+        {
+            glGenVertexArrays(1, &m_VAO);
+            glBindVertexArray(m_VAO);
 
-        glBufferData(GL_ARRAY_BUFFER, m_Vertices.size() * sizeof(VertexType), (void*)0, GL_STATIC_DRAW);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, m_Vertices.size() * sizeof(VertexType), m_Vertices.data());
+            glGenBuffers(1, &m_VBO);
+            glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-        glGenBuffers(1, &m_IBO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+            glBufferData(GL_ARRAY_BUFFER, m_Vertices.size() * sizeof(VertexType), (void*)0, GL_STATIC_DRAW);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, m_Vertices.size() * sizeof(VertexType), m_Vertices.data());
 
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Indices.size() * sizeof(unsigned int), (void*)0, GL_STATIC_DRAW);
-        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, m_Indices.size() * sizeof(unsigned int), m_Indices.data());
+            glGenBuffers(1, &m_IBO);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
 
-        VertexType::EnableVertexAttributes();
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Indices.size() * sizeof(unsigned int), (void*)0, GL_STATIC_DRAW);
+            glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, m_Indices.size() * sizeof(unsigned int), m_Indices.data());
 
-        glBindVertexArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
+            VertexType::EnableVertexAttributes();
 
-    void Delete() override
-    {
-        glDeleteVertexArrays(1, &m_VAO);
-        glDeleteBuffers(1, &m_VBO);
-        glDeleteBuffers(1, &m_IBO);
-    }
+            glBindVertexArray(0);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        }
 
-    void Bind() override { glBindVertexArray(m_VAO); }
+        void Delete() override
+        {
+            glDeleteVertexArrays(1, &m_VAO);
+            glDeleteBuffers(1, &m_VBO);
+            glDeleteBuffers(1, &m_IBO);
+        }
 
-    void Unbind() override { glBindVertexArray(0); }
+        void Bind() override { glBindVertexArray(m_VAO); }
 
-    void Draw() override { glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_Indices.size()), GL_UNSIGNED_INT, 0); }
+        void Unbind() override { glBindVertexArray(0); }
 
-    void Update() override
-    {
-        // Binding
-        glBindVertexArray(m_VAO);
+        void Draw() override { glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_Indices.size()), GL_UNSIGNED_INT, 0); }
 
-        // Bind buffers
-        glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+        void Update() override
+        {
+            // Binding
+            glBindVertexArray(m_VAO);
 
-        // Send data to buffers
-        glBufferSubData(GL_ARRAY_BUFFER, 0, m_Vertices.size() * sizeof(VertexType), m_Vertices.data());
-        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, m_Indices.size() * sizeof(unsigned int), m_Indices.data());
+            // Bind buffers
+            glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
 
-        // Unbind Buffers
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+            // Send data to buffers
+            glBufferSubData(GL_ARRAY_BUFFER, 0, m_Vertices.size() * sizeof(VertexType), m_Vertices.data());
+            glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, m_Indices.size() * sizeof(unsigned int), m_Indices.data());
 
-        glBindVertexArray(0);
-    }
+            // Unbind Buffers
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-private:
-    unsigned int m_VAO = 0;
-    unsigned int m_VBO = 0;
-    unsigned int m_IBO = 0;
+            glBindVertexArray(0);
+        }
 
-    std::vector<VertexType> m_Vertices;
-    std::vector<unsigned int> m_Indices;
+    private:
+        unsigned int m_VAO = 0;
+        unsigned int m_VBO = 0;
+        unsigned int m_IBO = 0;
 
-public:
-    [[nodiscard]] inline std::vector<VertexType>& GetVertices() { return m_Vertices; }
-    [[nodiscard]] inline std::vector<unsigned int>& GetIndices() { return m_Indices; }
-};
+        std::vector<VertexType> m_Vertices;
+        std::vector<unsigned int> m_Indices;
+
+    public:
+        [[nodiscard]] inline std::vector<VertexType>& GetVertices() { return m_Vertices; }
+        [[nodiscard]] inline std::vector<unsigned int>& GetIndices() { return m_Indices; }
+    };
+
+}

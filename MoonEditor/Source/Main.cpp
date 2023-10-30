@@ -1,5 +1,7 @@
 #include "App/Editor.hpp"
 
+using namespace Moon;
+
 int main()
 {
     WindowSpecification spec;

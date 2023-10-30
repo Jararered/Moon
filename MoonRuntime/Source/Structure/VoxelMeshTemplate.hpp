@@ -5,17 +5,22 @@
 
 #include <memory>
 
-struct VoxelMeshTemplate : public MeshInterface
+namespace Moon
 {
-    VoxelMeshTemplate() = default;
-    ~VoxelMeshTemplate() override = default;
 
-    void Draw() override
+    struct VoxelMeshTemplate : public MeshInterface
     {
-        Buffer->Bind();
-        Buffer->Draw();
-        Buffer->Unbind();
-    }
+        VoxelMeshTemplate() { Buffer = std::make_shared<VoxelBuffer>(); }
+        ~VoxelMeshTemplate() override = default;
 
-    std::shared_ptr<VoxelBuffer> Buffer;
-};
+        void Draw() override
+        {
+            Buffer->Bind();
+            Buffer->Draw();
+            Buffer->Unbind();
+        }
+
+        std::shared_ptr<VoxelBuffer> Buffer;
+    };
+
+}
