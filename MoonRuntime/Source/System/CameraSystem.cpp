@@ -67,7 +67,9 @@ namespace Moon
             auto& camera = m_Scenario->GetComponent<Camera>(entity);
 
             if (ImGui::SliderFloat("FOV", &camera.FOV, 10.0f, 170.0f))
+            {
                 UpdatePerspective(entity);
+            }
 
             if (ImGui::Button("Reset Position"))
             {
