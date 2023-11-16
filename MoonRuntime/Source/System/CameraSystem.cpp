@@ -31,7 +31,7 @@ namespace Moon
 
     void CameraSystem::Update(float)
     {
-        for (const auto entity : m_UUIDs)
+        for (const auto entity : m_Entities)
         {
             auto& transform = m_Scenario->GetComponent<Transform>(entity);
             auto& camera = m_Scenario->GetComponent<Camera>(entity);
@@ -62,7 +62,7 @@ namespace Moon
 
     void CameraSystem::UpdateUI()
     {
-        for (const auto entity : m_UUIDs)
+        for (const auto entity : m_Entities)
         {
             auto& camera = m_Scenario->GetComponent<Camera>(entity);
 

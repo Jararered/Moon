@@ -35,7 +35,7 @@ namespace Moon
 
     void ControlSystem::Update(float)
     {
-        for (const auto entity : m_UUIDs)
+        for (const auto entity : m_Entities)
         {
             auto& transform = m_Scenario->GetComponent<Transform>(entity);
             auto& rigidBody = m_Scenario->GetComponent<RigidBody>(entity);
@@ -93,7 +93,7 @@ namespace Moon
 
     void ControlSystem::UpdateUI()
     {
-        for (const auto entity : m_UUIDs)
+        for (const auto entity : m_Entities)
         {
             auto& transform = m_Scenario->GetComponent<Transform>(entity);
             auto& rigidBody = m_Scenario->GetComponent<RigidBody>(entity);

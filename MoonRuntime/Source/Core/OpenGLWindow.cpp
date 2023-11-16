@@ -87,7 +87,7 @@ namespace Moon
 
     bool OpenGLWindow::IsRunning()
     {
-        return not glfwWindowShouldClose(p_GLFWwindow);
+        return !glfwWindowShouldClose(p_GLFWwindow);
     }
 
 }

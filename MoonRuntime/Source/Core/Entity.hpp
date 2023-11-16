@@ -11,7 +11,7 @@ namespace Moon
     class Entity
     {
     public:
-        Entity(std::shared_ptr<Scenario> scenario) : m_Scenario(scenario) { m_UUID = m_Scenario->CreateEntity(); }
+        Entity(std::shared_ptr<Scenario> scenario) : m_Scenario(scenario), m_UUID(m_Scenario->CreateEntity()) {}
         ~Entity() {}
 
         // Returns true if the entity has the component

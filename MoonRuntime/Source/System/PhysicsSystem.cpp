@@ -38,7 +38,7 @@ namespace Moon
             dt = 1.0f / 60.0f;
         dt = dt / static_cast<float>(m_SubStepCount);
 
-        for (const auto entity : m_UUIDs)
+        for (const auto entity : m_Entities)
         {
             auto& rigidBody1 = m_Scenario->GetComponent<RigidBody>(entity);
 
@@ -96,7 +96,7 @@ namespace Moon
         auto& transform1 = m_Scenario->GetComponent<Transform>(entity);
         auto& rigidBody1 = m_Scenario->GetComponent<RigidBody>(entity);
 
-        for (const auto other : m_UUIDs)
+        for (const auto other : m_Entities)
         {
             // Skip collision test if checking against same entity
             if (entity == other)

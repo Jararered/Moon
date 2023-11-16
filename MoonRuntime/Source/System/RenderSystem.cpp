@@ -79,7 +79,7 @@ namespace Moon
         glPolygonMode(GL_FRONT_AND_BACK, m_PolygonMode);
 
         const auto camera = m_Scenario->GetComponent<Camera>(m_Camera);
-        for (const auto& entity : m_UUIDs)
+        for (const auto& entity : m_Entities)
         {
             const auto& shader = m_Scenario->GetComponent<Shader>(entity);
             glUseProgram(shader.ID);

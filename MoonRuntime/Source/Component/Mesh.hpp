@@ -7,6 +7,6 @@
 namespace Moon
 {
 
-    typedef std::shared_ptr<MeshInterface> Mesh;
+    using Mesh = std::shared_ptr<MeshInterface>;
 
 }

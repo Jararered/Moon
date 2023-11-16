@@ -15,6 +15,6 @@ namespace Moon
         virtual void Update(float dt, UUID uuid) = 0;
     };
 
-    typedef std::shared_ptr<ScriptInterface> Script;
+    using Script = std::shared_ptr<ScriptInterface>;
 
 }

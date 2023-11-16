@@ -26,7 +26,7 @@ namespace Moon
         virtual void Finalize() = 0;
 
         std::string m_Name;
-        std::set<UUID> m_UUIDs;
+        std::set<UUID> m_Entities;
         std::shared_ptr<Scenario> m_Scenario;
     };
 
