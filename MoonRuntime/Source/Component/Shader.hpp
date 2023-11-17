@@ -18,7 +18,7 @@ struct Shader
         auto vertexSourceChar = vertexSource.c_str();
         glShaderSource(vertexID, 1, &vertexSourceChar, NULL);
         glCompileShader(vertexID);
-        if (not CheckCompileStatus(vertexID))
+        if (!CheckCompileStatus(vertexID))
             return;
 
         // Fragment Shader
@@ -27,7 +27,7 @@ struct Shader
         auto fragmentSourceChar = fragmentSource.c_str();
         glShaderSource(fragmentID, 1, &fragmentSourceChar, NULL);
         glCompileShader(fragmentID);
-        if (not CheckCompileStatus(fragmentID))
+        if (!CheckCompileStatus(fragmentID))
             return;
 
         // Linking
@@ -35,7 +35,7 @@ struct Shader
         glAttachShader(shaderID, vertexID);
         glAttachShader(shaderID, fragmentID);
         glLinkProgram(shaderID);
-        if (not CheckLinkingStatus(shaderID))
+        if (!CheckLinkingStatus(shaderID))
             return;
 
         glDeleteShader(vertexID);
@@ -52,7 +52,7 @@ struct Shader
         auto vertexSourceChar = vertexSource.c_str();
         glShaderSource(vertexID, 1, &vertexSourceChar, NULL);
         glCompileShader(vertexID);
-        if (not CheckCompileStatus(vertexID))
+        if (!CheckCompileStatus(vertexID))
             return;
 
         // Geometry Shader
@@ -61,7 +61,7 @@ struct Shader
         auto geometrySourceChar = geometrySource.c_str();
         glShaderSource(geometryID, 1, &geometrySourceChar, NULL);
         glCompileShader(geometryID);
-        if (not CheckCompileStatus(geometryID))
+        if (!CheckCompileStatus(geometryID))
             return;
 
         // Fragment Shader
@@ -70,7 +70,7 @@ struct Shader
         auto fragmentSourceChar = fragmentSource.c_str();
         glShaderSource(fragmentID, 1, &fragmentSourceChar, NULL);
         glCompileShader(fragmentID);
-        if (not CheckCompileStatus(fragmentID))
+        if (!CheckCompileStatus(fragmentID))
             return;
 
         // Linking

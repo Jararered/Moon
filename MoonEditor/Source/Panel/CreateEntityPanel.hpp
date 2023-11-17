@@ -1,9 +1,11 @@
-#include "Panel.hpp"
+#pragma once
+
+#include <Core/Panel.hpp>
 
 class CreateEntityPanel final : public Panel
 {
 public:
     ~CreateEntityPanel() override = default;
 
-    void Draw() override;
+    void Update() override;
 };

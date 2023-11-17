@@ -20,9 +20,9 @@ namespace Moon
 
     public:
         virtual void Register(std::shared_ptr<Scenario> scenario) = 0;
+
         virtual void Initialize() = 0;
         virtual void Update(float dt) = 0;
-        virtual void UpdateUI() = 0;
         virtual void Finalize() = 0;
 
         std::string m_Name;

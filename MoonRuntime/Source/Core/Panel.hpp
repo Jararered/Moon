@@ -1,9 +1,11 @@
 #pragma once
 
+#include <imgui.h>
+
 class Panel
 {
 public:
     virtual ~Panel() = default;
 
-    virtual void Draw() = 0;
+    virtual void Update() = 0;
 };

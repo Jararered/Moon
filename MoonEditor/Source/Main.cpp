@@ -7,7 +7,7 @@ int main()
     WindowSpecification spec;
     spec.Width = 1280;
     spec.Height = 720;
-    spec.VSync = false;
+    spec.VSync = true;
     spec.Title = "Moon (OpenGL)";
 
     Editor editor;

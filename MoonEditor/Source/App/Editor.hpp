@@ -14,33 +14,33 @@ public:
     {
         using namespace Moon;
 
-        m_AvaliableMeshesMap.emplace("Cube", std::make_shared<TexturedCubeMesh>());
-        m_AvaliableMeshesMap.emplace("Voxel Single", std::make_shared<VoxelSingle>());
-        m_AvaliableMeshesMap.emplace("Voxel Chunk", std::make_shared<VoxelChunk>(16));
+        m_MeshLibrary.emplace("Cube", std::make_shared<TexturedCubeMesh>());
+        m_MeshLibrary.emplace("Voxel Single", std::make_shared<VoxelSingle>());
+        m_MeshLibrary.emplace("Voxel Chunk", std::make_shared<VoxelChunk>(16));
 
-        m_AvaliableTexturesMap.emplace("Checker 32x32", Texture("Texture/checker.png"));
-        m_AvaliableTexturesMap.emplace("Debug 32x32", Texture("Texture/debug.png"));
+        m_TextureLibrary.emplace("Checker 32x32", Texture("Texture/checker.png"));
+        m_TextureLibrary.emplace("Debug 32x32", Texture("Texture/debug.png"));
 
-        m_AvaliableShadersMap.emplace("Simple", Shader("Shader/PositionNormalTexture.vert", "Shader/Texture.frag"));
-        m_AvaliableShadersMap.emplace("White", Shader("Shader/PositionNormalTexture.vert", "Shader/White.frag"));
-        m_AvaliableShadersMap.emplace("Voxel", Shader("Shader/Voxel.vert", "Shader/Voxel.geom", "Shader/Voxel.frag"));
+        m_ShaderLibrary.emplace("Simple", Shader("Shader/PositionNormalTexture.vert", "Shader/Texture.frag"));
+        m_ShaderLibrary.emplace("White", Shader("Shader/PositionNormalTexture.vert", "Shader/White.frag"));
+        m_ShaderLibrary.emplace("Voxel", Shader("Shader/Voxel.vert", "Shader/Voxel.geom", "Shader/Voxel.frag"));
 
-        m_AvaliableScriptsMap.emplace("Test Script", std::make_shared<TestScript>());
+        m_ScriptLibrary.emplace("Test Script", std::make_shared<TestScript>());
 
         CreateBase();
 
         // Voxel Test
         // {
         //     Moon::Entity entity(m_Scenario);
-        //     entity.AddComponent<Mesh>(m_AvaliableMeshesMap.at("VoxelSingle"));
-        //     entity.AddComponent<Shader>(m_AvaliableShadersMap.at("Voxel"));
+        //     entity.AddComponent<Mesh>(m_MeshLibrary.at("VoxelSingle"));
+        //     entity.AddComponent<Shader>(m_ShaderLibrary.at("Voxel"));
         //     entity.AddComponent<Transform>(Transform{{0, 2, 0}, {0, 0, 0}, {1, 1, 1}});
         // }
 
         {
             Moon::Entity entity(m_Scenario);
-            entity.AddComponent<Mesh>(m_AvaliableMeshesMap.at("Voxel Chunk"));
-            entity.AddComponent<Shader>(m_AvaliableShadersMap.at("Voxel"));
+            entity.AddComponent<Mesh>(m_MeshLibrary.at("Voxel Chunk"));
+            entity.AddComponent<Shader>(m_ShaderLibrary.at("Voxel"));
             entity.AddComponent<Transform>(Transform{{0, 2, 0}, {0, 0, 0}, {1, 1, 1}});
         }
     }
@@ -54,8 +54,8 @@ public:
 
         {
             Entity entity(m_Scenario);
-            entity.AddComponent<Shader>(m_AvaliableShadersMap["Simple"]);
-            entity.AddComponent<Texture>(m_AvaliableTexturesMap["Debug 32x32"]);
+            entity.AddComponent<Shader>(m_ShaderLibrary["Simple"]);
+            entity.AddComponent<Texture>(m_TextureLibrary["Debug 32x32"]);
             entity.AddComponent<Transform>(Transform{{0, -1, 0}, {0, 0, 0}, {length, 1, width}});
             entity.AddComponent<Mesh>(std::make_shared<TexturedCubeMesh>(glm::vec3(length, 1, width)));
             entity.AddComponent<RigidBody>();
