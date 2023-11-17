@@ -30,7 +30,7 @@ void ScriptSystem::Update(float dt)
     for (const auto entity : m_Entities)
     {
         auto& script = m_Scenario->GetComponent<Script>(entity);
-        script->Update(dt * m_TimeScale, entity);
+        script.lock()->Update(dt * m_TimeScale, entity);
     }
 }
 

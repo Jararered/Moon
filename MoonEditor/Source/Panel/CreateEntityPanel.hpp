@@ -2,10 +2,15 @@
 
 #include <Core/Panel.hpp>
 
-class CreateEntityPanel final : public Panel
+class CreateEntityPanel final : public Moon::Panel
 {
 public:
     ~CreateEntityPanel() override = default;
 
-    void Update() override;
+    void Update() override
+    {
+        ImGui::Begin();
+
+        ImGui::End();
+    }
 };

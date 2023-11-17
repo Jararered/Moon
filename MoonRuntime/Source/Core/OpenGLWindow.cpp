@@ -74,10 +74,6 @@ void OpenGLWindow::NewFrame()
 
 void OpenGLWindow::EndFrame()
 {
-    ImGui::Begin("Statistics", NULL, ImGuiWindowFlags_AlwaysAutoResize);
-    ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-    ImGui::End();
-
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 

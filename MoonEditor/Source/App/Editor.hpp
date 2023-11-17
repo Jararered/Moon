@@ -7,13 +7,13 @@
 #include "Mesh/VoxelSingle.hpp"
 #include "Script/TestScript.hpp"
 
+#include "Panel/StatisticsPanel.hpp"
+
 class Editor final : public Moon::Application
 {
 public:
-    void CreateScene()
+    void LoadResources()
     {
-        using namespace Moon;
-
         m_MeshLibrary.emplace("Cube", std::make_shared<TexturedCubeMesh>());
         m_MeshLibrary.emplace("Voxel Single", std::make_shared<VoxelSingle>());
         m_MeshLibrary.emplace("Voxel Chunk", std::make_shared<VoxelChunk>(16));
@@ -25,40 +25,8 @@ public:
         m_ShaderLibrary.emplace("White", Shader("Shader/PositionNormalTexture.vert", "Shader/White.frag"));
         m_ShaderLibrary.emplace("Voxel", Shader("Shader/Voxel.vert", "Shader/Voxel.geom", "Shader/Voxel.frag"));
 
-        m_ScriptLibrary.emplace("Test Script", std::make_shared<TestScript>());
-
-        CreateBase();
-
-        // Voxel Test
-        // {
-        //     Moon::Entity entity(m_Scenario);
-        //     entity.AddComponent<Mesh>(m_MeshLibrary.at("VoxelSingle"));
-        //     entity.AddComponent<Shader>(m_ShaderLibrary.at("Voxel"));
-        //     entity.AddComponent<Transform>(Transform{{0, 2, 0}, {0, 0, 0}, {1, 1, 1}});
-        // }
-
-        {
-            Moon::Entity entity(m_Scenario);
-            entity.AddComponent<Mesh>(m_MeshLibrary.at("Voxel Chunk"));
-            entity.AddComponent<Shader>(m_ShaderLibrary.at("Voxel"));
-            entity.AddComponent<Transform>(Transform{{0, 2, 0}, {0, 0, 0}, {1, 1, 1}});
-        }
+        // m_ScriptLibrary.emplace("Test Script", std::make_shared<TestScript>());
     }
 
-    void CreateBase()
-    {
-        using namespace Moon;
-
-        const auto length = 20.0f;
-        const auto width = 20.0f;
-
-        {
-            Entity entity(m_Scenario);
-            entity.AddComponent<Shader>(m_ShaderLibrary["Simple"]);
-            entity.AddComponent<Texture>(m_TextureLibrary["Debug 32x32"]);
-            entity.AddComponent<Transform>(Transform{{0, -1, 0}, {0, 0, 0}, {length, 1, width}});
-            entity.AddComponent<Mesh>(std::make_shared<TexturedCubeMesh>(glm::vec3(length, 1, width)));
-            entity.AddComponent<RigidBody>();
-        }
-    }
+    void CreatePanels() { m_Panels.emplace("Statistics", std::make_shared<StatisticsPanel>()); }
 };

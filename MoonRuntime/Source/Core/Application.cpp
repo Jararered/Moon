@@ -21,6 +21,8 @@
 #include <filesystem>
 #include <glfw/glfw3.h>
 #include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
 using namespace Moon;
 
@@ -100,18 +102,3 @@ void Application::CreateWindow(const WindowSpecification& spec)
     if (m_Status == ApplicationStatus::Uninitialized)
         Initialize();
 }
-
-// void Application::UpdateUI()
-// {
-//     // Application Systems UI
-//     ImGui::Begin("Application Systems", NULL, ImGuiWindowFlags_AlwaysAutoResize);
-//     for (const auto [systemID, system] : m_Systems)
-//     {
-//         if (ImGui::CollapsingHeader(system->m_Name.c_str()))
-//         {
-//             ImGui::PushItemWidth(150);
-//             system->UpdateUI();
-//         }
-//     }
-//     ImGui::End();
-// }

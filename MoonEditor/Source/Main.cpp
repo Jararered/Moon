@@ -12,6 +12,9 @@ int main()
 
     Editor editor;
     editor.CreateWindow(spec);
-    editor.CreateScene();
+
+    editor.LoadResources();
+    editor.CreatePanels();
+
     editor.Start();
 }
