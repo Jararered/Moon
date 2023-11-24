@@ -28,8 +28,11 @@ using namespace Moon;
 
 void Application::Initialize()
 {
+    // Check if already initialized
     if (m_Status == ApplicationStatus::Initialized)
+    {
         return;
+    }
 
     m_Scenario = std::make_shared<Scenario>();
 
@@ -64,11 +67,36 @@ void Application::Initialize()
     m_Status = ApplicationStatus::Initialized;
 }
 
+void Application::Finalize()
+{
+}
+
+void Application::CreateWindow(const WindowSpecification& spec)
+{
+    if (!m_Window)
+    {
+        m_Window = std::make_shared<OpenGLWindow>(spec);
+    }
+
+    if (m_Status == ApplicationStatus::Uninitialized)
+    {
+        Initialize();
+    }
+}
+
 void Application::Start()
 {
-    if (!m_Window or m_Status == ApplicationStatus::Uninitialized)
+    if ((!m_Window) or (m_Status == ApplicationStatus::Uninitialized))
+    {
+        std::cout << "Application::Start: No window created. Returning...\n";
         return;
+    }
 
+    Loop();
+}
+
+void Application::Loop()
+{
     float dt = 0.0f;
 
     while (m_Window->IsRunning())
@@ -92,13 +120,6 @@ void Application::Start()
         const auto frameEndTime = std::chrono::high_resolution_clock::now();
         dt = std::chrono::duration<float, std::chrono::seconds::period>(frameEndTime - frameStartTime).count();
     }
-}
 
-void Application::CreateWindow(const WindowSpecification& spec)
-{
-    if (!m_Window)
-        m_Window = std::make_shared<OpenGLWindow>(spec);
-
-    if (m_Status == ApplicationStatus::Uninitialized)
-        Initialize();
+    Finalize();
 }

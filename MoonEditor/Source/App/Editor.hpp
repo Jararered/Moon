@@ -25,7 +25,7 @@ public:
         m_ShaderLibrary.emplace("White", Shader("Shader/PositionNormalTexture.vert", "Shader/White.frag"));
         m_ShaderLibrary.emplace("Voxel", Shader("Shader/Voxel.vert", "Shader/Voxel.geom", "Shader/Voxel.frag"));
 
-        // m_ScriptLibrary.emplace("Test Script", std::make_shared<TestScript>());
+        m_ScriptLibrary.emplace("Test Script", std::make_shared<Moon::TestScript>());
     }
 
     void CreatePanels() { m_Panels.emplace("Statistics", std::make_shared<StatisticsPanel>()); }
