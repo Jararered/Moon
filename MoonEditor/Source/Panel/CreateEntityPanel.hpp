@@ -1,13 +1,10 @@
 #pragma once
 
-#include <Core/Panel.hpp>
+#include <Component/Panel.hpp>
 
-class CreateEntityPanel final : public Moon::Panel
+struct CreateEntityPanel : public Moon::Panel
 {
-public:
-    ~CreateEntityPanel() override = default;
-
-    void Update() override
+    void Update()
     {
         ImGui::Begin();
 

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Panel.hpp"
 #include "Scenario.hpp"
 #include "SystemInterface.hpp"
 #include "Window.hpp"
@@ -8,6 +7,7 @@
 #include "Component/Camera.hpp"
 #include "Component/Controller.hpp"
 #include "Component/Mesh.hpp"
+#include "Component/Panel.hpp"
 #include "Component/RigidBody.hpp"
 #include "Component/Script.hpp"
 #include "Component/Shader.hpp"
@@ -35,9 +35,12 @@ namespace Moon
         virtual ~Application() = default;
 
         void CreateWindow(const WindowSpecification& spec);
-
-        void Initialize();
         void Start();
+
+    private:
+        void Initialize();
+        void Finalize();
+        void Loop();
 
     protected:
         std::shared_ptr<Window> m_Window;
