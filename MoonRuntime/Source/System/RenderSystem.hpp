@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Core/Framebuffer.hpp"
-#include "Core/SystemInterface.hpp"
+#include "Core/Scenario/Scenario.hpp"
+#include "Core/Scenario/SystemInterface.hpp"
 
 #include "Component/Mesh.hpp"
 #include "Component/Shader.hpp"
@@ -36,7 +37,7 @@ namespace Moon
 
         int m_PolygonMode;
 
-        UUID m_Camera;
+        Entity m_Camera;
         MSAAFramebuffer m_Framebuffer;
         Framebuffer m_WireFramebuffer;
     };

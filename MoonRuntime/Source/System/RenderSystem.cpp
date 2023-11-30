@@ -1,7 +1,6 @@
 #include "RenderSystem.hpp"
 
 #include "Core/Input.hpp"
-#include "Core/Scenario.hpp"
 
 #include "Component/Camera.hpp"
 #include "Component/Controller.hpp"
@@ -35,7 +34,6 @@ void RenderSystem::Register(std::shared_ptr<Scenario> scenario)
 
 void RenderSystem::Initialize()
 {
-    m_Name = "Render System";
     m_NearClip = 0.1f;
     m_FarClip = 1000.0f;
 
@@ -49,8 +47,6 @@ void RenderSystem::Initialize()
     glfwGetFramebufferSize(glfwGetCurrentContext(), &m_Width, &m_Height);
     m_Framebuffer.Create(m_Width, m_Height);
 
-    m_Camera = m_Scenario->CreateEntity();
-
     const auto position = glm::vec3(0.0f);
     const auto rotation = glm::vec3(0.0f, glm::radians(-90.0f), 0.0f); // Looking into the screen
     const auto scale = glm::vec3(0.5f, 2.0f, 0.5f);
@@ -58,13 +54,12 @@ void RenderSystem::Initialize()
     const auto aspectRatio = 16.0f / 9.0f;
     const auto projectionMatrix = glm::perspective(glm::radians(fov), aspectRatio, m_NearClip, m_FarClip);
     const auto viewMatrix = glm::mat4(1.0f);
-    m_Scenario->AddComponent<Transform>(m_Camera, Transform{.Position = position, .Rotation = rotation, .Scale = scale});
-    m_Scenario->AddComponent<Camera>(m_Camera, Camera{.ViewMatrix = viewMatrix, .ProjectionMatrix = projectionMatrix, .FOV = fov});
 
-    // Adding a rigid body to the camera so that it cannot pass through other objects
-    m_Scenario->AddComponent<RigidBody>(m_Camera, RigidBody{.Velocity = {0.0f, 0.0f, 0.0f}, .Acceleration = {0.0f, 0.0f, 0.0f}, .Mass = 1.0f});
-
-    m_Scenario->AddComponent<Controller>(m_Camera);
+    m_Camera = Entity(m_Scenario);
+    m_Camera.AddComponent<Transform>({.Position = position, .Rotation = rotation, .Scale = scale});
+    m_Camera.AddComponent<Camera>({.ViewMatrix = viewMatrix, .ProjectionMatrix = projectionMatrix, .FOV = fov});
+    m_Camera.AddComponent<RigidBody>({.Velocity = {0.0f, 0.0f, 0.0f}, .Acceleration = {0.0f, 0.0f, 0.0f}, .Mass = 1.0f});
+    m_Camera.AddComponent<Controller>({.SpeedLimit = 5.0f, .JumpMagnitude = 5.0f, .WalkMagnitude = 5.0f});
 
     ConfigureCallbacks();
 }
@@ -77,7 +72,9 @@ void RenderSystem::Update(float)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glPolygonMode(GL_FRONT_AND_BACK, m_PolygonMode);
 
-    const auto camera = m_Scenario->GetComponent<Camera>(m_Camera);
+    // const auto camera = m_Scenario->GetComponent<Camera>(m_Camera);
+    const auto camera = m_Camera.GetComponent<Camera>();
+
     for (const auto& entity : m_Entities)
     {
         const auto& shader = m_Scenario->GetComponent<Shader>(entity);
@@ -107,19 +104,6 @@ void RenderSystem::Update(float)
     m_Framebuffer.Draw();
 }
 
-// void RenderSystem::UpdateUI()
-// {
-//     if (ImGui::InputFloat("Near", &m_NearClip))
-//         ConfigureFramebuffer(m_Width, m_Height);
-//     if (ImGui::InputFloat("Far", &m_FarClip))
-//         ConfigureFramebuffer(m_Width, m_Height);
-//     if (ImGui::Button("Enable Wireframe"))
-//         m_PolygonMode = GL_LINE;
-//     ImGui::SameLine();
-//     if (ImGui::Button("Disable Wireframe"))
-//         m_PolygonMode = GL_FILL;
-// }
-
 void RenderSystem::Finalize()
 {
 }
@@ -134,7 +118,7 @@ void RenderSystem::ConfigureFramebuffer(int width, int height)
     m_Framebuffer.Delete();
     m_Framebuffer.Create(width, height);
 
-    auto& camera = m_Scenario->GetComponent<Camera>(m_Camera);
+    auto& camera = m_Camera.GetComponent<Camera>();
     camera.ProjectionMatrix = glm::perspective(glm::radians(camera.FOV), static_cast<float>(width) / static_cast<float>(height), m_NearClip, m_FarClip);
 }
 

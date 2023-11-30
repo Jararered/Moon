@@ -16,4 +16,12 @@ struct RigidBody
 
     float Mass = 0.0f;
     int MovementStatus = Status::Falling;
+
+    void Reset()
+    {
+        Velocity = glm::vec3(0.0f);
+        Acceleration = glm::vec3(0.0f);
+        Mass = 0.0f;
+        MovementStatus = Status::Falling;
+    }
 };

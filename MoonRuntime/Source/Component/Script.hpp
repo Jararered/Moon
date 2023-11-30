@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Core/Scenario.hpp"
-#include "Core/UUID.hpp"
+#include "Core/Scenario/Scenario.hpp"
+#include "Core/Scenario/UUID.hpp"
 
 #include <memory>
 

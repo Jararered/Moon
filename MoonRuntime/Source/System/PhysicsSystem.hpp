@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Core/SystemInterface.hpp"
+#include "Core/Scenario/Scenario.hpp"
+#include "Core/Scenario/SystemInterface.hpp"
 
 #include "Component/RigidBody.hpp"
 #include "Component/Transform.hpp"

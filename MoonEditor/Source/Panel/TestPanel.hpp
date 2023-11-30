@@ -1,12 +1,12 @@
 #pragma once
 
-#include <Component/Panel.hpp>
+#include "Panel.hpp"
 
-struct StatisticsPanel : public Moon::Panel
+struct TestPanel : public Moon::Panel
 {
     void Update()
     {
-        ImGui::Begin("Statistics Panel", NULL, ImGuiWindowFlags_AlwaysAutoResize);
+        ImGui::Begin("Test Panel");
 
         const auto& panel_pos = ImGui::GetWindowPos();
         ImGui::Text("Panel Position: %.0f, %.0f", panel_pos.x, panel_pos.y);

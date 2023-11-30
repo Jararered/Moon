@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include <Core/Scenario.hpp>
+#include <Core/Scenario/Scenario.hpp>
 
 namespace Moon
 {

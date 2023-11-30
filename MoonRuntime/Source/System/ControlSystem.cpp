@@ -1,8 +1,6 @@
 #include "ControlSystem.hpp"
 
 #include "Core/Input.hpp"
-#include "Core/Scenario.hpp"
-#include "Core/Signature.hpp"
 
 #include "Component/Controller.hpp"
 #include "Component/RigidBody.hpp"
@@ -26,10 +24,6 @@ void ControlSystem::Register(std::shared_ptr<Scenario> scenario)
 
 void ControlSystem::Initialize()
 {
-    m_SpeedLimit = 2.5f;
-    m_JumpMagnitude = 7.5f;
-    m_WalkMagnitude = 5.0f;
-    m_Name = "Control System";
 }
 
 void ControlSystem::Update(float)
@@ -38,7 +32,7 @@ void ControlSystem::Update(float)
     {
         auto& transform = m_Scenario->GetComponent<Transform>(entity);
         auto& rigidBody = m_Scenario->GetComponent<RigidBody>(entity);
-        auto speedLimit = m_SpeedLimit;
+        auto controller = m_Scenario->GetComponent<Controller>(entity);
 
         // X - Z Movement
         const auto direction = glm::vec3(glm::cos(transform.Rotation.y) * glm::cos(transform.Rotation.x), 0.0f, glm::sin(transform.Rotation.y) * glm::cos(transform.Rotation.x));
@@ -69,43 +63,26 @@ void ControlSystem::Update(float)
 
         // Apply velocity increment
         auto velocity = glm::vec3(0.0f);
-        velocity.x = m_WalkMagnitude * velocityDirection.x;
-        velocity.y = m_JumpMagnitude * velocityDirection.y;
-        velocity.z = m_WalkMagnitude * velocityDirection.z;
+        velocity.x = controller.WalkMagnitude * velocityDirection.x;
+        velocity.y = controller.JumpMagnitude * velocityDirection.y;
+        velocity.z = controller.WalkMagnitude * velocityDirection.z;
         rigidBody.Velocity += velocity;
 
         if (Input::IsKeyPressed(Key::LeftControl))
-            speedLimit *= 1.5f;
+            controller.SpeedLimit *= 1.5f;
         if (Input::IsKeyPressed(Key::LeftShift))
-            speedLimit *= 0.5f;
+            controller.SpeedLimit *= 0.5f;
 
         // Limit velocity in x,z directions
         auto xz = glm::vec3(rigidBody.Velocity.x, 0.0f, rigidBody.Velocity.z);
-        if (glm::length(xz) > speedLimit and glm::length(xz) != 0.0f)
+        if (glm::length(xz) > controller.SpeedLimit and glm::length(xz) != 0.0f)
         {
-            auto newxz = glm::normalize(xz) * speedLimit;
+            auto newxz = glm::normalize(xz) * controller.SpeedLimit;
             rigidBody.Velocity.x = newxz.x;
             rigidBody.Velocity.z = newxz.z;
         }
     }
 }
-
-// void ControlSystem::UpdateUI()
-// {
-//     for (const auto entity : m_Entities)
-//     {
-//         auto& transform = m_Scenario->GetComponent<Transform>(entity);
-//         auto& rigidBody = m_Scenario->GetComponent<RigidBody>(entity);
-
-//         ImGui::LabelText("", "Rigid Body");
-//         ImGui::InputFloat3("Position", &transform.Position.x);
-//         ImGui::InputFloat3("Velocity", &rigidBody.Velocity.x);
-//         ImGui::InputFloat3("Acceleration", &rigidBody.Acceleration.x);
-
-//         ImGui::InputFloat("Jump Magnitude", &m_JumpMagnitude);
-//         ImGui::InputFloat("Walk Magnitude", &m_WalkMagnitude);
-//     }
-// }
 
 void ControlSystem::Finalize()
 {

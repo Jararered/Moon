@@ -40,7 +40,7 @@ namespace Moon
         virtual void Create(int width, int height)
         {
             if (m_FrameShader.ID == 0)
-                m_FrameShader = Shader("Shader/Framebuffer.vert", "Shader/Framebuffer.frag");
+                m_FrameShader = Shader("Resources/Shaders/Framebuffer.vert", "Resources/Shaders/Framebuffer.frag");
 
             // Delete previous buffers if they exist
             if (m_FBO != 0)
@@ -151,7 +151,7 @@ namespace Moon
             m_Height = height;
 
             if (m_FrameShader.ID == 0)
-                m_FrameShader = Shader("Shader/Framebuffer.vert", "Shader/Framebuffer.frag");
+                m_FrameShader = Shader("Resources/Shaders/Framebuffer.vert", "Resources/Shaders/Framebuffer.frag");
 
             // Delete previous buffers if they exist
             if (m_FBO != 0)

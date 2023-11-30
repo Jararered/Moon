@@ -1,7 +1,6 @@
 #include "CameraSystem.hpp"
 
 #include "Core/Input.hpp"
-#include "Core/Scenario.hpp"
 
 #include "Component/Camera.hpp"
 #include "Component/Transform.hpp"
@@ -25,7 +24,6 @@ void CameraSystem::Register(std::shared_ptr<Scenario> scenario)
 
 void CameraSystem::Initialize()
 {
-    m_Name = "Camera System";
 }
 
 void CameraSystem::Update(float)

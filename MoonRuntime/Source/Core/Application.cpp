@@ -1,7 +1,8 @@
 #include "Application.hpp"
 
 #include "OpenGLWindow.hpp"
-#include "Scenario.hpp"
+
+#include "Scenario/Scenario.hpp"
 
 #include "System/CameraSystem.hpp"
 #include "System/ControlSystem.hpp"
@@ -93,6 +94,8 @@ void Application::Start()
     }
 
     Loop();
+
+    Finalize();
 }
 
 void Application::Loop()
@@ -110,16 +113,9 @@ void Application::Loop()
             system->Update(dt);
         }
 
-        for (const auto [_, panel] : m_Panels)
-        {
-            panel->Update();
-        }
-
         m_Window->EndFrame();
 
         const auto frameEndTime = std::chrono::high_resolution_clock::now();
         dt = std::chrono::duration<float, std::chrono::seconds::period>(frameEndTime - frameStartTime).count();
     }
-
-    Finalize();
 }

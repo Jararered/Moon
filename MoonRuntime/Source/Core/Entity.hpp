@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Scenario.hpp"
-#include "UUID.hpp"
+#include "Scenario/Scenario.hpp"
+#include "Scenario/UUID.hpp"
 
 #include <memory>
 
@@ -11,6 +11,7 @@ namespace Moon
     class Entity
     {
     public:
+        Entity() : m_UUID(0) {}
         Entity(std::shared_ptr<Scenario> scenario) : m_Scenario(scenario), m_UUID(m_Scenario->CreateEntity()) {}
         ~Entity() {}
 
@@ -22,6 +23,9 @@ namespace Moon
 
         // Adds the component provided
         template <class T> void AddComponent(const T& component) { m_Scenario->AddComponent<T>(m_UUID, component); }
+
+        // Gets the component provided
+        template <class T> T& GetComponent() { return m_Scenario->GetComponent<T>(m_UUID); }
 
         // Removes the component provided
         template <class T> void RemoveComponent() { m_Scenario->RemoveComponent<T>(m_UUID); }

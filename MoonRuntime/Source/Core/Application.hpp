@@ -1,18 +1,18 @@
 #pragma once
 
-#include "Scenario.hpp"
-#include "SystemInterface.hpp"
+#include "Scenario/SystemInterface.hpp"
 #include "Window.hpp"
 
 #include "Component/Camera.hpp"
 #include "Component/Controller.hpp"
 #include "Component/Mesh.hpp"
-#include "Component/Panel.hpp"
 #include "Component/RigidBody.hpp"
 #include "Component/Script.hpp"
 #include "Component/Shader.hpp"
 #include "Component/Texture.hpp"
 #include "Component/Transform.hpp"
+
+#include "Scenario/Scenario.hpp"
 
 #include <chrono>
 #include <map>
@@ -49,7 +49,6 @@ namespace Moon
         ApplicationStatus m_Status = ApplicationStatus::Uninitialized;
 
         std::map<unsigned int, std::shared_ptr<SystemInterface>> m_Systems;
-        std::unordered_map<std::string, std::shared_ptr<Panel>> m_Panels;
 
         std::unordered_map<std::string, Mesh> m_MeshLibrary;
         std::unordered_map<std::string, Script> m_ScriptLibrary;

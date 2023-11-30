@@ -1,6 +1,5 @@
 #include "PhysicsSystem.hpp"
 
-#include "Core/Scenario.hpp"
 #include "Core/Timer.hpp"
 
 #include <glm/trigonometric.hpp>
@@ -20,8 +19,6 @@ void PhysicsSystem::Register(std::shared_ptr<Scenario> scenario)
 
 void PhysicsSystem::Initialize()
 {
-    m_Name = "Physics System";
-
     m_SubStepCount = 4;
 
     m_AirFrictionCoefficient = 20.0f;

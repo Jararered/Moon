@@ -1,4 +1,4 @@
-#include "App/Editor.hpp"
+#include "Editor.hpp"
 
 using namespace Moon;
 
@@ -12,9 +12,7 @@ int main()
 
     Editor editor;
     editor.CreateWindow(spec);
-
-    editor.LoadResources();
     editor.CreatePanels();
-
+    editor.CreatePlatform();
     editor.Start();
 }
