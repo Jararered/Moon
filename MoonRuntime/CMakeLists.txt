@@ -43,6 +43,5 @@ target_include_directories(${Project} PUBLIC ${MoonIncludeDirs} ${LibraryInclude
 # else()
 #     target_compile_options(${Project} PRIVATE -Wall -Wextra -Wpedantic -Werror)
 # endif()
-if(WIN32)
-    install(DIRECTORY Resources DESTINATION Windows)
-endif(WIN32)
+
+install(DIRECTORY Resources DESTINATION ${InstallDir})

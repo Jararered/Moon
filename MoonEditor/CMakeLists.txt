@@ -10,4 +10,5 @@ add_executable(${Project} ${ProjectSourceFiles})
 target_include_directories(${Project} PUBLIC Source)
 target_link_libraries(${Project} MoonRuntime)
 
-install(DIRECTORY Resources DESTINATION ${CMAKE_SOURCE_DIR}/Build/${Project})
+install(DIRECTORY Resources DESTINATION ${InstallDir})
+install(TARGETS ${Project} RUNTIME DESTINATION ${InstallDir})
