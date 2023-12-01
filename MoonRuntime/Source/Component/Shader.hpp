@@ -1,5 +1,6 @@
 #pragma once
 
+#include <assert.h>
 #include <fstream>
 #include <glad/gl.h>
 #include <iostream>
@@ -40,6 +41,8 @@ struct Shader
 
         glDeleteShader(vertexID);
         glDeleteShader(fragmentID);
+
+        assert(shaderID != 0 and "Shader::Create: Unable to compile shader. No valid shader id was received from the GPU.");
 
         ID = shaderID;
     }
@@ -85,6 +88,8 @@ struct Shader
         glDeleteShader(geometryID);
         glDeleteShader(fragmentID);
 
+        assert(shaderID != 0 and "Shader::Create: Unable to compile shader. No valid shader id was received from the GPU.");
+
         ID = shaderID;
     }
 
@@ -92,6 +97,9 @@ struct Shader
     {
         std::ifstream fileStream(file.data());
         std::string fileString((std::istreambuf_iterator<char>(fileStream)), std::istreambuf_iterator<char>());
+
+        assert(!fileString.empty() and "Shader::OpenFile: Unable to open/read file provided.");
+
         return fileString;
     }
 
