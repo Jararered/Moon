@@ -42,6 +42,8 @@ namespace Moon
             if (m_FrameShader.ID == 0)
                 m_FrameShader = Shader("Resources/Shaders/Framebuffer.vert", "Resources/Shaders/Framebuffer.frag");
 
+            assert(m_FrameShader.ID == 0 and "Framebuffer shader was unable to compile.");
+
             // Delete previous buffers if they exist
             if (m_FBO != 0)
                 glDeleteFramebuffers(1, &m_FBO);
