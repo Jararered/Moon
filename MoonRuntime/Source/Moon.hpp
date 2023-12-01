@@ -4,9 +4,9 @@
 #include "Core/Entity.hpp"
 #include "Core/Input.hpp"
 #include "Core/Random.hpp"
-#include "Core/Scenario.hpp"
-#include "Core/Signature.hpp"
-#include "Core/SystemInterface.hpp"
+#include "Core/Scenario/Scenario.hpp"
+#include "Core/Scenario/Signature.hpp"
+#include "Core/Scenario/SystemInterface.hpp"
 #include "Core/Timer.hpp"
 #include "Core/Window.hpp"
 

@@ -5,7 +5,9 @@ project(${Project})
 
 set(CMAKE_CXX_STANDARD 23)
 
-set(InstallDir ${CMAKE_SOURCE_DIR})
+if(WIN32)
+    set(InstallDir ${CMAKE_SOURCE_DIR}/Windows)
+endif(WIN32)
 
 set(MoonIncludeDirs
     ${CMAKE_SOURCE_DIR}/MoonRuntime/Source

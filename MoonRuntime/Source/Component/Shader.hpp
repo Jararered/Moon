@@ -1,5 +1,6 @@
 #pragma once
 
+#include <assert.h>
 #include <fstream>
 #include <glad/gl.h>
 #include <iostream>
@@ -18,7 +19,7 @@ struct Shader
         auto vertexSourceChar = vertexSource.c_str();
         glShaderSource(vertexID, 1, &vertexSourceChar, NULL);
         glCompileShader(vertexID);
-        if (not CheckCompileStatus(vertexID))
+        if (!CheckCompileStatus(vertexID))
             return;
 
         // Fragment Shader
@@ -27,7 +28,7 @@ struct Shader
         auto fragmentSourceChar = fragmentSource.c_str();
         glShaderSource(fragmentID, 1, &fragmentSourceChar, NULL);
         glCompileShader(fragmentID);
-        if (not CheckCompileStatus(fragmentID))
+        if (!CheckCompileStatus(fragmentID))
             return;
 
         // Linking
@@ -35,11 +36,13 @@ struct Shader
         glAttachShader(shaderID, vertexID);
         glAttachShader(shaderID, fragmentID);
         glLinkProgram(shaderID);
-        if (not CheckLinkingStatus(shaderID))
+        if (!CheckLinkingStatus(shaderID))
             return;
 
         glDeleteShader(vertexID);
         glDeleteShader(fragmentID);
+
+        assert(shaderID != 0 and "Shader::Create: Unable to compile shader. No valid shader id was received from the GPU.");
 
         ID = shaderID;
     }
@@ -52,7 +55,7 @@ struct Shader
         auto vertexSourceChar = vertexSource.c_str();
         glShaderSource(vertexID, 1, &vertexSourceChar, NULL);
         glCompileShader(vertexID);
-        if (not CheckCompileStatus(vertexID))
+        if (!CheckCompileStatus(vertexID))
             return;
 
         // Geometry Shader
@@ -61,7 +64,7 @@ struct Shader
         auto geometrySourceChar = geometrySource.c_str();
         glShaderSource(geometryID, 1, &geometrySourceChar, NULL);
         glCompileShader(geometryID);
-        if (not CheckCompileStatus(geometryID))
+        if (!CheckCompileStatus(geometryID))
             return;
 
         // Fragment Shader
@@ -70,7 +73,7 @@ struct Shader
         auto fragmentSourceChar = fragmentSource.c_str();
         glShaderSource(fragmentID, 1, &fragmentSourceChar, NULL);
         glCompileShader(fragmentID);
-        if (not CheckCompileStatus(fragmentID))
+        if (!CheckCompileStatus(fragmentID))
             return;
 
         // Linking
@@ -85,6 +88,8 @@ struct Shader
         glDeleteShader(geometryID);
         glDeleteShader(fragmentID);
 
+        assert(shaderID != 0 and "Shader::Create: Unable to compile shader. No valid shader id was received from the GPU.");
+
         ID = shaderID;
     }
 
@@ -92,6 +97,9 @@ struct Shader
     {
         std::ifstream fileStream(file.data());
         std::string fileString((std::istreambuf_iterator<char>(fileStream)), std::istreambuf_iterator<char>());
+
+        assert(!fileString.empty() and "Shader::OpenFile: Unable to open/read file provided.");
+
         return fileString;
     }
 
@@ -101,12 +109,9 @@ struct Shader
         char info[512];
 
         glGetShaderiv(id, GL_COMPILE_STATUS, &status);
-        if (status == GL_FALSE)
-        {
-            glGetShaderInfoLog(id, 512, NULL, info);
-            std::cout << "Shader::CheckCompileStatus():\n" << info << "\n";
-            glDeleteShader(id);
-        }
+        glGetShaderInfoLog(id, 512, NULL, info);
+
+        assert(status != GL_FALSE and info);
 
         return status;
     }
@@ -117,12 +122,9 @@ struct Shader
         char info[512];
 
         glGetProgramiv(id, GL_LINK_STATUS, &status);
-        if (status == GL_FALSE)
-        {
-            glGetProgramInfoLog(id, 512, NULL, info);
-            std::cout << "Shader::CheckLinkingStatus():\n" << info << "\n";
-            glDeleteProgram(id);
-        }
+        glGetProgramInfoLog(id, 512, NULL, info);
+
+        assert(status != GL_FALSE and info);
 
         return status;
     }

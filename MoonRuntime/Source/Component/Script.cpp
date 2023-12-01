@@ -1,8 +1,5 @@
 #include "Script.hpp"
 
-namespace Moon
-{
+using namespace Moon;
 
-    std::shared_ptr<Scenario> ScriptInterface::s_Scenario = nullptr;
-
-}
+std::weak_ptr<Scenario> ScriptInterface::s_Scenario;

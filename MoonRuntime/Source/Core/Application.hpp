@@ -1,12 +1,6 @@
 #pragma once
 
-#include <chrono>
-#include <map>
-#include <memory>
-#include <string>
-
-#include "Scenario.hpp"
-#include "SystemInterface.hpp"
+#include "Scenario/SystemInterface.hpp"
 #include "Window.hpp"
 
 #include "Component/Camera.hpp"
@@ -17,6 +11,13 @@
 #include "Component/Shader.hpp"
 #include "Component/Texture.hpp"
 #include "Component/Transform.hpp"
+
+#include "Scenario/Scenario.hpp"
+
+#include <chrono>
+#include <map>
+#include <memory>
+#include <string>
 
 namespace Moon
 {
@@ -34,25 +35,25 @@ namespace Moon
         virtual ~Application() = default;
 
         void CreateWindow(const WindowSpecification& spec);
-
-        void Initialize();
         void Start();
 
-        void UpdateUI();
+    private:
+        void Initialize();
+        void Finalize();
+        void Loop();
 
     protected:
+        std::shared_ptr<Window> m_Window;
         std::shared_ptr<Scenario> m_Scenario;
 
-        std::shared_ptr<Window> p_Window;
         ApplicationStatus m_Status = ApplicationStatus::Uninitialized;
 
-        std::vector<std::shared_ptr<SystemInterface>> m_Systems;
-        std::map<unsigned int, std::shared_ptr<SystemInterface>> m_SystemMap;
+        std::map<unsigned int, std::shared_ptr<SystemInterface>> m_Systems;
 
-        std::unordered_map<std::string, std::shared_ptr<MeshInterface>> m_AvaliableMeshesMap;
-        std::unordered_map<std::string, Script> m_AvaliableScriptsMap;
-        std::unordered_map<std::string, Texture> m_AvaliableTexturesMap;
-        std::unordered_map<std::string, Shader> m_AvaliableShadersMap;
+        std::unordered_map<std::string, Mesh> m_MeshLibrary;
+        std::unordered_map<std::string, Script> m_ScriptLibrary;
+        std::unordered_map<std::string, Texture> m_TextureLibrary;
+        std::unordered_map<std::string, Shader> m_ShaderLibrary;
     };
 
 }

@@ -18,4 +18,11 @@ struct Transform
         while (rotation < glm::radians(-360.0f))
             rotation += glm::radians(360.0f);
     }
+
+    void Reset()
+    {
+        Position = glm::vec3(0.0f);
+        Rotation = glm::vec3(0.0f);
+        Scale = glm::vec3(1.0f);
+    }
 };

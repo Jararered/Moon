@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Core/Framebuffer.hpp"
-#include "Core/SystemInterface.hpp"
+#include "Core/Scenario/Scenario.hpp"
+#include "Core/Scenario/SystemInterface.hpp"
 
 #include "Component/Mesh.hpp"
 #include "Component/Shader.hpp"
@@ -21,7 +22,6 @@ namespace Moon
         void Register(std::shared_ptr<Scenario> scenario) override;
         void Initialize() override;
         void Update(float dt) override;
-        void UpdateUI() override;
         void Finalize() override;
 
     private:
@@ -37,7 +37,7 @@ namespace Moon
 
         int m_PolygonMode;
 
-        UUID m_Camera;
+        Entity m_Camera;
         MSAAFramebuffer m_Framebuffer;
         Framebuffer m_WireFramebuffer;
     };

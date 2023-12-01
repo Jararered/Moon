@@ -25,7 +25,7 @@ add_library(${Project}
 
 if(UNIX)
     add_definitions(-DUNIX)
-    find_package(glfw3 3.3.8 REQUIRED)
+    find_package(glfw3)
     target_link_libraries(${Project} glfw)
 endif(UNIX)
 
@@ -43,3 +43,5 @@ target_include_directories(${Project} PUBLIC ${MoonIncludeDirs} ${LibraryInclude
 # else()
 #     target_compile_options(${Project} PRIVATE -Wall -Wextra -Wpedantic -Werror)
 # endif()
+
+install(DIRECTORY Resources DESTINATION ${InstallDir})

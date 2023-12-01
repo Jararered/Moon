@@ -38,10 +38,10 @@ namespace Moon
         void EntityDestroyed(UUID uuid)
         {
             // Erase a destroyed uuid from all system lists
-            // m_UUIDs is a set so no check needed
+            // m_Entities is a set so no check needed
             for (const auto& [_, system] : m_Systems)
             {
-                system->m_UUIDs.erase(uuid);
+                system->m_Entities.erase(uuid);
             }
         }
 
@@ -55,12 +55,12 @@ namespace Moon
                 if ((entitySignature & systemSignature) == systemSignature)
                 {
                     // Entity signature matches system signature - insert into set
-                    system->m_UUIDs.insert(uuid);
+                    system->m_Entities.insert(uuid);
                 }
                 else
                 {
                     // Entity signature does not match system signature - erase from set
-                    system->m_UUIDs.erase(uuid);
+                    system->m_Entities.erase(uuid);
                 }
             }
         }

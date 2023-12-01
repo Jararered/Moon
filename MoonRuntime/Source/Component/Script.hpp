@@ -1,20 +1,24 @@
 #pragma once
 
-#include "Core/Entity.hpp"
-#include "Core/Scenario.hpp"
+#include "Core/Scenario/Scenario.hpp"
+#include "Core/Scenario/UUID.hpp"
 
 #include <memory>
 
 namespace Moon
 {
 
-    struct ScriptInterface
+    class ScriptInterface
     {
-        static std::shared_ptr<Scenario> s_Scenario;
-
+    public:
         virtual void Update(float dt, UUID uuid) = 0;
+
+        std::shared_ptr<Scenario> GetScenario() { return s_Scenario.lock(); }
+
+    private:
+        static std::weak_ptr<Scenario> s_Scenario;
     };
 
-    typedef std::shared_ptr<ScriptInterface> Script;
+    using Script = std::weak_ptr<ScriptInterface>;
 
 }

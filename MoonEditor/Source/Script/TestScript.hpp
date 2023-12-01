@@ -12,7 +12,7 @@ namespace Moon
     {
         void Update(float dt, UUID uuid) override
         {
-            if (s_Scenario->HasComponent<Transform>(uuid))
+            if (GetScenario()->HasComponent<Transform>(uuid))
             {
                 std::cout << "Entity " << uuid << " has a transform component!\n";
             }
