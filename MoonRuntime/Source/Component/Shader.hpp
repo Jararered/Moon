@@ -109,12 +109,9 @@ struct Shader
         char info[512];
 
         glGetShaderiv(id, GL_COMPILE_STATUS, &status);
-        if (status == GL_FALSE)
-        {
-            glGetShaderInfoLog(id, 512, NULL, info);
-            std::cout << "Shader::CheckCompileStatus():\n" << info << "\n";
-            glDeleteShader(id);
-        }
+        glGetShaderInfoLog(id, 512, NULL, info);
+
+        assert(status != GL_FALSE and info);
 
         return status;
     }
@@ -125,12 +122,9 @@ struct Shader
         char info[512];
 
         glGetProgramiv(id, GL_LINK_STATUS, &status);
-        if (status == GL_FALSE)
-        {
-            glGetProgramInfoLog(id, 512, NULL, info);
-            std::cout << "Shader::CheckLinkingStatus():\n" << info << "\n";
-            glDeleteProgram(id);
-        }
+        glGetProgramInfoLog(id, 512, NULL, info);
+
+        assert(status != GL_FALSE and info);
 
         return status;
     }
