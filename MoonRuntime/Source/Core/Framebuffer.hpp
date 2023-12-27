@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Component/Mesh.hpp"
-#include "Component/Shader.hpp"
+#include "Core/Components.hpp"
 #include "Entity.hpp"
 #include "Structure/Vertex.hpp"
 #include "Structure/VertexBuffer.hpp"

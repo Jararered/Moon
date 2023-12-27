@@ -3,8 +3,7 @@
 #include "Core/Scenario/Scenario.hpp"
 #include "Core/Scenario/SystemInterface.hpp"
 
-#include "Component/RigidBody.hpp"
-#include "Component/Transform.hpp"
+#include "Core/Components.hpp"
 
 #include <glm/vec3.hpp>
 

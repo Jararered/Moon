@@ -2,9 +2,7 @@
 
 #include "Core/Input.hpp"
 
-#include "Component/Controller.hpp"
-#include "Component/RigidBody.hpp"
-#include "Component/Transform.hpp"
+#include "Core/Components.hpp"
 
 #include <glm/trigonometric.hpp>
 #include <imgui.h>

@@ -1,16 +1,8 @@
 #pragma once
 
+#include "Core/Components.hpp"
 #include "Scenario/SystemInterface.hpp"
 #include "Window.hpp"
-
-#include "Component/Camera.hpp"
-#include "Component/Controller.hpp"
-#include "Component/Mesh.hpp"
-#include "Component/RigidBody.hpp"
-#include "Component/Script.hpp"
-#include "Component/Shader.hpp"
-#include "Component/Texture.hpp"
-#include "Component/Transform.hpp"
 
 #include "Scenario/Scenario.hpp"
 

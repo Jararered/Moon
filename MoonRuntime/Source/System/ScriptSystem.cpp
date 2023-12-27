@@ -1,7 +1,6 @@
 #include "ScriptSystem.hpp"
 
-#include "Component/Script.hpp"
-#include "Component/Transform.hpp"
+#include "Core/Components.hpp"
 
 #include <glm/glm.hpp>
 

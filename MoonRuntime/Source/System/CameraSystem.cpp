@@ -2,8 +2,7 @@
 
 #include "Core/Input.hpp"
 
-#include "Component/Camera.hpp"
-#include "Component/Transform.hpp"
+#include "Core/Components.hpp"
 
 #include <glfw/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
