@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Moon/Components.hpp>
+#include <Components.hpp>
 
 #include <iostream>
 

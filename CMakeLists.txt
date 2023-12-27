@@ -10,7 +10,7 @@ if(WIN32)
 endif(WIN32)
 
 set(MoonIncludeDirs
-    ${CMAKE_SOURCE_DIR}/MoonRuntime/Source
+    ${CMAKE_SOURCE_DIR}/MoonRuntime/Source/Moon
 )
 
 set(LibraryIncludeDirs

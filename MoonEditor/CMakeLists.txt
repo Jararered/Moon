@@ -5,9 +5,18 @@ project(${Project})
 
 file(GLOB_RECURSE ProjectSourceFiles Source/*.cpp)
 
-add_executable(${Project} ${ProjectSourceFiles})
+set(ImguiSourceFiles
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/imgui_draw.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/imgui_tables.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/imgui_widgets.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/imgui.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/backends/imgui_impl_glfw.cpp
+    ${CMAKE_SOURCE_DIR}/Libraries/imgui/backends/imgui_impl_opengl3.cpp
+)
 
-target_include_directories(${Project} PUBLIC Source)
+add_executable(${Project} ${ProjectSourceFiles} ${ImguiSourceFiles})
+
+target_include_directories(${Project} PUBLIC Source ${MoonIncludeDirs})
 target_link_libraries(${Project} MoonRuntime)
 
 install(DIRECTORY Resources DESTINATION ${InstallDir})

@@ -1,11 +1,9 @@
 #include "ControlSystem.hpp"
 
-#include "Moon/Input.hpp"
-
-#include "Moon/Components.hpp"
+#include "Components.hpp"
+#include "Input.hpp"
 
 #include <glm/trigonometric.hpp>
-#include <imgui.h>
 
 using namespace Moon;
 

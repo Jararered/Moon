@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Moon/Scenario/Scenario.hpp"
-#include "Moon/Scenario/UUID.hpp"
+#include "Scenario/Scenario.hpp"
+#include "Scenario/UUID.hpp"
 #include "Structure/MeshInterface.hpp"
 
 #include <glad/gl.h>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Moon.hpp>
+#include <Application.hpp>
 
 namespace Moon
 {
@@ -8,6 +8,7 @@ namespace Moon
     class Editor final : public Application
     {
     public:
+        void InitializeImGui();
         void CreatePanels();
         void CreatePlatform();
 

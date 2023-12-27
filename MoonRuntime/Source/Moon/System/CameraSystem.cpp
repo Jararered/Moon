@@ -1,13 +1,11 @@
 #include "CameraSystem.hpp"
 
-#include "Moon/Input.hpp"
-
-#include "Moon/Components.hpp"
+#include "Components.hpp"
+#include "Input.hpp"
 
 #include <glfw/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/trigonometric.hpp>
-#include <imgui.h>
 
 using namespace Moon;
 
@@ -60,25 +58,6 @@ void CameraSystem::Update(float)
         camera.ViewMatrix = glm::lookAt(cameraPosition, (cameraPosition + direction), glm::vec3(0.0f, 1.0f, 0.0f));
     }
 }
-
-// void CameraSystem::UpdateUI()
-// {
-//     for (const auto entity : m_Entities)
-//     {
-//         auto& camera = m_Scenario->GetComponent<Camera>(entity);
-
-//         if (ImGui::SliderFloat("FOV", &camera.FOV, 10.0f, 170.0f))
-//         {
-//             UpdatePerspective(entity);
-//         }
-
-//         if (ImGui::Button("Reset Position"))
-//         {
-//             auto& transform = m_Scenario->GetComponent<Transform>(entity);
-//             transform.Position = glm::vec3(0.0f);
-//         }
-//     }
-// }
 
 void CameraSystem::Finalize()
 {

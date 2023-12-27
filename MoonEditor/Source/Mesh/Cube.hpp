@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Moon/Components.hpp>
-#include <Moon/Structure/Vertex.hpp>
-#include <Moon/Structure/VertexMeshTemplate.hpp>
+#include <Components.hpp>
+#include <Structure/Vertex.hpp>
+#include <Structure/VertexMeshTemplate.hpp>
 
 class TexturedCubeMesh : public Moon::VertexMeshTemplate<Moon::Vertex3D<glm::vec3, glm::vec3, glm::vec2>> // Position, Normal, Texture Coordinate
 {

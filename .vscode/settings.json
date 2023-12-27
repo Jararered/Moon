@@ -1,6 +1,7 @@
 {
     "cmake.generator": "Ninja",
     "cmake.buildDirectory": "${workspaceFolder}/Build",
+    "cmake.configureOnOpen": true,
     // "files.exclude": {
     //     ".vscode": true,
     //     "Build": true,

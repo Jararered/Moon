@@ -1,6 +1,6 @@
 #include "ScriptSystem.hpp"
 
-#include "Moon/Components.hpp"
+#include "Components.hpp"
 
 #include <glm/glm.hpp>
 

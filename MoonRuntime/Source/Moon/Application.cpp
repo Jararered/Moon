@@ -1,22 +1,18 @@
 #include "Application.hpp"
 
+#include "Components.hpp"
 #include "OpenGLWindow.hpp"
-
 #include "Scenario/Scenario.hpp"
-
 #include "System/CameraSystem.hpp"
 #include "System/ControlSystem.hpp"
 #include "System/PhysicsSystem.hpp"
 #include "System/RenderSystem.hpp"
 #include "System/ScriptSystem.hpp"
 
-#include "Moon/Components.hpp"
+#include <glfw/glfw3.h>
 
 #include <filesystem>
-#include <glfw/glfw3.h>
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
+#include <print>
 
 using namespace Moon;
 
@@ -86,7 +82,7 @@ void Application::Start()
 {
     if ((!m_Window) or (m_Status == ApplicationStatus::Uninitialized))
     {
-        std::cout << "Application::Start: No window created. Returning...\n";
+        std::println("Application::Start: No window created. Returning...");
         return;
     }
 

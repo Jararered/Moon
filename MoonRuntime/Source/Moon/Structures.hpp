@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Moon/Structure/BufferInterface.hpp"
-#include "Moon/Structure/MeshInterface.hpp"
-#include "Moon/Structure/Vertex.hpp"
-#include "Moon/Structure/VertexBuffer.hpp"
-#include "Moon/Structure/VertexMeshTemplate.hpp"
-#include "Moon/Structure/Voxel.hpp"
-#include "Moon/Structure/VoxelBuffer.hpp"
-#include "Moon/Structure/VoxelMeshTemplate.hpp"
+#include "Structure/BufferInterface.hpp"
+#include "Structure/MeshInterface.hpp"
+#include "Structure/Vertex.hpp"
+#include "Structure/VertexBuffer.hpp"
+#include "Structure/VertexMeshTemplate.hpp"
+#include "Structure/Voxel.hpp"
+#include "Structure/VoxelBuffer.hpp"
+#include "Structure/VoxelMeshTemplate.hpp"

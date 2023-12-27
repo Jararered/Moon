@@ -1,16 +1,13 @@
 #include "RenderSystem.hpp"
 
-#include "Moon/Components.hpp"
-#include "Moon/Input.hpp"
+#include "Components.hpp"
+#include "Input.hpp"
 
 #include <glad/gl.h>
 #include <glfw/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/euler_angles.hpp>
 #include <glm/trigonometric.hpp>
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
 
 using namespace Moon;
 

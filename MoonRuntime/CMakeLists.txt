@@ -10,12 +10,6 @@ file(GLOB_RECURSE ProjectSourceFiles Source/*.cpp)
 set(LibrarySourceFiles
     ${CMAKE_SOURCE_DIR}/Libraries/glad/source/gl.c
     ${CMAKE_SOURCE_DIR}/Libraries/stb_image/source/stb_image.cpp
-    ${CMAKE_SOURCE_DIR}/Libraries/imgui/imgui_draw.cpp
-    ${CMAKE_SOURCE_DIR}/Libraries/imgui/imgui_tables.cpp
-    ${CMAKE_SOURCE_DIR}/Libraries/imgui/imgui_widgets.cpp
-    ${CMAKE_SOURCE_DIR}/Libraries/imgui/imgui.cpp
-    ${CMAKE_SOURCE_DIR}/Libraries/imgui/backends/imgui_impl_glfw.cpp
-    ${CMAKE_SOURCE_DIR}/Libraries/imgui/backends/imgui_impl_opengl3.cpp
 )
 
 add_library(${Project} 

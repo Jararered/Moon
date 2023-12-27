@@ -1,10 +1,15 @@
 #include "Editor.hpp"
 
+#include "Entity.hpp"
 #include "Mesh/Cube.hpp"
 #include "Panel/TestPanel.hpp"
 #include "Script/TestScript.hpp"
 
 using namespace Moon;
+
+void Editor::InitializeImGui()
+{
+}
 
 void Editor::CreatePanels()
 {

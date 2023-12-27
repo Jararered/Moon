@@ -1,9 +1,8 @@
 #include "PhysicsSystem.hpp"
 
-#include "Moon/Timer.hpp"
+#include "Timer.hpp"
 
 #include <glm/trigonometric.hpp>
-#include <imgui.h>
 
 using namespace Moon;
 
@@ -50,14 +49,6 @@ void PhysicsSystem::Update(float dt)
         }
     }
 }
-
-// void PhysicsSystem::UpdateUI()
-// {
-//     ImGui::InputInt("Steps", &m_SubStepCount);
-//     ImGui::InputFloat("Gravity", &m_Gravity.y);
-//     ImGui::InputFloat("Air Friction", &m_AirFrictionCoefficient);
-//     ImGui::InputFloat("Solid Friction", &m_SolidFrictionCoefficient);
-// }
 
 void PhysicsSystem::Finalize()
 {
