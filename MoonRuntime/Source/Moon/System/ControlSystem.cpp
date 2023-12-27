@@ -1,8 +1,8 @@
 #include "ControlSystem.hpp"
 
-#include "Core/Input.hpp"
+#include "Moon/Input.hpp"
 
-#include "Core/Components.hpp"
+#include "Moon/Components.hpp"
 
 #include <glm/trigonometric.hpp>
 #include <imgui.h>
@@ -53,10 +53,10 @@ void ControlSystem::Update(float)
         if (glm::length(velocityDirection) != 0.0f)
             velocityDirection = glm::normalize(velocityDirection);
 
-        if (Input::IsKeyPressed(Key::Space) and rigidBody.MovementStatus == Status::Grounded)
+        if (Input::IsKeyPressed(Key::Space) and rigidBody.MovementStatus == RigidBody::Status::Grounded)
         {
             velocityDirection += up;
-            rigidBody.MovementStatus = Status::Falling;
+            rigidBody.MovementStatus = RigidBody::Status::Falling;
         }
 
         // Apply velocity increment

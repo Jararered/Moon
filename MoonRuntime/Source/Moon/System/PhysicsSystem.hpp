@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Core/Scenario/Scenario.hpp"
-#include "Core/Scenario/SystemInterface.hpp"
+#include "Moon/Scenario/Scenario.hpp"
+#include "Moon/Scenario/SystemInterface.hpp"
 
-#include "Core/Components.hpp"
+#include "Moon/Components.hpp"
 
 #include <glm/vec3.hpp>
 

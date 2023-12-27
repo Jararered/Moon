@@ -1,8 +1,8 @@
 #include "CameraSystem.hpp"
 
-#include "Core/Input.hpp"
+#include "Moon/Input.hpp"
 
-#include "Core/Components.hpp"
+#include "Moon/Components.hpp"
 
 #include <glfw/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -41,7 +41,12 @@ void CameraSystem::Update(float)
 
         // Clamp looking up and down to near +/- 90 degrees
         transform.Rotation.x = glm::clamp(transform.Rotation.x, glm::radians(-89.99f), glm::radians(89.99f));
-        transform.FixRotation(transform.Rotation.y);
+
+        // rotation in radians
+        while (transform.Rotation.y > glm::radians(360.0f))
+            transform.Rotation.y -= glm::radians(360.0f);
+        while (transform.Rotation.y < glm::radians(-360.0f))
+            transform.Rotation.y += glm::radians(360.0f);
 
         auto direction = glm::vec3(0.0f);
         direction.x = glm::cos(transform.Rotation.y) * glm::cos(transform.Rotation.x);

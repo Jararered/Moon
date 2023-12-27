@@ -2,4 +2,4 @@
 
 using namespace Moon;
 
-std::weak_ptr<Scenario> Panel::s_Scenario;
+std::weak_ptr<Scenario> Panel::s_CurrentScenario;

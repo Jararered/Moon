@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Component/Script.hpp"
-#include "Component/Transform.hpp"
+#include <Moon/Components.hpp>
 
 #include <iostream>
 

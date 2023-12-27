@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Core/Scenario/Scenario.hpp"
-#include "Core/Scenario/SystemInterface.hpp"
+#include "Moon/Scenario/Scenario.hpp"
+#include "Moon/Scenario/SystemInterface.hpp"
 
 namespace Moon
 {

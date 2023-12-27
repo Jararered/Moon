@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/Components.hpp"
+#include "Moon/Components.hpp"
 #include "Scenario/SystemInterface.hpp"
 #include "Window.hpp"
 

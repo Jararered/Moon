@@ -23,15 +23,15 @@ add_library(${Project}
     ${LibrarySourceFiles}
 )
 
+if(WIN32)
+    target_link_libraries(${Project} ${CMAKE_SOURCE_DIR}/Libraries/glfw/lib/glfw3.lib)
+endif(WIN32)
+
 if(UNIX)
     add_definitions(-DUNIX)
     find_package(glfw3)
     target_link_libraries(${Project} glfw)
 endif(UNIX)
-
-if(WIN32)
-    target_link_libraries(${Project} ${CMAKE_SOURCE_DIR}/Libraries/glfw/lib/glfw3.lib)
-endif(WIN32)
 
 add_definitions(-DGLFW_INCLUDE_NONE)
 add_definitions(-DGLM_ENABLE_EXPERIMENTAL)

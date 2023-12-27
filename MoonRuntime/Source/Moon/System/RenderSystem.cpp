@@ -1,14 +1,7 @@
 #include "RenderSystem.hpp"
 
-#include "Core/Input.hpp"
-
-#include "Component/Camera.hpp"
-#include "Component/Controller.hpp"
-#include "Component/Mesh.hpp"
-#include "Component/RigidBody.hpp"
-#include "Component/Shader.hpp"
-#include "Component/Texture.hpp"
-#include "Component/Transform.hpp"
+#include "Moon/Components.hpp"
+#include "Moon/Input.hpp"
 
 #include <glad/gl.h>
 #include <glfw/glfw3.h>

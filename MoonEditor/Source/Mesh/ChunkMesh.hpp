@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Components/Mesh.hpp>
+#include <Moon/Components.hpp>
 
 #include <FastNoiseLite.h>
 #include <octree/octree.h>

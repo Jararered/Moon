@@ -1,11 +1,9 @@
 #pragma once
 
-#include "Core/Framebuffer.hpp"
-#include "Core/Scenario/Scenario.hpp"
-#include "Core/Scenario/SystemInterface.hpp"
-
-#include "Component/Mesh.hpp"
-#include "Component/Shader.hpp"
+#include "Moon/Components.hpp"
+#include "Moon/Framebuffer.hpp"
+#include "Moon/Scenario/Scenario.hpp"
+#include "Moon/Scenario/SystemInterface.hpp"
 
 #include <glm/mat4x4.hpp>
 

@@ -1,10 +1,11 @@
 #pragma once
 
-#include "Core/Components.hpp"
 #include "Entity.hpp"
+#include "Moon/Components.hpp"
 #include "Structure/Vertex.hpp"
 #include "Structure/VertexBuffer.hpp"
 #include "Structure/VertexMeshTemplate.hpp"
+
 
 #include <glad/gl.h>
 #include <glfw/glfw3.h>

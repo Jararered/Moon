@@ -1,8 +1,8 @@
 #pragma once
 
-#include <imgui.h>
+#include <Moon/Scenario/Scenario.hpp>
 
-#include <Core/Scenario/Scenario.hpp>
+#include <imgui.h>
 
 namespace Moon
 {
@@ -15,8 +15,8 @@ namespace Moon
         virtual ~Panel() = default;
 
     private:
-        std::shared_ptr<Scenario> GetScenario() { return s_Scenario.lock(); }
-        static std::weak_ptr<Scenario> s_Scenario;
+        std::shared_ptr<Scenario> GetScenario() { return s_CurrentScenario.lock(); }
+        static std::weak_ptr<Scenario> s_CurrentScenario;
     };
 
 }

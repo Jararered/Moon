@@ -1,6 +1,6 @@
 #include "ScriptSystem.hpp"
 
-#include "Core/Components.hpp"
+#include "Moon/Components.hpp"
 
 #include <glm/glm.hpp>
 
@@ -25,7 +25,7 @@ void ScriptSystem::Update(float dt)
     for (const auto entity : m_Entities)
     {
         auto& script = m_Scenario->GetComponent<Script>(entity);
-        script.lock()->Update(dt * m_TimeScale, entity);
+        script->Update(dt * m_TimeScale, entity);
     }
 }
 

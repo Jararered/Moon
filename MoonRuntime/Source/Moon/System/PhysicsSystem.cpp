@@ -1,6 +1,6 @@
 #include "PhysicsSystem.hpp"
 
-#include "Core/Timer.hpp"
+#include "Moon/Timer.hpp"
 
 #include <glm/trigonometric.hpp>
 #include <imgui.h>
@@ -136,7 +136,7 @@ void PhysicsSystem::UpdateCollision(UUID entity)
                     continue;
                 }
                 transform1.Position.y += upper2.y - lower1.y;
-                rigidBody1.MovementStatus = Status::Grounded;
+                rigidBody1.MovementStatus = RigidBody::Status::Grounded;
             }
 
             rigidBody1.Velocity.y = 0.0f;
@@ -165,10 +165,10 @@ void PhysicsSystem::UpdateFriction(float dt, UUID entity)
     auto xzMag = glm::length(xz);
     if (glm::length(xz) > 0.0f)
     {
-        if (rigidBody.MovementStatus == Status::Falling)
+        if (rigidBody.MovementStatus == RigidBody::Status::Falling)
             xzMag -= glm::min(xzMag, m_AirFrictionCoefficient * dt);
 
-        if (rigidBody.MovementStatus == Status::Grounded)
+        if (rigidBody.MovementStatus == RigidBody::Status::Grounded)
             xzMag -= glm::min(xzMag, m_SolidFrictionCoefficient * dt);
 
         auto xzNew = glm::normalize(xz) * xzMag;

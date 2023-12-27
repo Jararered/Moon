@@ -1,10 +1,14 @@
 #include "Editor.hpp"
 
+#include "Mesh/Cube.hpp"
+#include "Panel/TestPanel.hpp"
+#include "Script/TestScript.hpp"
+
 using namespace Moon;
 
 void Editor::CreatePanels()
 {
-    m_Panels.emplace("Test Panel", std::make_shared<TestPanel>());
+    // m_Panels.emplace("Test Panel", std::make_shared<TestPanel>());
 }
 
 void Editor::CreatePlatform()
