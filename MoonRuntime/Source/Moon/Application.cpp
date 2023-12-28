@@ -101,10 +101,14 @@ void Application::Loop()
 
         m_Window->NewFrame();
 
+        PreUpdate();
+
         for (const auto [systemID, system] : m_Systems)
         {
             system->Update(dt);
         }
+
+        PostUpdate();
 
         m_Window->EndFrame();
 

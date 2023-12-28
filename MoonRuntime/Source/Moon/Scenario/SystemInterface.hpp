@@ -3,7 +3,6 @@
 #include "Signature.hpp"
 #include "UUID.hpp"
 
-#include <imgui.h>
 #include <memory>
 #include <set>
 #include <string>

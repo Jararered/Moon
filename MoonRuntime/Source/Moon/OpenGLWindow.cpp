@@ -26,8 +26,8 @@ OpenGLWindow::OpenGLWindow(const WindowSpecification& spec) : Window(spec)
     glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_TRUE);
 #endif
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     p_GLFWwindow = glfwCreateWindow(spec.Width, spec.Height, spec.Title.c_str(), NULL, NULL);
@@ -56,28 +56,10 @@ OpenGLWindow::~OpenGLWindow()
 void OpenGLWindow::NewFrame()
 {
     Input::PollEvents();
-
-    if (Input::IsKeyPressed(Key::Escape))
-        Input::ReleaseCursor();
-
-    // if (!Input::IsMouseCaptured() and Input::IsLeftClick() and !(ImGui::GetIO().WantCaptureMouse))
-    if (!Input::IsMouseCaptured() and Input::IsLeftClick())
-        Input::CaptureCursor();
-
-    if (Input::IsKeyPressed(Key::Escape) and Input::IsMouseCaptured())
-        Input::ReleaseCursor();
-
-    // Start the Dear ImGui frame
-    // ImGui_ImplOpenGL3_NewFrame();
-    // ImGui_ImplGlfw_NewFrame();
-    // ImGui::NewFrame();
 }
 
 void OpenGLWindow::EndFrame()
 {
-    // ImGui::Render();
-    // ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
     glfwSwapBuffers(p_GLFWwindow);
 }
 

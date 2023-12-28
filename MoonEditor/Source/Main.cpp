@@ -10,9 +10,15 @@ int main()
     spec.VSync = true;
     spec.Title = "Moon (OpenGL)";
 
+    // Application
     Editor editor;
+
+    // Creating window
     editor.CreateWindow(spec);
-    editor.CreatePanels();
+    editor.InitializeImGui();
+
+    // Test Scene
     editor.CreatePlatform();
+
     editor.Start();
 }

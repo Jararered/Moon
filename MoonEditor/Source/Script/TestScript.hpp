@@ -2,7 +2,7 @@
 
 #include <Components.hpp>
 
-#include <iostream>
+#include <print>
 
 namespace Moon
 {
@@ -13,11 +13,11 @@ namespace Moon
         {
             if (GetScenario()->HasComponent<Transform>(uuid))
             {
-                std::cout << "Entity " << uuid << " has a transform component!\n";
+                std::println("Entity %d has a transform component!", uuid);
             }
             else
             {
-                std::cout << "Entity " << uuid << " does not have a transform component!\n";
+                std::println("Entity %d does not have a transform component!", uuid);
             }
         }
     };

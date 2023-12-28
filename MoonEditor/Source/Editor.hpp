@@ -9,11 +9,12 @@ namespace Moon
     {
     public:
         void InitializeImGui();
-        void CreatePanels();
+        void FinalizeImGui();
+
         void CreatePlatform();
 
-    private:
-        // std::unordered_map<std::string, std::shared_ptr<Panel>> m_Panels;
+        void PreUpdate() override;
+        void PostUpdate() override;
     };
 
 }

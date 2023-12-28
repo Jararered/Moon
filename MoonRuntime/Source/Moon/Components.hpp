@@ -12,7 +12,6 @@
 
 #include <assert.h>
 #include <fstream>
-#include <iostream>
 #include <memory>
 #include <string>
 
