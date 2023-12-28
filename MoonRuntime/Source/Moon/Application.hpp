@@ -32,9 +32,10 @@ namespace Moon
         void Initialize();
         void Finalize();
 
-        virtual void PreUpdate() = 0;
         void Loop();
-        virtual void PostUpdate() = 0;
+
+        virtual void PreUpdate() {}
+        virtual void PostUpdate() {}
 
     protected:
         std::shared_ptr<Window> m_Window;

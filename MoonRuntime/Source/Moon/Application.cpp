@@ -21,6 +21,7 @@ void Application::Initialize()
     // Check if already initialized
     if (m_Status == ApplicationStatus::Initialized)
     {
+        std::println("Application::Initialize: Application has already been initialized.");
         return;
     }
 
