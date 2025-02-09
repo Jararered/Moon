@@ -17,9 +17,9 @@ namespace Moon
 
     protected:
         std::string m_Name;
-        std::chrono::steady_clock::time_point m_Start;
-        std::chrono::steady_clock::time_point m_Last;
-        std::chrono::steady_clock::time_point m_Stop;
+        std::chrono::system_clock::time_point m_Start;
+        std::chrono::system_clock::time_point m_Last;
+        std::chrono::system_clock::time_point m_Stop;
     };
 
     class ScopedTimer final : protected Timer
