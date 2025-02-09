@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.26)
 
-get_filename_component(Project ${CMAKE_CURRENT_SOURCE_DIR} NAME)
-project(${Project})
+add_executable(MoonSandbox)
 
 file(GLOB_RECURSE ProjectSourceFiles Source/*.cpp)
 
@@ -14,10 +13,18 @@ set(ImguiSourceFiles
     ${CMAKE_SOURCE_DIR}/Libraries/imgui/backends/imgui_impl_opengl3.cpp
 )
 
-add_executable(${Project} ${ProjectSourceFiles} ${ImguiSourceFiles})
+target_sources(MoonSandbox 
+PRIVATE 
+    ${ProjectSourceFiles} 
+    ${ImguiSourceFiles}
+)
 
-target_include_directories(${Project} PUBLIC Source ${MoonIncludeDirs})
-target_link_libraries(${Project} MoonRuntime)
+target_include_directories(MoonSandbox 
+PRIVATE 
+    Source 
+)
 
-install(DIRECTORY Resources DESTINATION ${InstallDir})
-install(TARGETS ${Project} RUNTIME DESTINATION ${InstallDir})
+target_link_libraries(MoonSandbox PRIVATE MoonRuntime)
+
+install(TARGETS MoonSandbox RUNTIME DESTINATION ./)
+install(DIRECTORY Resources DESTINATION ./)
